@@ -1,23 +1,45 @@
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).end();
-  
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  // Handle CORS preflight
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  if (req.method === "OPTIONS") return res.status(200).end();
+  if (req.method !== "POST") return res.status(405).end();
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
+    // Vercel auto-parses JSON body — req.body is already an object
+    const body = req.body;
+
+    if (!body || !body.messages) {
+      return res.status(400).json({ error: "Missing messages in request body" });
+    }
+
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_KEY,
-        'anthropic-version': '2023-06-01'
+        "Content-Type": "application/json",
+        "x-api-key": process.env.ANTHROPIC_KEY,
+        "anthropic-version": "2023-06-01"
       },
-      body: JSON.stringify(req.body)
+      body: JSON.stringify({
+        model: body.model || "claude-haiku-4-5-20251001",
+        max_tokens: body.max_tokens || 512,
+        system: body.system || "You are Ollie the Owl, a friendly 11+ tutor.",
+        messages: body.messages
+      })
     });
+
+    if (!response.ok) {
+      const errText = await response.text();
+      console.error("Anthropic error:", response.status, errText);
+      return res.status(response.status).json({ error: errText });
+    }
+
     const data = await response.json();
-    res.status(200).json(data);
+    return res.status(200).json(data);
+
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error("Ollie handler error:", err);
+    return res.status(500).json({ error: err.message });
   }
 }
