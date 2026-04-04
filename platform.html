@@ -90,10 +90,12 @@ input, textarea { font-family: inherit; }
 /* ── Page system ── */
 .page { display: none; min-height: 100vh; }
 .page.active { display: block; }
+#auth-page.active { display: flex; }
+#app-page.active { display: flex; flex-direction: column; }
 
 /* ── Auth Page ── */
 #auth-page {
-  display: flex; align-items: center; justify-content: center;
+  align-items: center; justify-content: center;
   min-height: 100vh; padding: 24px;
   background: linear-gradient(135deg, #f0f4ff 0%, #faf5ff 50%, #f0fdf4 100%);
 }
@@ -157,8 +159,7 @@ input, textarea { font-family: inherit; }
 .btn-xs { padding: 5px 10px; font-size: 0.78rem; }
 
 /* ── App Shell ── */
-#app-page { display: none; }
-#app-page.active { display: flex; flex-direction: column; }
+
 
 /* ── Top Nav ── */
 .top-nav {
@@ -185,7 +186,7 @@ input, textarea { font-family: inherit; }
 .nav-avatar {
   width: 34px; height: 34px; border-radius: 50%;
   background: linear-gradient(135deg, var(--accent), var(--purple));
-  display: flex; align-items: center; justify-content: center;
+  align-items: center; justify-content: center;
   font-size: 1rem; color: white; font-weight: 700;
 }
 
@@ -259,7 +260,7 @@ input, textarea { font-family: inherit; }
 .subject-card .subj-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
 .subject-card .subj-icon {
   width: 40px; height: 40px; border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
+  align-items: center; justify-content: center;
   font-size: 1.3rem;
 }
 .subject-card.english .subj-icon { background: #f3e8ff; }
@@ -286,7 +287,7 @@ input, textarea { font-family: inherit; }
 .subject-header .back-btn {
   width: 36px; height: 36px; border-radius: 8px;
   background: var(--surface2); border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
+  align-items: center; justify-content: center;
   cursor: pointer; font-size: 1.1rem; transition: all 0.15s;
 }
 .subject-header .back-btn:hover { background: var(--border); }
@@ -455,7 +456,7 @@ input, textarea { font-family: inherit; }
 .ollie-fab {
   width: 52px; height: 52px; border-radius: 50%;
   background: var(--accent); border: none;
-  display: flex; align-items: center; justify-content: center;
+  align-items: center; justify-content: center;
   font-size: 1.4rem; box-shadow: var(--shadow-lg); cursor: pointer;
   transition: all 0.2s;
 }
@@ -509,7 +510,7 @@ input, textarea { font-family: inherit; }
 /* ── Loading overlay ── */
 #loading-overlay {
   position: fixed; inset: 0; background: rgba(255,255,255,0.9);
-  display: flex; align-items: center; justify-content: center;
+  align-items: center; justify-content: center;
   z-index: 500; flex-direction: column; gap: 14px;
 }
 #loading-overlay p { font-size: 0.95rem; color: var(--text2); font-weight: 500; }
@@ -1696,13 +1697,29 @@ async function doLogout() {
 
 async function onSignedIn(user) {
   currentUser = user;
-  // Load profile
-  const { data: prof } = await sb.from("profiles").select("*").eq("id", user.id).single();
-  currentProfile = prof;
+  // Load profile — retry once if not yet created by trigger
+  let { data: prof } = await sb.from("profiles").select("*").eq("id", user.id).single();
+  if (!prof) {
+    // Profile trigger may not have fired yet — wait 800ms and retry
+    await new Promise(r => setTimeout(r, 800));
+    const res = await sb.from("profiles").select("*").eq("id", user.id).single();
+    prof = res.data;
+  }
+  if (!prof) {
+    // Create profile manually if trigger never fired
+    const name = user.user_metadata?.full_name || user.email.split("@")[0];
+    const role = user.user_metadata?.role || "student";
+    await sb.from("profiles").upsert({ id: user.id, email: user.email, full_name: name, role });
+    await sb.from("streaks").upsert({ user_id: user.id });
+    const res2 = await sb.from("profiles").select("*").eq("id", user.id).single();
+    prof = res2.data;
+  }
+  currentProfile = prof || { id: user.id, email: user.email, full_name: user.email.split("@")[0], role: "student" };
   setupAppUI();
   await loadProgressCache();
   refreshDashboard();
   showPage("app");
+  showView("dashboard");
   document.getElementById("ollie-panel").style.display = "block";
   startStreakCheck();
 }
