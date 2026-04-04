@@ -6,552 +6,383 @@
 <title>T3 Academy — 11+ Exam Preparation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
-/* ── CSS Variables ── */
 :root {
   --accent: #6366f1;
+  --accent-light: #eef2ff;
   --accent-hover: #4f46e5;
   --green: #22c55e;
+  --green-light: #f0fdf4;
   --amber: #f59e0b;
+  --amber-light: #fffbeb;
   --red: #ef4444;
+  --red-light: #fef2f2;
   --purple: #8b5cf6;
+  --purple-light: #f5f3ff;
   --blue: #3b82f6;
+  --blue-light: #eff6ff;
   --teal: #14b8a6;
-  --bg: #f8fafc;
+  --bg: #f0f2f8;
   --surface: #ffffff;
-  --surface2: #f1f5f9;
+  --surface2: #f8fafc;
+  --surface3: #f1f5f9;
   --border: #e2e8f0;
+  --border2: #cbd5e1;
   --text: #0f172a;
   --text2: #475569;
   --text3: #94a3b8;
-  --radius: 12px;
+  --radius: 14px;
   --radius-sm: 8px;
-  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
-  --shadow-lg: 0 10px 30px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.06);
+  --radius-lg: 20px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow: 0 2px 8px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.05);
+  --shadow-lg: 0 10px 32px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.06);
+  --subj-english: #8b5cf6;
+  --subj-maths: #3b82f6;
+  --subj-verbal: #22c55e;
+  --subj-nvr: #f59e0b;
 }
 
-/* ── Reset & Base ── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 16px; }
-body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-  min-height: 100vh;
-}
-a { color: inherit; text-decoration: none; }
-button { cursor: pointer; font-family: inherit; }
-input, textarea { font-family: inherit; }
-
-/* ── Utility ── */
-.hidden { display: none !important; }
-.flex { display: flex; }
-.flex-col { flex-direction: column; }
-.items-center { align-items: center; }
-.justify-between { justify-content: space-between; }
-.gap-2 { gap: 8px; }
-.gap-3 { gap: 12px; }
-.gap-4 { gap: 16px; }
-.w-full { width: 100%; }
-.text-sm { font-size: 0.875rem; }
-.text-xs { font-size: 0.75rem; }
-.font-semibold { font-weight: 600; }
-.font-bold { font-weight: 700; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;}
+a{color:inherit;text-decoration:none;}
+button{cursor:pointer;font-family:inherit;border:none;}
+input,textarea,select{font-family:inherit;}
+.hidden{display:none!important;}
 
 /* ── Spinner ── */
-.spinner {
-  width: 36px; height: 36px;
-  border: 3px solid var(--border);
-  border-top-color: var(--accent);
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
-  margin: 0 auto;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
+.spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite;margin:0 auto;}
+@keyframes spin{to{transform:rotate(360deg);}}
 
 /* ── Toast ── */
-#toast {
-  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
-  background: var(--text); color: #fff; padding: 12px 20px;
-  border-radius: var(--radius-sm); font-size: 0.875rem; font-weight: 500;
-  box-shadow: var(--shadow-lg); z-index: 9999;
-  transition: transform 0.3s ease;
-  max-width: 360px; text-align: center;
-}
-#toast.show { transform: translateX(-50%) translateY(0); }
-#toast.success { background: var(--green); }
-#toast.error { background: var(--red); }
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--text);color:#fff;padding:12px 22px;border-radius:999px;font-size:0.875rem;font-weight:600;box-shadow:var(--shadow-lg);z-index:9999;transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1);max-width:340px;text-align:center;pointer-events:none;}
+#toast.show{transform:translateX(-50%) translateY(0);}
+#toast.success{background:var(--green);}
+#toast.error{background:var(--red);}
 
-/* ── Page system ── */
-.page { display: none; min-height: 100vh; }
-.page.active { display: block; }
-#auth-page.active { display: flex; }
-#app-page.active { display: flex; flex-direction: column; }
+/* ── Pages ── */
+.page{display:none;min-height:100vh;}
+.page.active{display:block;}
+#auth-page.active{display:flex;}
+#app-page.active{display:flex;flex-direction:column;}
 
-/* ── Auth Page ── */
-#auth-page {
-  align-items: center; justify-content: center;
-  min-height: 100vh; padding: 24px;
-  background: linear-gradient(135deg, #f0f4ff 0%, #faf5ff 50%, #f0fdf4 100%);
-}
-.auth-card {
-  background: var(--surface);
-  border-radius: 20px;
-  padding: 48px 40px;
-  width: 100%; max-width: 420px;
-  box-shadow: var(--shadow-lg);
-}
-.auth-logo {
-  text-align: center;
-  margin-bottom: 32px;
-}
-.auth-logo .owl { font-size: 3rem; margin-bottom: 8px; }
-.auth-logo h1 { font-size: 1.75rem; font-weight: 800; color: var(--text); }
-.auth-logo p { color: var(--text2); font-size: 0.9rem; margin-top: 4px; }
+/* ── Loading ── */
+#loading-overlay{position:fixed;inset:0;background:rgba(255,255,255,0.95);display:flex;align-items:center;justify-content:center;z-index:500;flex-direction:column;gap:14px;}
+#loading-overlay p{font-size:0.95rem;color:var(--text2);font-weight:500;}
 
-.auth-tabs {
-  display: flex; background: var(--surface2);
-  border-radius: var(--radius-sm); padding: 4px; margin-bottom: 28px; gap: 4px;
-}
-.auth-tab {
-  flex: 1; padding: 10px; border: none; background: transparent;
-  border-radius: 6px; font-weight: 600; font-size: 0.9rem;
-  color: var(--text2); transition: all 0.2s;
-}
-.auth-tab.active {
-  background: var(--surface); color: var(--text);
-  box-shadow: var(--shadow);
-}
+/* ══════════════════════════════════
+   AUTH PAGE
+══════════════════════════════════ */
+#auth-page{align-items:center;justify-content:center;min-height:100vh;padding:24px;background:linear-gradient(135deg,#eef2ff 0%,#f5f3ff 40%,#f0fdf4 100%);}
+.auth-card{background:var(--surface);border-radius:24px;padding:48px 40px;width:100%;max-width:420px;box-shadow:var(--shadow-lg);}
+.auth-logo{text-align:center;margin-bottom:32px;}
+.auth-logo .owl-wrap{width:72px;height:72px;background:linear-gradient(135deg,var(--accent),var(--purple));border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:2.2rem;margin:0 auto 14px;box-shadow:0 8px 24px rgba(99,102,241,0.3);}
+.auth-logo h1{font-size:1.8rem;font-weight:800;color:var(--text);}
+.auth-logo p{color:var(--text2);font-size:0.875rem;margin-top:4px;}
+.auth-tabs{display:flex;background:var(--surface3);border-radius:10px;padding:4px;margin-bottom:28px;gap:4px;}
+.auth-tab{flex:1;padding:10px;border:none;background:transparent;border-radius:7px;font-weight:600;font-size:0.9rem;color:var(--text2);transition:all 0.2s;cursor:pointer;}
+.auth-tab.active{background:var(--surface);color:var(--text);box-shadow:var(--shadow-sm);}
+.form-group{margin-bottom:18px;}
+.form-label{display:block;font-size:0.82rem;font-weight:700;color:var(--text2);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em;}
+.form-input{width:100%;padding:12px 14px;border:2px solid var(--border);border-radius:var(--radius-sm);font-size:0.95rem;color:var(--text);transition:border-color 0.2s;outline:none;background:var(--surface);}
+.form-input:focus{border-color:var(--accent);}
+.form-hint{font-size:0.78rem;color:var(--text3);margin-top:4px;}
 
-.form-group { margin-bottom: 18px; }
-.form-label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text2); margin-bottom: 6px; }
-.form-input {
-  width: 100%; padding: 12px 14px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-sm);
-  font-size: 0.95rem; color: var(--text);
-  transition: border-color 0.2s;
-  outline: none; background: var(--surface);
-}
-.form-input:focus { border-color: var(--accent); }
-.form-hint { font-size: 0.78rem; color: var(--text3); margin-top: 4px; }
+/* ── Buttons ── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border:none;border-radius:var(--radius-sm);font-size:0.9rem;font-weight:700;transition:all 0.2s;white-space:nowrap;cursor:pointer;}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 2px 8px rgba(99,102,241,0.3);}
+.btn-primary:hover{background:var(--accent-hover);box-shadow:0 4px 14px rgba(99,102,241,0.4);transform:translateY(-1px);}
+.btn-secondary{background:var(--surface);color:var(--text2);border:2px solid var(--border);}
+.btn-secondary:hover{background:var(--surface3);color:var(--text);border-color:var(--border2);}
+.btn-success{background:var(--green);color:#fff;}
+.btn-success:hover{background:#16a34a;transform:translateY(-1px);}
+.btn-danger{background:#fef2f2;color:var(--red);border:2px solid #fecaca;}
+.btn-danger:hover{background:#fee2e2;}
+.btn-ghost{background:transparent;color:var(--text2);padding:8px 12px;}
+.btn-ghost:hover{background:var(--surface3);}
+.btn-sm{padding:8px 14px;font-size:0.82rem;}
+.btn-xs{padding:5px 10px;font-size:0.75rem;}
+.btn-icon{width:36px;height:36px;padding:0;border-radius:var(--radius-sm);}
+.w-full{width:100%;}
 
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  padding: 12px 20px; border: none; border-radius: var(--radius-sm);
-  font-size: 0.95rem; font-weight: 600; transition: all 0.2s; white-space: nowrap;
-}
-.btn-primary {
-  background: var(--accent); color: #fff;
-  box-shadow: 0 2px 8px rgba(99,102,241,0.3);
-}
-.btn-primary:hover { background: var(--accent-hover); box-shadow: 0 4px 12px rgba(99,102,241,0.4); transform: translateY(-1px); }
-.btn-secondary { background: var(--surface2); color: var(--text2); border: 1.5px solid var(--border); }
-.btn-secondary:hover { background: var(--border); color: var(--text); }
-.btn-danger { background: #fef2f2; color: var(--red); border: 1.5px solid #fecaca; }
-.btn-danger:hover { background: #fee2e2; }
-.btn-sm { padding: 8px 14px; font-size: 0.85rem; }
-.btn-xs { padding: 5px 10px; font-size: 0.78rem; }
+/* ══════════════════════════════════
+   APP SHELL
+══════════════════════════════════ */
+.top-nav{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:62px;box-shadow:var(--shadow-sm);}
+.nav-logo{font-size:1.1rem;font-weight:800;color:var(--text);display:flex;align-items:center;gap:10px;}
+.nav-logo-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--accent),var(--purple));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
+.nav-links{display:flex;align-items:center;gap:2px;}
+.nav-link{padding:8px 14px;border-radius:8px;font-size:0.85rem;font-weight:600;color:var(--text2);border:none;background:transparent;transition:all 0.15s;cursor:pointer;}
+.nav-link:hover{background:var(--surface3);color:var(--text);}
+.nav-link.active{background:var(--accent-light);color:var(--accent);}
+.nav-right{display:flex;align-items:center;gap:10px;}
+.nav-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--purple));display:flex;align-items:center;justify-content:center;font-size:0.95rem;color:white;font-weight:800;}
 
-/* ── App Shell ── */
+.app-content{flex:1;}
+.view{display:none;padding:28px 28px;max-width:1100px;margin:0 auto;}
+.view.active{display:block;}
 
+/* ── Section Labels ── */
+.section-label{font-size:0.72rem;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:14px;}
 
-/* ── Top Nav ── */
-.top-nav {
-  position: sticky; top: 0; z-index: 100;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  padding: 0 24px;
-  display: flex; align-items: center; justify-content: space-between;
-  height: 60px;
-  box-shadow: var(--shadow);
-}
-.nav-logo { font-size: 1.1rem; font-weight: 800; color: var(--text); display: flex; align-items: center; gap: 8px; }
-.nav-logo span { font-size: 1.3rem; }
-.nav-links { display: flex; align-items: center; gap: 4px; }
-.nav-link {
-  padding: 8px 14px; border-radius: 8px;
-  font-size: 0.875rem; font-weight: 600; color: var(--text2);
-  border: none; background: transparent;
-  transition: all 0.15s; cursor: pointer;
-}
-.nav-link:hover { background: var(--surface2); color: var(--text); }
-.nav-link.active { background: #eef2ff; color: var(--accent); }
-.nav-user { display: flex; align-items: center; gap: 10px; }
-.nav-avatar {
-  width: 34px; height: 34px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--purple));
-  align-items: center; justify-content: center;
-  font-size: 1rem; color: white; font-weight: 700;
-}
+/* ══════════════════════════════════
+   DASHBOARD
+══════════════════════════════════ */
+.ollie-banner{background:linear-gradient(135deg,#eef2ff 0%,#f5f3ff 100%);border:1.5px solid #c7d2fe;border-radius:var(--radius-lg);padding:22px 26px;display:flex;align-items:center;gap:18px;margin-bottom:24px;position:relative;overflow:hidden;}
+.ollie-banner::after{content:'';position:absolute;right:-20px;top:-20px;width:120px;height:120px;background:radial-gradient(circle,rgba(99,102,241,0.1),transparent);border-radius:50%;}
+.ollie-banner .owl-icon{font-size:2.8rem;flex-shrink:0;animation:float 3s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+.ollie-banner h2{font-size:1.1rem;font-weight:800;color:var(--text);margin-bottom:2px;}
+.ollie-banner p{font-size:0.875rem;color:var(--text2);}
+.ollie-banner .banner-badge{margin-left:auto;flex-shrink:0;background:white;border:1.5px solid #c7d2fe;border-radius:20px;padding:6px 14px;font-size:0.78rem;font-weight:700;color:var(--accent);white-space:nowrap;}
 
-/* ── App Content ── */
-.app-content { flex: 1; }
-.view { display: none; padding: 28px 24px; max-width: 1100px; margin: 0 auto; }
-.view.active { display: block; }
+/* Stats */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px;}
+.stat-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden;transition:transform 0.2s,box-shadow 0.2s;}
+.stat-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.stat-card:nth-child(1)::before{background:linear-gradient(90deg,var(--accent),var(--purple));}
+.stat-card:nth-child(2)::before{background:linear-gradient(90deg,var(--green),var(--teal));}
+.stat-card:nth-child(3)::before{background:linear-gradient(90deg,var(--amber),#f97316);}
+.stat-label{font-size:0.72rem;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;}
+.stat-value{font-size:2rem;font-weight:800;color:var(--text);line-height:1;transition:all 0.4s;}
+.stat-sub{font-size:0.78rem;color:var(--text3);margin-top:4px;}
+.stat-icon{position:absolute;right:16px;top:16px;font-size:1.6rem;opacity:0.15;}
 
-/* ── Dashboard ── */
-.ollie-banner {
-  background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 100%);
-  border: 1px solid #c7d2fe;
-  border-radius: 16px;
-  padding: 20px 24px;
-  display: flex; align-items: center; gap: 16px;
-  margin-bottom: 28px;
-}
-.ollie-banner .owl-icon { font-size: 2.5rem; flex-shrink: 0; }
-.ollie-banner .greeting-text h2 { font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: 2px; }
-.ollie-banner .greeting-text p { font-size: 0.875rem; color: var(--text2); }
+/* Subject Cards */
+.subject-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:24px;}
+.subject-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:22px;cursor:pointer;transition:all 0.2s;box-shadow:var(--shadow-sm);position:relative;overflow:hidden;}
+.subject-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
+.subject-card .card-accent{position:absolute;top:0;left:0;right:0;height:4px;border-radius:var(--radius-lg) var(--radius-lg) 0 0;}
+.subject-card.english .card-accent{background:linear-gradient(90deg,var(--subj-english),#a78bfa);}
+.subject-card.maths .card-accent{background:linear-gradient(90deg,var(--subj-maths),#60a5fa);}
+.subject-card.verbal .card-accent{background:linear-gradient(90deg,var(--subj-verbal),#4ade80);}
+.subject-card.nvr .card-accent{background:linear-gradient(90deg,var(--subj-nvr),#fbbf24);}
+.subj-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.subj-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;}
+.subject-card.english .subj-icon{background:#f3e8ff;}
+.subject-card.maths .subj-icon{background:#eff6ff;}
+.subject-card.verbal .subj-icon{background:#f0fdf4;}
+.subject-card.nvr .subj-icon{background:#fffbeb;}
+.subj-name{font-size:1rem;font-weight:800;color:var(--text);}
+.subj-topics{font-size:0.78rem;color:var(--text3);margin-top:1px;}
+.progress-ring-wrap{margin-left:auto;}
+.progress-ring{transform:rotate(-90deg);}
+.progress-ring circle{transition:stroke-dashoffset 0.6s ease;}
+.subj-stats{display:flex;gap:16px;margin-top:12px;}
+.subj-stat{font-size:0.8rem;color:var(--text2);}
+.subj-stat strong{color:var(--text);font-weight:700;}
 
-.stats-row {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 14px; margin-bottom: 28px;
-}
-.stat-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 18px 20px;
-  box-shadow: var(--shadow);
-}
-.stat-card .stat-label { font-size: 0.78rem; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
-.stat-card .stat-value { font-size: 1.75rem; font-weight: 800; color: var(--text); line-height: 1; }
-.stat-card .stat-sub { font-size: 0.8rem; color: var(--text2); margin-top: 4px; }
+/* Weak Areas */
+.weak-panel{background:var(--surface);border:1.5px solid #fecaca;border-radius:var(--radius);padding:18px 20px;margin-bottom:24px;}
+.weak-panel h3{font-size:0.85rem;font-weight:800;color:#b91c1c;margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+.weak-item{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);}
+.weak-item:last-child{border-bottom:none;}
+.weak-item-name{font-size:0.85rem;font-weight:600;color:var(--text);}
+.weak-item-pct{font-size:0.82rem;font-weight:700;color:var(--red);background:var(--red-light);padding:2px 8px;border-radius:999px;}
 
-.section-heading {
-  font-size: 0.8rem; font-weight: 700; color: var(--text3);
-  text-transform: uppercase; letter-spacing: 0.08em;
-  margin-bottom: 14px;
-}
+/* Streak calendar */
+.streak-row{display:flex;gap:6px;margin-top:10px;}
+.streak-day{width:28px;height:28px;border-radius:6px;background:var(--surface3);display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;color:var(--text3);}
+.streak-day.active{background:var(--accent);color:white;}
+.streak-day.today{border:2px solid var(--accent);}
 
-.subject-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  margin-bottom: 28px;
-}
-.subject-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 22px;
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: var(--shadow);
-  position: relative;
-  overflow: hidden;
-}
-.subject-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0;
-  width: 4px; height: 100%;
-}
-.subject-card.english::before { background: var(--purple); }
-.subject-card.maths::before { background: var(--blue); }
-.subject-card.verbal::before { background: var(--green); }
-.subject-card.nvr::before { background: var(--amber); }
+/* ══════════════════════════════════
+   SUBJECT / TOPIC VIEW
+══════════════════════════════════ */
+.view-header{display:flex;align-items:center;gap:12px;margin-bottom:24px;}
+.back-btn{width:38px;height:38px;border-radius:var(--radius-sm);background:var(--surface);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;transition:all 0.15s;flex-shrink:0;}
+.back-btn:hover{background:var(--surface3);border-color:var(--border2);}
+.view-header h2{font-size:1.35rem;font-weight:800;color:var(--text);}
+.topic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;}
+.topic-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:18px 20px;transition:all 0.2s;box-shadow:var(--shadow-sm);}
+.topic-card:hover{border-color:var(--accent);box-shadow:var(--shadow-md);transform:translateY(-1px);}
+.topic-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;}
+.topic-name{font-size:0.95rem;font-weight:700;color:var(--text);}
+.trophy-badge{font-size:1.2rem;}
+.topic-meta{font-size:0.78rem;color:var(--text3);margin-bottom:12px;}
+.topic-acc-bar{background:var(--surface3);border-radius:999px;height:5px;overflow:hidden;margin-bottom:12px;}
+.topic-acc-fill{height:100%;border-radius:999px;transition:width 0.4s ease;}
+.topic-actions{display:flex;gap:8px;flex-wrap:wrap;}
 
-.subject-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-.subject-card .subj-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-.subject-card .subj-icon {
-  width: 40px; height: 40px; border-radius: 10px;
-  align-items: center; justify-content: center;
-  font-size: 1.3rem;
-}
-.subject-card.english .subj-icon { background: #f3e8ff; }
-.subject-card.maths .subj-icon { background: #eff6ff; }
-.subject-card.verbal .subj-icon { background: #f0fdf4; }
-.subject-card.nvr .subj-icon { background: #fffbeb; }
-.subject-card .subj-name { font-size: 1rem; font-weight: 700; color: var(--text); }
-.subject-card .subj-topics { font-size: 0.78rem; color: var(--text3); }
-.progress-bar { background: var(--surface2); border-radius: 999px; height: 6px; overflow: hidden; margin: 10px 0; }
-.progress-fill { height: 100%; border-radius: 999px; transition: width 0.4s ease; }
-.subject-card.english .progress-fill { background: var(--purple); }
-.subject-card.maths .progress-fill { background: var(--blue); }
-.subject-card.verbal .progress-fill { background: var(--green); }
-.subject-card.nvr .progress-fill { background: var(--amber); }
-.subject-card .subj-stats { display: flex; gap: 14px; }
-.subject-card .subj-stat { font-size: 0.8rem; color: var(--text2); }
-.subject-card .subj-stat strong { color: var(--text); font-weight: 700; }
+/* ══════════════════════════════════
+   QUIZ
+══════════════════════════════════ */
+.quiz-shell{max-width:720px;margin:0 auto;}
+.quiz-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:12px;}
+.quiz-topbar-left{display:flex;flex-direction:column;}
+.quiz-topic-label{font-size:1rem;font-weight:800;color:var(--text);}
+.quiz-sub-label{font-size:0.8rem;color:var(--text2);}
+.quiz-timer{font-size:1rem;font-weight:800;color:var(--text);background:var(--surface);border:2px solid var(--border);padding:7px 16px;border-radius:999px;font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:6px;}
+.quiz-timer.warning{border-color:var(--amber);color:var(--amber);}
+.quiz-timer.danger{border-color:var(--red);color:var(--red);animation:pulse-timer 1s ease-in-out infinite;}
+@keyframes pulse-timer{0%,100%{opacity:1;}50%{opacity:0.6;}}
 
-/* ── Subject View ── */
-.subject-header {
-  display: flex; align-items: center; gap: 12px;
-  margin-bottom: 24px;
-}
-.subject-header .back-btn {
-  width: 36px; height: 36px; border-radius: 8px;
-  background: var(--surface2); border: 1px solid var(--border);
-  align-items: center; justify-content: center;
-  cursor: pointer; font-size: 1.1rem; transition: all 0.15s;
-}
-.subject-header .back-btn:hover { background: var(--border); }
-.subject-header h2 { font-size: 1.4rem; font-weight: 800; color: var(--text); }
+.quiz-progress-outer{background:var(--surface3);border-radius:999px;height:6px;margin-bottom:28px;overflow:hidden;}
+.quiz-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--purple));border-radius:999px;transition:width 0.4s ease;}
 
-.topic-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 14px;
-}
-.topic-card {
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius);
-  padding: 18px;
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: var(--shadow);
-}
-.topic-card:hover { border-color: var(--accent); box-shadow: var(--shadow-md); transform: translateY(-1px); }
-.topic-card .topic-name { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
-.topic-card .topic-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-.topic-card .q-count { font-size: 0.8rem; color: var(--text3); }
-.trophy-badge {
-  font-size: 1rem; line-height: 1;
-}
-.topic-card .topic-actions { display: flex; gap: 8px; margin-top: 10px; }
+.question-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:32px;box-shadow:var(--shadow-md);margin-bottom:20px;animation:slideUp 0.3s ease;}
+@keyframes slideUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+.q-number{font-size:0.72rem;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;}
+.q-text{font-size:1.05rem;font-weight:600;color:var(--text);line-height:1.7;margin-bottom:26px;white-space:pre-wrap;}
 
-/* ── Quiz View ── */
-.quiz-header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 24px;
-}
-.quiz-meta { font-size: 0.85rem; color: var(--text2); }
-.quiz-timer {
-  font-size: 1rem; font-weight: 700; color: var(--text);
-  background: var(--surface2); padding: 6px 14px; border-radius: 20px;
-  font-variant-numeric: tabular-nums;
-}
-.quiz-progress-bar { height: 4px; background: var(--surface2); border-radius: 999px; margin-bottom: 28px; overflow: hidden; }
-.quiz-progress-fill { height: 100%; background: var(--accent); border-radius: 999px; transition: width 0.3s ease; }
+.options-list{display:flex;flex-direction:column;gap:10px;}
+.option-btn{display:flex;align-items:center;gap:14px;padding:14px 18px;border:2px solid var(--border);border-radius:var(--radius);background:var(--surface);cursor:pointer;transition:all 0.15s;text-align:left;font-size:0.95rem;font-weight:500;color:var(--text);width:100%;}
+.option-btn:hover:not(:disabled){border-color:var(--accent);background:var(--accent-light);}
+.option-btn:disabled{cursor:default;}
+.option-letter{width:30px;height:30px;border-radius:7px;background:var(--surface3);display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:800;color:var(--text2);flex-shrink:0;transition:all 0.15s;}
+.option-btn.correct{border-color:var(--green);background:var(--green-light);}
+.option-btn.correct .option-letter{background:var(--green);color:white;}
+.option-btn.selected-wrong{border-color:var(--red);background:var(--red-light);}
+.option-btn.selected-wrong .option-letter{background:var(--red);color:white;}
 
-.question-card {
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 20px;
-  padding: 32px;
-  box-shadow: var(--shadow-md);
-  margin-bottom: 20px;
-}
-.question-number { font-size: 0.78rem; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
-.question-text {
-  font-size: 1.1rem; font-weight: 600; color: var(--text);
-  line-height: 1.6; margin-bottom: 28px;
-  white-space: pre-wrap;
-}
-.options-list { display: flex; flex-direction: column; gap: 10px; }
-.option-btn {
-  display: flex; align-items: center; gap: 12px;
-  padding: 14px 18px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
-  cursor: pointer; transition: all 0.15s;
-  text-align: left; font-size: 0.95rem; font-weight: 500; color: var(--text);
-}
-.option-btn:hover:not(:disabled) { border-color: var(--accent); background: #f5f5ff; }
-.option-btn:disabled { cursor: default; }
-.option-btn .option-letter {
-  width: 28px; height: 28px; border-radius: 6px;
-  background: var(--surface2); display: flex; align-items: center; justify-content: center;
-  font-size: 0.8rem; font-weight: 700; color: var(--text2); flex-shrink: 0;
-  transition: all 0.15s;
-}
-.option-btn.correct { border-color: var(--green); background: #f0fdf4; }
-.option-btn.correct .option-letter { background: var(--green); color: white; }
-.option-btn.wrong { border-color: var(--red); background: #fef2f2; }
-.option-btn.wrong .option-letter { background: var(--red); color: white; }
-.option-btn.selected-wrong { border-color: var(--red); background: #fef2f2; }
-.option-btn.selected-wrong .option-letter { background: var(--red); color: white; }
+.explanation-box{padding:18px 20px;border-radius:var(--radius);margin-top:16px;display:none;animation:fadeIn 0.3s ease;}
+.explanation-box.show{display:block;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.explanation-box.correct-exp{background:var(--green-light);border:1.5px solid #86efac;}
+.explanation-box.wrong-exp{background:var(--red-light);border:1.5px solid #fca5a5;}
+.exp-title{font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;}
+.correct-exp .exp-title{color:#15803d;}
+.wrong-exp .exp-title{color:#b91c1c;}
+.exp-text{font-size:0.9rem;color:var(--text);margin-bottom:8px;line-height:1.6;}
+.tip-text{font-size:0.85rem;color:var(--text2);line-height:1.5;}
+.tip-text strong{color:var(--accent);}
 
-.explanation-box {
-  padding: 18px 20px;
-  border-radius: var(--radius);
-  margin-top: 18px;
-  display: none;
-}
-.explanation-box.show { display: block; }
-.explanation-box.correct-exp { background: #f0fdf4; border: 1px solid #86efac; }
-.explanation-box.wrong-exp { background: #fef2f2; border: 1px solid #fca5a5; }
-.explanation-box .exp-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
-.explanation-box.correct-exp .exp-title { color: #15803d; }
-.explanation-box.wrong-exp .exp-title { color: #b91c1c; }
-.explanation-box .exp-text { font-size: 0.9rem; color: var(--text); margin-bottom: 8px; }
-.explanation-box .tip-text { font-size: 0.85rem; color: var(--text2); }
-.explanation-box .tip-text strong { color: var(--accent); }
+.hint-area{background:var(--amber-light);border:1.5px solid #fde68a;border-radius:var(--radius-sm);padding:12px 16px;margin-top:14px;font-size:0.875rem;color:#92400e;display:none;animation:fadeIn 0.2s ease;}
+.hint-area.show{display:block;}
+.quiz-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:4px;}
 
-.quiz-actions { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-.hint-area { background: #fffbeb; border: 1px solid #fde68a; border-radius: var(--radius-sm); padding: 12px 16px; margin-top: 12px; font-size: 0.875rem; color: #92400e; display: none; }
-.hint-area.show { display: block; }
+/* ══════════════════════════════════
+   RESULTS
+══════════════════════════════════ */
+.results-wrap{max-width:560px;margin:0 auto;}
+.results-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:40px 36px;text-align:center;box-shadow:var(--shadow-md);}
+.results-trophy{font-size:4.5rem;margin-bottom:10px;animation:trophy-pop 0.5s cubic-bezier(0.34,1.56,0.64,1);}
+@keyframes trophy-pop{from{transform:scale(0.5);opacity:0;}to{transform:scale(1);opacity:1;}}
+.results-title{font-size:1.6rem;font-weight:800;color:var(--text);margin-bottom:6px;}
+.results-subtitle{font-size:0.9rem;color:var(--text2);margin-bottom:28px;max-width:340px;margin-left:auto;margin-right:auto;}
+.score-circle{width:130px;height:130px;margin:0 auto 28px;position:relative;}
+.score-circle svg{transform:rotate(-90deg);}
+.score-circle .score-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.score-circle .score-pct{font-size:1.9rem;font-weight:800;color:var(--text);line-height:1;}
+.score-circle .score-lbl{font-size:0.72rem;font-weight:700;color:var(--text3);text-transform:uppercase;}
+.results-stats{display:flex;justify-content:center;gap:28px;margin-bottom:20px;}
+.rs-val{font-size:1.5rem;font-weight:800;color:var(--text);}
+.rs-lbl{font-size:0.75rem;color:var(--text3);font-weight:600;text-transform:uppercase;}
+.comparison-box{background:var(--surface3);border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:24px;font-size:0.875rem;color:var(--text2);}
+.results-actions{display:flex;flex-direction:column;gap:10px;}
 
-/* ── Results / Completion ── */
-.results-card {
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 20px;
-  padding: 40px 32px;
-  text-align: center;
-  box-shadow: var(--shadow-md);
-  max-width: 540px; margin: 0 auto;
-}
-.results-trophy { font-size: 4rem; margin-bottom: 12px; }
-.results-title { font-size: 1.5rem; font-weight: 800; color: var(--text); margin-bottom: 6px; }
-.results-subtitle { font-size: 0.95rem; color: var(--text2); margin-bottom: 28px; }
-.results-score-ring {
-  width: 120px; height: 120px; border-radius: 50%;
-  border: 8px solid var(--surface2);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  margin: 0 auto 28px;
-  position: relative;
-}
-.results-score-ring .score-pct { font-size: 1.8rem; font-weight: 800; color: var(--text); }
-.results-score-ring .score-label { font-size: 0.75rem; font-weight: 600; color: var(--text3); }
-.results-stats { display: flex; justify-content: center; gap: 24px; margin-bottom: 28px; }
-.results-stat { text-align: center; }
-.results-stat .rs-val { font-size: 1.4rem; font-weight: 800; color: var(--text); }
-.results-stat .rs-label { font-size: 0.78rem; color: var(--text3); font-weight: 600; }
-.results-actions { display: flex; flex-direction: column; gap: 10px; }
+/* Review screen */
+.review-list{display:flex;flex-direction:column;gap:12px;margin-top:16px;}
+.review-item{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 18px;}
+.review-item.wrong{border-color:#fca5a5;background:var(--red-light);}
+.review-item.correct{border-color:#86efac;background:var(--green-light);}
+.review-q{font-size:0.9rem;font-weight:600;color:var(--text);margin-bottom:8px;}
+.review-answers{font-size:0.82rem;color:var(--text2);}
 
-/* ── Progress View ── */
-.progress-section { margin-bottom: 32px; }
-.progress-section h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 16px; }
+/* ══════════════════════════════════
+   PROGRESS VIEW
+══════════════════════════════════ */
+.progress-subject-block{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:22px;margin-bottom:20px;box-shadow:var(--shadow-sm);}
+.progress-subject-block h3{font-size:1rem;font-weight:800;color:var(--text);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.attempt-table{width:100%;border-collapse:collapse;}
+.attempt-table th{text-align:left;font-size:0.7rem;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;padding:8px 12px;border-bottom:2px solid var(--border);}
+.attempt-table td{padding:11px 12px;border-bottom:1px solid var(--border);font-size:0.85rem;color:var(--text2);}
+.attempt-table tr:last-child td{border-bottom:none;}
+.attempt-table td:first-child{font-weight:700;color:var(--text);}
 
-.attempt-table { width: 100%; border-collapse: collapse; }
-.attempt-table th {
-  text-align: left; font-size: 0.75rem; font-weight: 700;
-  color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em;
-  padding: 8px 12px; border-bottom: 2px solid var(--border);
-}
-.attempt-table td {
-  padding: 12px 12px; border-bottom: 1px solid var(--border);
-  font-size: 0.875rem; color: var(--text2);
-}
-.attempt-table tr:last-child td { border-bottom: none; }
-.attempt-table td:first-child { font-weight: 600; color: var(--text); }
+/* ══════════════════════════════════
+   MOCK EXAM
+══════════════════════════════════ */
+.mock-setup{max-width:560px;margin:0 auto;}
+.mock-option-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:28px;}
+.mock-option-card{background:var(--surface);border:2px solid var(--border);border-radius:var(--radius);padding:20px;cursor:pointer;transition:all 0.2s;text-align:center;}
+.mock-option-card:hover,.mock-option-card.selected{border-color:var(--accent);background:var(--accent-light);}
+.mock-option-card .moc-icon{font-size:2rem;margin-bottom:8px;}
+.mock-option-card .moc-title{font-size:0.95rem;font-weight:800;color:var(--text);margin-bottom:4px;}
+.mock-option-card .moc-detail{font-size:0.78rem;color:var(--text2);}
+.mock-info-box{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:24px;}
+.mock-info-box h3{font-size:0.85rem;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;}
+.mock-info-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:0.875rem;}
+.mock-info-row:last-child{border-bottom:none;}
+.mock-info-row span:first-child{color:var(--text2);}
+.mock-info-row span:last-child{font-weight:700;color:var(--text);}
 
-/* ── Parent Dashboard ── */
-.accuracy-grid {
-  display: grid; grid-template-columns: repeat(2, 1fr);
-  gap: 14px; margin-bottom: 24px;
-}
-.accuracy-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 18px;
-  box-shadow: var(--shadow);
-}
-.accuracy-card .ac-subject { font-size: 0.85rem; font-weight: 700; color: var(--text2); margin-bottom: 8px; }
-.accuracy-card .ac-pct { font-size: 2rem; font-weight: 800; color: var(--text); }
-.accuracy-card .ac-detail { font-size: 0.8rem; color: var(--text3); margin-top: 2px; }
+/* Mock exam results breakdown */
+.mock-breakdown{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px;}
+.mock-subj-result{background:var(--surface3);border-radius:var(--radius-sm);padding:14px;text-align:center;}
+.mock-subj-result .msr-name{font-size:0.75rem;font-weight:700;color:var(--text2);margin-bottom:4px;}
+.mock-subj-result .msr-score{font-size:1.4rem;font-weight:800;color:var(--text);}
+.mock-subj-result .msr-pct{font-size:0.78rem;color:var(--text3);}
 
-/* ── Ollie Tutor ── */
-.ollie-panel {
-  position: fixed; bottom: 24px; right: 24px; z-index: 200;
-}
-.ollie-fab {
-  width: 52px; height: 52px; border-radius: 50%;
-  background: var(--accent); border: none;
-  align-items: center; justify-content: center;
-  font-size: 1.4rem; box-shadow: var(--shadow-lg); cursor: pointer;
-  transition: all 0.2s;
-}
-.ollie-fab:hover { background: var(--accent-hover); transform: scale(1.05); }
-.ollie-chat {
-  position: absolute; bottom: 64px; right: 0;
-  width: 320px; background: var(--surface);
-  border: 1.5px solid var(--border); border-radius: 16px;
-  box-shadow: var(--shadow-lg);
-  display: none; flex-direction: column;
-  overflow: hidden;
-}
-.ollie-chat.open { display: flex; }
-.ollie-chat-header {
-  background: linear-gradient(135deg, var(--accent), var(--purple));
-  padding: 14px 16px;
-  display: flex; align-items: center; gap: 10px;
-}
-.ollie-chat-header .hdr-owl { font-size: 1.4rem; }
-.ollie-chat-header .hdr-text h4 { font-size: 0.9rem; font-weight: 700; color: white; }
-.ollie-chat-header .hdr-text p { font-size: 0.75rem; color: rgba(255,255,255,0.8); }
-.ollie-close {
-  margin-left: auto; background: none; border: none;
-  color: rgba(255,255,255,0.8); font-size: 1.2rem; cursor: pointer; padding: 4px;
-}
-.chat-messages {
-  padding: 14px; flex: 1; overflow-y: auto;
-  max-height: 260px; display: flex; flex-direction: column; gap: 10px;
-}
-.chat-msg {
-  max-width: 90%; padding: 10px 12px;
-  border-radius: 12px; font-size: 0.85rem; line-height: 1.5;
-}
-.chat-msg.ollie { background: #eef2ff; color: var(--text); align-self: flex-start; }
-.chat-msg.user { background: var(--accent); color: white; align-self: flex-end; }
-.chat-input-row {
-  padding: 10px 14px; border-top: 1px solid var(--border);
-  display: flex; gap: 8px;
-}
-.chat-input {
-  flex: 1; border: 1.5px solid var(--border); border-radius: 8px;
-  padding: 8px 12px; font-size: 0.85rem; outline: none;
-}
-.chat-input:focus { border-color: var(--accent); }
-.chat-send {
-  background: var(--accent); color: white; border: none;
-  border-radius: 8px; padding: 8px 12px; font-size: 0.85rem;
-  font-weight: 600; cursor: pointer;
-}
+/* ══════════════════════════════════
+   PARENT VIEW
+══════════════════════════════════ */
+.accuracy-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:24px;}
+.accuracy-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);}
+.accuracy-card .ac-subj{font-size:0.82rem;font-weight:700;color:var(--text2);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.accuracy-card .ac-pct{font-size:2.2rem;font-weight:800;color:var(--text);line-height:1;}
+.accuracy-card .ac-detail{font-size:0.78rem;color:var(--text3);margin-top:4px;}
 
-/* ── Loading overlay ── */
-#loading-overlay {
-  position: fixed; inset: 0; background: rgba(255,255,255,0.9);
-  align-items: center; justify-content: center;
-  z-index: 500; flex-direction: column; gap: 14px;
-}
-#loading-overlay p { font-size: 0.95rem; color: var(--text2); font-weight: 500; }
+/* ══════════════════════════════════
+   OLLIE CHAT
+══════════════════════════════════ */
+.ollie-panel{position:fixed;bottom:24px;right:24px;z-index:200;}
+.ollie-fab{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--purple));border:none;display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 4px 20px rgba(99,102,241,0.4);cursor:pointer;transition:all 0.2s;}
+.ollie-fab:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(99,102,241,0.5);}
+.ollie-chat{position:absolute;bottom:66px;right:0;width:330px;background:var(--surface);border:1.5px solid var(--border);border-radius:20px;box-shadow:var(--shadow-lg);display:none;flex-direction:column;overflow:hidden;animation:slideUp 0.25s ease;}
+.ollie-chat.open{display:flex;}
+.ollie-chat-header{background:linear-gradient(135deg,var(--accent),var(--purple));padding:14px 16px;display:flex;align-items:center;gap:10px;}
+.ollie-chat-header .hdr-owl{font-size:1.5rem;}
+.hdr-text h4{font-size:0.9rem;font-weight:800;color:white;}
+.hdr-text p{font-size:0.72rem;color:rgba(255,255,255,0.8);}
+.ollie-close{margin-left:auto;background:none;border:none;color:rgba(255,255,255,0.8);font-size:1.2rem;cursor:pointer;padding:4px;line-height:1;}
+.chat-messages{padding:14px;flex:1;overflow-y:auto;max-height:280px;display:flex;flex-direction:column;gap:10px;}
+.chat-msg{max-width:88%;padding:10px 14px;border-radius:14px;font-size:0.85rem;line-height:1.55;}
+.chat-msg.ollie{background:var(--surface3);color:var(--text);align-self:flex-start;border-bottom-left-radius:4px;}
+.chat-msg.user{background:var(--accent);color:white;align-self:flex-end;border-bottom-right-radius:4px;}
+.chat-input-row{padding:10px 12px;border-top:1px solid var(--border);display:flex;gap:8px;}
+.chat-input{flex:1;border:2px solid var(--border);border-radius:8px;padding:8px 12px;font-size:0.85rem;outline:none;transition:border-color 0.2s;}
+.chat-input:focus{border-color:var(--accent);}
+.chat-send{background:var(--accent);color:white;border:none;border-radius:8px;padding:8px 14px;font-size:0.85rem;font-weight:700;cursor:pointer;transition:background 0.2s;}
+.chat-send:hover{background:var(--accent-hover);}
+
+/* ── Confetti overlay ── */
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:1000;}
+.confetti-piece{position:absolute;width:10px;height:10px;border-radius:2px;animation:confetti-fall linear forwards;}
+@keyframes confetti-fall{0%{transform:translateY(-20px) rotate(0deg);opacity:1;}100%{transform:translateY(100vh) rotate(720deg);opacity:0;}}
 
 /* ── Responsive ── */
-@media (max-width: 640px) {
-  .view { padding: 20px 16px; }
-  .subject-grid { grid-template-columns: 1fr; }
-  .stats-row { grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  .stat-card { padding: 14px 12px; }
-  .stat-card .stat-value { font-size: 1.4rem; }
-  .accuracy-grid { grid-template-columns: 1fr; }
-  .question-card { padding: 20px; }
-  .auth-card { padding: 32px 24px; }
-  .nav-links .nav-link span { display: none; }
-  .top-nav { padding: 0 16px; }
+@media(max-width:768px){
+  .view{padding:20px 16px;}
+  .subject-grid{grid-template-columns:1fr;}
+  .stats-row{gap:10px;}
+  .stat-value{font-size:1.6rem;}
+  .mock-option-grid{grid-template-columns:1fr;}
+  .accuracy-grid{grid-template-columns:1fr;}
+  .mock-breakdown{grid-template-columns:1fr;}
+  .top-nav{padding:0 16px;}
 }
-
-@media (max-width: 380px) {
-  .stats-row { grid-template-columns: 1fr; }
+@media(max-width:420px){
+  .stats-row{grid-template-columns:1fr;}
+  .auth-card{padding:32px 22px;}
 }
 </style>
 </head>
 <body>
 
-<!-- Loading Overlay -->
-<div id="loading-overlay">
-  <div class="spinner"></div>
-  <p>Loading T3 Academy…</p>
-</div>
-
-<!-- Toast -->
+<div id="loading-overlay"><div class="spinner"></div><p>Loading T3 Academy…</p></div>
 <div id="toast"></div>
 
-<!-- ═══════════════════════════════════════════ -->
-<!--  AUTH PAGE                                  -->
-<!-- ═══════════════════════════════════════════ -->
+<!-- ═══════════════ AUTH ═══════════════ -->
 <div id="auth-page" class="page active">
   <div class="auth-card">
     <div class="auth-logo">
-      <div class="owl">🦉</div>
+      <div class="owl-wrap">🦉</div>
       <h1>T3 Academy</h1>
       <p>11+ GL Assessment Preparation</p>
     </div>
@@ -559,8 +390,6 @@ input, textarea { font-family: inherit; }
       <button class="auth-tab active" onclick="switchAuthTab('login')">Log in</button>
       <button class="auth-tab" onclick="switchAuthTab('register')">Register</button>
     </div>
-
-    <!-- Login Form -->
     <div id="login-form">
       <div class="form-group">
         <label class="form-label">Email address</label>
@@ -568,12 +397,10 @@ input, textarea { font-family: inherit; }
       </div>
       <div class="form-group">
         <label class="form-label">Password</label>
-        <input id="login-password" class="form-input" type="password" placeholder="Your password" autocomplete="current-password">
+        <input id="login-password" class="form-input" type="password" placeholder="Password" autocomplete="current-password">
       </div>
-      <button class="btn btn-primary w-full" onclick="doLogin()">Log in</button>
+      <button class="btn btn-primary w-full" onclick="doLogin()">Log in →</button>
     </div>
-
-    <!-- Register Form -->
     <div id="register-form" class="hidden">
       <div class="form-group">
         <label class="form-label">Full name</label>
@@ -593,33 +420,27 @@ input, textarea { font-family: inherit; }
           <option value="student">Student</option>
           <option value="parent">Parent</option>
         </select>
-        <p class="form-hint">Parents can see progress reports and accuracy charts.</p>
+        <p class="form-hint">Parents can view progress reports and accuracy charts.</p>
       </div>
-      <button class="btn btn-primary w-full" onclick="doRegister()">Create account</button>
+      <button class="btn btn-primary w-full" onclick="doRegister()">Create account →</button>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════ -->
-<!--  APP PAGE                                   -->
-<!-- ═══════════════════════════════════════════ -->
+<!-- ═══════════════ APP ═══════════════ -->
 <div id="app-page" class="page">
-
-  <!-- Top Nav -->
   <nav class="top-nav">
-    <div class="nav-logo"><span>🦉</span> T3 Academy</div>
-    <div class="nav-links">
-      <button class="nav-link active" id="nav-dashboard" onclick="showView('dashboard')">
-        <span>Dashboard</span>
-      </button>
-      <button class="nav-link" id="nav-progress" onclick="showView('progress')">
-        <span>My Progress</span>
-      </button>
-      <button class="nav-link hidden" id="nav-parent" onclick="showView('parent')">
-        <span>Reports</span>
-      </button>
+    <div class="nav-logo">
+      <div class="nav-logo-icon">🦉</div>
+      T3 Academy
     </div>
-    <div class="nav-user">
+    <div class="nav-links">
+      <button class="nav-link active" id="nav-dashboard" onclick="showView('dashboard')">Dashboard</button>
+      <button class="nav-link" id="nav-mock" onclick="showView('mock')">Mock Exam</button>
+      <button class="nav-link" id="nav-progress" onclick="showView('progress')">My Progress</button>
+      <button class="nav-link hidden" id="nav-parent" onclick="showView('parent')">Reports</button>
+    </div>
+    <div class="nav-right">
       <div class="nav-avatar" id="nav-avatar">?</div>
       <button class="btn btn-secondary btn-sm" onclick="doLogout()">Log out</button>
     </div>
@@ -627,201 +448,334 @@ input, textarea { font-family: inherit; }
 
   <div class="app-content">
 
-    <!-- ─── DASHBOARD VIEW ─── -->
+    <!-- DASHBOARD -->
     <div class="view active" id="view-dashboard">
       <div class="ollie-banner">
         <div class="owl-icon">🦉</div>
-        <div class="greeting-text">
-          <h2 id="dashboard-greeting">Welcome back!</h2>
-          <p id="dashboard-tip">Pick a subject below to continue your practice.</p>
+        <div>
+          <h2 id="dash-greeting">Good afternoon!</h2>
+          <p id="dash-tip">Pick a subject below to start practising.</p>
         </div>
+        <div class="banner-badge" id="dash-streak-badge">🔥 0 day streak</div>
       </div>
 
       <div class="stats-row">
         <div class="stat-card">
+          <div class="stat-icon">📝</div>
           <div class="stat-label">Questions Done</div>
-          <div class="stat-value" id="stat-total-q">0</div>
+          <div class="stat-value" id="stat-q">0</div>
           <div class="stat-sub">across all topics</div>
         </div>
         <div class="stat-card">
+          <div class="stat-icon">🎯</div>
           <div class="stat-label">Accuracy</div>
-          <div class="stat-value" id="stat-accuracy">—</div>
+          <div class="stat-value" id="stat-acc">—</div>
           <div class="stat-sub">overall average</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Day Streak</div>
-          <div class="stat-value" id="stat-streak">0</div>
-          <div class="stat-sub" id="stat-streak-sub">days in a row</div>
+          <div class="stat-icon">🏆</div>
+          <div class="stat-label">Trophies</div>
+          <div class="stat-value" id="stat-trophies">0</div>
+          <div class="stat-sub">topics completed</div>
         </div>
       </div>
 
-      <p class="section-heading">Subjects</p>
+      <div id="weak-panel-wrap"></div>
+
+      <p class="section-label">Subjects</p>
       <div class="subject-grid">
         <div class="subject-card english" onclick="showSubject('english')">
+          <div class="card-accent"></div>
           <div class="subj-header">
             <div class="subj-icon">📖</div>
             <div>
               <div class="subj-name">English</div>
               <div class="subj-topics">6 topics</div>
             </div>
+            <div class="progress-ring-wrap">
+              <svg class="progress-ring" width="44" height="44">
+                <circle cx="22" cy="22" r="17" fill="none" stroke="#f1f5f9" stroke-width="4"/>
+                <circle id="ring-english" cx="22" cy="22" r="17" fill="none" stroke="#8b5cf6" stroke-width="4" stroke-dasharray="106.8" stroke-dashoffset="106.8" stroke-linecap="round"/>
+              </svg>
+            </div>
           </div>
-          <div class="progress-bar"><div class="progress-fill" id="prog-english" style="width:0%"></div></div>
           <div class="subj-stats">
-            <div class="subj-stat">Topics done: <strong id="done-english">0/6</strong></div>
+            <div class="subj-stat">Done: <strong id="done-english">0/6</strong></div>
             <div class="subj-stat">Accuracy: <strong id="acc-english">—</strong></div>
           </div>
         </div>
         <div class="subject-card maths" onclick="showSubject('maths')">
+          <div class="card-accent"></div>
           <div class="subj-header">
             <div class="subj-icon">🔢</div>
             <div>
               <div class="subj-name">Maths</div>
               <div class="subj-topics">9 topics</div>
             </div>
+            <div class="progress-ring-wrap">
+              <svg class="progress-ring" width="44" height="44">
+                <circle cx="22" cy="22" r="17" fill="none" stroke="#f1f5f9" stroke-width="4"/>
+                <circle id="ring-maths" cx="22" cy="22" r="17" fill="none" stroke="#3b82f6" stroke-width="4" stroke-dasharray="106.8" stroke-dashoffset="106.8" stroke-linecap="round"/>
+              </svg>
+            </div>
           </div>
-          <div class="progress-bar"><div class="progress-fill" id="prog-maths" style="width:0%"></div></div>
           <div class="subj-stats">
-            <div class="subj-stat">Topics done: <strong id="done-maths">0/9</strong></div>
+            <div class="subj-stat">Done: <strong id="done-maths">0/9</strong></div>
             <div class="subj-stat">Accuracy: <strong id="acc-maths">—</strong></div>
           </div>
         </div>
         <div class="subject-card verbal" onclick="showSubject('verbal')">
+          <div class="card-accent"></div>
           <div class="subj-header">
             <div class="subj-icon">💬</div>
             <div>
               <div class="subj-name">Verbal Reasoning</div>
-              <div class="subj-topics" id="verbal-topics-count">13 topics</div>
+              <div class="subj-topics" id="verbal-count">13 topics</div>
+            </div>
+            <div class="progress-ring-wrap">
+              <svg class="progress-ring" width="44" height="44">
+                <circle cx="22" cy="22" r="17" fill="none" stroke="#f1f5f9" stroke-width="4"/>
+                <circle id="ring-verbal" cx="22" cy="22" r="17" fill="none" stroke="#22c55e" stroke-width="4" stroke-dasharray="106.8" stroke-dashoffset="106.8" stroke-linecap="round"/>
+              </svg>
             </div>
           </div>
-          <div class="progress-bar"><div class="progress-fill" id="prog-verbal" style="width:0%"></div></div>
           <div class="subj-stats">
-            <div class="subj-stat">Topics done: <strong id="done-verbal">0/13</strong></div>
+            <div class="subj-stat">Done: <strong id="done-verbal">0/13</strong></div>
             <div class="subj-stat">Accuracy: <strong id="acc-verbal">—</strong></div>
           </div>
         </div>
         <div class="subject-card nvr" onclick="showSubject('nvr')">
+          <div class="card-accent"></div>
           <div class="subj-header">
             <div class="subj-icon">🔷</div>
             <div>
               <div class="subj-name">Non-Verbal Reasoning</div>
               <div class="subj-topics">8 topics</div>
             </div>
+            <div class="progress-ring-wrap">
+              <svg class="progress-ring" width="44" height="44">
+                <circle cx="22" cy="22" r="17" fill="none" stroke="#f1f5f9" stroke-width="4"/>
+                <circle id="ring-nvr" cx="22" cy="22" r="17" fill="none" stroke="#f59e0b" stroke-width="4" stroke-dasharray="106.8" stroke-dashoffset="106.8" stroke-linecap="round"/>
+              </svg>
+            </div>
           </div>
-          <div class="progress-bar"><div class="progress-fill" id="prog-nvr" style="width:0%"></div></div>
           <div class="subj-stats">
-            <div class="subj-stat">Topics done: <strong id="done-nvr">0/8</strong></div>
+            <div class="subj-stat">Done: <strong id="done-nvr">0/8</strong></div>
             <div class="subj-stat">Accuracy: <strong id="acc-nvr">—</strong></div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ─── SUBJECT VIEW ─── -->
+    <!-- SUBJECT -->
     <div class="view" id="view-subject">
-      <div class="subject-header">
+      <div class="view-header">
         <div class="back-btn" onclick="showView('dashboard')">←</div>
         <h2 id="subject-title">Subject</h2>
       </div>
       <div class="topic-grid" id="topic-grid"></div>
     </div>
 
-    <!-- ─── QUIZ VIEW ─── -->
+    <!-- QUIZ -->
     <div class="view" id="view-quiz">
-      <div class="quiz-header">
-        <div>
-          <div style="font-weight:700;font-size:1rem" id="quiz-topic-name"></div>
-          <div class="quiz-meta" id="quiz-meta"></div>
+      <div class="quiz-shell">
+        <div class="quiz-topbar">
+          <div class="quiz-topbar-left">
+            <div class="quiz-topic-label" id="quiz-topic-label"></div>
+            <div class="quiz-sub-label" id="quiz-sub-label"></div>
+          </div>
+          <div class="quiz-timer" id="quiz-timer">⏱ 0:00</div>
         </div>
-        <div class="quiz-timer" id="quiz-timer">0:00</div>
-      </div>
-      <div class="quiz-progress-bar">
-        <div class="quiz-progress-fill" id="quiz-progress-fill" style="width:0%"></div>
-      </div>
-
-      <div class="question-card">
-        <div class="question-number" id="q-number">Question 1 of 10</div>
-        <div class="question-text" id="q-text"></div>
-        <div class="options-list" id="options-list"></div>
-        <div class="hint-area" id="hint-area"></div>
-        <div class="explanation-box" id="explanation-box">
-          <div class="exp-title" id="exp-title"></div>
-          <div class="exp-text" id="exp-text"></div>
-          <div class="tip-text" id="tip-text"></div>
+        <div class="quiz-progress-outer">
+          <div class="quiz-progress-fill" id="quiz-progress-fill" style="width:0%"></div>
         </div>
-      </div>
-
-      <div class="quiz-actions">
-        <button class="btn btn-secondary btn-sm" id="hint-btn" onclick="showHint()">💡 Hint</button>
-        <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none">Next →</button>
-        <div id="answer-status" style="font-size:0.85rem;font-weight:600;color:var(--text3)"></div>
+        <div class="question-card">
+          <div class="q-number" id="q-number">Question 1 of 10</div>
+          <div class="q-text" id="q-text"></div>
+          <div class="options-list" id="options-list"></div>
+          <div class="hint-area" id="hint-area"></div>
+          <div class="explanation-box" id="explanation-box">
+            <div class="exp-title" id="exp-title"></div>
+            <div class="exp-text" id="exp-text"></div>
+            <div class="tip-text" id="tip-text"></div>
+          </div>
+        </div>
+        <div class="quiz-actions">
+          <button class="btn btn-secondary btn-sm" id="hint-btn" onclick="showHint()">💡 Hint</button>
+          <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none">Next →</button>
+        </div>
       </div>
     </div>
 
-    <!-- ─── RESULTS VIEW ─── -->
+    <!-- RESULTS -->
     <div class="view" id="view-results">
-      <div class="results-card">
-        <div class="results-trophy" id="results-trophy">🥉</div>
-        <div class="results-title" id="results-title">Topic Complete!</div>
-        <div class="results-subtitle" id="results-subtitle"></div>
-        <div class="results-score-ring" id="results-ring">
-          <div class="score-pct" id="results-pct">0%</div>
-          <div class="score-label">Score</div>
-        </div>
-        <div class="results-stats">
-          <div class="results-stat">
-            <div class="rs-val" id="res-correct">0</div>
-            <div class="rs-label">Correct</div>
+      <div class="results-wrap">
+        <div class="results-card">
+          <div class="results-trophy" id="results-trophy">📝</div>
+          <div class="results-title" id="results-title">Topic Complete!</div>
+          <div class="results-subtitle" id="results-subtitle"></div>
+          <div class="score-circle">
+            <svg width="130" height="130">
+              <circle cx="65" cy="65" r="55" fill="none" stroke="#f1f5f9" stroke-width="10"/>
+              <circle id="score-ring-circle" cx="65" cy="65" r="55" fill="none" stroke="#6366f1" stroke-width="10" stroke-dasharray="345.4" stroke-dashoffset="345.4" stroke-linecap="round"/>
+            </svg>
+            <div class="score-text">
+              <div class="score-pct" id="results-pct">0%</div>
+              <div class="score-lbl">Score</div>
+            </div>
           </div>
-          <div class="results-stat">
-            <div class="rs-val" id="res-total">0</div>
-            <div class="rs-label">Total</div>
+          <div class="results-stats">
+            <div><div class="rs-val" id="res-correct">0</div><div class="rs-lbl">Correct</div></div>
+            <div><div class="rs-val" id="res-total">0</div><div class="rs-lbl">Total</div></div>
+            <div><div class="rs-val" id="res-time">0:00</div><div class="rs-lbl">Time</div></div>
           </div>
-          <div class="results-stat">
-            <div class="rs-val" id="res-time">0:00</div>
-            <div class="rs-label">Time</div>
+          <div class="comparison-box hidden" id="comparison-box"></div>
+          <div class="results-actions">
+            <button class="btn btn-primary" onclick="retryTopic()">🔄 Try again (reshuffled)</button>
+            <button class="btn btn-secondary" onclick="showReview()">📋 Review wrong answers</button>
+            <button class="btn btn-secondary" onclick="backToSubject()">← Back to topics</button>
+            <button class="btn btn-ghost btn-sm" onclick="showView('dashboard')">🏠 Dashboard</button>
           </div>
-        </div>
-        <div id="attempt-comparison" style="margin-bottom:20px;font-size:0.875rem;color:var(--text2)"></div>
-        <div class="results-actions">
-          <button class="btn btn-primary" onclick="retryTopic()">🔄 Try again (reshuffle)</button>
-          <button class="btn btn-secondary" onclick="backToSubject()">← Back to topics</button>
-          <button class="btn btn-secondary" onclick="showView('dashboard')">🏠 Dashboard</button>
         </div>
       </div>
     </div>
 
-    <!-- ─── PROGRESS VIEW ─── -->
+    <!-- REVIEW -->
+    <div class="view" id="view-review">
+      <div class="view-header">
+        <div class="back-btn" onclick="showView('results')">←</div>
+        <h2>Review: Wrong Answers</h2>
+      </div>
+      <div class="review-list" id="review-list"></div>
+    </div>
+
+    <!-- MOCK EXAM SETUP -->
+    <div class="view" id="view-mock">
+      <h2 style="font-size:1.35rem;font-weight:800;margin-bottom:6px;">Mock Exam</h2>
+      <p style="color:var(--text2);font-size:0.875rem;margin-bottom:24px;">Timed practice in the GL Assessment format.</p>
+      <div class="mock-setup">
+        <p class="section-label">Choose exam type</p>
+        <div class="mock-option-grid">
+          <div class="mock-option-card selected" id="mock-opt-full" onclick="selectMockType('full')">
+            <div class="moc-icon">📋</div>
+            <div class="moc-title">Full Mock</div>
+            <div class="moc-detail">80 questions · 50 minutes · All subjects</div>
+          </div>
+          <div class="mock-option-card" id="mock-opt-english" onclick="selectMockType('english')">
+            <div class="moc-icon">📖</div>
+            <div class="moc-title">English Only</div>
+            <div class="moc-detail">20 questions · 12 minutes</div>
+          </div>
+          <div class="mock-option-card" id="mock-opt-maths" onclick="selectMockType('maths')">
+            <div class="moc-icon">🔢</div>
+            <div class="moc-title">Maths Only</div>
+            <div class="moc-detail">20 questions · 12 minutes</div>
+          </div>
+          <div class="mock-option-card" id="mock-opt-verbal" onclick="selectMockType('verbal')">
+            <div class="moc-icon">💬</div>
+            <div class="moc-title">Verbal Only</div>
+            <div class="moc-detail">20 questions · 12 minutes</div>
+          </div>
+          <div class="mock-option-card" id="mock-opt-nvr" onclick="selectMockType('nvr')">
+            <div class="moc-icon">🔷</div>
+            <div class="moc-title">NVR Only</div>
+            <div class="moc-detail">20 questions · 12 minutes</div>
+          </div>
+        </div>
+        <div class="mock-info-box" id="mock-info-box">
+          <h3>Exam details</h3>
+          <div class="mock-info-row"><span>Questions</span><span id="mock-info-q">80</span></div>
+          <div class="mock-info-row"><span>Time allowed</span><span id="mock-info-t">50 minutes</span></div>
+          <div class="mock-info-row"><span>Format</span><span>GL Assessment style, mixed topics</span></div>
+          <div class="mock-info-row"><span>Marking</span><span>1 mark per correct answer</span></div>
+        </div>
+        <button class="btn btn-primary w-full" onclick="startMockExam()" style="font-size:1rem;padding:14px;">Start Exam →</button>
+        <div id="mock-history" style="margin-top:28px;"></div>
+      </div>
+    </div>
+
+    <!-- MOCK EXAM QUIZ (reuses quiz UI) -->
+    <div class="view" id="view-mock-quiz">
+      <div class="quiz-shell">
+        <div class="quiz-topbar">
+          <div class="quiz-topbar-left">
+            <div class="quiz-topic-label" id="mock-quiz-label">Mock Exam</div>
+            <div class="quiz-sub-label" id="mock-quiz-sub"></div>
+          </div>
+          <div class="quiz-timer danger" id="mock-timer">⏱ 50:00</div>
+        </div>
+        <div class="quiz-progress-outer">
+          <div class="quiz-progress-fill" id="mock-progress-fill" style="width:0%"></div>
+        </div>
+        <div class="question-card">
+          <div class="q-number" id="mock-q-number">Question 1 of 80</div>
+          <div class="q-text" id="mock-q-text"></div>
+          <div class="options-list" id="mock-options-list"></div>
+          <div class="explanation-box" id="mock-explanation-box" style="display:none"></div>
+        </div>
+        <div class="quiz-actions">
+          <button class="btn btn-danger btn-sm" onclick="abandonMock()">✕ Abandon exam</button>
+          <button class="btn btn-primary" id="mock-next-btn" onclick="mockNextQuestion()" style="display:none">Next →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOCK RESULTS -->
+    <div class="view" id="view-mock-results">
+      <div class="results-wrap">
+        <div class="results-card">
+          <div class="results-trophy" id="mock-results-trophy">📋</div>
+          <div class="results-title" id="mock-results-title">Mock Exam Complete</div>
+          <div class="results-subtitle" id="mock-results-subtitle"></div>
+          <div class="score-circle">
+            <svg width="130" height="130">
+              <circle cx="65" cy="65" r="55" fill="none" stroke="#f1f5f9" stroke-width="10"/>
+              <circle id="mock-score-ring" cx="65" cy="65" r="55" fill="none" stroke="#6366f1" stroke-width="10" stroke-dasharray="345.4" stroke-dashoffset="345.4" stroke-linecap="round"/>
+            </svg>
+            <div class="score-text">
+              <div class="score-pct" id="mock-results-pct">0%</div>
+              <div class="score-lbl">Score</div>
+            </div>
+          </div>
+          <div class="results-stats">
+            <div><div class="rs-val" id="mock-res-correct">0</div><div class="rs-lbl">Correct</div></div>
+            <div><div class="rs-val" id="mock-res-total">0</div><div class="rs-lbl">Total</div></div>
+            <div><div class="rs-val" id="mock-res-time">0:00</div><div class="rs-lbl">Time</div></div>
+          </div>
+          <div class="mock-breakdown" id="mock-breakdown"></div>
+          <div class="results-actions">
+            <button class="btn btn-primary" onclick="showView('mock')">Take another mock</button>
+            <button class="btn btn-secondary" onclick="showView('dashboard')">🏠 Dashboard</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROGRESS -->
     <div class="view" id="view-progress">
-      <h2 style="font-size:1.3rem;font-weight:800;margin-bottom:24px;">My Progress</h2>
-      <div id="progress-content">
-        <div class="spinner"></div>
-      </div>
+      <h2 style="font-size:1.35rem;font-weight:800;margin-bottom:24px;">My Progress</h2>
+      <div id="progress-content"><div class="spinner"></div></div>
     </div>
 
-    <!-- ─── PARENT VIEW ─── -->
+    <!-- PARENT -->
     <div class="view" id="view-parent">
-      <h2 style="font-size:1.3rem;font-weight:800;margin-bottom:24px;">Progress Reports</h2>
-      <div id="parent-content">
-        <div class="spinner"></div>
-      </div>
+      <h2 style="font-size:1.35rem;font-weight:800;margin-bottom:24px;">Progress Reports</h2>
+      <div id="parent-content"><div class="spinner"></div></div>
     </div>
 
-  </div><!-- end app-content -->
-</div><!-- end app-page -->
+  </div>
+</div>
 
-<!-- Ollie Floating Button -->
+<!-- Ollie -->
 <div class="ollie-panel" id="ollie-panel" style="display:none">
   <div class="ollie-chat" id="ollie-chat">
     <div class="ollie-chat-header">
       <span class="hdr-owl">🦉</span>
-      <div class="hdr-text">
-        <h4>Ollie</h4>
-        <p>Your AI Tutor</p>
-      </div>
+      <div class="hdr-text"><h4>Ollie</h4><p>Your AI Tutor</p></div>
       <button class="ollie-close" onclick="toggleOllie()">✕</button>
     </div>
     <div class="chat-messages" id="chat-messages">
-      <div class="chat-msg ollie">Hi! I'm Ollie 🦉 — your 11+ tutor. Ask me about any question you're stuck on!</div>
+      <div class="chat-msg ollie">Hi! I'm Ollie 🦉 — your personal 11+ tutor. Ask me anything about a question, a topic, or just say hello!</div>
     </div>
     <div class="chat-input-row">
       <input class="chat-input" id="chat-input" placeholder="Ask Ollie…" onkeydown="if(event.key==='Enter')sendOllieMsg()">
@@ -831,9 +785,6 @@ input, textarea { font-family: inherit; }
   <button class="ollie-fab" onclick="toggleOllie()" title="Ask Ollie">🦉</button>
 </div>
 
-<!-- ═══════════════════════════════════════════ -->
-<!--  QUESTION BANK (embedded)                   -->
-<!-- ═══════════════════════════════════════════ -->
 <script>
 // ============================================================
 // T3 ACADEMY — COMPLETE QUESTION BANK
@@ -1549,46 +1500,53 @@ const QB = {
 };
 
 // ═══════════════════════════════════════════════════════════════
-//  T3 ACADEMY — MAIN APPLICATION SCRIPT
+//  T3 ACADEMY — MAIN APP
 // ═══════════════════════════════════════════════════════════════
 
-// ── Supabase Setup ──
-const SUPABASE_URL = "https://tsfiaqunaasthbmuxvdx.supabase.co";
+const SUPABASE_URL  = "https://tsfiaqunaasthbmuxvdx.supabase.co";
 const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRzZmlhcXVuYWFzdGhibXV4dmR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4MTU1NTEsImV4cCI6MjA5MDM5MTU1MX0.vaMgcIS3u_ROflDlm3DuXlb-tb4vmOi4uPYJNaKsT2k";
-const ANTHROPIC_KEY = "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"; // retrieve from console.anthropic.com — key named "T3academy Ollie"
 
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-// ── App State ──
+// ── State ──
 let currentUser = null;
 let currentProfile = null;
-let currentSubject = null;   // "english" | "maths" | "verbal" | "nvr"
+let currentSubject = null;
 let currentTopic = null;
-let currentQuestions = [];
-let currentQIndex = 0;
+let currentQs = [];
+let currentQIdx = 0;
 let currentScore = 0;
-let currentAttemptNumber = 1;
+let currentAttempt = 1;
+let timerSecs = 0;
 let timerInterval = null;
-let timerSeconds = 0;
-let hintShown = false;
 let questionAnswered = false;
-let shadowLogEntries = [];
-let questionStartTime = 0;
-let progressCache = {};      // keyed by "subject::topic"
+let shadowEntries = [];
+let qStartTime = 0;
+let progressCache = {};
 let attemptsCache = [];
+let wrongAnswers = [];
 
-// ── Subject Config ──
-const SUBJECT_CONF = {
-  english: { label: "English", icon: "📖", css: "english", bankKey: "english" },
-  maths:   { label: "Maths",   icon: "🔢", css: "maths",   bankKey: "maths" },
-  verbal:  { label: "Verbal Reasoning", icon: "💬", css: "verbal", bankKey: "verbal" },
-  nvr:     { label: "Non-Verbal Reasoning", icon: "🔷", css: "nvr", bankKey: "nvr" }
+// Mock exam state
+let mockType = "full";
+let mockQs = [];
+let mockIdx = 0;
+let mockScore = 0;
+let mockTimerSecs = 0;
+let mockTimerInterval = null;
+let mockAnswered = false;
+let mockSubjectScores = {};
+let mockTimeLimit = 3000;
+
+// ── Subject config ──
+const SUBJ = {
+  english: { label: "English",           icon: "📖", topics: 6  },
+  maths:   { label: "Maths",             icon: "🔢", topics: 9  },
+  verbal:  { label: "Verbal Reasoning",  icon: "💬", topics: 13 },
+  nvr:     { label: "Non-Verbal Reasoning", icon: "🔷", topics: 8 }
 };
 
-// ── Normalise question format ──
-// VR/Maths: { q, options, correct, explanation, tip }
-// English/NVR: { q, opts, ans, exp, tip }
-function normaliseQ(q) {
+// ── Normalise questions (VR/Maths use options/correct/explanation; English/NVR use opts/ans/exp) ──
+function norm(q) {
   return {
     q:    q.q,
     opts: q.options || q.opts || [],
@@ -1598,266 +1556,28 @@ function normaliseQ(q) {
   };
 }
 
-// ── Fisher-Yates Shuffle ──
 function shuffle(arr) {
   const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
   }
   return a;
 }
 
-// Shuffle options while tracking correct answer
-function shuffleWithAnswer(q) {
-  const norm = normaliseQ(q);
-  const correctText = norm.opts[norm.ans];
-  const shuffled = shuffle(norm.opts);
-  const newAns = shuffled.indexOf(correctText);
-  return { ...norm, opts: shuffled, ans: newAns };
+function shuffleQ(q) {
+  const n = norm(q);
+  const correctText = n.opts[n.ans];
+  const shuffled = shuffle(n.opts);
+  return { ...n, opts: shuffled, ans: shuffled.indexOf(correctText) };
 }
 
-// ── Toast ──
-function toast(msg, type = "") {
-  const t = document.getElementById("toast");
-  t.textContent = msg;
-  t.className = type ? `show ${type}` : "show";
-  setTimeout(() => { t.className = ""; }, 3000);
+function fmtTime(s) {
+  const m = Math.floor(s/60);
+  return m + ":" + String(s%60).padStart(2,"0");
 }
 
-// ── Show/hide loading ──
-function setLoading(show) {
-  document.getElementById("loading-overlay").style.display = show ? "flex" : "none";
-}
-
-// ── Page routing ──
-function showPage(name) {
-  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-  document.getElementById(name + "-page").classList.add("active");
-}
-
-function showView(name) {
-  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
-  document.getElementById("view-" + name).classList.add("active");
-  document.querySelectorAll(".nav-link").forEach(l => l.classList.remove("active"));
-  const nl = document.getElementById("nav-" + name);
-  if (nl) nl.classList.add("active");
-  // scroll to top
-  window.scrollTo({ top: 0 });
-  if (name === "progress") buildProgressView();
-  if (name === "parent")   buildParentView();
-  if (name === "dashboard") refreshDashboard();
-}
-
-// ── Auth ──
-function switchAuthTab(tab) {
-  document.querySelectorAll(".auth-tab").forEach((t, i) => {
-    t.classList.toggle("active", (i === 0 && tab === "login") || (i === 1 && tab === "register"));
-  });
-  document.getElementById("login-form").classList.toggle("hidden", tab !== "login");
-  document.getElementById("register-form").classList.toggle("hidden", tab !== "register");
-}
-
-async function doLogin() {
-  const email = document.getElementById("login-email").value.trim();
-  const pass  = document.getElementById("login-password").value;
-  if (!email || !pass) { toast("Please fill in email and password.", "error"); return; }
-  setLoading(true);
-  const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
-  setLoading(false);
-  if (error) { toast(error.message, "error"); return; }
-  await onSignedIn(data.user);
-}
-
-async function doRegister() {
-  const name  = document.getElementById("reg-name").value.trim();
-  const email = document.getElementById("reg-email").value.trim();
-  const pass  = document.getElementById("reg-password").value;
-  const role  = document.getElementById("reg-role").value;
-  if (!name || !email || !pass) { toast("Please fill in all fields.", "error"); return; }
-  if (pass.length < 6) { toast("Password must be at least 6 characters.", "error"); return; }
-  setLoading(true);
-  const { data, error } = await sb.auth.signUp({
-    email, password: pass,
-    options: { data: { full_name: name, role } }
-  });
-  setLoading(false);
-  if (error) { toast(error.message, "error"); return; }
-  if (data.user) await onSignedIn(data.user);
-  else toast("Check your email to confirm your account.", "success");
-}
-
-async function doLogout() {
-  await sb.auth.signOut();
-  currentUser = null; currentProfile = null;
-  progressCache = {}; attemptsCache = [];
-  document.getElementById("ollie-panel").style.display = "none";
-  showPage("auth");
-}
-
-async function onSignedIn(user) {
-  currentUser = user;
-  // Load profile — retry once if not yet created by trigger
-  let { data: prof } = await sb.from("profiles").select("*").eq("id", user.id).single();
-  if (!prof) {
-    // Profile trigger may not have fired yet — wait 800ms and retry
-    await new Promise(r => setTimeout(r, 800));
-    const res = await sb.from("profiles").select("*").eq("id", user.id).single();
-    prof = res.data;
-  }
-  if (!prof) {
-    // Create profile manually if trigger never fired
-    const name = user.user_metadata?.full_name || user.email.split("@")[0];
-    const role = user.user_metadata?.role || "student";
-    await sb.from("profiles").upsert({ id: user.id, email: user.email, full_name: name, role });
-    await sb.from("streaks").upsert({ user_id: user.id });
-    const res2 = await sb.from("profiles").select("*").eq("id", user.id).single();
-    prof = res2.data;
-  }
-  currentProfile = prof || { id: user.id, email: user.email, full_name: user.email.split("@")[0], role: "student" };
-  setupAppUI();
-  await loadProgressCache();
-  refreshDashboard();
-  showPage("app");
-  showView("dashboard");
-  document.getElementById("ollie-panel").style.display = "block";
-  startStreakCheck();
-}
-
-function setupAppUI() {
-  if (!currentProfile) return;
-  const initial = (currentProfile.full_name || currentProfile.email || "?")[0].toUpperCase();
-  document.getElementById("nav-avatar").textContent = initial;
-  // Show parent nav if role is parent
-  if (currentProfile.role === "parent") {
-    document.getElementById("nav-parent").classList.remove("hidden");
-  }
-}
-
-// ── Streak ──
-async function startStreakCheck() {
-  if (!currentUser) return;
-  const today = new Date().toISOString().split("T")[0];
-  const { data: streak } = await sb.from("streaks").select("*").eq("user_id", currentUser.id).single();
-  if (!streak) return;
-  const last = streak.last_active_date;
-  if (last !== today) {
-    const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
-    const newStreak = last === yesterday ? streak.current_streak + 1 : 1;
-    await sb.from("streaks").update({
-      current_streak: newStreak,
-      longest_streak: Math.max(newStreak, streak.longest_streak),
-      last_active_date: today
-    }).eq("user_id", currentUser.id);
-  }
-}
-
-// ── Load progress cache ──
-async function loadProgressCache() {
-  if (!currentUser) return;
-  progressCache = {};
-  attemptsCache = [];
-  const { data: progRows } = await sb.from("progress").select("*").eq("user_id", currentUser.id);
-  const { data: attRows }  = await sb.from("attempts").select("*").eq("user_id", currentUser.id).order("created_at", { ascending: false });
-  if (progRows) progRows.forEach(r => { progressCache[r.subject + "::" + r.topic] = r; });
-  if (attRows) attemptsCache = attRows;
-}
-
-// ── Dashboard ──
-function refreshDashboard() {
-  if (!currentProfile) return;
-  const name = (currentProfile.full_name || currentProfile.email || "").split(" ")[0];
-  const hour = new Date().getHours();
-  let greeting = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
-  document.getElementById("dashboard-greeting").textContent = greeting + ", " + name + "! 🦉";
-
-  const tips = [
-    "Little and often is the best way to prepare for the 11+.",
-    "Try a topic you haven't done yet today.",
-    "Remember: read every question carefully before answering.",
-    "Stuck on something? Ask Ollie for a hint!",
-    "Consistent daily practice makes all the difference."
-  ];
-  document.getElementById("dashboard-tip").textContent = tips[Math.floor(Math.random() * tips.length)];
-
-  // Stats from cache
-  let totalQ = 0, totalCorrect = 0;
-  attemptsCache.forEach(a => { totalQ += a.total; totalCorrect += a.score; });
-  document.getElementById("stat-total-q").textContent = totalQ;
-  document.getElementById("stat-accuracy").textContent = totalQ > 0 ? Math.round(totalCorrect / totalQ * 100) + "%" : "—";
-
-  // streak
-  loadStreakDisplay();
-
-  // Per-subject stats
-  updateSubjectStats("english",  Object.keys(QB.english).length);
-  updateSubjectStats("maths",    Object.keys(QB.maths).length);
-  updateSubjectStats("verbal",   Object.keys(QB.verbal).length);
-  updateSubjectStats("nvr",      Object.keys(QB.nvr).length);
-}
-
-async function loadStreakDisplay() {
-  if (!currentUser) return;
-  const { data: streak } = await sb.from("streaks").select("current_streak,longest_streak").eq("user_id", currentUser.id).single();
-  if (streak) {
-    document.getElementById("stat-streak").textContent = streak.current_streak;
-    document.getElementById("stat-streak-sub").textContent = "best: " + streak.longest_streak;
-  }
-}
-
-function updateSubjectStats(subj, topicCount) {
-  const topics = Object.keys(QB[subj]);
-  let done = 0, totalQ = 0, totalC = 0;
-  topics.forEach(t => {
-    const key = subj + "::" + t;
-    const prog = progressCache[key];
-    if (prog && prog.completed) done++;
-    if (prog) { totalQ += prog.questions_attempted; totalC += prog.questions_correct; }
-  });
-  const pct = Math.round(done / topicCount * 100);
-  document.getElementById("prog-" + subj).style.width = pct + "%";
-  document.getElementById("done-" + subj).textContent = done + "/" + topicCount;
-  document.getElementById("acc-" + subj).textContent = totalQ > 0 ? Math.round(totalC / totalQ * 100) + "%" : "—";
-}
-
-// ── Subject View ──
-function showSubject(subj) {
-  currentSubject = subj;
-  const conf = SUBJECT_CONF[subj];
-  document.getElementById("subject-title").textContent = conf.icon + " " + conf.label;
-  const bank = QB[subj === "english" ? "english" : subj === "maths" ? "maths" : subj === "verbal" ? "verbal" : "nvr"];
-  const topics = Object.keys(bank);
-  const grid = document.getElementById("topic-grid");
-  grid.innerHTML = "";
-  topics.forEach(topic => {
-    const qs = bank[topic];
-    const key = subj + "::" + topic;
-    const prog = progressCache[key];
-    const trophy = prog ? trophyForScore(prog.completed ? Math.round(prog.questions_correct / prog.questions_attempted * 100) : 0) : "";
-    const attNum = prog ? prog.attempt_number : 0;
-    const acc = (prog && prog.questions_attempted > 0) ? Math.round(prog.questions_correct / prog.questions_attempted * 100) + "%" : "—";
-    const attemptLabel = attNum > 0 ? `Attempt ${attNum}` : "Not started";
-
-    const card = document.createElement("div");
-    card.className = "topic-card";
-    card.innerHTML = `
-      <div class="topic-meta">
-        <div class="topic-name">${topic}</div>
-        <div class="trophy-badge">${trophy}</div>
-      </div>
-      <div class="q-count">${qs.length} questions &bull; Accuracy: ${acc} &bull; ${attemptLabel}</div>
-      <div class="topic-actions" onclick="event.stopPropagation()">
-        <button class="btn btn-primary btn-sm" onclick="startQuiz('${subj}','${CSS.escape(topic)}')">
-          ${attNum > 0 ? "Practice again" : "Start"}
-        </button>
-        ${attNum > 0 ? `<button class="btn btn-secondary btn-sm" onclick="resetTopic('${subj}','${CSS.escape(topic)}')">Reset</button>` : ""}
-      </div>`;
-    grid.appendChild(card);
-  });
-  showView("subject");
-}
-
-function trophyForScore(pct) {
+function trophyForPct(pct) {
   if (pct >= 90) return "🏆";
   if (pct >= 75) return "🥇";
   if (pct >= 60) return "🥈";
@@ -1873,407 +1593,772 @@ function trophyLabel(pct) {
   return "Keep trying";
 }
 
-// ── Quiz ──
-function startQuiz(subj, topic) {
+// ── Toast ──
+function toast(msg, type="") {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.className = type ? "show "+type : "show";
+  setTimeout(() => { t.className = ""; }, 3200);
+}
+
+function setLoading(show) {
+  document.getElementById("loading-overlay").style.display = show ? "flex" : "none";
+}
+
+function showPage(name) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById(name+"-page").classList.add("active");
+}
+
+function showView(name) {
+  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+  document.getElementById("view-"+name).classList.add("active");
+  document.querySelectorAll(".nav-link").forEach(l => l.classList.remove("active"));
+  const nl = document.getElementById("nav-"+name);
+  if (nl) nl.classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+  if (name === "progress") buildProgressView();
+  if (name === "parent")   buildParentView();
+  if (name === "dashboard") refreshDashboard();
+  if (name === "mock") buildMockHistory();
+}
+
+// ── Auth ──
+function switchAuthTab(tab) {
+  document.querySelectorAll(".auth-tab").forEach((t,i) => {
+    t.classList.toggle("active", (i===0 && tab==="login") || (i===1 && tab==="register"));
+  });
+  document.getElementById("login-form").classList.toggle("hidden", tab!=="login");
+  document.getElementById("register-form").classList.toggle("hidden", tab!=="register");
+}
+
+async function doLogin() {
+  const email = document.getElementById("login-email").value.trim();
+  const pass  = document.getElementById("login-password").value;
+  if (!email||!pass) { toast("Please fill in email and password.","error"); return; }
+  setLoading(true);
+  const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
+  setLoading(false);
+  if (error) { toast(error.message,"error"); return; }
+  await onSignedIn(data.user);
+}
+
+async function doRegister() {
+  const name  = document.getElementById("reg-name").value.trim();
+  const email = document.getElementById("reg-email").value.trim();
+  const pass  = document.getElementById("reg-password").value;
+  const role  = document.getElementById("reg-role").value;
+  if (!name||!email||!pass) { toast("Please fill in all fields.","error"); return; }
+  if (pass.length < 6) { toast("Password must be at least 6 characters.","error"); return; }
+  setLoading(true);
+  const { data, error } = await sb.auth.signUp({
+    email, password: pass,
+    options: { data: { full_name: name, role } }
+  });
+  setLoading(false);
+  if (error) { toast(error.message,"error"); return; }
+  if (data.user) await onSignedIn(data.user);
+  else toast("Check your email to confirm your account.","success");
+}
+
+async function doLogout() {
+  await sb.auth.signOut();
+  currentUser = null; currentProfile = null;
+  progressCache = {}; attemptsCache = [];
+  clearInterval(timerInterval);
+  clearInterval(mockTimerInterval);
+  document.getElementById("ollie-panel").style.display = "none";
+  showPage("auth");
+}
+
+async function onSignedIn(user) {
+  currentUser = user;
+  let { data: prof } = await sb.from("profiles").select("*").eq("id", user.id).single();
+  if (!prof) {
+    await new Promise(r => setTimeout(r, 900));
+    const r2 = await sb.from("profiles").select("*").eq("id", user.id).single();
+    prof = r2.data;
+  }
+  if (!prof) {
+    const name = user.user_metadata?.full_name || user.email.split("@")[0];
+    const role = user.user_metadata?.role || "student";
+    await sb.from("profiles").upsert({ id: user.id, email: user.email, full_name: name, role });
+    await sb.from("streaks").upsert({ user_id: user.id });
+    const r3 = await sb.from("profiles").select("*").eq("id", user.id).single();
+    prof = r3.data;
+  }
+  currentProfile = prof || { id: user.id, email: user.email, full_name: user.email.split("@")[0], role: "student" };
+  setupAppUI();
+  await loadCache();
+  refreshDashboard();
+  showPage("app");
+  showView("dashboard");
+  document.getElementById("ollie-panel").style.display = "block";
+  startStreakCheck();
+}
+
+function setupAppUI() {
+  const initial = (currentProfile.full_name || currentProfile.email || "?")[0].toUpperCase();
+  document.getElementById("nav-avatar").textContent = initial;
+  if (currentProfile.role === "parent") {
+    document.getElementById("nav-parent").classList.remove("hidden");
+  }
+}
+
+async function startStreakCheck() {
+  if (!currentUser) return;
+  const today = new Date().toISOString().split("T")[0];
+  const { data: streak } = await sb.from("streaks").select("*").eq("user_id", currentUser.id).single();
+  if (!streak) return;
+  if (streak.last_active_date !== today) {
+    const yesterday = new Date(Date.now()-86400000).toISOString().split("T")[0];
+    const newStreak = streak.last_active_date === yesterday ? streak.current_streak+1 : 1;
+    await sb.from("streaks").update({
+      current_streak: newStreak,
+      longest_streak: Math.max(newStreak, streak.longest_streak),
+      last_active_date: today,
+      updated_at: new Date().toISOString()
+    }).eq("user_id", currentUser.id);
+  }
+}
+
+async function loadCache() {
+  if (!currentUser) return;
+  progressCache = {}; attemptsCache = [];
+  const [pr, ar] = await Promise.all([
+    sb.from("progress").select("*").eq("user_id", currentUser.id),
+    sb.from("attempts").select("*").eq("user_id", currentUser.id).order("created_at", {ascending:false})
+  ]);
+  if (pr.data) pr.data.forEach(r => { progressCache[r.subject+"::"+r.topic] = r; });
+  if (ar.data) attemptsCache = ar.data;
+}
+
+// ── Dashboard ──
+function refreshDashboard() {
+  if (!currentProfile) return;
+  const name = (currentProfile.full_name || "").split(" ")[0] || "there";
+  const h = new Date().getHours();
+  const greeting = h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
+  document.getElementById("dash-greeting").textContent = greeting + ", " + name + "! 🦉";
+
+  const tips = [
+    "Pick up where you left off — consistency is everything.",
+    "Little and often is the best way to prepare for the 11+.",
+    "Try a topic you haven't done before today.",
+    "Stuck on something? Ask Ollie for a hint!",
+    "Check your weak areas below and focus there today."
+  ];
+  document.getElementById("dash-tip").textContent = tips[Math.floor(Math.random()*tips.length)];
+
+  // Stats from cache
+  let totalQ = 0, totalC = 0, trophyCount = 0;
+  attemptsCache.forEach(a => { totalQ += a.total; totalC += a.score; });
+  Object.values(progressCache).forEach(p => { if (p.completed && trophyForPct(Math.round(p.questions_correct/p.questions_attempted*100))) trophyCount++; });
+
+  animateCounter("stat-q", totalQ);
+  document.getElementById("stat-acc").textContent = totalQ > 0 ? Math.round(totalC/totalQ*100)+"%" : "—";
+  animateCounter("stat-trophies", trophyCount);
+
+  loadStreakBadge();
+  updateSubjectRings();
+  buildWeakPanel();
+}
+
+function animateCounter(id, target) {
+  const el = document.getElementById(id);
+  const start = parseInt(el.textContent) || 0;
+  const diff = target - start;
+  if (diff === 0) return;
+  const steps = 20;
+  let step = 0;
+  const interval = setInterval(() => {
+    step++;
+    el.textContent = Math.round(start + diff * (step/steps));
+    if (step >= steps) clearInterval(interval);
+  }, 20);
+}
+
+async function loadStreakBadge() {
+  if (!currentUser) return;
+  const { data: streak } = await sb.from("streaks").select("current_streak").eq("user_id", currentUser.id).single();
+  if (streak) document.getElementById("dash-streak-badge").textContent = "🔥 " + streak.current_streak + " day streak";
+}
+
+function updateSubjectRings() {
+  const circumference = 106.8;
+  ["english","maths","verbal","nvr"].forEach(subj => {
+    const bank = QB[subj];
+    const topics = Object.keys(bank);
+    const total = topics.length;
+    let done = 0, totalQ = 0, totalC = 0;
+    topics.forEach(t => {
+      const p = progressCache[subj+"::"+t];
+      if (p && p.completed) done++;
+      if (p) { totalQ += p.questions_attempted; totalC += p.questions_correct; }
+    });
+    const pct = done/total;
+    const offset = circumference - (pct * circumference);
+    const ring = document.getElementById("ring-"+subj);
+    if (ring) ring.style.strokeDashoffset = offset;
+    document.getElementById("done-"+subj).textContent = done+"/"+total;
+    document.getElementById("acc-"+subj).textContent = totalQ > 0 ? Math.round(totalC/totalQ*100)+"%" : "—";
+  });
+}
+
+function buildWeakPanel() {
+  const weak = [];
+  Object.entries(progressCache).forEach(([key, p]) => {
+    if (!p.completed || p.questions_attempted === 0) return;
+    const pct = Math.round(p.questions_correct/p.questions_attempted*100);
+    if (pct < 60) {
+      const [subj, topic] = key.split("::");
+      weak.push({ subj, topic, pct });
+    }
+  });
+  weak.sort((a,b) => a.pct - b.pct);
+  const wrap = document.getElementById("weak-panel-wrap");
+  if (weak.length === 0) { wrap.innerHTML = ""; return; }
+  let html = `<div class="weak-panel"><h3>⚠️ Areas needing attention</h3>`;
+  weak.slice(0,4).forEach(w => {
+    html += `<div class="weak-item">
+      <span class="weak-item-name">${w.topic} <span style="color:var(--text3);font-weight:400;font-size:0.75rem">(${SUBJ[w.subj].label})</span></span>
+      <span class="weak-item-pct">${w.pct}%</span>
+    </div>`;
+  });
+  html += "</div>";
+  wrap.innerHTML = html;
+}
+
+// ── Subject View ──
+function showSubject(subj) {
+  currentSubject = subj;
+  const conf = SUBJ[subj];
+  document.getElementById("subject-title").textContent = conf.icon + " " + conf.label;
+  const bank = QB[subj];
+  const topics = Object.keys(bank);
+  const grid = document.getElementById("topic-grid");
+  grid.innerHTML = "";
+  topics.forEach(topic => {
+    const qs = bank[topic];
+    const key = subj+"::"+topic;
+    const prog = progressCache[key];
+    const attNum = prog ? prog.attempt_number : 0;
+    const pct = (prog && prog.questions_attempted > 0) ? Math.round(prog.questions_correct/prog.questions_attempted*100) : 0;
+    const trophy = prog && prog.completed ? trophyForPct(pct) : "";
+    const acc = prog && prog.questions_attempted > 0 ? pct+"%" : "—";
+    const safeKey = topic.replace(/'/g,"\\'");
+
+    const subjColours = { english:"var(--subj-english)", maths:"var(--subj-maths)", verbal:"var(--subj-verbal)", nvr:"var(--subj-nvr)" };
+    const colour = subjColours[subj];
+
+    const card = document.createElement("div");
+    card.className = "topic-card";
+    card.innerHTML = `
+      <div class="topic-card-top">
+        <div class="topic-name">${topic}</div>
+        <div class="trophy-badge">${trophy}</div>
+      </div>
+      <div class="topic-meta">${qs.length} questions &bull; Accuracy: ${acc} &bull; ${attNum > 0 ? "Attempt "+attNum : "Not started"}</div>
+      <div class="topic-acc-bar"><div class="topic-acc-fill" style="width:${pct}%;background:${colour}"></div></div>
+      <div class="topic-actions">
+        <button class="btn btn-primary btn-sm" onclick="startQuiz('${subj}','${safeKey}')">${attNum > 0 ? "Practice again" : "Start"}</button>
+        ${attNum > 0 ? `<button class="btn btn-secondary btn-sm" onclick="resetTopic('${subj}','${safeKey}')">Reset</button>` : ""}
+        <button class="btn btn-ghost btn-sm" onclick="startQuiz('${subj}','${safeKey}',true)">🔀 Shuffle</button>
+      </div>`;
+    grid.appendChild(card);
+  });
+  showView("subject");
+}
+
+function startQuiz(subj, topic, reshuffle) {
   currentSubject = subj;
   currentTopic = topic;
-  const bank = QB[subj === "english" ? "english" : subj === "maths" ? "maths" : subj === "verbal" ? "verbal" : "nvr"];
-  const rawQs = bank[topic] || [];
-
-  // Shuffle questions and answer positions
-  currentQuestions = shuffle(rawQs).map(q => shuffleWithAnswer(q));
-  currentQIndex = 0;
+  const rawQs = QB[subj][topic] || [];
+  currentQs = shuffle(rawQs).map(q => shuffleQ(q));
+  currentQIdx = 0;
   currentScore = 0;
-  shadowLogEntries = [];
-  hintShown = false;
+  shadowEntries = [];
+  wrongAnswers = [];
   questionAnswered = false;
-
-  // Determine attempt number
-  const key = subj + "::" + topic;
+  const key = subj+"::"+topic;
   const prog = progressCache[key];
-  currentAttemptNumber = prog ? prog.attempt_number + 1 : 1;
-
-  // Timer
-  timerSeconds = 0;
+  currentAttempt = prog ? prog.attempt_number+1 : 1;
+  timerSecs = 0;
   clearInterval(timerInterval);
   timerInterval = setInterval(() => {
-    timerSeconds++;
-    document.getElementById("quiz-timer").textContent = fmtTime(timerSeconds);
+    timerSecs++;
+    document.getElementById("quiz-timer").textContent = "⏱ "+fmtTime(timerSecs);
   }, 1000);
-
-  document.getElementById("quiz-topic-name").textContent = topic;
+  document.getElementById("quiz-topic-label").textContent = topic;
+  document.getElementById("quiz-sub-label").textContent = SUBJ[subj].label + " · Attempt " + currentAttempt;
   showView("quiz");
   renderQuestion();
 }
 
-function fmtTime(s) {
-  const m = Math.floor(s / 60);
-  const sec = s % 60;
-  return m + ":" + String(sec).padStart(2, "0");
-}
-
 function renderQuestion() {
-  const q = currentQuestions[currentQIndex];
-  const total = currentQuestions.length;
-  hintShown = false;
+  const q = currentQs[currentQIdx];
+  const total = currentQs.length;
   questionAnswered = false;
-
-  document.getElementById("q-number").textContent = "Question " + (currentQIndex + 1) + " of " + total;
+  document.getElementById("q-number").textContent = "Question "+(currentQIdx+1)+" of "+total;
   document.getElementById("q-text").textContent = q.q;
-  document.getElementById("quiz-progress-fill").style.width = (currentQIndex / total * 100) + "%";
-  document.getElementById("quiz-meta").textContent = currentSubject.charAt(0).toUpperCase() + currentSubject.slice(1) + " — Attempt " + currentAttemptNumber;
-
-  // Options
-  const optList = document.getElementById("options-list");
-  optList.innerHTML = "";
-  const letters = ["A", "B", "C", "D", "E"];
+  document.getElementById("quiz-progress-fill").style.width = (currentQIdx/total*100)+"%";
+  const opts = document.getElementById("options-list");
+  opts.innerHTML = "";
+  const letters = ["A","B","C","D","E"];
   q.opts.forEach((opt, i) => {
     const btn = document.createElement("button");
     btn.className = "option-btn";
-    btn.disabled = false;
     btn.innerHTML = `<span class="option-letter">${letters[i]}</span><span>${opt}</span>`;
     btn.onclick = () => selectAnswer(i);
-    optList.appendChild(btn);
+    opts.appendChild(btn);
   });
-
-  // Reset state
   document.getElementById("hint-area").className = "hint-area";
   document.getElementById("hint-area").textContent = "";
   document.getElementById("explanation-box").className = "explanation-box";
   document.getElementById("hint-btn").style.display = "inline-flex";
   document.getElementById("next-btn").style.display = "none";
-  document.getElementById("answer-status").textContent = "";
-
-  questionStartTime = Date.now();
+  qStartTime = Date.now();
 }
 
 function selectAnswer(idx) {
   if (questionAnswered) return;
   questionAnswered = true;
-  const q = currentQuestions[currentQIndex];
+  const q = currentQs[currentQIdx];
   const correct = idx === q.ans;
-  const timeTaken = Math.round((Date.now() - questionStartTime) / 1000);
-
+  const timeTaken = Math.round((Date.now()-qStartTime)/1000);
   if (correct) currentScore++;
-
-  // Update option buttons
-  const btns = document.querySelectorAll(".option-btn");
+  const btns = document.querySelectorAll("#options-list .option-btn");
   btns.forEach((btn, i) => {
     btn.disabled = true;
-    if (i === q.ans) { btn.classList.add("correct"); }
-    else if (i === idx && !correct) { btn.classList.add("selected-wrong"); }
+    if (i === q.ans) btn.classList.add("correct");
+    else if (i === idx && !correct) btn.classList.add("selected-wrong");
   });
-
   // Explanation
   const expBox = document.getElementById("explanation-box");
-  const expClass = correct ? "correct-exp" : "wrong-exp";
-  expBox.className = "explanation-box show " + expClass;
+  expBox.className = "explanation-box show "+(correct ? "correct-exp" : "wrong-exp");
   document.getElementById("exp-title").textContent = correct ? "✓ Correct!" : "✗ Not quite";
   document.getElementById("exp-text").textContent = q.exp;
-  document.getElementById("tip-text").innerHTML = q.tip ? "<strong>💡 Tip:</strong> " + q.tip : "";
-
-  // Shadow log entry
-  shadowLogEntries.push({
-    user_id: currentUser.id,
-    subject: currentSubject,
-    topic: currentTopic,
-    question_text: q.q.substring(0, 200),
-    was_correct: correct,
-    attempt_number: currentAttemptNumber,
-    time_taken_seconds: timeTaken
-  });
-
-  // Show next / finish
-  const isLast = currentQIndex >= currentQuestions.length - 1;
+  document.getElementById("tip-text").innerHTML = q.tip ? "<strong>💡 Tip:</strong> "+q.tip : "";
+  // Track wrong answers for review
+  if (!correct) {
+    wrongAnswers.push({ q: q.q, yourAns: q.opts[idx] || "—", correctAns: q.opts[q.ans], exp: q.exp });
+  }
+  shadowEntries.push({ user_id: currentUser.id, subject: currentSubject, topic: currentTopic, question_text: q.q.substring(0,200), was_correct: correct, attempt_number: currentAttempt, time_taken_seconds: timeTaken });
+  const isLast = currentQIdx >= currentQs.length-1;
   document.getElementById("next-btn").style.display = "inline-flex";
   document.getElementById("next-btn").textContent = isLast ? "See results →" : "Next →";
   document.getElementById("hint-btn").style.display = "none";
+  // Live dashboard stats update
+  updateLiveDashStats(correct);
+}
+
+function updateLiveDashStats(correct) {
+  // Update the in-memory attemptsCache for live dashboard refresh
+  // This is a lightweight update without Supabase round-trip
+  const totalEl = document.getElementById("stat-q");
+  const accEl = document.getElementById("stat-acc");
+  if (totalEl) {
+    const curTotal = parseInt(totalEl.textContent) || 0;
+    totalEl.textContent = curTotal+1;
+  }
+  // Recalculate accuracy from cache + current session
+  let totalQ = 1, totalC = correct ? 1 : 0;
+  attemptsCache.forEach(a => { totalQ += a.total; totalC += a.score; });
+  // Add questions answered so far this session
+  totalQ += currentQIdx;
+  totalC += currentScore - (correct ? 1 : 0); // already added above
+  if (accEl && totalQ > 0) accEl.textContent = Math.round(totalC/totalQ*100)+"%";
 }
 
 function showHint() {
   if (questionAnswered) return;
-  const q = currentQuestions[currentQIndex];
+  const q = currentQs[currentQIdx];
   if (q.tip) {
-    const hint = document.getElementById("hint-area");
-    hint.textContent = "💡 " + q.tip;
-    hint.className = "hint-area show";
-    hintShown = true;
+    const h = document.getElementById("hint-area");
+    h.textContent = "💡 "+q.tip;
+    h.className = "hint-area show";
   }
 }
 
 function nextQuestion() {
-  const isLast = currentQIndex >= currentQuestions.length - 1;
-  if (isLast) {
-    finishQuiz();
-  } else {
-    currentQIndex++;
-    renderQuestion();
-  }
+  if (currentQIdx >= currentQs.length-1) finishQuiz();
+  else { currentQIdx++; renderQuestion(); }
 }
 
 async function finishQuiz() {
   clearInterval(timerInterval);
-  const total = currentQuestions.length;
-  const pct = Math.round(currentScore / total * 100);
-  const trophy = trophyForScore(pct);
+  const total = currentQs.length;
+  const pct = Math.round(currentScore/total*100);
+  const trophy = trophyForPct(pct);
   const tLabel = trophyLabel(pct);
 
-  // Show results
   document.getElementById("results-trophy").textContent = trophy || "📝";
-  document.getElementById("results-title").textContent = trophy ? tLabel + " Trophy!" : "Topic Complete";
+  document.getElementById("results-title").textContent = trophy ? tLabel+" Trophy!" : "Topic Complete";
   document.getElementById("results-subtitle").textContent = trophy
-    ? "Well done — you earned the " + tLabel + " trophy for this topic!"
-    : "Keep practising to earn a trophy. You need 40% or more.";
-  document.getElementById("results-pct").textContent = pct + "%";
+    ? "You earned the "+tLabel+" trophy for "+currentTopic+"!"
+    : "Keep practising — you need 40% or above to earn a trophy.";
+  document.getElementById("results-pct").textContent = pct+"%";
   document.getElementById("res-correct").textContent = currentScore;
   document.getElementById("res-total").textContent = total;
-  document.getElementById("res-time").textContent = fmtTime(timerSeconds);
+  document.getElementById("res-time").textContent = fmtTime(timerSecs);
 
-  // Ring colour
-  const ring = document.getElementById("results-ring");
-  const ringColor = pct >= 90 ? "#6366f1" : pct >= 75 ? "#f59e0b" : pct >= 60 ? "#94a3b8" : pct >= 40 ? "#cd7f32" : "#e2e8f0";
-  ring.style.borderColor = ringColor;
+  // Animate score ring
+  const ringEl = document.getElementById("score-ring-circle");
+  const circumference = 345.4;
+  const offset = circumference - (pct/100 * circumference);
+  ringEl.style.transition = "stroke-dashoffset 1s ease";
+  ringEl.style.strokeDashoffset = offset;
+  const ringColour = pct >= 90 ? "#6366f1" : pct >= 75 ? "#f59e0b" : pct >= 60 ? "#94a3b8" : pct >= 40 ? "#cd7f32" : "#e2e8f0";
+  ringEl.style.stroke = ringColour;
 
   // Attempt comparison
-  const key = currentSubject + "::" + currentTopic;
-  const prevProg = progressCache[key];
-  if (prevProg && prevProg.attempt_number > 0 && prevProg.questions_attempted > 0) {
-    const prevPct = Math.round(prevProg.questions_correct / prevProg.questions_attempted * 100);
+  const key = currentSubject+"::"+currentTopic;
+  const prev = progressCache[key];
+  const cmpBox = document.getElementById("comparison-box");
+  if (prev && prev.questions_attempted > 0) {
+    const prevPct = Math.round(prev.questions_correct/prev.questions_attempted*100);
     const diff = pct - prevPct;
-    const cmp = document.getElementById("attempt-comparison");
-    if (diff > 0) cmp.textContent = "▲ +" + diff + "% compared to your last attempt — great improvement!";
-    else if (diff < 0) cmp.textContent = "▼ " + Math.abs(diff) + "% compared to last time. Keep going — practice makes perfect.";
-    else cmp.textContent = "Same score as last time — try to push a bit higher next session.";
+    cmpBox.className = "comparison-box";
+    cmpBox.textContent = diff > 0 ? "▲ +" +diff+"% vs your last attempt — great improvement!"
+      : diff < 0 ? "▼ " +Math.abs(diff)+"% vs last time. Keep going!"
+      : "Same score as last time — push a little harder next session.";
   } else {
-    document.getElementById("attempt-comparison").textContent = "";
+    cmpBox.className = "comparison-box hidden";
   }
 
   showView("results");
-
-  // Save to Supabase
+  if (trophy) showConfetti();
   await saveSession(total, pct, trophy || "none");
+  await loadCache();
+  refreshDashboard();
+}
+
+function showReview() {
+  const list = document.getElementById("review-list");
+  if (wrongAnswers.length === 0) {
+    list.innerHTML = `<div style="text-align:center;padding:40px;color:var(--text2)"><div style="font-size:3rem;margin-bottom:12px">🎉</div><div style="font-weight:700">No wrong answers!</div><p style="font-size:0.875rem;margin-top:6px">You got everything right.</p></div>`;
+  } else {
+    list.innerHTML = wrongAnswers.map((w,i) => `
+      <div class="review-item wrong">
+        <div class="review-q">${i+1}. ${w.q}</div>
+        <div class="review-answers">
+          <span style="color:var(--red);font-weight:600">✗ Your answer:</span> ${w.yourAns}<br>
+          <span style="color:var(--green);font-weight:600">✓ Correct:</span> ${w.correctAns}<br>
+          <span style="color:var(--text2)">${w.exp}</span>
+        </div>
+      </div>`).join("");
+  }
+  showView("review");
 }
 
 async function saveSession(total, pct, trophy) {
   if (!currentUser) return;
-  const key = currentSubject + "::" + currentTopic;
-
-  // Upsert progress
-  const progData = {
-    user_id: currentUser.id,
-    subject: currentSubject,
-    topic: currentTopic,
-    attempt_number: currentAttemptNumber,
-    questions_attempted: total,
-    questions_correct: currentScore,
-    trophy,
-    completed: true,
-    duration_seconds: timerSeconds,
-    updated_at: new Date().toISOString()
-  };
+  const progData = { user_id: currentUser.id, subject: currentSubject, topic: currentTopic, attempt_number: currentAttempt, questions_attempted: total, questions_correct: currentScore, trophy, completed: true, duration_seconds: timerSecs, updated_at: new Date().toISOString() };
   await sb.from("progress").upsert(progData, { onConflict: "user_id,subject,topic" });
-
-  // Insert attempt record
-  const attemptData = {
-    user_id: currentUser.id,
-    subject: currentSubject,
-    topic: currentTopic,
-    attempt_number: currentAttemptNumber,
-    score: currentScore,
-    total,
-    accuracy_pct: pct,
-    duration_seconds: timerSeconds,
-    trophy
-  };
-  await sb.from("attempts").insert(attemptData);
-
-  // Insert shadow log entries
-  if (shadowLogEntries.length > 0) {
-    await sb.from("shadow_log").insert(shadowLogEntries);
-  }
-
-  // Update streaks
-  await sb.from("streaks").update({
-    total_questions: sb.rpc ? undefined : undefined, // handled by trigger ideally
-    last_active_date: new Date().toISOString().split("T")[0],
-    updated_at: new Date().toISOString()
-  }).eq("user_id", currentUser.id);
-
-  // Refresh cache
-  await loadProgressCache();
+  await sb.from("attempts").insert({ user_id: currentUser.id, subject: currentSubject, topic: currentTopic, attempt_number: currentAttempt, score: currentScore, total, accuracy_pct: pct, duration_seconds: timerSecs, trophy });
+  if (shadowEntries.length > 0) await sb.from("shadow_log").insert(shadowEntries);
+  const today = new Date().toISOString().split("T")[0];
+  await sb.from("streaks").update({ last_active_date: today, updated_at: new Date().toISOString() }).eq("user_id", currentUser.id);
 }
 
-function retryTopic() {
-  if (currentSubject && currentTopic) startQuiz(currentSubject, currentTopic);
-}
-
-function backToSubject() {
-  if (currentSubject) showSubject(currentSubject);
-}
+function retryTopic() { if (currentSubject && currentTopic) startQuiz(currentSubject, currentTopic); }
+function backToSubject() { if (currentSubject) showSubject(currentSubject); }
 
 async function resetTopic(subj, topic) {
-  if (!confirm("Reset progress for this topic? Your trophy history will be cleared.")) return;
-  if (!currentUser) return;
+  if (!confirm("Reset progress for this topic? Your attempt history will be cleared.")) return;
   await sb.from("progress").delete().eq("user_id", currentUser.id).eq("subject", subj).eq("topic", topic);
-  await loadProgressCache();
+  await loadCache();
   showSubject(subj);
-  toast("Topic reset successfully.", "success");
+  toast("Topic reset.", "success");
+}
+
+// ── Mock Exam ──
+const MOCK_CONF = {
+  full:    { q: 80, t: 3000, label: "Full Mock Exam" },
+  english: { q: 20, t: 720,  label: "English Mock" },
+  maths:   { q: 20, t: 720,  label: "Maths Mock" },
+  verbal:  { q: 20, t: 720,  label: "Verbal Reasoning Mock" },
+  nvr:     { q: 20, t: 720,  label: "Non-Verbal Reasoning Mock" }
+};
+
+function selectMockType(type) {
+  mockType = type;
+  document.querySelectorAll(".mock-option-card").forEach(c => c.classList.remove("selected"));
+  document.getElementById("mock-opt-"+type).classList.add("selected");
+  const conf = MOCK_CONF[type];
+  document.getElementById("mock-info-q").textContent = conf.q;
+  document.getElementById("mock-info-t").textContent = Math.floor(conf.t/60)+" minutes";
+}
+
+function buildMockQs(type) {
+  const conf = MOCK_CONF[type];
+  let pool = [];
+  if (type === "full") {
+    const subjList = ["english","maths","verbal","nvr"];
+    subjList.forEach(subj => {
+      const bank = QB[subj];
+      let subjQs = [];
+      Object.values(bank).forEach(arr => subjQs.push(...arr.map(q => ({...shuffleQ(q), _subj: subj}))));
+      shuffle(subjQs).slice(0, 20).forEach(q => pool.push(q));
+    });
+  } else {
+    const bank = QB[type];
+    let all = [];
+    Object.values(bank).forEach(arr => arr.forEach(q => all.push({...shuffleQ(q), _subj: type})));
+    pool = shuffle(all).slice(0, conf.q);
+  }
+  return shuffle(pool);
+}
+
+function startMockExam() {
+  const conf = MOCK_CONF[mockType];
+  mockQs = buildMockQs(mockType);
+  mockIdx = 0;
+  mockScore = 0;
+  mockAnswered = false;
+  mockSubjectScores = { english:{c:0,t:0}, maths:{c:0,t:0}, verbal:{c:0,t:0}, nvr:{c:0,t:0} };
+  mockTimeLimit = conf.t;
+  mockTimerSecs = conf.t;
+  clearInterval(mockTimerInterval);
+  mockTimerInterval = setInterval(() => {
+    mockTimerSecs--;
+    const el = document.getElementById("mock-timer");
+    el.textContent = "⏱ "+fmtTime(mockTimerSecs);
+    el.className = "quiz-timer" + (mockTimerSecs < 300 ? " danger" : mockTimerSecs < 600 ? " warning" : "");
+    if (mockTimerSecs <= 0) { clearInterval(mockTimerInterval); finishMockExam(); }
+  }, 1000);
+  document.getElementById("mock-quiz-label").textContent = conf.label;
+  showView("mock-quiz");
+  renderMockQuestion();
+}
+
+function renderMockQuestion() {
+  const q = mockQs[mockIdx];
+  const total = mockQs.length;
+  mockAnswered = false;
+  document.getElementById("mock-q-number").textContent = "Question "+(mockIdx+1)+" of "+total;
+  document.getElementById("mock-q-text").textContent = q.q;
+  document.getElementById("mock-quiz-sub").textContent = SUBJ[q._subj]?.label || q._subj;
+  document.getElementById("mock-progress-fill").style.width = (mockIdx/total*100)+"%";
+  const opts = document.getElementById("mock-options-list");
+  opts.innerHTML = "";
+  const letters = ["A","B","C","D","E"];
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement("button");
+    btn.className = "option-btn";
+    btn.innerHTML = `<span class="option-letter">${letters[i]}</span><span>${opt}</span>`;
+    btn.onclick = () => selectMockAnswer(i);
+    opts.appendChild(btn);
+  });
+  document.getElementById("mock-explanation-box").style.display = "none";
+  document.getElementById("mock-next-btn").style.display = "none";
+}
+
+function selectMockAnswer(idx) {
+  if (mockAnswered) return;
+  mockAnswered = true;
+  const q = mockQs[mockIdx];
+  const correct = idx === q.ans;
+  if (correct) { mockScore++; mockSubjectScores[q._subj].c++; }
+  mockSubjectScores[q._subj].t++;
+  const btns = document.querySelectorAll("#mock-options-list .option-btn");
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.ans) btn.classList.add("correct");
+    else if (i === idx && !correct) btn.classList.add("selected-wrong");
+  });
+  const isLast = mockIdx >= mockQs.length-1;
+  document.getElementById("mock-next-btn").style.display = "inline-flex";
+  document.getElementById("mock-next-btn").textContent = isLast ? "Finish exam →" : "Next →";
+}
+
+function mockNextQuestion() {
+  if (mockIdx >= mockQs.length-1) finishMockExam();
+  else { mockIdx++; renderMockQuestion(); }
+}
+
+function abandonMock() {
+  if (!confirm("Abandon this exam? Your progress will be lost.")) return;
+  clearInterval(mockTimerInterval);
+  showView("mock");
+}
+
+async function finishMockExam() {
+  clearInterval(mockTimerInterval);
+  const total = mockQs.length;
+  const timeTaken = mockTimeLimit - mockTimerSecs;
+  const pct = Math.round(mockScore/total*100);
+  const trophy = trophyForPct(pct);
+
+  document.getElementById("mock-results-trophy").textContent = trophy || "📋";
+  document.getElementById("mock-results-title").textContent = trophy ? trophy+" "+trophyLabel(pct)+" Performance!" : "Mock Exam Complete";
+  document.getElementById("mock-results-subtitle").textContent = `You scored ${mockScore} out of ${total} (${pct}%) in ${fmtTime(timeTaken)}.`;
+  document.getElementById("mock-results-pct").textContent = pct+"%";
+  document.getElementById("mock-res-correct").textContent = mockScore;
+  document.getElementById("mock-res-total").textContent = total;
+  document.getElementById("mock-res-time").textContent = fmtTime(timeTaken);
+
+  // Score ring
+  const ringEl = document.getElementById("mock-score-ring");
+  const offset = 345.4 - (pct/100*345.4);
+  ringEl.style.transition = "stroke-dashoffset 1s ease";
+  ringEl.style.strokeDashoffset = offset;
+  ringEl.style.stroke = pct >= 75 ? "#22c55e" : pct >= 50 ? "#f59e0b" : "#ef4444";
+
+  // Breakdown
+  const bd = document.getElementById("mock-breakdown");
+  bd.innerHTML = Object.entries(mockSubjectScores).filter(([s,d]) => d.t > 0).map(([subj, d]) => {
+    const sp = d.t > 0 ? Math.round(d.c/d.t*100) : 0;
+    return `<div class="mock-subj-result">
+      <div class="msr-name">${SUBJ[subj].icon} ${SUBJ[subj].label}</div>
+      <div class="msr-score">${d.c}/${d.t}</div>
+      <div class="msr-pct">${sp}%</div>
+    </div>`;
+  }).join("");
+
+  // Save attempt
+  if (currentUser) {
+    await sb.from("attempts").insert({ user_id: currentUser.id, subject: "mock", topic: MOCK_CONF[mockType].label, attempt_number: 1, score: mockScore, total, accuracy_pct: pct, duration_seconds: timeTaken, trophy: trophy || "none" });
+    await loadCache();
+  }
+
+  showView("mock-results");
+  if (trophy) showConfetti();
+}
+
+function buildMockHistory() {
+  const mockAttempts = attemptsCache.filter(a => a.subject === "mock");
+  const wrap = document.getElementById("mock-history");
+  if (!wrap || mockAttempts.length === 0) { if(wrap) wrap.innerHTML=""; return; }
+  let html = `<p class="section-label">Previous mock exams</p><table class="attempt-table" style="background:var(--surface);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm)">
+    <thead><tr><th>Type</th><th>Score</th><th>Accuracy</th><th>Trophy</th></tr></thead><tbody>`;
+  mockAttempts.slice(0,8).forEach(a => {
+    html += `<tr><td>${a.topic}</td><td>${a.score}/${a.total}</td><td>${a.accuracy_pct}%</td><td>${trophyForPct(a.accuracy_pct)||"—"}</td></tr>`;
+  });
+  html += "</tbody></table>";
+  wrap.innerHTML = html;
 }
 
 // ── Progress View ──
 async function buildProgressView() {
   const container = document.getElementById("progress-content");
-  container.innerHTML = '<div class="spinner"></div>';
-  await loadProgressCache();
-
+  container.innerHTML = "<div class='spinner'></div>";
+  await loadCache();
   let html = "";
-  const subjects = ["english", "maths", "verbal", "nvr"];
-
-  subjects.forEach(subj => {
-    const conf = SUBJECT_CONF[subj];
-    const bank = QB[subj === "english" ? "english" : subj === "maths" ? "maths" : subj === "verbal" ? "verbal" : "nvr"];
+  Object.entries(SUBJ).forEach(([subj, conf]) => {
+    const bank = QB[subj];
     const topics = Object.keys(bank);
-    let hasAny = false;
     let rows = "";
-
     topics.forEach(t => {
-      const key = subj + "::" + t;
-      const prog = progressCache[key];
-      if (!prog || !prog.completed) return;
-      hasAny = true;
-      const pct = Math.round(prog.questions_correct / prog.questions_attempted * 100);
-      const trophy = trophyForScore(pct);
+      const p = progressCache[subj+"::"+t];
+      if (!p || !p.completed) return;
+      const pct = Math.round(p.questions_correct/p.questions_attempted*100);
+      const trophy = trophyForPct(pct);
+      const safeT = t.replace(/'/g,"\\'");
       rows += `<tr>
-        <td>${t}</td>
-        <td>${prog.questions_correct}/${prog.questions_attempted}</td>
+        <td>${t}</td><td>${p.questions_correct}/${p.questions_attempted}</td>
         <td>${pct}%</td>
-        <td>${trophy ? trophy + " " + trophyLabel(pct) : "—"}</td>
-        <td>Attempt ${prog.attempt_number}</td>
-        <td><button class="btn btn-danger btn-xs" onclick="resetTopic('${subj}','${CSS.escape(t)}')">Reset</button></td>
+        <td>${trophy ? trophy+" "+trophyLabel(pct) : "—"}</td>
+        <td>Attempt ${p.attempt_number}</td>
+        <td><button class="btn btn-danger btn-xs" onclick="resetTopic('${subj}','${safeT}')">Reset</button></td>
       </tr>`;
     });
-
-    if (!hasAny) return;
-    html += `<div class="progress-section">
+    if (!rows) return;
+    html += `<div class="progress-subject-block">
       <h3>${conf.icon} ${conf.label}</h3>
-      <table class="attempt-table">
-        <thead><tr>
-          <th>Topic</th><th>Score</th><th>Accuracy</th><th>Trophy</th><th>Attempt</th><th></th>
-        </tr></thead>
-        <tbody>${rows}</tbody>
-      </table>
-    </div>`;
+      <table class="attempt-table"><thead><tr><th>Topic</th><th>Score</th><th>Accuracy</th><th>Trophy</th><th>Attempt</th><th></th></tr></thead>
+      <tbody>${rows}</tbody></table></div>`;
   });
-
   if (!html) {
-    html = `<div style="text-align:center;padding:48px 0;color:var(--text3)">
-      <div style="font-size:3rem;margin-bottom:12px">📖</div>
-      <div style="font-weight:600">No completed topics yet</div>
-      <div style="font-size:0.875rem;margin-top:6px">Start practising to see your progress here.</div>
-    </div>`;
+    html = `<div style="text-align:center;padding:60px 0;color:var(--text3)"><div style="font-size:3.5rem;margin-bottom:14px">📖</div><div style="font-weight:700;font-size:1rem">No completed topics yet</div><p style="font-size:0.875rem;margin-top:6px">Start practising to see your progress here.</p></div>`;
   }
-
   container.innerHTML = html;
 }
 
 // ── Parent View ──
 async function buildParentView() {
   const container = document.getElementById("parent-content");
-  container.innerHTML = '<div class="spinner"></div>';
-  await loadProgressCache();
+  container.innerHTML = "<div class='spinner'></div>";
+  await loadCache();
 
-  // Accuracy by subject
-  const subjects = ["english", "maths", "verbal", "nvr"];
-  let accHtml = '<p class="section-heading">Accuracy by Subject</p><div class="accuracy-grid">';
-  subjects.forEach(subj => {
-    const conf = SUBJECT_CONF[subj];
+  let html = `<p class="section-label">Accuracy by Subject</p><div class="accuracy-grid">`;
+  Object.entries(SUBJ).forEach(([subj, conf]) => {
     const attempts = attemptsCache.filter(a => a.subject === subj);
-    const totalQ = attempts.reduce((s, a) => s + a.total, 0);
-    const totalC = attempts.reduce((s, a) => s + a.score, 0);
-    const pct = totalQ > 0 ? Math.round(totalC / totalQ * 100) : null;
-    accHtml += `<div class="accuracy-card">
-      <div class="ac-subject">${conf.icon} ${conf.label}</div>
-      <div class="ac-pct">${pct !== null ? pct + "%" : "—"}</div>
+    const totalQ = attempts.reduce((s,a) => s+a.total, 0);
+    const totalC = attempts.reduce((s,a) => s+a.score, 0);
+    const pct = totalQ > 0 ? Math.round(totalC/totalQ*100) : null;
+    html += `<div class="accuracy-card">
+      <div class="ac-subj">${conf.icon} ${conf.label}</div>
+      <div class="ac-pct">${pct !== null ? pct+"%" : "—"}</div>
       <div class="ac-detail">${totalQ} questions attempted</div>
     </div>`;
   });
-  accHtml += "</div>";
+  html += "</div>";
 
-  // Improvement velocity — compare first vs latest attempt per topic
-  let improvements = [];
-  const seenTopics = new Set();
-  // Group attempts by subject+topic
-  const topicAttempts = {};
-  attemptsCache.forEach(a => {
-    const key = a.subject + "::" + a.topic;
-    if (!topicAttempts[key]) topicAttempts[key] = [];
-    topicAttempts[key].push(a);
+  // Improvement velocity
+  const topicMap = {};
+  attemptsCache.filter(a => a.subject !== "mock").forEach(a => {
+    const key = a.subject+"::"+a.topic;
+    if (!topicMap[key]) topicMap[key] = [];
+    topicMap[key].push(a);
   });
-  Object.entries(topicAttempts).forEach(([key, attempts]) => {
-    if (attempts.length < 2) return;
-    const sorted = [...attempts].sort((a, b) => a.attempt_number - b.attempt_number);
-    const first = sorted[0];
-    const latest = sorted[sorted.length - 1];
-    improvements.push({
-      topic: first.topic,
-      subject: first.subject,
-      first: first.accuracy_pct,
-      latest: latest.accuracy_pct,
-      delta: latest.accuracy_pct - first.accuracy_pct
-    });
+  const improvements = [];
+  Object.entries(topicMap).forEach(([key, atts]) => {
+    if (atts.length < 2) return;
+    const sorted = [...atts].sort((a,b) => a.attempt_number-b.attempt_number);
+    improvements.push({ topic: sorted[0].topic, subj: sorted[0].subject, first: sorted[0].accuracy_pct, latest: sorted[sorted.length-1].accuracy_pct, delta: sorted[sorted.length-1].accuracy_pct - sorted[0].accuracy_pct });
   });
-  improvements.sort((a, b) => b.delta - a.delta);
-
-  let velHtml = "";
+  improvements.sort((a,b) => b.delta-a.delta);
   if (improvements.length > 0) {
-    velHtml = `<p class="section-heading" style="margin-top:24px">Improvement (Attempt 1 vs Latest)</p>
-    <table class="attempt-table">
-      <thead><tr><th>Topic</th><th>Subject</th><th>First</th><th>Latest</th><th>Change</th></tr></thead>
-      <tbody>`;
+    html += `<p class="section-label" style="margin-top:24px">Improvement (Attempt 1 vs Latest)</p>
+    <div class="progress-subject-block"><table class="attempt-table">
+      <thead><tr><th>Topic</th><th>Subject</th><th>First</th><th>Latest</th><th>Change</th></tr></thead><tbody>`;
     improvements.forEach(imp => {
-      const delta = imp.delta > 0 ? "▲ +" + imp.delta + "%" : imp.delta < 0 ? "▼ " + imp.delta + "%" : "—";
       const colour = imp.delta > 0 ? "var(--green)" : imp.delta < 0 ? "var(--red)" : "var(--text3)";
-      velHtml += `<tr>
-        <td>${imp.topic}</td>
-        <td>${SUBJECT_CONF[imp.subject].label}</td>
-        <td>${imp.first}%</td>
-        <td>${imp.latest}%</td>
-        <td style="color:${colour};font-weight:700">${delta}</td>
-      </tr>`;
+      const arrow = imp.delta > 0 ? "▲ +" : imp.delta < 0 ? "▼ " : "—";
+      html += `<tr><td>${imp.topic}</td><td>${SUBJ[imp.subj]?.label||imp.subj}</td><td>${imp.first}%</td><td>${imp.latest}%</td><td style="color:${colour};font-weight:700">${imp.delta !== 0 ? arrow+imp.delta+"%" : "—"}</td></tr>`;
     });
-    velHtml += "</tbody></table>";
+    html += "</tbody></table></div>";
   }
 
   // Recent sessions
-  const recent = attemptsCache.slice(0, 10);
-  let recentHtml = "";
+  const recent = attemptsCache.filter(a => a.subject !== "mock").slice(0,12);
   if (recent.length > 0) {
-    recentHtml = `<p class="section-heading" style="margin-top:24px">Recent Sessions</p>
-    <table class="attempt-table">
-      <thead><tr><th>Topic</th><th>Subject</th><th>Score</th><th>Accuracy</th><th>Trophy</th></tr></thead>
-      <tbody>`;
+    html += `<p class="section-label" style="margin-top:24px">Recent Sessions</p>
+    <div class="progress-subject-block"><table class="attempt-table">
+      <thead><tr><th>Topic</th><th>Subject</th><th>Score</th><th>Accuracy</th><th>Trophy</th></tr></thead><tbody>`;
     recent.forEach(a => {
-      const trophy = trophyForScore(a.accuracy_pct);
-      recentHtml += `<tr>
-        <td>${a.topic}</td>
-        <td>${SUBJECT_CONF[a.subject]?.label || a.subject}</td>
-        <td>${a.score}/${a.total}</td>
-        <td>${a.accuracy_pct}%</td>
-        <td>${trophy || "—"}</td>
-      </tr>`;
+      html += `<tr><td>${a.topic}</td><td>${SUBJ[a.subject]?.label||a.subject}</td><td>${a.score}/${a.total}</td><td>${a.accuracy_pct}%</td><td>${trophyForPct(a.accuracy_pct)||"—"}</td></tr>`;
     });
-    recentHtml += "</tbody></table>";
+    html += "</tbody></table></div>";
   }
 
-  container.innerHTML = accHtml + velHtml + recentHtml;
+  container.innerHTML = html;
 }
 
-// ── Ollie AI Tutor ──
-let ollieContext = "";
+// ── Confetti ──
+function showConfetti() {
+  const wrap = document.createElement("div");
+  wrap.className = "confetti-wrap";
+  const colours = ["#6366f1","#22c55e","#f59e0b","#ef4444","#8b5cf6","#3b82f6","#ec4899"];
+  for (let i = 0; i < 60; i++) {
+    const piece = document.createElement("div");
+    piece.className = "confetti-piece";
+    piece.style.left = Math.random()*100+"vw";
+    piece.style.background = colours[Math.floor(Math.random()*colours.length)];
+    piece.style.animationDuration = (1.5+Math.random()*2)+"s";
+    piece.style.animationDelay = Math.random()*0.8+"s";
+    piece.style.width = (8+Math.random()*8)+"px";
+    piece.style.height = (8+Math.random()*8)+"px";
+    wrap.appendChild(piece);
+  }
+  document.body.appendChild(wrap);
+  setTimeout(() => wrap.remove(), 4000);
+}
 
+// ── Ollie ──
 function toggleOllie() {
-  const chat = document.getElementById("ollie-chat");
-  chat.classList.toggle("open");
+  document.getElementById("ollie-chat").classList.toggle("open");
 }
 
 async function sendOllieMsg() {
@@ -2282,66 +2367,54 @@ async function sendOllieMsg() {
   if (!msg) return;
   input.value = "";
   addChatMsg(msg, "user");
-  addChatMsg("Thinking…", "ollie", "thinking-msg");
-
+  const thinkId = "think-"+Date.now();
+  addChatMsg("Thinking…", "ollie", thinkId);
   try {
     const context = currentTopic
-      ? "The student is currently practising the topic: " + currentTopic + " in " + currentSubject + "."
-      : "The student is on the T3 Academy platform.";
-
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      ? "The student is currently practising: "+currentTopic+" ("+SUBJ[currentSubject]?.label+")."
+      : "The student is on the T3 Academy dashboard.";
+    const res = await fetch("/api/ollie", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": ANTHROPIC_KEY,
-        "anthropic-version": "2023-06-01"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         model: "claude-haiku-4-5-20251001",
         max_tokens: 512,
-        system: "You are Ollie the Owl 🦉, a warm and encouraging AI tutor on T3 Academy, helping children aged 9-11 prepare for the 11+ GL Assessment exam. Your personality: friendly, patient, enthusiastic. Use simple language and fun analogies. Rules: never give the answer directly — guide the student to understand. Keep responses to 3-4 sentences. Always end with encouragement or a gentle question to check understanding. " + context,
+        system: "You are Ollie the Owl 🦉, a warm and encouraging AI tutor on T3 Academy, helping children aged 9-11 prepare for the 11+ GL Assessment exam. Be friendly, patient and enthusiastic. Use simple language. Never give the answer directly — guide the student to understand. Keep responses to 3-4 sentences. Always end with encouragement or a question to check understanding. "+context,
         messages: [{ role: "user", content: msg }]
       })
     });
     const data = await res.json();
     const reply = data.content?.[0]?.text || "I'm having a little trouble right now — try again in a moment!";
-    const thinking = document.getElementById("thinking-msg");
-    if (thinking) thinking.remove();
+    document.getElementById(thinkId)?.remove();
     addChatMsg(reply, "ollie");
-  } catch (e) {
-    const thinking = document.getElementById("thinking-msg");
-    if (thinking) thinking.remove();
-    addChatMsg("Sorry, I couldn't connect just now. Try again!", "ollie");
+  } catch(e) {
+    document.getElementById(thinkId)?.remove();
+    addChatMsg("Sorry, I couldn't connect just now. Make sure the /api/ollie function is deployed!", "ollie");
   }
 }
 
 function addChatMsg(text, who, id) {
   const msgs = document.getElementById("chat-messages");
   const div = document.createElement("div");
-  div.className = "chat-msg " + who;
+  div.className = "chat-msg "+who;
   div.textContent = text;
   if (id) div.id = id;
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
 }
 
+// ── Enter key shortcuts ──
+document.getElementById("login-password").addEventListener("keydown", e => { if(e.key==="Enter") doLogin(); });
+document.getElementById("reg-password").addEventListener("keydown",  e => { if(e.key==="Enter") doRegister(); });
+
 // ── Init ──
 async function init() {
   const { data: { session } } = await sb.auth.getSession();
   setLoading(false);
-  if (session?.user) {
-    await onSignedIn(session.user);
-  } else {
-    showPage("auth");
-  }
+  if (session?.user) await onSignedIn(session.user);
+  else showPage("auth");
 }
-
-// Enter to submit on auth forms
-document.getElementById("login-password").addEventListener("keydown", e => { if (e.key === "Enter") doLogin(); });
-document.getElementById("reg-password").addEventListener("keydown",  e => { if (e.key === "Enter") doRegister(); });
 
 init();
 
-</script>
-</body>
-</html>
+</script></body></html>
