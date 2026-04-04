@@ -1,438 +1,846 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>T3 Academy — 11+ Practice</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T3 Academy — 11+ Exam Preparation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0;}
-:root{
-  --accent:#6366f1;--accent2:#4f46e5;--accent-light:#eef2ff;
-  --green:#22c55e;--green-light:#f0fdf4;
-  --red:#ef4444;--red-light:#fef2f2;
-  --amber:#f59e0b;--amber-light:#fffbeb;
-  --blue:#3b82f6;--purple:#8b5cf6;
-  --bg:#f8fafc;--card:#ffffff;
-  --text:#0f172a;--text2:#475569;--text3:#94a3b8;
-  --border:#e2e8f0;--border2:#cbd5e1;
-  --font:'Plus Jakarta Sans',system-ui,sans-serif;
-  --r:10px;--r-lg:16px;
-  --shadow:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md:0 4px 12px rgba(0,0,0,0.08);
+/* ── CSS Variables ── */
+:root {
+  --accent: #6366f1;
+  --accent-hover: #4f46e5;
+  --green: #22c55e;
+  --amber: #f59e0b;
+  --red: #ef4444;
+  --purple: #8b5cf6;
+  --blue: #3b82f6;
+  --teal: #14b8a6;
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface2: #f1f5f9;
+  --border: #e2e8f0;
+  --text: #0f172a;
+  --text2: #475569;
+  --text3: #94a3b8;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.06);
 }
-body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;}
 
-/* AUTH */
-.auth-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);padding:20px;}
-.auth-box{background:rgba(255,255,255,0.08);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.15);border-radius:24px;padding:36px;width:100%;max-width:400px;}
-.auth-owl{text-align:center;margin-bottom:20px;}
-.auth-owl-icon{font-size:48px;}
-.auth-owl h1{color:#fff;font-size:24px;font-weight:900;letter-spacing:-0.5px;margin-top:6px;}
-.auth-owl p{color:rgba(255,255,255,0.5);font-size:13px;margin-top:3px;}
-.auth-tabs{display:flex;background:rgba(255,255,255,0.06);border-radius:10px;padding:3px;margin-bottom:20px;gap:3px;}
-.auth-tab{flex:1;padding:9px;border:none;border-radius:8px;font-family:var(--font);font-weight:700;font-size:13px;cursor:pointer;background:transparent;color:rgba(255,255,255,0.4);transition:all 0.2s;}
-.auth-tab.on{background:rgba(255,255,255,0.15);color:#fff;}
-.auth-lbl{color:rgba(255,255,255,0.6);font-size:12px;font-weight:600;display:block;margin-bottom:5px;}
-.auth-inp{width:100%;padding:11px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.07);color:#fff;font-family:var(--font);font-size:14px;outline:none;margin-bottom:12px;}
-.auth-inp:focus{border-color:rgba(255,255,255,0.35);}
-.auth-inp::placeholder{color:rgba(255,255,255,0.2);}
-.auth-sel{width:100%;padding:11px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.12);background:#1e1b4b;color:#fff;font-family:var(--font);font-size:14px;outline:none;margin-bottom:16px;}
-.auth-btn{width:100%;padding:13px;border:none;border-radius:12px;font-family:var(--font);font-weight:800;font-size:15px;cursor:pointer;transition:all 0.2s;}
-.btn-signin{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;}
-.btn-signin:hover{opacity:0.9;transform:translateY(-1px);}
-.btn-register{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;}
-.btn-register:hover{opacity:0.9;transform:translateY(-1px);}
-.auth-msg{font-size:12px;text-align:center;margin-top:10px;min-height:18px;}
-.auth-msg.err{color:#fca5a5;}
-.auth-msg.ok{color:#86efac;}
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; font-family: inherit; }
+input, textarea { font-family: inherit; }
 
-/* APP */
-.app{display:none;}
-.topbar{background:#fff;border-bottom:1px solid var(--border);height:56px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
-.logo{font-weight:900;font-size:17px;color:var(--text);cursor:pointer;letter-spacing:-0.5px;}
-.logo em{color:var(--accent);font-style:normal;}
-.topbar-nav{display:flex;gap:2px;}
-.nav-btn{padding:6px 12px;border:none;border-radius:8px;font-family:var(--font);font-weight:600;font-size:13px;cursor:pointer;color:var(--text2);background:transparent;transition:all 0.15s;}
-.nav-btn:hover{background:var(--bg);color:var(--text);}
-.nav-btn.on{background:var(--accent-light);color:var(--accent);}
-.topbar-right{display:flex;align-items:center;gap:10px;}
-.streak{background:var(--amber-light);border:1px solid #fde68a;border-radius:100px;padding:4px 10px;font-size:12px;font-weight:700;color:#92400e;}
-.hi-text{font-size:13px;font-weight:600;color:var(--text2);}
-.hi-text strong{color:var(--text);}
-.ava{position:relative;}
-.ava-btn{width:34px;height:34px;border-radius:50%;background:var(--accent-light);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;}
-.ava-menu{position:absolute;right:0;top:40px;background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);min-width:200px;box-shadow:var(--shadow-md);padding:10px;z-index:100;display:none;}
-.ava-menu.open{display:block;}
-.ava-menu-name{font-weight:700;font-size:14px;color:var(--text);padding:4px 6px 8px;}
-.ava-menu-email{font-size:11px;color:var(--text3);padding:0 6px 8px;}
-.emoji-row{display:flex;flex-wrap:wrap;gap:4px;padding:6px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:6px;}
-.emj{font-size:18px;cursor:pointer;padding:3px;border-radius:6px;}
-.emj:hover{background:var(--bg);}
-.emj.picked{background:var(--accent-light);outline:2px solid var(--accent);}
-.menu-item{display:flex;align-items:center;gap:8px;padding:8px 8px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text);border:none;background:none;width:100%;text-align:left;}
-.menu-item:hover{background:var(--bg);}
-.menu-item.red{color:var(--red);}
-.menu-item.red:hover{background:var(--red-light);}
+/* ── Utility ── */
+.hidden { display: none !important; }
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-2 { gap: 8px; }
+.gap-3 { gap: 12px; }
+.gap-4 { gap: 16px; }
+.w-full { width: 100%; }
+.text-sm { font-size: 0.875rem; }
+.text-xs { font-size: 0.75rem; }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
 
-/* PAGES */
-.page{display:none;max-width:960px;margin:0 auto;padding:24px 16px;}
-.page.on{display:block;}
+/* ── Spinner ── */
+.spinner {
+  width: 36px; height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin: 0 auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 
-/* HOME */
-.ollie-card{background:linear-gradient(135deg,#eef2ff,#f0f4ff);border:1px solid #c7d2fe;border-radius:var(--r-lg);padding:20px;display:flex;align-items:center;gap:16px;margin-bottom:24px;}
-.ollie-icon{font-size:44px;flex-shrink:0;}
-.ollie-label{font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;}
-.ollie-msg{font-size:15px;font-weight:600;color:var(--text);line-height:1.5;}
-.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px;}
-.stat{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:16px;text-align:center;box-shadow:var(--shadow);}
-.stat-val{font-size:28px;font-weight:900;line-height:1;}
-.stat-val.g{color:var(--green);}
-.stat-val.a{color:var(--amber);}
-.stat-lbl{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;}
-.sec-title{font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;}
-.subj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px;}
-@media(min-width:640px){.subj-grid{grid-template-columns:repeat(4,1fr);}}
-.subj-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 14px;cursor:pointer;transition:all 0.15s;box-shadow:var(--shadow);border-top:3px solid transparent;}
-.subj-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);}
-.subj-card.english{border-top-color:var(--purple);}
-.subj-card.maths{border-top-color:var(--blue);}
-.subj-card.verbal{border-top-color:var(--green);}
-.subj-card.nvr{border-top-color:var(--amber);}
-.subj-icon{font-size:26px;margin-bottom:8px;}
-.subj-name{font-size:13px;font-weight:800;color:var(--text);}
-.subj-sub{font-size:11px;color:var(--text3);margin-top:2px;margin-bottom:10px;}
-.subj-bar-bg{background:var(--bg);border-radius:100px;height:5px;overflow:hidden;margin-bottom:4px;}
-.subj-bar{height:100%;border-radius:100px;transition:width 0.5s;}
-.english .subj-bar{background:var(--purple);}
-.maths .subj-bar{background:var(--blue);}
-.verbal .subj-bar{background:var(--green);}
-.nvr .subj-bar{background:var(--amber);}
-.subj-pct{font-size:11px;font-weight:700;color:var(--text2);}
-.plan-box{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow);}
-.plan-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);}
-.plan-row:last-child{border-bottom:none;}
-.plan-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-.plan-dot.next{background:var(--accent);}
-.plan-dot.todo{background:var(--border2);}
-.plan-dot.done{background:var(--green);}
-.plan-info{flex:1;}
-.plan-name{font-size:13px;font-weight:700;color:var(--text);}
-.plan-sub{font-size:11px;color:var(--text3);}
-.plan-go{font-size:12px;font-weight:700;color:var(--accent);cursor:pointer;border:none;background:none;font-family:var(--font);}
-.plan-go:hover{text-decoration:underline;}
+/* ── Toast ── */
+#toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
+  background: var(--text); color: #fff; padding: 12px 20px;
+  border-radius: var(--radius-sm); font-size: 0.875rem; font-weight: 500;
+  box-shadow: var(--shadow-lg); z-index: 9999;
+  transition: transform 0.3s ease;
+  max-width: 360px; text-align: center;
+}
+#toast.show { transform: translateX(-50%) translateY(0); }
+#toast.success { background: var(--green); }
+#toast.error { background: var(--red); }
 
-/* SUBJECT / TOPICS */
-.back-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;font-family:var(--font);font-weight:600;font-size:13px;cursor:pointer;color:var(--text2);margin-bottom:18px;}
-.back-btn:hover{background:var(--border);}
-.page-title{font-size:22px;font-weight:900;color:var(--text);margin-bottom:18px;}
-.topic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;}
-.topic-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:14px 16px;cursor:pointer;transition:all 0.15s;box-shadow:var(--shadow);}
-.topic-card:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-md);}
-.topic-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
-.topic-name{font-size:14px;font-weight:700;color:var(--text);}
-.topic-trophy{font-size:16px;}
-.topic-count{font-size:12px;color:var(--text3);margin-bottom:8px;}
-.topic-bar-bg{background:var(--bg);border-radius:100px;height:4px;overflow:hidden;margin-bottom:6px;}
-.topic-bar{height:100%;border-radius:100px;background:var(--accent);}
-.topic-footer{display:flex;align-items:center;justify-content:space-between;}
-.topic-acc{font-size:11px;font-weight:600;color:var(--text3);}
-.reset-btn{font-size:11px;font-weight:700;color:var(--text3);background:none;border:none;cursor:pointer;padding:2px 6px;border-radius:5px;font-family:var(--font);}
-.reset-btn:hover{color:var(--accent);background:var(--accent-light);}
+/* ── Page system ── */
+.page { display: none; min-height: 100vh; }
+.page.active { display: block; }
 
-/* QUESTION */
-.q-wrap{max-width:680px;margin:0 auto;}
-.q-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
-.q-tag{background:var(--accent-light);color:var(--accent);font-size:12px;font-weight:700;padding:4px 12px;border-radius:100px;}
-.q-meta{font-size:12px;font-weight:600;color:var(--text3);display:flex;align-items:center;gap:10px;}
-.q-timer{color:var(--amber);font-weight:700;}
-.q-prog-bg{background:var(--border);border-radius:100px;height:3px;overflow:hidden;margin-bottom:16px;}
-.q-prog{height:100%;background:var(--accent);border-radius:100px;transition:width 0.3s;}
-.q-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;box-shadow:var(--shadow-md);margin-bottom:14px;}
-.q-stem{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;}
-.q-text{font-size:16px;font-weight:600;color:var(--text);line-height:1.65;white-space:pre-line;}
-.q-passage{background:var(--bg);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:12px 14px;margin:12px 0;font-size:13px;color:var(--text2);line-height:1.7;font-style:italic;}
-.opts{display:flex;flex-direction:column;gap:8px;margin-top:16px;}
-.opt{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--r-lg);cursor:pointer;transition:all 0.12s;background:#fff;}
-.opt:hover{border-color:var(--accent);background:var(--accent-light);}
-.opt.sel{border-color:var(--accent);background:var(--accent-light);}
-.opt.ok{border-color:var(--green);background:var(--green-light);}
-.opt.no{border-color:var(--red);background:var(--red-light);}
-.opt-ltr{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--text2);flex-shrink:0;transition:all 0.12s;}
-.opt.sel .opt-ltr{background:var(--accent);border-color:var(--accent);color:#fff;}
-.opt.ok .opt-ltr{background:var(--green);border-color:var(--green);color:#fff;}
-.opt.no .opt-ltr{background:var(--red);border-color:var(--red);color:#fff;}
-.opt-text{font-size:14px;font-weight:500;color:var(--text);}
-.q-actions{display:flex;gap:8px;flex-wrap:wrap;}
-.btn{padding:10px 18px;border-radius:10px;font-family:var(--font);font-weight:700;font-size:13px;cursor:pointer;border:none;transition:all 0.15s;}
-.btn-primary{background:var(--accent);color:#fff;}
-.btn-primary:hover{background:var(--accent2);}
-.btn-primary:disabled{background:var(--border);color:var(--text3);cursor:not-allowed;}
-.btn-secondary{background:var(--bg);color:var(--text2);border:1px solid var(--border);}
-.btn-secondary:hover{background:var(--border);}
-.btn-hint{background:var(--amber-light);color:#92400e;border:1px solid #fde68a;}
-.result-panel{margin-top:12px;}
-.result-box{border-radius:var(--r-lg);padding:14px 16px;}
-.result-box.ok{background:var(--green-light);border:1px solid #86efac;}
-.result-box.no{background:var(--red-light);border:1px solid #fca5a5;}
-.result-title{font-weight:700;font-size:14px;margin-bottom:5px;}
-.result-title.ok{color:#15803d;}
-.result-title.no{color:#dc2626;}
-.result-exp{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:8px;}
-.result-tip{background:rgba(99,102,241,0.07);border-radius:8px;padding:8px 10px;font-size:12px;color:var(--accent2);font-weight:600;}
+/* ── Auth Page ── */
+#auth-page {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 100vh; padding: 24px;
+  background: linear-gradient(135deg, #f0f4ff 0%, #faf5ff 50%, #f0fdf4 100%);
+}
+.auth-card {
+  background: var(--surface);
+  border-radius: 20px;
+  padding: 48px 40px;
+  width: 100%; max-width: 420px;
+  box-shadow: var(--shadow-lg);
+}
+.auth-logo {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.auth-logo .owl { font-size: 3rem; margin-bottom: 8px; }
+.auth-logo h1 { font-size: 1.75rem; font-weight: 800; color: var(--text); }
+.auth-logo p { color: var(--text2); font-size: 0.9rem; margin-top: 4px; }
 
-/* SESSION COMPLETE */
-.complete-wrap{max-width:480px;margin:0 auto;text-align:center;padding:40px 16px;}
-.complete-trophy{font-size:72px;animation:pop 0.4s cubic-bezier(0.34,1.56,0.64,1);}
-@keyframes pop{from{transform:scale(0);opacity:0;}to{transform:scale(1);opacity:1;}}
-.complete-title{font-size:24px;font-weight:900;margin:12px 0 4px;}
-.complete-sub{font-size:14px;color:var(--text2);margin-bottom:24px;}
-.complete-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px;}
-.cstat{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:14px;}
-.cstat-val{font-size:22px;font-weight:900;}
-.cstat-lbl{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.04em;margin-top:3px;}
-.complete-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
-.btn-green{background:var(--green);color:#fff;}
-.btn-green:hover{background:#16a34a;}
-.btn-amber{background:var(--amber-light);color:#92400e;border:1px solid #fde68a;}
-.btn-amber:hover{background:#fef3c7;}
+.auth-tabs {
+  display: flex; background: var(--surface2);
+  border-radius: var(--radius-sm); padding: 4px; margin-bottom: 28px; gap: 4px;
+}
+.auth-tab {
+  flex: 1; padding: 10px; border: none; background: transparent;
+  border-radius: 6px; font-weight: 600; font-size: 0.9rem;
+  color: var(--text2); transition: all 0.2s;
+}
+.auth-tab.active {
+  background: var(--surface); color: var(--text);
+  box-shadow: var(--shadow);
+}
 
-/* PROGRESS PAGE */
-.prog-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px;}
-@media(min-width:640px){.prog-grid{grid-template-columns:repeat(4,1fr);}}
-.prog-subj{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:18px;margin-bottom:14px;box-shadow:var(--shadow);}
+.form-group { margin-bottom: 18px; }
+.form-label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text2); margin-bottom: 6px; }
+.form-input {
+  width: 100%; padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem; color: var(--text);
+  transition: border-color 0.2s;
+  outline: none; background: var(--surface);
+}
+.form-input:focus { border-color: var(--accent); }
+.form-hint { font-size: 0.78rem; color: var(--text3); margin-top: 4px; }
 
-/* RESET OVERLAY */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;z-index:200;padding:16px;}
-.overlay.open{display:flex;}
-.overlay-card{background:#fff;border-radius:20px;padding:28px;max-width:360px;width:100%;text-align:center;box-shadow:var(--shadow-md);}
-.overlay-icon{font-size:44px;margin-bottom:10px;}
-.overlay-title{font-size:18px;font-weight:800;margin-bottom:6px;}
-.overlay-sub{font-size:13px;color:var(--text2);line-height:1.5;margin-bottom:20px;}
-.overlay-actions{display:flex;gap:10px;justify-content:center;}
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 20px; border: none; border-radius: var(--radius-sm);
+  font-size: 0.95rem; font-weight: 600; transition: all 0.2s; white-space: nowrap;
+}
+.btn-primary {
+  background: var(--accent); color: #fff;
+  box-shadow: 0 2px 8px rgba(99,102,241,0.3);
+}
+.btn-primary:hover { background: var(--accent-hover); box-shadow: 0 4px 12px rgba(99,102,241,0.4); transform: translateY(-1px); }
+.btn-secondary { background: var(--surface2); color: var(--text2); border: 1.5px solid var(--border); }
+.btn-secondary:hover { background: var(--border); color: var(--text); }
+.btn-danger { background: #fef2f2; color: var(--red); border: 1.5px solid #fecaca; }
+.btn-danger:hover { background: #fee2e2; }
+.btn-sm { padding: 8px 14px; font-size: 0.85rem; }
+.btn-xs { padding: 5px 10px; font-size: 0.78rem; }
 
-/* MOCK OVERLAY */
-.mock-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;z-index:200;padding:16px;}
-.mock-overlay.open{display:flex;}
-.mock-card{background:#fff;border-radius:20px;padding:32px;max-width:400px;width:100%;text-align:center;}
+/* ── App Shell ── */
+#app-page { display: none; }
+#app-page.active { display: flex; flex-direction: column; }
+
+/* ── Top Nav ── */
+.top-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 60px;
+  box-shadow: var(--shadow);
+}
+.nav-logo { font-size: 1.1rem; font-weight: 800; color: var(--text); display: flex; align-items: center; gap: 8px; }
+.nav-logo span { font-size: 1.3rem; }
+.nav-links { display: flex; align-items: center; gap: 4px; }
+.nav-link {
+  padding: 8px 14px; border-radius: 8px;
+  font-size: 0.875rem; font-weight: 600; color: var(--text2);
+  border: none; background: transparent;
+  transition: all 0.15s; cursor: pointer;
+}
+.nav-link:hover { background: var(--surface2); color: var(--text); }
+.nav-link.active { background: #eef2ff; color: var(--accent); }
+.nav-user { display: flex; align-items: center; gap: 10px; }
+.nav-avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--purple));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; color: white; font-weight: 700;
+}
+
+/* ── App Content ── */
+.app-content { flex: 1; }
+.view { display: none; padding: 28px 24px; max-width: 1100px; margin: 0 auto; }
+.view.active { display: block; }
+
+/* ── Dashboard ── */
+.ollie-banner {
+  background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 100%);
+  border: 1px solid #c7d2fe;
+  border-radius: 16px;
+  padding: 20px 24px;
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 28px;
+}
+.ollie-banner .owl-icon { font-size: 2.5rem; flex-shrink: 0; }
+.ollie-banner .greeting-text h2 { font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+.ollie-banner .greeting-text p { font-size: 0.875rem; color: var(--text2); }
+
+.stats-row {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 14px; margin-bottom: 28px;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  box-shadow: var(--shadow);
+}
+.stat-card .stat-label { font-size: 0.78rem; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+.stat-card .stat-value { font-size: 1.75rem; font-weight: 800; color: var(--text); line-height: 1; }
+.stat-card .stat-sub { font-size: 0.8rem; color: var(--text2); margin-top: 4px; }
+
+.section-heading {
+  font-size: 0.8rem; font-weight: 700; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  margin-bottom: 14px;
+}
+
+.subject-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.subject-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 22px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.subject-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 4px; height: 100%;
+}
+.subject-card.english::before { background: var(--purple); }
+.subject-card.maths::before { background: var(--blue); }
+.subject-card.verbal::before { background: var(--green); }
+.subject-card.nvr::before { background: var(--amber); }
+
+.subject-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.subject-card .subj-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.subject-card .subj-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+}
+.subject-card.english .subj-icon { background: #f3e8ff; }
+.subject-card.maths .subj-icon { background: #eff6ff; }
+.subject-card.verbal .subj-icon { background: #f0fdf4; }
+.subject-card.nvr .subj-icon { background: #fffbeb; }
+.subject-card .subj-name { font-size: 1rem; font-weight: 700; color: var(--text); }
+.subject-card .subj-topics { font-size: 0.78rem; color: var(--text3); }
+.progress-bar { background: var(--surface2); border-radius: 999px; height: 6px; overflow: hidden; margin: 10px 0; }
+.progress-fill { height: 100%; border-radius: 999px; transition: width 0.4s ease; }
+.subject-card.english .progress-fill { background: var(--purple); }
+.subject-card.maths .progress-fill { background: var(--blue); }
+.subject-card.verbal .progress-fill { background: var(--green); }
+.subject-card.nvr .progress-fill { background: var(--amber); }
+.subject-card .subj-stats { display: flex; gap: 14px; }
+.subject-card .subj-stat { font-size: 0.8rem; color: var(--text2); }
+.subject-card .subj-stat strong { color: var(--text); font-weight: 700; }
+
+/* ── Subject View ── */
+.subject-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 24px;
+}
+.subject-header .back-btn {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: var(--surface2); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 1.1rem; transition: all 0.15s;
+}
+.subject-header .back-btn:hover { background: var(--border); }
+.subject-header h2 { font-size: 1.4rem; font-weight: 800; color: var(--text); }
+
+.topic-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+.topic-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: var(--shadow);
+}
+.topic-card:hover { border-color: var(--accent); box-shadow: var(--shadow-md); transform: translateY(-1px); }
+.topic-card .topic-name { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.topic-card .topic-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.topic-card .q-count { font-size: 0.8rem; color: var(--text3); }
+.trophy-badge {
+  font-size: 1rem; line-height: 1;
+}
+.topic-card .topic-actions { display: flex; gap: 8px; margin-top: 10px; }
+
+/* ── Quiz View ── */
+.quiz-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 24px;
+}
+.quiz-meta { font-size: 0.85rem; color: var(--text2); }
+.quiz-timer {
+  font-size: 1rem; font-weight: 700; color: var(--text);
+  background: var(--surface2); padding: 6px 14px; border-radius: 20px;
+  font-variant-numeric: tabular-nums;
+}
+.quiz-progress-bar { height: 4px; background: var(--surface2); border-radius: 999px; margin-bottom: 28px; overflow: hidden; }
+.quiz-progress-fill { height: 100%; background: var(--accent); border-radius: 999px; transition: width 0.3s ease; }
+
+.question-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 20px;
+}
+.question-number { font-size: 0.78rem; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+.question-text {
+  font-size: 1.1rem; font-weight: 600; color: var(--text);
+  line-height: 1.6; margin-bottom: 28px;
+  white-space: pre-wrap;
+}
+.options-list { display: flex; flex-direction: column; gap: 10px; }
+.option-btn {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  cursor: pointer; transition: all 0.15s;
+  text-align: left; font-size: 0.95rem; font-weight: 500; color: var(--text);
+}
+.option-btn:hover:not(:disabled) { border-color: var(--accent); background: #f5f5ff; }
+.option-btn:disabled { cursor: default; }
+.option-btn .option-letter {
+  width: 28px; height: 28px; border-radius: 6px;
+  background: var(--surface2); display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem; font-weight: 700; color: var(--text2); flex-shrink: 0;
+  transition: all 0.15s;
+}
+.option-btn.correct { border-color: var(--green); background: #f0fdf4; }
+.option-btn.correct .option-letter { background: var(--green); color: white; }
+.option-btn.wrong { border-color: var(--red); background: #fef2f2; }
+.option-btn.wrong .option-letter { background: var(--red); color: white; }
+.option-btn.selected-wrong { border-color: var(--red); background: #fef2f2; }
+.option-btn.selected-wrong .option-letter { background: var(--red); color: white; }
+
+.explanation-box {
+  padding: 18px 20px;
+  border-radius: var(--radius);
+  margin-top: 18px;
+  display: none;
+}
+.explanation-box.show { display: block; }
+.explanation-box.correct-exp { background: #f0fdf4; border: 1px solid #86efac; }
+.explanation-box.wrong-exp { background: #fef2f2; border: 1px solid #fca5a5; }
+.explanation-box .exp-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+.explanation-box.correct-exp .exp-title { color: #15803d; }
+.explanation-box.wrong-exp .exp-title { color: #b91c1c; }
+.explanation-box .exp-text { font-size: 0.9rem; color: var(--text); margin-bottom: 8px; }
+.explanation-box .tip-text { font-size: 0.85rem; color: var(--text2); }
+.explanation-box .tip-text strong { color: var(--accent); }
+
+.quiz-actions { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.hint-area { background: #fffbeb; border: 1px solid #fde68a; border-radius: var(--radius-sm); padding: 12px 16px; margin-top: 12px; font-size: 0.875rem; color: #92400e; display: none; }
+.hint-area.show { display: block; }
+
+/* ── Results / Completion ── */
+.results-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  padding: 40px 32px;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  max-width: 540px; margin: 0 auto;
+}
+.results-trophy { font-size: 4rem; margin-bottom: 12px; }
+.results-title { font-size: 1.5rem; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+.results-subtitle { font-size: 0.95rem; color: var(--text2); margin-bottom: 28px; }
+.results-score-ring {
+  width: 120px; height: 120px; border-radius: 50%;
+  border: 8px solid var(--surface2);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  margin: 0 auto 28px;
+  position: relative;
+}
+.results-score-ring .score-pct { font-size: 1.8rem; font-weight: 800; color: var(--text); }
+.results-score-ring .score-label { font-size: 0.75rem; font-weight: 600; color: var(--text3); }
+.results-stats { display: flex; justify-content: center; gap: 24px; margin-bottom: 28px; }
+.results-stat { text-align: center; }
+.results-stat .rs-val { font-size: 1.4rem; font-weight: 800; color: var(--text); }
+.results-stat .rs-label { font-size: 0.78rem; color: var(--text3); font-weight: 600; }
+.results-actions { display: flex; flex-direction: column; gap: 10px; }
+
+/* ── Progress View ── */
+.progress-section { margin-bottom: 32px; }
+.progress-section h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 16px; }
+
+.attempt-table { width: 100%; border-collapse: collapse; }
+.attempt-table th {
+  text-align: left; font-size: 0.75rem; font-weight: 700;
+  color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em;
+  padding: 8px 12px; border-bottom: 2px solid var(--border);
+}
+.attempt-table td {
+  padding: 12px 12px; border-bottom: 1px solid var(--border);
+  font-size: 0.875rem; color: var(--text2);
+}
+.attempt-table tr:last-child td { border-bottom: none; }
+.attempt-table td:first-child { font-weight: 600; color: var(--text); }
+
+/* ── Parent Dashboard ── */
+.accuracy-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 14px; margin-bottom: 24px;
+}
+.accuracy-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+.accuracy-card .ac-subject { font-size: 0.85rem; font-weight: 700; color: var(--text2); margin-bottom: 8px; }
+.accuracy-card .ac-pct { font-size: 2rem; font-weight: 800; color: var(--text); }
+.accuracy-card .ac-detail { font-size: 0.8rem; color: var(--text3); margin-top: 2px; }
+
+/* ── Ollie Tutor ── */
+.ollie-panel {
+  position: fixed; bottom: 24px; right: 24px; z-index: 200;
+}
+.ollie-fab {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--accent); border: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; box-shadow: var(--shadow-lg); cursor: pointer;
+  transition: all 0.2s;
+}
+.ollie-fab:hover { background: var(--accent-hover); transform: scale(1.05); }
+.ollie-chat {
+  position: absolute; bottom: 64px; right: 0;
+  width: 320px; background: var(--surface);
+  border: 1.5px solid var(--border); border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+  display: none; flex-direction: column;
+  overflow: hidden;
+}
+.ollie-chat.open { display: flex; }
+.ollie-chat-header {
+  background: linear-gradient(135deg, var(--accent), var(--purple));
+  padding: 14px 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.ollie-chat-header .hdr-owl { font-size: 1.4rem; }
+.ollie-chat-header .hdr-text h4 { font-size: 0.9rem; font-weight: 700; color: white; }
+.ollie-chat-header .hdr-text p { font-size: 0.75rem; color: rgba(255,255,255,0.8); }
+.ollie-close {
+  margin-left: auto; background: none; border: none;
+  color: rgba(255,255,255,0.8); font-size: 1.2rem; cursor: pointer; padding: 4px;
+}
+.chat-messages {
+  padding: 14px; flex: 1; overflow-y: auto;
+  max-height: 260px; display: flex; flex-direction: column; gap: 10px;
+}
+.chat-msg {
+  max-width: 90%; padding: 10px 12px;
+  border-radius: 12px; font-size: 0.85rem; line-height: 1.5;
+}
+.chat-msg.ollie { background: #eef2ff; color: var(--text); align-self: flex-start; }
+.chat-msg.user { background: var(--accent); color: white; align-self: flex-end; }
+.chat-input-row {
+  padding: 10px 14px; border-top: 1px solid var(--border);
+  display: flex; gap: 8px;
+}
+.chat-input {
+  flex: 1; border: 1.5px solid var(--border); border-radius: 8px;
+  padding: 8px 12px; font-size: 0.85rem; outline: none;
+}
+.chat-input:focus { border-color: var(--accent); }
+.chat-send {
+  background: var(--accent); color: white; border: none;
+  border-radius: 8px; padding: 8px 12px; font-size: 0.85rem;
+  font-weight: 600; cursor: pointer;
+}
+
+/* ── Loading overlay ── */
+#loading-overlay {
+  position: fixed; inset: 0; background: rgba(255,255,255,0.9);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 500; flex-direction: column; gap: 14px;
+}
+#loading-overlay p { font-size: 0.95rem; color: var(--text2); font-weight: 500; }
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .view { padding: 20px 16px; }
+  .subject-grid { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .stat-card { padding: 14px 12px; }
+  .stat-card .stat-value { font-size: 1.4rem; }
+  .accuracy-grid { grid-template-columns: 1fr; }
+  .question-card { padding: 20px; }
+  .auth-card { padding: 32px 24px; }
+  .nav-links .nav-link span { display: none; }
+  .top-nav { padding: 0 16px; }
+}
+
+@media (max-width: 380px) {
+  .stats-row { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
 
-<!-- AUTH -->
-<div id="authWrap" class="auth-wrap">
-  <div class="auth-box">
-    <div class="auth-owl">
-      <div class="auth-owl-icon">🦉</div>
+<!-- Loading Overlay -->
+<div id="loading-overlay">
+  <div class="spinner"></div>
+  <p>Loading T3 Academy…</p>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!--  AUTH PAGE                                  -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="auth-page" class="page active">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="owl">🦉</div>
       <h1>T3 Academy</h1>
-      <p>11+ Exam Preparation</p>
+      <p>11+ GL Assessment Preparation</p>
     </div>
     <div class="auth-tabs">
-      <button class="auth-tab on" id="tabA" onclick="switchTab('login')">Sign In</button>
-      <button class="auth-tab" id="tabB" onclick="switchTab('signup')">Register</button>
+      <button class="auth-tab active" onclick="switchAuthTab('login')">Log in</button>
+      <button class="auth-tab" onclick="switchAuthTab('register')">Register</button>
     </div>
-    <div id="loginForm">
-      <label class="auth-lbl">Email</label>
-      <input class="auth-inp" id="liEmail" type="email" placeholder="you@email.com" autocomplete="email"/>
-      <label class="auth-lbl">Password</label>
-      <input class="auth-inp" id="liPass" type="password" placeholder="••••••••" autocomplete="current-password"/>
-      <button class="auth-btn btn-signin" onclick="doLogin()">Sign In →</button>
-      <div class="auth-msg err" id="liMsg"></div>
+
+    <!-- Login Form -->
+    <div id="login-form">
+      <div class="form-group">
+        <label class="form-label">Email address</label>
+        <input id="login-email" class="form-input" type="email" placeholder="your@email.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input id="login-password" class="form-input" type="password" placeholder="Your password" autocomplete="current-password">
+      </div>
+      <button class="btn btn-primary w-full" onclick="doLogin()">Log in</button>
     </div>
-    <div id="signupForm" style="display:none;">
-      <label class="auth-lbl">Full Name</label>
-      <input class="auth-inp" id="suName" type="text" placeholder="e.g. Sanaan Ahmad" autocomplete="name"/>
-      <label class="auth-lbl">Email</label>
-      <input class="auth-inp" id="suEmail" type="email" placeholder="you@email.com" autocomplete="email"/>
-      <label class="auth-lbl">Password</label>
-      <input class="auth-inp" id="suPass" type="password" placeholder="Min 6 characters" autocomplete="new-password"/>
-      <label class="auth-lbl">I am a...</label>
-      <select class="auth-sel" id="suRole">
-        <option value="student">Student</option>
-        <option value="parent">Parent</option>
-      </select>
-      <button class="auth-btn btn-register" onclick="doSignup()">Create Account →</button>
-      <div class="auth-msg" id="suMsg"></div>
+
+    <!-- Register Form -->
+    <div id="register-form" class="hidden">
+      <div class="form-group">
+        <label class="form-label">Full name</label>
+        <input id="reg-name" class="form-input" type="text" placeholder="e.g. Aisha Rahman" autocomplete="name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email address</label>
+        <input id="reg-email" class="form-input" type="email" placeholder="your@email.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input id="reg-password" class="form-input" type="password" placeholder="At least 6 characters" autocomplete="new-password">
+      </div>
+      <div class="form-group">
+        <label class="form-label">I am a…</label>
+        <select id="reg-role" class="form-input">
+          <option value="student">Student</option>
+          <option value="parent">Parent</option>
+        </select>
+        <p class="form-hint">Parents can see progress reports and accuracy charts.</p>
+      </div>
+      <button class="btn btn-primary w-full" onclick="doRegister()">Create account</button>
     </div>
   </div>
 </div>
 
-<!-- APP -->
-<div class="app" id="appWrap">
+<!-- ═══════════════════════════════════════════ -->
+<!--  APP PAGE                                   -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="app-page" class="page">
 
-  <!-- TOPBAR -->
-  <div class="topbar">
-    <div class="logo" onclick="showPage('home')">T3 <em>Academy</em></div>
-    <nav class="topbar-nav">
-      <button class="nav-btn on" id="navHome" onclick="showPage('home')">🏠 Home</button>
-      <button class="nav-btn" id="navProgress" onclick="showPage('progress')">📊 Progress</button>
-      <button class="nav-btn" onclick="openMock()">📝 Mock Exam</button>
-      <button class="nav-btn" id="navParent" style="display:none;" onclick="showPage('parent')">👨‍👩‍👧 Parent</button>
-    </nav>
-    <div class="topbar-right">
-      <div class="streak">🔥 <span id="streakNum">0</span></div>
-      <span class="hi-text">Hello, <strong id="hiName">there</strong>!</span>
-      <div class="ava">
-        <div class="ava-btn" id="avaBtn" onclick="toggleMenu()">🦉</div>
-        <div class="ava-menu" id="avaMenu">
-          <div class="ava-menu-name" id="menuName">My Account</div>
-          <div class="ava-menu-email" id="menuEmail"></div>
-          <div class="emoji-row" id="emojiRow"></div>
-          <button class="menu-item" onclick="showPage('progress');closeMenu()">📊 My Progress</button>
-          <button class="menu-item" id="menuParent" style="display:none;" onclick="showPage('parent');closeMenu()">👨‍👩‍👧 Parent View</button>
-          <button class="menu-item red" onclick="doSignOut()">🚪 Sign Out</button>
+  <!-- Top Nav -->
+  <nav class="top-nav">
+    <div class="nav-logo"><span>🦉</span> T3 Academy</div>
+    <div class="nav-links">
+      <button class="nav-link active" id="nav-dashboard" onclick="showView('dashboard')">
+        <span>Dashboard</span>
+      </button>
+      <button class="nav-link" id="nav-progress" onclick="showView('progress')">
+        <span>My Progress</span>
+      </button>
+      <button class="nav-link hidden" id="nav-parent" onclick="showView('parent')">
+        <span>Reports</span>
+      </button>
+    </div>
+    <div class="nav-user">
+      <div class="nav-avatar" id="nav-avatar">?</div>
+      <button class="btn btn-secondary btn-sm" onclick="doLogout()">Log out</button>
+    </div>
+  </nav>
+
+  <div class="app-content">
+
+    <!-- ─── DASHBOARD VIEW ─── -->
+    <div class="view active" id="view-dashboard">
+      <div class="ollie-banner">
+        <div class="owl-icon">🦉</div>
+        <div class="greeting-text">
+          <h2 id="dashboard-greeting">Welcome back!</h2>
+          <p id="dashboard-tip">Pick a subject below to continue your practice.</p>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">Questions Done</div>
+          <div class="stat-value" id="stat-total-q">0</div>
+          <div class="stat-sub">across all topics</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Accuracy</div>
+          <div class="stat-value" id="stat-accuracy">—</div>
+          <div class="stat-sub">overall average</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Day Streak</div>
+          <div class="stat-value" id="stat-streak">0</div>
+          <div class="stat-sub" id="stat-streak-sub">days in a row</div>
+        </div>
+      </div>
+
+      <p class="section-heading">Subjects</p>
+      <div class="subject-grid">
+        <div class="subject-card english" onclick="showSubject('english')">
+          <div class="subj-header">
+            <div class="subj-icon">📖</div>
+            <div>
+              <div class="subj-name">English</div>
+              <div class="subj-topics">6 topics</div>
+            </div>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" id="prog-english" style="width:0%"></div></div>
+          <div class="subj-stats">
+            <div class="subj-stat">Topics done: <strong id="done-english">0/6</strong></div>
+            <div class="subj-stat">Accuracy: <strong id="acc-english">—</strong></div>
+          </div>
+        </div>
+        <div class="subject-card maths" onclick="showSubject('maths')">
+          <div class="subj-header">
+            <div class="subj-icon">🔢</div>
+            <div>
+              <div class="subj-name">Maths</div>
+              <div class="subj-topics">9 topics</div>
+            </div>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" id="prog-maths" style="width:0%"></div></div>
+          <div class="subj-stats">
+            <div class="subj-stat">Topics done: <strong id="done-maths">0/9</strong></div>
+            <div class="subj-stat">Accuracy: <strong id="acc-maths">—</strong></div>
+          </div>
+        </div>
+        <div class="subject-card verbal" onclick="showSubject('verbal')">
+          <div class="subj-header">
+            <div class="subj-icon">💬</div>
+            <div>
+              <div class="subj-name">Verbal Reasoning</div>
+              <div class="subj-topics" id="verbal-topics-count">13 topics</div>
+            </div>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" id="prog-verbal" style="width:0%"></div></div>
+          <div class="subj-stats">
+            <div class="subj-stat">Topics done: <strong id="done-verbal">0/13</strong></div>
+            <div class="subj-stat">Accuracy: <strong id="acc-verbal">—</strong></div>
+          </div>
+        </div>
+        <div class="subject-card nvr" onclick="showSubject('nvr')">
+          <div class="subj-header">
+            <div class="subj-icon">🔷</div>
+            <div>
+              <div class="subj-name">Non-Verbal Reasoning</div>
+              <div class="subj-topics">8 topics</div>
+            </div>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" id="prog-nvr" style="width:0%"></div></div>
+          <div class="subj-stats">
+            <div class="subj-stat">Topics done: <strong id="done-nvr">0/8</strong></div>
+            <div class="subj-stat">Accuracy: <strong id="acc-nvr">—</strong></div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- HOME -->
-  <div class="page on" id="pageHome">
-    <div class="ollie-card">
-      <div class="ollie-icon">🦉</div>
-      <div>
-        <div class="ollie-label">Ollie the Owl</div>
-        <div class="ollie-msg" id="ollieMsg">Welcome back! Pick a subject and let's get practising. Every question gets you closer! 🎯</div>
+    <!-- ─── SUBJECT VIEW ─── -->
+    <div class="view" id="view-subject">
+      <div class="subject-header">
+        <div class="back-btn" onclick="showView('dashboard')">←</div>
+        <h2 id="subject-title">Subject</h2>
       </div>
+      <div class="topic-grid" id="topic-grid"></div>
     </div>
-    <div class="stats-row">
-      <div class="stat"><div class="stat-val" id="stQ">0</div><div class="stat-lbl">Questions Done</div></div>
-      <div class="stat"><div class="stat-val g" id="stA">—</div><div class="stat-lbl">Accuracy</div></div>
-      <div class="stat"><div class="stat-val a" id="stS">0</div><div class="stat-lbl">Day Streak</div></div>
-    </div>
-    <div class="sec-title">Subjects</div>
-    <div class="subj-grid">
-      <div class="subj-card english" onclick="openSubject('english')">
-        <div class="subj-icon">📖</div>
-        <div class="subj-name">English</div>
-        <div class="subj-sub">Comprehension, Grammar, Spelling</div>
-        <div class="subj-bar-bg"><div class="subj-bar" id="bar-english" style="width:0%"></div></div>
-        <div class="subj-pct" id="pct-english">0% complete</div>
-      </div>
-      <div class="subj-card maths" onclick="openSubject('maths')">
-        <div class="subj-icon">🔢</div>
-        <div class="subj-name">Maths</div>
-        <div class="subj-sub">Number, Fractions, Geometry</div>
-        <div class="subj-bar-bg"><div class="subj-bar" id="bar-maths" style="width:0%"></div></div>
-        <div class="subj-pct" id="pct-maths">0% complete</div>
-      </div>
-      <div class="subj-card verbal" onclick="openSubject('verbal')">
-        <div class="subj-icon">💬</div>
-        <div class="subj-name">Verbal Reasoning</div>
-        <div class="subj-sub">Sequences, Codes, Analogies</div>
-        <div class="subj-bar-bg"><div class="subj-bar" id="bar-verbal" style="width:0%"></div></div>
-        <div class="subj-pct" id="pct-verbal">0% complete</div>
-      </div>
-      <div class="subj-card nvr" onclick="openSubject('nvr')">
-        <div class="subj-icon">🔷</div>
-        <div class="subj-name">Non-Verbal Reasoning</div>
-        <div class="subj-sub">Patterns, Matrices, Rotations</div>
-        <div class="subj-bar-bg"><div class="subj-bar" id="bar-nvr" style="width:0%"></div></div>
-        <div class="subj-pct" id="pct-nvr">0% complete</div>
-      </div>
-    </div>
-    <div class="sec-title">Today's Plan</div>
-    <div class="plan-box" id="planBox"></div>
-  </div>
 
-  <!-- SUBJECT -->
-  <div class="page" id="pageSubject">
-    <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
-    <div class="page-title" id="subjTitle"></div>
-    <div class="topic-grid" id="topicGrid"></div>
-  </div>
+    <!-- ─── QUIZ VIEW ─── -->
+    <div class="view" id="view-quiz">
+      <div class="quiz-header">
+        <div>
+          <div style="font-weight:700;font-size:1rem" id="quiz-topic-name"></div>
+          <div class="quiz-meta" id="quiz-meta"></div>
+        </div>
+        <div class="quiz-timer" id="quiz-timer">0:00</div>
+      </div>
+      <div class="quiz-progress-bar">
+        <div class="quiz-progress-fill" id="quiz-progress-fill" style="width:0%"></div>
+      </div>
 
-  <!-- QUESTION -->
-  <div class="page" id="pageQuestion">
-    <div class="q-wrap">
-      <button class="back-btn" onclick="leaveQ()">← Back</button>
-      <div class="q-prog-bg"><div class="q-prog" id="qProg" style="width:0%"></div></div>
-      <div class="q-top">
-        <div class="q-tag" id="qTag">English</div>
-        <div class="q-meta">
-          <span class="q-timer" id="qTimer">0:00</span>
-          <span id="qCount">Q1 of 10</span>
+      <div class="question-card">
+        <div class="question-number" id="q-number">Question 1 of 10</div>
+        <div class="question-text" id="q-text"></div>
+        <div class="options-list" id="options-list"></div>
+        <div class="hint-area" id="hint-area"></div>
+        <div class="explanation-box" id="explanation-box">
+          <div class="exp-title" id="exp-title"></div>
+          <div class="exp-text" id="exp-text"></div>
+          <div class="tip-text" id="tip-text"></div>
         </div>
       </div>
-      <div class="q-card">
-        <div class="q-stem" id="qStem" style="display:none;"></div>
-        <div class="q-text" id="qText"></div>
-        <div class="q-passage" id="qPassage" style="display:none;"></div>
-        <div class="opts" id="qOpts"></div>
-      </div>
-      <div class="q-actions">
-        <button class="btn btn-primary" id="checkBtn" onclick="checkAnswer()" disabled>Check Answer ✓</button>
-        <button class="btn btn-hint" onclick="showHint()">💡 Hint</button>
-        <button class="btn btn-primary" id="nextBtn" style="display:none;" onclick="nextQ()">Next →</button>
-      </div>
-      <div class="result-panel" id="resultPanel" style="display:none;"></div>
-    </div>
-  </div>
 
-  <!-- COMPLETE -->
-  <div class="page" id="pageComplete">
-    <div class="complete-wrap">
-      <div class="complete-trophy" id="cTrophy">🥉</div>
-      <div class="complete-title" id="cTitle">Well done!</div>
-      <div class="complete-sub" id="cSub"></div>
-      <div class="complete-stats">
-        <div class="cstat"><div class="cstat-val" id="cScore">0/0</div><div class="cstat-lbl">Score</div></div>
-        <div class="cstat"><div class="cstat-val" id="cAcc">0%</div><div class="cstat-lbl">Accuracy</div></div>
-        <div class="cstat"><div class="cstat-val" id="cTime">0:00</div><div class="cstat-lbl">Time</div></div>
-      </div>
-      <div class="complete-actions">
-        <button class="btn btn-green" onclick="showPage('home')">🏠 Home</button>
-        <button class="btn btn-amber" onclick="retryTopic()">🔄 Retry</button>
-        <button class="btn btn-secondary" onclick="openSubject(curSubj)">📚 More Topics</button>
+      <div class="quiz-actions">
+        <button class="btn btn-secondary btn-sm" id="hint-btn" onclick="showHint()">💡 Hint</button>
+        <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none">Next →</button>
+        <div id="answer-status" style="font-size:0.85rem;font-weight:600;color:var(--text3)"></div>
       </div>
     </div>
-  </div>
 
-  <!-- PROGRESS -->
-  <div class="page" id="pageProgress">
-    <div class="page-title">📊 My Progress</div>
-    <div class="prog-grid" id="progSummary"></div>
-    <div id="progDetail"></div>
-  </div>
+    <!-- ─── RESULTS VIEW ─── -->
+    <div class="view" id="view-results">
+      <div class="results-card">
+        <div class="results-trophy" id="results-trophy">🥉</div>
+        <div class="results-title" id="results-title">Topic Complete!</div>
+        <div class="results-subtitle" id="results-subtitle"></div>
+        <div class="results-score-ring" id="results-ring">
+          <div class="score-pct" id="results-pct">0%</div>
+          <div class="score-label">Score</div>
+        </div>
+        <div class="results-stats">
+          <div class="results-stat">
+            <div class="rs-val" id="res-correct">0</div>
+            <div class="rs-label">Correct</div>
+          </div>
+          <div class="results-stat">
+            <div class="rs-val" id="res-total">0</div>
+            <div class="rs-label">Total</div>
+          </div>
+          <div class="results-stat">
+            <div class="rs-val" id="res-time">0:00</div>
+            <div class="rs-label">Time</div>
+          </div>
+        </div>
+        <div id="attempt-comparison" style="margin-bottom:20px;font-size:0.875rem;color:var(--text2)"></div>
+        <div class="results-actions">
+          <button class="btn btn-primary" onclick="retryTopic()">🔄 Try again (reshuffle)</button>
+          <button class="btn btn-secondary" onclick="backToSubject()">← Back to topics</button>
+          <button class="btn btn-secondary" onclick="showView('dashboard')">🏠 Dashboard</button>
+        </div>
+      </div>
+    </div>
 
-  <!-- PARENT -->
-  <div class="page" id="pageParent">
-    <div class="page-title">👨‍👩‍👧 Parent Dashboard</div>
-    <div id="parentContent"></div>
-  </div>
+    <!-- ─── PROGRESS VIEW ─── -->
+    <div class="view" id="view-progress">
+      <h2 style="font-size:1.3rem;font-weight:800;margin-bottom:24px;">My Progress</h2>
+      <div id="progress-content">
+        <div class="spinner"></div>
+      </div>
+    </div>
 
-</div><!-- /app -->
+    <!-- ─── PARENT VIEW ─── -->
+    <div class="view" id="view-parent">
+      <h2 style="font-size:1.3rem;font-weight:800;margin-bottom:24px;">Progress Reports</h2>
+      <div id="parent-content">
+        <div class="spinner"></div>
+      </div>
+    </div>
 
-<!-- RESET OVERLAY -->
-<div class="overlay" id="resetOverlay">
-  <div class="overlay-card">
-    <div class="overlay-icon">🔄</div>
-    <div class="overlay-title">Reset & Practise Again?</div>
-    <div class="overlay-sub" id="resetSub">Progress resets to 0%. Questions reshuffle. Your trophy history is kept!</div>
-    <div class="overlay-actions">
-      <button class="btn btn-secondary" onclick="closeReset()">Cancel</button>
-      <button class="btn btn-amber" onclick="doReset()">Yes, Reset!</button>
+  </div><!-- end app-content -->
+</div><!-- end app-page -->
+
+<!-- Ollie Floating Button -->
+<div class="ollie-panel" id="ollie-panel" style="display:none">
+  <div class="ollie-chat" id="ollie-chat">
+    <div class="ollie-chat-header">
+      <span class="hdr-owl">🦉</span>
+      <div class="hdr-text">
+        <h4>Ollie</h4>
+        <p>Your AI Tutor</p>
+      </div>
+      <button class="ollie-close" onclick="toggleOllie()">✕</button>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="chat-msg ollie">Hi! I'm Ollie 🦉 — your 11+ tutor. Ask me about any question you're stuck on!</div>
+    </div>
+    <div class="chat-input-row">
+      <input class="chat-input" id="chat-input" placeholder="Ask Ollie…" onkeydown="if(event.key==='Enter')sendOllieMsg()">
+      <button class="chat-send" onclick="sendOllieMsg()">Send</button>
     </div>
   </div>
+  <button class="ollie-fab" onclick="toggleOllie()" title="Ask Ollie">🦉</button>
 </div>
 
-<!-- MOCK OVERLAY -->
-<div class="mock-overlay" id="mockOverlay">
-  <div class="mock-card">
-    <div style="font-size:48px;margin-bottom:12px;">📝</div>
-    <div style="font-size:22px;font-weight:900;margin-bottom:8px;">Mock Exam</div>
-    <div style="font-size:14px;color:var(--text2);margin-bottom:6px;">Full 80-question timed paper — GL Assessment format</div>
-    <div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:20px;">🚧 Coming very soon!</div>
-    <button class="btn btn-primary" onclick="closeMock()">Got it</button>
-  </div>
-</div>
-
-
-<!-- SUPABASE -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<!-- QUESTION BANKS -->
+<!-- ═══════════════════════════════════════════ -->
+<!--  QUESTION BANK (embedded)                   -->
+<!-- ═══════════════════════════════════════════ -->
 <script>
+// ============================================================
+// T3 ACADEMY — COMPLETE QUESTION BANK
+// 443+ Questions across 4 subjects
+// GL Assessment 11+ Style
+// ============================================================
+
+// ── VERBAL REASONING (179 questions, 13 question types) ──
 // T3 Academy — Verbal Reasoning Complete Question Bank
 // GL Assessment 11+ Style — 12 Question Types, 20 Questions Each
 // Total: 240 Verbal Reasoning questions
@@ -694,6 +1102,7 @@ const VR = {
 
 };
 
+// ── MATHS (129 questions, 9 topics) ──
 // T3 Academy — Maths Complete Question Bank
 // GL Assessment 11+ Style — Full KS2 Curriculum
 // 10 Topics, 20 Questions Each = 200 Questions
@@ -719,7 +1128,7 @@ const MATHS = {
     { q:"What is the product of 7 and 8?", options:["15","54","56","64","48"], correct:2, explanation:"7×8=56.", tip:"7×8: try 7×10=70, then 70−14=56." },
     { q:"A number is multiplied by itself. The answer is 144. What is the number?", options:["11","12","13","14","15"], correct:1, explanation:"12×12=144. 12 is the square root of 144.", tip:"Learn square numbers: 11²=121, 12²=144, 13²=169." },
     { q:"What is the Roman numeral for 2026?", options:["MMXXIV","MMXXVI","MMXXV","MMXVI","MMXXVII"], correct:1, explanation:"2026=MM+XX+VI=MMXXVI.", tip:"M=1000, D=500, C=100, L=50, X=10, V=5, I=1." },
-    { q:"Which is a prime number?", options:["21","27","29","33","35"], correct:2, explanation:"29 is only divisible by 1 and 29.", tip:"Check: is the number divisible by 2,3,5,7? If not, it\'s prime." },
+    { q:"Which is a prime number?", options:["21","27","29","33","35"], correct:2, explanation:"29 is only divisible by 1 and 29.", tip:"Check: is the number divisible by 2,3,5,7? If not, it's prime." },
     { q:"What is the LCM of 4 and 6?", options:["2","8","12","24","6"], correct:2, explanation:"Multiples of 4: 4,8,12... Multiples of 6: 6,12... First common: 12.", tip:"List multiples of each number and find the first one they share." },
   ],
 
@@ -781,7 +1190,7 @@ const MATHS = {
     { q:"Train ticket: £12.50 adult, £6.75 child. Cost for 2 adults and 3 children?", options:["£38.00","£45.25","£43.25","£38.25","£44.25"], correct:2, explanation:"2×£12.50=£25. 3×£6.75=£20.25. Total=£45.25. Wait: 2×12.50=25, 3×6.75=20.25, total=45.25. Answer B.", tip:"Calculate adults and children separately, then add." },
     { q:"Mobile phone was £480. Now reduced by 25%. New price?", options:["£120","£240","£360","£420","£380"], correct:2, explanation:"25% of £480=£120. £480−£120=£360.", tip:"25%=1/4. Find 1/4 of the price, then subtract." },
     { q:"A shopkeeper buys 100 pens at 8p each. Sells them at 15p each. Profit?", options:["£3","£7","£8","£700","£70"], correct:1, explanation:"Cost=100×8p=800p=£8. Revenue=100×15p=1500p=£15. Profit=£7.", tip:"Profit = selling price − cost price. Calculate totals." },
-    { q:"3 friends share a £27 meal equally. Each pays £1.50 tip. Total paid each?", options:["£9.50","£10.50","£10.00","£11.50","£8.50"], correct:1, explanation:"£27÷3=£9. Plus £1.50 tip=£10.50 each.", tip:"Divide the bill, then add the tip to each person\'s share." },
+    { q:"3 friends share a £27 meal equally. Each pays £1.50 tip. Total paid each?", options:["£9.50","£10.50","£10.00","£11.50","£8.50"], correct:1, explanation:"£27÷3=£9. Plus £1.50 tip=£10.50 each.", tip:"Divide the bill, then add the tip to each person's share." },
     { q:"A car travels 45 miles on 5 litres of petrol. Petrol costs £1.60/litre. Cost per mile?", options:["16p","17p","18p","9p","10p"], correct:1, explanation:"Cost for 5L=£8. Cost per mile=£8÷45=17.8p≈18p. Actually: £8÷45≈17.8. Closest: 18p? GL answer: 17p if exact.", tip:"Calculate total cost, then divide by miles. Divide carefully." },
     { q:"A jar contains 240 sweets. 3/8 are red, 1/4 are blue, rest are green. How many are green?", options:["60","90","80","110","150"], correct:1, explanation:"Red=3/8 of 240=90. Blue=1/4 of 240=60. Green=240−90−60=90.", tip:"Find each fraction of the total, then subtract from the whole." },
     { q:"House price rises from £180,000 to £225,000. Percentage increase?", options:["20%","22%","25%","27%","30%"], correct:2, explanation:"Increase=£45,000. 45,000÷180,000=0.25=25%.", tip:"% increase = (increase÷original)×100." },
@@ -865,10 +1274,10 @@ const MATHS = {
     { q:"Matthew thinks of a number, ×2, −4 = 10. What was it?", options:["3","7","10","12","14"], correct:1, explanation:"Work backwards: 10+4=14, 14÷2=7.", tip:"Reverse each operation in reverse order." },
     { q:"9, 36, 81 are alike because they are all...?", options:["Even","Two-digit","Prime","Square numbers","Divisible by 2"], correct:3, explanation:"9=3², 36=6², 81=9². All perfect squares.", tip:"Learn square numbers: 1,4,9,16,25,36,49,64,81,100." },
     { q:"Callum: 2-digit number, digits sum to 5, it is prime, square has 3 digits. What is it?", options:["31","14","23","13","41"], correct:2, explanation:"Candidates: 14,23,32,41,50. Prime: 23,41. 23²=529 (3 digits✓). 41²=1681 (4 digits✗). Answer: 23.", tip:"Work through each condition to eliminate wrong answers." },
-    { q:"Which of these is NOT a multiple of 6?", options:["24","36","42","50","48"], correct:3, explanation:"24=4×6, 36=6×6, 42=7×6, 48=8×6. 50÷6=8.33... not a multiple.", tip:"Divide by 6 — if there's a remainder it\'s not a multiple." },
+    { q:"Which of these is NOT a multiple of 6?", options:["24","36","42","50","48"], correct:3, explanation:"24=4×6, 36=6×6, 42=7×6, 48=8×6. 50÷6=8.33... not a multiple.", tip:"Divide by 6 — if there's a remainder it's not a multiple." },
     { q:"What are the factors of 24?", options:["1,2,3,4,6,8,12,24","1,2,4,8,12,24","1,2,3,6,8,12,24","1,2,4,6,8,24","1,2,3,4,8,12,24"], correct:0, explanation:"1×24, 2×12, 3×8, 4×6. Factors: 1,2,3,4,6,8,12,24.", tip:"Find pairs that multiply to 24. Don't miss any pairs." },
     { q:"A frog starts 6m from the edge. Each jump halves the distance. After 3 jumps?", options:["10.5m","75cm","150cm","5.25m","125cm"], correct:1, explanation:"6→3→1.5→0.75m=75cm.", tip:"Halving repeatedly: 6, 3, 1.5, 0.75. Convert to cm: ×100." },
-    { q:"Greg starts with 5. Which does NOT give 17?", options:["Halve, +6, double","×4, −3","Triple, +2","Add 3 and double","×10, −16, halve"], correct:3, explanation:"A: 2.5+6=8.5×2=17✓. B: 20−3=17✓. C: 15+2=17✓. D: 5+3=8×2=16✗. E: 50−16=34÷2=17✓.", tip:"Test EVERY option fully. One small error and you\'ll pick the wrong one." },
+    { q:"Greg starts with 5. Which does NOT give 17?", options:["Halve, +6, double","×4, −3","Triple, +2","Add 3 and double","×10, −16, halve"], correct:3, explanation:"A: 2.5+6=8.5×2=17✓. B: 20−3=17✓. C: 15+2=17✓. D: 5+3=8×2=16✗. E: 50−16=34÷2=17✓.", tip:"Test EVERY option fully. One small error and you'll pick the wrong one." },
     { q:"168km to miles: divide by 8, multiply by 5. Answer?", options:["100","105","110","115","120"], correct:1, explanation:"168÷8=21. 21×5=105 miles.", tip:"Apply the formula step by step: ÷8 first, then ×5." },
     { q:"A rectangular playground has area 210m². Which COULD be its perimeter?", options:["44m","52m","64m","74m","88m"], correct:3, explanation:"Factor pairs of 210: 7×30 → perimeter=2(7+30)=74m.", tip:"List factor pairs, calculate perimeter for each: 2(l+w)." },
     { q:"Bus: 36 seats, already 27 people. 8 at next stop. How many still need seats?", options:["−1","1","9","17","8"], correct:1, explanation:"36−27=9 empty. 8 get on. 9−8=1 seat remaining. Actually: need seats = max(0, people−seats). 27+8=35 people. 35≤36, so 1 spare seat, 0 people standing. But question asks how many STILL NEED seats after 8 get on. 35 people, 36 seats. All have seats. But 1 spare seat means 0 need seats... Hmm. Rewrite: 36 seats, 27 on. 12 get on at next stop. Now 27+12=39>36. So 39−36=3 people need seats.", tip:"Check if the number of people exceeds the number of seats." },
@@ -886,6 +1295,7 @@ const MATHS = {
 
 };
 
+// ── ENGLISH (69 questions, 6 topics) ──
 // ============================================================
 // T3 ACADEMY — ENGLISH COMPLETE QUESTION BANK
 // GL Assessment 11+ Style
@@ -937,7 +1347,7 @@ const ENGLISH_VOCABULARY = [
   { q:"'The winds at length were lulled.' What does 'lulled' mean here?", opts:["Rhythmic","Weakened","Welcomed","Rocked","Calmed"], ans:4, exp:"'Lulled' means soothed or calmed down. The winds quietened and became peaceful.", tip:"Context: the winds are dying down. Lulled = calmed/soothed." },
   { q:"'In a few days it was again habitable.' What does 'habitable' mean?", opts:["Repaired","Fit to live in","Luxurious","Dry","Destroyed"], ans:1, exp:"'Habitable' = fit to be lived in. From 'habitat' — a place where something lives.", tip:"Root: 'habit' = to dwell. -able = capable of. Habitable = can be lived in." },
   { q:"'The damage was irreparable.' What does this suggest?", opts:["Easy to repair","Likely to be repeated","Could be repaired but difficultly","Impossible to repair","Never seen before"], ans:3, exp:"'Irreparable' = ir (not) + repairable = impossible to repair.", tip:"ir- = not. Irreparable = not repairable = impossible to fix." },
-  { q:"'We battered vigorously at the rock.' What does 'vigorously' mean?", opts:["Painfully","Rebelliously","Energetically","Carefully","Quietly"], ans:2, exp:"'Vigorously' = with great energy and force.", tip:"Think about what 'battering a rock' looks like — it\'s forceful and energetic." },
+  { q:"'We battered vigorously at the rock.' What does 'vigorously' mean?", opts:["Painfully","Rebelliously","Energetically","Carefully","Quietly"], ans:2, exp:"'Vigorously' = with great energy and force.", tip:"Think about what 'battering a rock' looks like — it's forceful and energetic." },
   { q:"'Six days of incessant toil.' What does 'incessant' mean?", opts:["Easy","Occasional","Never-stopping","Difficult","Rapid"], ans:2, exp:"'Incessant' = in (not) + cessant (ceasing) = never stopping.", tip:"in- = not. Incessant = not stopping = continuous." },
   { q:"'Soldiers' quarters.' What does 'quarters' mean in this context?", opts:["Sections","Lodgings","Storerooms","Money","One quarter"], ans:1, exp:"'Quarters' in a military context means accommodation/lodgings where people live.", tip:"'Quarters' can mean where soldiers live — not money or fractions here." },
   { q:"'Crystal pillars rose like mighty trees.' This is an example of:", opts:["A metaphor","Personification","Exaggeration","A simile","Alliteration"], ans:3, exp:"'Like mighty trees' — the word 'like' indicates a simile.", tip:"Simile = comparison using 'like' or 'as'. Metaphor = direct comparison without 'like'/'as'." },
@@ -952,10 +1362,10 @@ const ENGLISH_VOCABULARY = [
 ];
 
 const ENGLISH_GRAMMAR = [
-  { q:"What word class is 'carefully' in: 'She walked carefully'?", opts:["Noun","Verb","Adjective","Adverb","Preposition"], ans:3, exp:"'Carefully' modifies the verb 'walked' — it tells us HOW she walked. This is an adverb.", tip:"Adverbs answer: how? when? where? If it modifies a verb, it\'s an adverb." },
+  { q:"What word class is 'carefully' in: 'She walked carefully'?", opts:["Noun","Verb","Adjective","Adverb","Preposition"], ans:3, exp:"'Carefully' modifies the verb 'walked' — it tells us HOW she walked. This is an adverb.", tip:"Adverbs answer: how? when? where? If it modifies a verb, it's an adverb." },
   { q:"What word class is 'trailing' in: 'trailing sprays of ivy'?", opts:["Noun","Verb","Adjective","Adverb","Preposition"], ans:2, exp:"'Trailing' comes before the noun 'sprays' and describes them. It is a participial adjective.", tip:"-ing before a noun = adjective. -ing after is/was/were = part of a verb." },
   { q:"What word class is 'vigorously' in: 'they battered vigorously'?", opts:["Noun","Verb","Adjective","Adverb","Preposition"], ans:3, exp:"'Vigorously' modifies the verb 'battered' — it tells us how they battered. Adverb.", tip:"Ask: how did they batter? Vigorously = with great force. Modifies the verb." },
-  { q:"What word class is 'soaked' in: 'the provisions were soaked'?", opts:["Noun","Verb","Adjective","Adverb","Preposition"], ans:2, exp:"'Soaked' describes the state of the provisions — it\'s a participial adjective.", tip:"'Were soaked' as a verb? Or 'soaked provisions' as an adj? Here it describes state = adjective." },
+  { q:"What word class is 'soaked' in: 'the provisions were soaked'?", opts:["Noun","Verb","Adjective","Adverb","Preposition"], ans:2, exp:"'Soaked' describes the state of the provisions — it's a participial adjective.", tip:"'Were soaked' as a verb? Or 'soaked provisions' as an adj? Here it describes state = adjective." },
   { q:"What word class is 'resolve' in: 'he made a resolve to continue'?", opts:["Noun","Verb","Adjective","Adverb","Preposition"], ans:0, exp:"Here 'resolve' is used as a noun (a determination/decision). It follows 'a' which signals a noun.", tip:"'A resolve' = a decision. 'He resolved' = he decided (verb). Context determines class." },
   { q:"Identify the VERB in: 'The ancient tree swayed in the wind.'", opts:["ancient","tree","swayed","wind","The"], ans:2, exp:"'Swayed' is the verb — it tells us what the tree DID.", tip:"Find the doing/action/being word. What did the tree do? It swayed." },
   { q:"Which sentence uses a COMMA correctly?", opts:["The dog, ran across the garden.","She was tired, but she kept going.","He ate, quickly.","The girl, smiled.","They were, happy."], ans:1, exp:"A comma before 'but' correctly separates two main clauses. The others incorrectly separate subject from verb.", tip:"Never put a comma between subject and verb. Comma before 'but' joining two clauses is correct." },
@@ -970,10 +1380,10 @@ const ENGLISH_GRAMMAR = [
 ];
 
 const ENGLISH_PUNCTUATION = [
-  { q:"Find the punctuation error:\n'Why don\'t you play outside today,' suggested Tom's aunt.", opts:["Why don\'t you play outside today,'","suggested Tom's aunt.","No mistake","The apostrophes","The comma placement"], ans:0, exp:"The comma should be a question mark because the spoken words form a question: 'Why don\'t you play outside today?'", tip:"If spoken words are a question, use ? inside the speech marks, not a comma." },
+  { q:"Find the punctuation error:\n'Why don't you play outside today,' suggested Tom's aunt.", opts:["Why don't you play outside today,'","suggested Tom's aunt.","No mistake","The apostrophes","The comma placement"], ans:0, exp:"The comma should be a question mark because the spoken words form a question: 'Why don't you play outside today?'", tip:"If spoken words are a question, use ? inside the speech marks, not a comma." },
   { q:"Find the punctuation error:\n'Even the best, most expensive detergent, couldn't remove the stain.'", opts:["Even the best,","most expensive detergent,","couldn't remove","the stain.","No mistake"], ans:1, exp:"The comma after 'detergent' incorrectly separates the subject from its verb. Remove it.", tip:"Never place a comma between the subject and its main verb." },
   { q:"Find the punctuation error:\n'Looking through my parents music collection, I was amazed.'", opts:["Looking through my parents","music collection,","I was amazed","No mistake","parents (apostrophe missing)"], ans:0, exp:"'parents' should be 'parents'' (possessive): my parents' music collection.", tip:"Plural possessive: add apostrophe after the s: parents' (belonging to the parents)." },
-  { q:"Find the punctuation error:\n'If we hadnt seen the road sign, we would have ended up in Wales.'", opts:["If we hadnt seen","the road sign,","we would have ended up","in Wales.","No mistake"], ans:0, exp:"'hadnt' should be 'hadn't' — contraction of 'had not' needs an apostrophe.", tip:"Contractions always need apostrophes: hadn't, don\'t, can\'t, won\'t." },
+  { q:"Find the punctuation error:\n'If we hadnt seen the road sign, we would have ended up in Wales.'", opts:["If we hadnt seen","the road sign,","we would have ended up","in Wales.","No mistake"], ans:0, exp:"'hadnt' should be 'hadn't' — contraction of 'had not' needs an apostrophe.", tip:"Contractions always need apostrophes: hadn't, don't, can't, won't." },
   { q:"Find the punctuation error:\n'We were lucky to win tickets to see The Nutcracker this Winter.'", opts:["We were lucky to win tickets","to see The Nutcracker","this Winter.","No mistake","The Nutcracker (capitalisation)"], ans:2, exp:"'Winter' should not be capitalised. Seasons are common nouns in English.", tip:"Seasons (spring, summer, autumn, winter) are NOT capitalised in English." },
   { q:"Which sentence is correctly punctuated?", opts:["Its raining outside.","Its' raining outside.","It's raining outside.","It is' raining outside.","Its, raining outside."], ans:2, exp:"It's = it is. The apostrophe replaces the missing letter 'i'. 'Its' (no apostrophe) = belonging to it.", tip:"It's = it is. Its = belonging to it. Very commonly confused pair." },
   { q:"Which sentence uses a COLON correctly?", opts:["She ran: quickly.","He was: tired.","The recipe had two stages: chop and blend.","They were: happy and sad.","She: laughed."], ans:2, exp:"A colon introduces a list, explanation or example after a complete clause.", tip:"Colon use: complete clause + colon + explanation/list/example." },
@@ -1011,6 +1421,7 @@ const englishBank = {
 const ENGLISH_TOTAL = Object.values(englishBank).reduce((s,a)=>s+a.length,0);
 
 
+// ── NON-VERBAL REASONING (66 questions, 8 topics) ──
 // ============================================================
 // T3 ACADEMY — NON-VERBAL REASONING COMPLETE QUESTION BANK
 // GL Assessment 11+ Style
@@ -1047,7 +1458,7 @@ const NVR_ANALOGIES = [
 const NVR_SIMILARITIES = [
   { q:"Both examples show a small solid black circle inside a larger outline shape (one rounded rectangle, one pentagon). Which option matches?", opts:["Star with solid circle","Triangle with white circle","Hexagon with solid circle","Oval, no inner shape","Solid circle alone"], ans:2, exp:"Shared feature: small SOLID circle inside a larger OUTLINE shape. Hexagon+solid circle = C.", tip:"Focus on what's SHARED between examples. Ignore the outer shape type — it varies." },
   { q:"Both examples show an arrow with an unshaded (white) equilateral triangle arrowhead — one large arrow, one small. Which option matches?", opts:["Arrow with shaded triangular head","Arrow with unshaded equilateral triangle head","Arrow with circular head","Arrow with shaded small head","Line with no arrowhead"], ans:1, exp:"Shared: arrowhead is unshaded equilateral triangle. Size and direction are irrelevant.", tip:"Arrow direction and size are red herrings. Focus on the arrowhead shape and shading." },
-  { q:"Both examples show exactly half the shape shaded solid black (one circle, one rectangle). Which option matches?", opts:["Fully shaded triangle","Half-shaded hexagon","Unshaded pentagon","Quarter-shaded oval","Triangle with line, no shading"], ans:1, exp:"Shared: exactly half the shape is solid black. Shape type is irrelevant.", tip:"Shape type varies between examples = it\'s a red herring. Half-shaded is the shared feature." },
+  { q:"Both examples show exactly half the shape shaded solid black (one circle, one rectangle). Which option matches?", opts:["Fully shaded triangle","Half-shaded hexagon","Unshaded pentagon","Quarter-shaded oval","Triangle with line, no shading"], ans:1, exp:"Shared: exactly half the shape is solid black. Shape type is irrelevant.", tip:"Shape type varies between examples = it's a red herring. Half-shaded is the shared feature." },
   { q:"Three examples each show a shape with a line of symmetry drawn in (square, circle, irregular hexagon). Which option matches?", opts:["Triangle with non-symmetrical line","Pentagon with vertical line of symmetry","Rectangle with non-symmetrical diagonal","Oval with two crossing non-symmetry lines","Shape with no line"], ans:1, exp:"Shared: a true line of symmetry. Pentagon with vertical symmetry line = correct.", tip:"A line of symmetry must divide the shape into two MIRROR-IMAGE halves." },
   { q:"Both examples show a large shape containing exactly TWO smaller shapes inside it. Which option matches?", opts:["Circle with one small square","Hexagon with three dots","Triangle with circle and star","Rectangle with no inner shapes","Small square with two shapes"], ans:2, exp:"Shared: large outer shape + exactly TWO inner shapes. Triangle+circle+star = C.", tip:"Count carefully: not one, not three — exactly TWO inner shapes." },
   { q:"Both examples show a large shape with diagonal shading AND a small white shape floating OUTSIDE (not touching) the large shape. Which matches?", opts:["Diagonally shaded shape, small white shape touching edge","Diagonally shaded shape, small white shape separate","Unshaded shape, small white shape outside","Diagonally shaded shape, no small shape","Dots-filled shape, small white shape outside"], ans:1, exp:"TWO features must both be present: diagonal shading + small white shape separate from it.", tip:"When there are two shared features, BOTH must appear in the answer." },
@@ -1059,7 +1470,7 @@ const NVR_SIMILARITIES = [
 
 const NVR_ODD_ONE_OUT = [
   { q:"Five figures: A=white triangle, B=white square, C=BLACK circle, D=white hexagon, E=white pentagon. Odd one out?", opts:["A","B","C","D","E"], ans:2, exp:"A, B, D, E are all white/unshaded. Only C is solid black. C is the odd one out.", tip:"Find what FOUR shapes share. The odd one breaks that shared feature." },
-  { q:"Five arrows: A=large arrow up, B=medium arrow up, C=small arrow up, D=large arrow DOWN, E=tiny arrow up. Odd one out?", opts:["A","B","C","D","E"], ans:3, exp:"A, B, C, E all point upward. Only D points downward. D is the odd one out.", tip:"SIZE varies freely among the group — it\'s a red herring. DIRECTION is the key feature." },
+  { q:"Five arrows: A=large arrow up, B=medium arrow up, C=small arrow up, D=large arrow DOWN, E=tiny arrow up. Odd one out?", opts:["A","B","C","D","E"], ans:3, exp:"A, B, C, E all point upward. Only D points downward. D is the odd one out.", tip:"SIZE varies freely among the group — it's a red herring. DIRECTION is the key feature." },
   { q:"Five shapes with diagonal lines: A=square \\, B=triangle \\, C=hexagon \\, D=pentagon /, E=oval \\. Odd one out?", opts:["A","B","C","D","E"], ans:3, exp:"A, B, C, E all have \\ lines (top-left to bottom-right). D has / lines. D is odd.", tip:"\\ and / are DIFFERENT directions. Use the edge of your paper to check." },
   { q:"Five compound figures: A=circle with triangle inside, B=square with diamond inside, C=pentagon with cross inside, D=hexagon with circle inside, E=triangle with small square OUTSIDE. Odd one out?", opts:["A","B","C","D","E"], ans:4, exp:"A, B, C, D all have a shape INSIDE the outer shape. E has the shape OUTSIDE. E is odd.", tip:"Spatial relationship: inside vs outside. E breaks the 'inside' pattern." },
   { q:"Five figures: A=double-headed arrow, B=double-headed arrow, C=SINGLE-headed arrow, D=double-headed arrow, E=double-headed arrow. Odd one out?", opts:["A","B","C","D","E"], ans:2, exp:"A, B, D, E all have arrowheads at BOTH ends. C has only ONE arrowhead. C is odd.", tip:"Count the arrowheads carefully: one vs two makes all the difference." },
@@ -1067,7 +1478,7 @@ const NVR_ODD_ONE_OUT = [
   { q:"Five figures: A=shape with 1 dot, B=shape with 1 dot, C=shape with 1 dot, D=shape with 2 DOTS, E=shape with 1 dot. Odd one out?", opts:["A","B","C","D","E"], ans:3, exp:"A, B, C, E all have 1 dot inside. D has 2 dots. D is odd.", tip:"Count carefully. Small visual differences like 1 vs 2 dots are easy to miss." },
   { q:"Five shapes: A=3-sided, B=4-sided (EVEN), C=5-sided, D=7-sided, E=3-sided. Odd one out?", opts:["A","B","C","D","E"], ans:1, exp:"A(3), C(5), D(7), E(3) all have ODD numbers of sides. B(4) has an EVEN number. B is odd.", tip:"Count sides exactly. Odd vs even number of sides can be the distinguishing feature." },
   { q:"Five figures each with a shape overlapping: A=overlapping, B=overlapping, C=TOUCHING AT ONE POINT only, D=overlapping, E=overlapping. Odd one out?", opts:["A","B","C","D","E"], ans:2, exp:"A, B, D, E show shapes that share an overlapping area. C only touches at one point. C is odd.", tip:"Overlapping = shared area. Touching = only share a boundary point. Different!" },
-  { q:"Five shapes: A=large, B=large, C=SMALL, D=large, E=large. All shapes are the same type. Odd one out?", opts:["A","B","C","D","E"], ans:2, exp:"A, B, D, E are all large. C is small. C is the odd one out.", tip:"Sometimes it\'s as simple as size. Check if one shape is noticeably different in size." },
+  { q:"Five shapes: A=large, B=large, C=SMALL, D=large, E=large. All shapes are the same type. Odd one out?", opts:["A","B","C","D","E"], ans:2, exp:"A, B, D, E are all large. C is small. C is the odd one out.", tip:"Sometimes it's as simple as size. Check if one shape is noticeably different in size." },
 ];
 
 const NVR_CODES = [
@@ -1078,7 +1489,7 @@ const NVR_CODES = [
   { q:"Shape A: Large shaded hexagon = RFP. Shape B: Large shaded square = SFP. Shape C: Small shaded hexagon = RGP. Code for SMALL SHADED SQUARE?", opts:["RFP","SGP","SFP","RGQ","SFQ"], ans:1, exp:"R=hexagon, S=square, F=large, G=small, P=shaded. Small shaded square=SGP.", tip:"With 3-letter codes, decode each position separately: shape, size, shading." },
   { q:"Arrow pointing right, 1 base line=KQW. Arrow pointing left, 2 base lines=LRX. Arrow pointing right, 2 base lines=KRX. Code for ARROW POINTING LEFT, 1 BASE LINE?", opts:["LQW","KRX","LRW","KQX","LQX"], ans:0, exp:"K=right, L=left. Q=1 line, R=2 lines. W and X encode arrowhead style. Left+1 line=LQW.", tip:"With 3 codes to decode: direction, base lines, head style. Use elimination." },
   { q:"White arrows pointing outward=F/S. White arrows pointing inward=G/S. Black arrows pointing outward=F/T. Black arrows pointing inward=G/T. Code for GREY arrows pointing outward (grey is a NEW fill type)?", opts:["F/S","G/S","F/U","G/U","F/T"], ans:2, exp:"Top: F=outward, G=inward. Bottom: S=white, T=black, U=grey (new letter for new feature). F/U.", tip:"When test shape has a NEW feature, look for the new letter in the options." },
-  { q:"Shape 1: circle with dot, code=LP. Shape 2: hexagon no dot, code=MQ. Shape 3: circle solid black, code=NP. Code for HEXAGON SOLID BLACK?", opts:["LM","NQ","MQ","MP","LQ"], ans:1, exp:"Wait: L=white circle, M=white hexagon, N=black circle? Re-examine. P=has dot, Q=no dot. Fill: L=white, M=white hex, N=black. Hexagon black with no dot: need new letter for black hexagon. By elimination: NQ (black+no dot) but that's a circle... The answer from the options is NQ.", tip:"When confused, use elimination: cross out options that definitely don\'t fit." },
+  { q:"Shape 1: circle with dot, code=LP. Shape 2: hexagon no dot, code=MQ. Shape 3: circle solid black, code=NP. Code for HEXAGON SOLID BLACK?", opts:["LM","NQ","MQ","MP","LQ"], ans:1, exp:"Wait: L=white circle, M=white hexagon, N=black circle? Re-examine. P=has dot, Q=no dot. Fill: L=white, M=white hex, N=black. Hexagon black with no dot: need new letter for black hexagon. By elimination: NQ (black+no dot) but that's a circle... The answer from the options is NQ.", tip:"When confused, use elimination: cross out options that definitely don't fit." },
 ];
 
 const NVR_MATRICES = [
@@ -1122,670 +1533,798 @@ const nvrBank = {
 const NVR_TOTAL = Object.values(nvrBank).reduce((s,a)=>s+a.length,0);
 
 
-// Assemble
+// ── MASTER BANK OBJECT ──
+// Use this in your platform:
+// QB.english = englishBank  (keys: Comprehension, Grammar, etc.)
+// QB.maths = MATHS          (keys: numberAndPlaceValue, fractions, etc.)
+// QB.verbal = VR            (keys: synonyms, antonyms, sequences, etc.)
+// QB.nvr = nvrBank          (keys: series, analogies, matrices, etc.)
+
 const QB = {
   english: englishBank,
   maths: MATHS,
   verbal: VR,
   nvr: nvrBank
 };
-</script>
 
-<!-- MAIN APP -->
-<script>
-const SB_URL = 'https://tsfiaqunaasthbmuxvdx.supabase.co';
-const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRzZmlhcXVuYWFzdGhibXV4dmR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4MTU1NTEsImV4cCI6MjA5MDM5MTU1MX0.vaMgcIS3u_ROflDlm3DuXlb-tb4vmOi4uPYJNaKsT2k';
-const sb = supabase.createClient(SB_URL, SB_KEY);
+// ═══════════════════════════════════════════════════════════════
+//  T3 ACADEMY — MAIN APPLICATION SCRIPT
+// ═══════════════════════════════════════════════════════════════
 
-// ── STATE ──
-let user = null, profile = null;
-let curSubj = '', curTopic = '';
-let qBank = [], qIdx = 0, qCorrect = 0;
-let qSel = null, sesStart = 0, timerInt = null, qSecs = 0;
-let userProg = {};
-let resetSubj = '', resetTopic = '';
-let allAttempts = 0, allCorrect = 0, curStreak = 0;
+// ── Supabase Setup ──
+const SUPABASE_URL = "https://tsfiaqunaasthbmuxvdx.supabase.co";
+const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRzZmlhcXVuYWFzdGhibXV4dmR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4MTU1NTEsImV4cCI6MjA5MDM5MTU1MX0.vaMgcIS3u_ROflDlm3DuXlb-tb4vmOi4uPYJNaKsT2k";
+const ANTHROPIC_KEY = "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"; // retrieve from console.anthropic.com — key named "T3academy Ollie"
 
-// ── INIT ──
-async function init() {
-  try {
-    const { data: { session } } = await sb.auth.getSession();
-    if (session) { user = session.user; await afterAuth(); }
-    else { showAuth(); }
-    sb.auth.onAuthStateChange(async (ev, ses) => {
-      if (ev === 'SIGNED_IN' && ses) { user = ses.user; await afterAuth(); }
-      else if (ev === 'SIGNED_OUT') { user = null; showAuth(); }
-    });
-  } catch(e) { console.error('Init error:', e); showAuth(); }
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+// ── App State ──
+let currentUser = null;
+let currentProfile = null;
+let currentSubject = null;   // "english" | "maths" | "verbal" | "nvr"
+let currentTopic = null;
+let currentQuestions = [];
+let currentQIndex = 0;
+let currentScore = 0;
+let currentAttemptNumber = 1;
+let timerInterval = null;
+let timerSeconds = 0;
+let hintShown = false;
+let questionAnswered = false;
+let shadowLogEntries = [];
+let questionStartTime = 0;
+let progressCache = {};      // keyed by "subject::topic"
+let attemptsCache = [];
+
+// ── Subject Config ──
+const SUBJECT_CONF = {
+  english: { label: "English", icon: "📖", css: "english", bankKey: "english" },
+  maths:   { label: "Maths",   icon: "🔢", css: "maths",   bankKey: "maths" },
+  verbal:  { label: "Verbal Reasoning", icon: "💬", css: "verbal", bankKey: "verbal" },
+  nvr:     { label: "Non-Verbal Reasoning", icon: "🔷", css: "nvr", bankKey: "nvr" }
+};
+
+// ── Normalise question format ──
+// VR/Maths: { q, options, correct, explanation, tip }
+// English/NVR: { q, opts, ans, exp, tip }
+function normaliseQ(q) {
+  return {
+    q:    q.q,
+    opts: q.options || q.opts || [],
+    ans:  (q.correct !== undefined) ? q.correct : (q.ans !== undefined ? q.ans : 0),
+    exp:  q.explanation || q.exp || "",
+    tip:  q.tip || ""
+  };
 }
 
-function showAuth() {
-  document.getElementById('authWrap').style.display = 'flex';
-  document.getElementById('appWrap').style.display = 'none';
+// ── Fisher-Yates Shuffle ──
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
 }
 
-async function afterAuth() {
-  document.getElementById('authWrap').style.display = 'none';
-  document.getElementById('appWrap').style.display = 'block';
-  await loadProfile();
-  await loadProgress();
-  refreshHome();
-  setupEmojis();
+// Shuffle options while tracking correct answer
+function shuffleWithAnswer(q) {
+  const norm = normaliseQ(q);
+  const correctText = norm.opts[norm.ans];
+  const shuffled = shuffle(norm.opts);
+  const newAns = shuffled.indexOf(correctText);
+  return { ...norm, opts: shuffled, ans: newAns };
 }
 
-// ── AUTH FUNCTIONS ──
-function switchTab(t) {
-  document.getElementById('tabA').classList.toggle('on', t==='login');
-  document.getElementById('tabB').classList.toggle('on', t==='signup');
-  document.getElementById('loginForm').style.display = t==='login' ? 'block' : 'none';
-  document.getElementById('signupForm').style.display = t==='signup' ? 'block' : 'none';
-  document.getElementById('liMsg').textContent = '';
-  document.getElementById('suMsg').textContent = '';
+// ── Toast ──
+function toast(msg, type = "") {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.className = type ? `show ${type}` : "show";
+  setTimeout(() => { t.className = ""; }, 3000);
+}
+
+// ── Show/hide loading ──
+function setLoading(show) {
+  document.getElementById("loading-overlay").style.display = show ? "flex" : "none";
+}
+
+// ── Page routing ──
+function showPage(name) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById(name + "-page").classList.add("active");
+}
+
+function showView(name) {
+  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+  document.getElementById("view-" + name).classList.add("active");
+  document.querySelectorAll(".nav-link").forEach(l => l.classList.remove("active"));
+  const nl = document.getElementById("nav-" + name);
+  if (nl) nl.classList.add("active");
+  // scroll to top
+  window.scrollTo({ top: 0 });
+  if (name === "progress") buildProgressView();
+  if (name === "parent")   buildParentView();
+  if (name === "dashboard") refreshDashboard();
+}
+
+// ── Auth ──
+function switchAuthTab(tab) {
+  document.querySelectorAll(".auth-tab").forEach((t, i) => {
+    t.classList.toggle("active", (i === 0 && tab === "login") || (i === 1 && tab === "register"));
+  });
+  document.getElementById("login-form").classList.toggle("hidden", tab !== "login");
+  document.getElementById("register-form").classList.toggle("hidden", tab !== "register");
 }
 
 async function doLogin() {
-  const email = document.getElementById('liEmail').value.trim();
-  const pass = document.getElementById('liPass').value;
-  const msg = document.getElementById('liMsg');
-  msg.textContent = 'Signing in...';
-  msg.className = 'auth-msg';
-  try {
-    const { error } = await sb.auth.signInWithPassword({ email, password: pass });
-    if (error) throw error;
-  } catch(e) {
-    msg.textContent = e.message || 'Sign in failed. Check your details.';
-    msg.className = 'auth-msg err';
-  }
+  const email = document.getElementById("login-email").value.trim();
+  const pass  = document.getElementById("login-password").value;
+  if (!email || !pass) { toast("Please fill in email and password.", "error"); return; }
+  setLoading(true);
+  const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
+  setLoading(false);
+  if (error) { toast(error.message, "error"); return; }
+  await onSignedIn(data.user);
 }
 
-async function doSignup() {
-  const name = document.getElementById('suName').value.trim();
-  const email = document.getElementById('suEmail').value.trim();
-  const pass = document.getElementById('suPass').value;
-  const role = document.getElementById('suRole').value;
-  const msg = document.getElementById('suMsg');
-  msg.textContent = 'Creating account...';
-  msg.className = 'auth-msg';
-  try {
-    const { error } = await sb.auth.signUp({
-      email, password: pass,
-      options: { data: { full_name: name, role }, emailRedirectTo: window.location.href }
-    });
-    if (error) throw error;
-    // Try auto sign-in
-    const { error: e2 } = await sb.auth.signInWithPassword({ email, password: pass });
-    if (e2) {
-      msg.textContent = '✅ Account created! Please sign in.';
-      msg.className = 'auth-msg ok';
-      switchTab('login');
-    }
-  } catch(e) {
-    msg.textContent = e.message || 'Sign up failed. Try again.';
-    msg.className = 'auth-msg err';
-  }
+async function doRegister() {
+  const name  = document.getElementById("reg-name").value.trim();
+  const email = document.getElementById("reg-email").value.trim();
+  const pass  = document.getElementById("reg-password").value;
+  const role  = document.getElementById("reg-role").value;
+  if (!name || !email || !pass) { toast("Please fill in all fields.", "error"); return; }
+  if (pass.length < 6) { toast("Password must be at least 6 characters.", "error"); return; }
+  setLoading(true);
+  const { data, error } = await sb.auth.signUp({
+    email, password: pass,
+    options: { data: { full_name: name, role } }
+  });
+  setLoading(false);
+  if (error) { toast(error.message, "error"); return; }
+  if (data.user) await onSignedIn(data.user);
+  else toast("Check your email to confirm your account.", "success");
 }
 
-async function doSignOut() {
+async function doLogout() {
   await sb.auth.signOut();
-  closeMenu();
+  currentUser = null; currentProfile = null;
+  progressCache = {}; attemptsCache = [];
+  document.getElementById("ollie-panel").style.display = "none";
+  showPage("auth");
 }
 
-// ── PROFILE ──
-async function loadProfile() {
-  const { data } = await sb.from('profiles').select('*').eq('id', user.id).single();
-  if (data) {
-    profile = data;
-    const name = data.full_name || data.email?.split('@')[0] || 'Student';
-    const emoji = data.avatar_emoji || '🦉';
-    document.getElementById('hiName').textContent = name.split(' ')[0];
-    document.getElementById('avaBtn').textContent = emoji;
-    document.getElementById('menuName').textContent = name;
-    document.getElementById('menuEmail').textContent = data.email || '';
-    if (data.role === 'parent') {
-      document.getElementById('navParent').style.display = '';
-      document.getElementById('menuParent').style.display = '';
-    }
+async function onSignedIn(user) {
+  currentUser = user;
+  // Load profile
+  const { data: prof } = await sb.from("profiles").select("*").eq("id", user.id).single();
+  currentProfile = prof;
+  setupAppUI();
+  await loadProgressCache();
+  refreshDashboard();
+  showPage("app");
+  document.getElementById("ollie-panel").style.display = "block";
+  startStreakCheck();
+}
+
+function setupAppUI() {
+  if (!currentProfile) return;
+  const initial = (currentProfile.full_name || currentProfile.email || "?")[0].toUpperCase();
+  document.getElementById("nav-avatar").textContent = initial;
+  // Show parent nav if role is parent
+  if (currentProfile.role === "parent") {
+    document.getElementById("nav-parent").classList.remove("hidden");
   }
 }
 
-function setupEmojis() {
-  const emojis = ['🦉','🐯','🦁','🐻','🐼','🐸','🦊','🐺','🦄','🐙','🦋','🐬','🦅','🌟','🚀'];
-  const cur = profile?.avatar_emoji || '🦉';
-  document.getElementById('emojiRow').innerHTML = emojis.map(e =>
-    `<span class="emj${e===cur?' picked':''}" onclick="setEmoji('${e}')">${e}</span>`
-  ).join('');
-}
-
-async function setEmoji(e) {
-  document.getElementById('avaBtn').textContent = e;
-  document.querySelectorAll('.emj').forEach(el => el.classList.toggle('picked', el.textContent===e));
-  if (user) await sb.from('profiles').update({ avatar_emoji: e }).eq('id', user.id);
-  if (profile) profile.avatar_emoji = e;
-}
-
-function toggleMenu() { document.getElementById('avaMenu').classList.toggle('open'); }
-function closeMenu() { document.getElementById('avaMenu').classList.remove('open'); }
-document.addEventListener('click', e => {
-  const ava = document.querySelector('.ava');
-  if (ava && !ava.contains(e.target)) closeMenu();
-});
-
-// ── PROGRESS LOADING ──
-async function loadProgress() {
-  if (!user) return;
-  const { data: prog } = await sb.from('progress').select('*').eq('user_id', user.id);
-  userProg = {};
-  if (prog) prog.forEach(p => { userProg[p.subject+'::'+p.topic] = p; });
-
-  const { data: streak } = await sb.from('streaks').select('*').eq('user_id', user.id).single();
-  if (streak) {
-    curStreak = streak.current_streak || 0;
-    allAttempts = streak.total_questions || 0;
-    allCorrect = streak.total_correct || 0;
-    document.getElementById('streakNum').textContent = curStreak;
-    document.getElementById('stS').textContent = curStreak;
-    document.getElementById('stQ').textContent = allAttempts.toLocaleString();
-    document.getElementById('stA').textContent = allAttempts > 0 ? Math.round(allCorrect/allAttempts*100)+'%' : '—';
+// ── Streak ──
+async function startStreakCheck() {
+  if (!currentUser) return;
+  const today = new Date().toISOString().split("T")[0];
+  const { data: streak } = await sb.from("streaks").select("*").eq("user_id", currentUser.id).single();
+  if (!streak) return;
+  const last = streak.last_active_date;
+  if (last !== today) {
+    const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
+    const newStreak = last === yesterday ? streak.current_streak + 1 : 1;
+    await sb.from("streaks").update({
+      current_streak: newStreak,
+      longest_streak: Math.max(newStreak, streak.longest_streak),
+      last_active_date: today
+    }).eq("user_id", currentUser.id);
   }
 }
 
-// ── HOME ──
-function refreshHome() {
-  ['english','maths','verbal','nvr'].forEach(s => {
-    const topics = Object.keys(QB[s] || {});
-    const done = topics.filter(t => userProg[s+'::'+t]?.completed).length;
-    const pct = topics.length > 0 ? Math.round(done/topics.length*100) : 0;
-    const bar = document.getElementById('bar-'+s);
-    const pctEl = document.getElementById('pct-'+s);
-    if (bar) bar.style.width = pct+'%';
-    if (pctEl) pctEl.textContent = pct+'% complete';
-  });
-  buildPlan();
-  const name = profile?.full_name?.split(' ')[0] || 'there';
-  const msgs = [
-    `Welcome back, ${name}! Ready to practise? Every question counts. 🎯`,
-    `Hi ${name}! Let's strengthen those weak spots today. 💪`,
-    `Good to see you, ${name}! Consistent practice is the secret weapon. 🦉`,
+// ── Load progress cache ──
+async function loadProgressCache() {
+  if (!currentUser) return;
+  progressCache = {};
+  attemptsCache = [];
+  const { data: progRows } = await sb.from("progress").select("*").eq("user_id", currentUser.id);
+  const { data: attRows }  = await sb.from("attempts").select("*").eq("user_id", currentUser.id).order("created_at", { ascending: false });
+  if (progRows) progRows.forEach(r => { progressCache[r.subject + "::" + r.topic] = r; });
+  if (attRows) attemptsCache = attRows;
+}
+
+// ── Dashboard ──
+function refreshDashboard() {
+  if (!currentProfile) return;
+  const name = (currentProfile.full_name || currentProfile.email || "").split(" ")[0];
+  const hour = new Date().getHours();
+  let greeting = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
+  document.getElementById("dashboard-greeting").textContent = greeting + ", " + name + "! 🦉";
+
+  const tips = [
+    "Little and often is the best way to prepare for the 11+.",
+    "Try a topic you haven't done yet today.",
+    "Remember: read every question carefully before answering.",
+    "Stuck on something? Ask Ollie for a hint!",
+    "Consistent daily practice makes all the difference."
   ];
-  document.getElementById('ollieMsg').textContent = msgs[Math.floor(Math.random()*msgs.length)];
+  document.getElementById("dashboard-tip").textContent = tips[Math.floor(Math.random() * tips.length)];
+
+  // Stats from cache
+  let totalQ = 0, totalCorrect = 0;
+  attemptsCache.forEach(a => { totalQ += a.total; totalCorrect += a.score; });
+  document.getElementById("stat-total-q").textContent = totalQ;
+  document.getElementById("stat-accuracy").textContent = totalQ > 0 ? Math.round(totalCorrect / totalQ * 100) + "%" : "—";
+
+  // streak
+  loadStreakDisplay();
+
+  // Per-subject stats
+  updateSubjectStats("english",  Object.keys(QB.english).length);
+  updateSubjectStats("maths",    Object.keys(QB.maths).length);
+  updateSubjectStats("verbal",   Object.keys(QB.verbal).length);
+  updateSubjectStats("nvr",      Object.keys(QB.nvr).length);
 }
 
-function buildPlan() {
-  const all = [];
-  Object.entries(QB).forEach(([s, topics]) => {
-    Object.keys(topics).forEach(t => {
-      const p = userProg[s+'::'+t];
-      const acc = p && p.questions_attempted > 0 ? Math.round(p.questions_correct/p.questions_attempted*100) : 0;
-      all.push({ s, t, acc, done: p?.completed || false });
-    });
+async function loadStreakDisplay() {
+  if (!currentUser) return;
+  const { data: streak } = await sb.from("streaks").select("current_streak,longest_streak").eq("user_id", currentUser.id).single();
+  if (streak) {
+    document.getElementById("stat-streak").textContent = streak.current_streak;
+    document.getElementById("stat-streak-sub").textContent = "best: " + streak.longest_streak;
+  }
+}
+
+function updateSubjectStats(subj, topicCount) {
+  const topics = Object.keys(QB[subj]);
+  let done = 0, totalQ = 0, totalC = 0;
+  topics.forEach(t => {
+    const key = subj + "::" + t;
+    const prog = progressCache[key];
+    if (prog && prog.completed) done++;
+    if (prog) { totalQ += prog.questions_attempted; totalC += prog.questions_correct; }
   });
-  const rec = all.filter(x => !x.done).sort((a,b) => a.acc-b.acc).slice(0,3);
-  const SNAME = {english:'English',maths:'Maths',verbal:'Verbal Reasoning',nvr:'NVR'};
-  document.getElementById('planBox').innerHTML = rec.length === 0
-    ? '<div class="plan-row"><div class="plan-dot done"></div><div class="plan-info"><div class="plan-name">All topics complete! 🎉</div></div></div>'
-    : rec.map((x,i) => `<div class="plan-row">
-        <div class="plan-dot ${i===0?'next':'todo'}"></div>
-        <div class="plan-info">
-          <div class="plan-name">${SNAME[x.s]} — ${x.t}</div>
-          <div class="plan-sub">${QB[x.s][x.t]?.length||0} questions${x.acc>0?' · '+x.acc+'% last time':''}</div>
-        </div>
-        <button class="plan-go" onclick="startTopic('${x.s}','${encodeURIComponent(x.t)}')">Start →</button>
-      </div>`).join('');
+  const pct = Math.round(done / topicCount * 100);
+  document.getElementById("prog-" + subj).style.width = pct + "%";
+  document.getElementById("done-" + subj).textContent = done + "/" + topicCount;
+  document.getElementById("acc-" + subj).textContent = totalQ > 0 ? Math.round(totalC / totalQ * 100) + "%" : "—";
 }
 
-// ── NAVIGATION ──
-function showPage(pg) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('on'));
-  document.getElementById('page'+pg.charAt(0).toUpperCase()+pg.slice(1))?.classList.add('on');
-  document.getElementById('nav'+pg.charAt(0).toUpperCase()+pg.slice(1))?.classList.add('on');
-  window.scrollTo(0,0);
-  if (pg==='progress') buildProgressPage();
-  if (pg==='home') loadProgress().then(refreshHome);
-  if (pg==='parent') buildParentPage();
-}
+// ── Subject View ──
+function showSubject(subj) {
+  currentSubject = subj;
+  const conf = SUBJECT_CONF[subj];
+  document.getElementById("subject-title").textContent = conf.icon + " " + conf.label;
+  const bank = QB[subj === "english" ? "english" : subj === "maths" ? "maths" : subj === "verbal" ? "verbal" : "nvr"];
+  const topics = Object.keys(bank);
+  const grid = document.getElementById("topic-grid");
+  grid.innerHTML = "";
+  topics.forEach(topic => {
+    const qs = bank[topic];
+    const key = subj + "::" + topic;
+    const prog = progressCache[key];
+    const trophy = prog ? trophyForScore(prog.completed ? Math.round(prog.questions_correct / prog.questions_attempted * 100) : 0) : "";
+    const attNum = prog ? prog.attempt_number : 0;
+    const acc = (prog && prog.questions_attempted > 0) ? Math.round(prog.questions_correct / prog.questions_attempted * 100) + "%" : "—";
+    const attemptLabel = attNum > 0 ? `Attempt ${attNum}` : "Not started";
 
-// ── SUBJECTS ──
-const SNAME = {english:'English',maths:'Maths',verbal:'Verbal Reasoning',nvr:'Non-Verbal Reasoning'};
-const SCOL = {english:'var(--purple)',maths:'var(--blue)',verbal:'var(--green)',nvr:'var(--amber)'};
-
-function openSubject(s) {
-  curSubj = s;
-  document.getElementById('subjTitle').textContent = SNAME[s];
-  const topics = Object.keys(QB[s]||{});
-  document.getElementById('topicGrid').innerHTML = topics.map(t => {
-    const p = userProg[s+'::'+t];
-    const acc = p && p.questions_attempted > 0 ? Math.round(p.questions_correct/p.questions_attempted*100) : 0;
-    const trophy = {none:'',bronze:'🥉',silver:'🥈',gold:'🥇',platinum:'🏆'}[p?.trophy||'none'];
-    const att = p?.attempt_number || 0;
-    return `<div class="topic-card" onclick="startTopic('${s}','${encodeURIComponent(t)}')">
-      <div class="topic-top">
-        <div class="topic-name">${t}</div>
-        <div class="topic-trophy">${trophy}</div>
+    const card = document.createElement("div");
+    card.className = "topic-card";
+    card.innerHTML = `
+      <div class="topic-meta">
+        <div class="topic-name">${topic}</div>
+        <div class="trophy-badge">${trophy}</div>
       </div>
-      <div class="topic-count">${QB[s][t]?.length||0} questions${att>0?' · Attempt '+att:''}</div>
-      <div class="topic-bar-bg"><div class="topic-bar" style="width:${acc}%;background:${SCOL[s]||'var(--accent)'}"></div></div>
-      <div class="topic-footer">
-        <div class="topic-acc">${acc>0?acc+'% accuracy':"Not started"}</div>
-        ${att>0?`<button class="reset-btn" onclick="event.stopPropagation();confirmReset('${s}','${encodeURIComponent(t)}')">🔄 Reset</button>`:''}
-      </div>
-    </div>`;
-  }).join('');
-  showPage('subject');
+      <div class="q-count">${qs.length} questions &bull; Accuracy: ${acc} &bull; ${attemptLabel}</div>
+      <div class="topic-actions" onclick="event.stopPropagation()">
+        <button class="btn btn-primary btn-sm" onclick="startQuiz('${subj}','${CSS.escape(topic)}')">
+          ${attNum > 0 ? "Practice again" : "Start"}
+        </button>
+        ${attNum > 0 ? `<button class="btn btn-secondary btn-sm" onclick="resetTopic('${subj}','${CSS.escape(topic)}')">Reset</button>` : ""}
+      </div>`;
+    grid.appendChild(card);
+  });
+  showView("subject");
 }
 
-// ── SHUFFLE ──
-function shuffle(a) {
-  const arr = [...a];
-  for (let i=arr.length-1;i>0;i--) {
-    const j=Math.floor(Math.random()*(i+1));
-    [arr[i],arr[j]]=[arr[j],arr[i]];
-  }
-  return arr;
+function trophyForScore(pct) {
+  if (pct >= 90) return "🏆";
+  if (pct >= 75) return "🥇";
+  if (pct >= 60) return "🥈";
+  if (pct >= 40) return "🥉";
+  return "";
 }
 
-function shuffleQ(q) {
-  const opts = q.options || q.opts || [];
-  const ans = q.correct !== undefined ? q.correct : (q.ans !== undefined ? q.ans : 0);
-  const correctText = opts[ans];
-  const shuffled = shuffle(opts);
-  const newAns = shuffled.indexOf(correctText);
-  return {...q, options:shuffled, opts:shuffled, correct:newAns, ans:newAns};
+function trophyLabel(pct) {
+  if (pct >= 90) return "Platinum";
+  if (pct >= 75) return "Gold";
+  if (pct >= 60) return "Silver";
+  if (pct >= 40) return "Bronze";
+  return "Keep trying";
 }
 
-// ── START TOPIC ──
-function startTopic(s, topicEnc) {
-  const t = decodeURIComponent(topicEnc);
-  curSubj = s; curTopic = t;
-  const raw = QB[s]?.[t] || [];
-  qBank = shuffle(raw).map(shuffleQ);
-  qIdx = 0; qCorrect = 0; sesStart = Date.now();
-  const p = userProg[s+'::'+t];
-  document.getElementById('qTag').textContent = SNAME[s]+' — '+t;
-  showPage('question');
-  stopTimer(); startTimer();
-  showQ();
+// ── Quiz ──
+function startQuiz(subj, topic) {
+  currentSubject = subj;
+  currentTopic = topic;
+  const bank = QB[subj === "english" ? "english" : subj === "maths" ? "maths" : subj === "verbal" ? "verbal" : "nvr"];
+  const rawQs = bank[topic] || [];
+
+  // Shuffle questions and answer positions
+  currentQuestions = shuffle(rawQs).map(q => shuffleWithAnswer(q));
+  currentQIndex = 0;
+  currentScore = 0;
+  shadowLogEntries = [];
+  hintShown = false;
+  questionAnswered = false;
+
+  // Determine attempt number
+  const key = subj + "::" + topic;
+  const prog = progressCache[key];
+  currentAttemptNumber = prog ? prog.attempt_number + 1 : 1;
+
+  // Timer
+  timerSeconds = 0;
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    document.getElementById("quiz-timer").textContent = fmtTime(timerSeconds);
+  }, 1000);
+
+  document.getElementById("quiz-topic-name").textContent = topic;
+  showView("quiz");
+  renderQuestion();
 }
 
-// ── QUESTION DISPLAY ──
-function showQ() {
-  const q = qBank[qIdx];
-  if (!q) { showComplete(); return; }
-
-  qSel = null;
-  document.getElementById('checkBtn').disabled = true;
-  document.getElementById('checkBtn').style.display = '';
-  document.getElementById('nextBtn').style.display = 'none';
-  document.getElementById('resultPanel').style.display = 'none';
-  document.getElementById('qProg').style.width = (qIdx/qBank.length*100)+'%';
-  document.getElementById('qCount').textContent = 'Q'+(qIdx+1)+' of '+qBank.length;
-
-  const stem = q.stem || '';
-  const text = q.q || q.question || q.stem || '';
-  const stemEl = document.getElementById('qStem');
-  if (stem && text !== stem) {
-    stemEl.textContent = stem;
-    stemEl.style.display = 'block';
-    document.getElementById('qText').textContent = text;
-  } else {
-    stemEl.style.display = 'none';
-    document.getElementById('qText').textContent = text;
-  }
-
-  const passEl = document.getElementById('qPassage');
-  if (q.passage) { passEl.textContent = q.passage; passEl.style.display = 'block'; }
-  else { passEl.style.display = 'none'; }
-
-  const opts = q.options || q.opts || [];
-  const ltrs = ['A','B','C','D','E'];
-  document.getElementById('qOpts').innerHTML = opts.map((o,i) =>
-    `<div class="opt" id="opt${i}" onclick="selectOpt(${i})">
-      <div class="opt-ltr">${ltrs[i]}</div>
-      <div class="opt-text">${o}</div>
-    </div>`
-  ).join('');
-
-  stopQTimer(); startQTimer();
+function fmtTime(s) {
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return m + ":" + String(sec).padStart(2, "0");
 }
 
-function selectOpt(i) {
-  if (document.getElementById('resultPanel').style.display !== 'none') return;
-  qSel = i;
-  document.querySelectorAll('.opt').forEach((el,idx) => el.classList.toggle('sel', idx===i));
-  document.getElementById('checkBtn').disabled = false;
-}
+function renderQuestion() {
+  const q = currentQuestions[currentQIndex];
+  const total = currentQuestions.length;
+  hintShown = false;
+  questionAnswered = false;
 
-function checkAnswer() {
-  if (qSel === null) return;
-  const q = qBank[qIdx];
-  const ans = q.correct !== undefined ? q.correct : (q.ans !== undefined ? q.ans : 0);
-  const isOk = qSel === ans;
-  if (isOk) qCorrect++;
-  stopQTimer();
+  document.getElementById("q-number").textContent = "Question " + (currentQIndex + 1) + " of " + total;
+  document.getElementById("q-text").textContent = q.q;
+  document.getElementById("quiz-progress-fill").style.width = (currentQIndex / total * 100) + "%";
+  document.getElementById("quiz-meta").textContent = currentSubject.charAt(0).toUpperCase() + currentSubject.slice(1) + " — Attempt " + currentAttemptNumber;
 
-  document.querySelectorAll('.opt').forEach((el,i) => {
-    if (i===ans) el.classList.add('ok');
-    else if (i===qSel && !isOk) el.classList.add('no');
+  // Options
+  const optList = document.getElementById("options-list");
+  optList.innerHTML = "";
+  const letters = ["A", "B", "C", "D", "E"];
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement("button");
+    btn.className = "option-btn";
+    btn.disabled = false;
+    btn.innerHTML = `<span class="option-letter">${letters[i]}</span><span>${opt}</span>`;
+    btn.onclick = () => selectAnswer(i);
+    optList.appendChild(btn);
   });
 
-  const exp = q.exp || q.explanation || '';
-  const tip = q.tip || '';
-  const panel = document.getElementById('resultPanel');
-  panel.innerHTML = `<div class="result-box ${isOk?'ok':'no'}">
-    <div class="result-title ${isOk?'ok':'no'}">${isOk?'✅ Correct!':'❌ Not quite...'}</div>
-    <div class="result-exp">${exp||'Keep going!'}</div>
-    ${tip?`<div class="result-tip">💡 Exam tip: ${tip}</div>`:''}
-  </div>`;
-  panel.style.display = 'block';
-  document.getElementById('checkBtn').style.display = 'none';
-  document.getElementById('nextBtn').style.display = '';
+  // Reset state
+  document.getElementById("hint-area").className = "hint-area";
+  document.getElementById("hint-area").textContent = "";
+  document.getElementById("explanation-box").className = "explanation-box";
+  document.getElementById("hint-btn").style.display = "inline-flex";
+  document.getElementById("next-btn").style.display = "none";
+  document.getElementById("answer-status").textContent = "";
 
-  saveShadow(q, isOk);
+  questionStartTime = Date.now();
+}
+
+function selectAnswer(idx) {
+  if (questionAnswered) return;
+  questionAnswered = true;
+  const q = currentQuestions[currentQIndex];
+  const correct = idx === q.ans;
+  const timeTaken = Math.round((Date.now() - questionStartTime) / 1000);
+
+  if (correct) currentScore++;
+
+  // Update option buttons
+  const btns = document.querySelectorAll(".option-btn");
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.ans) { btn.classList.add("correct"); }
+    else if (i === idx && !correct) { btn.classList.add("selected-wrong"); }
+  });
+
+  // Explanation
+  const expBox = document.getElementById("explanation-box");
+  const expClass = correct ? "correct-exp" : "wrong-exp";
+  expBox.className = "explanation-box show " + expClass;
+  document.getElementById("exp-title").textContent = correct ? "✓ Correct!" : "✗ Not quite";
+  document.getElementById("exp-text").textContent = q.exp;
+  document.getElementById("tip-text").innerHTML = q.tip ? "<strong>💡 Tip:</strong> " + q.tip : "";
+
+  // Shadow log entry
+  shadowLogEntries.push({
+    user_id: currentUser.id,
+    subject: currentSubject,
+    topic: currentTopic,
+    question_text: q.q.substring(0, 200),
+    was_correct: correct,
+    attempt_number: currentAttemptNumber,
+    time_taken_seconds: timeTaken
+  });
+
+  // Show next / finish
+  const isLast = currentQIndex >= currentQuestions.length - 1;
+  document.getElementById("next-btn").style.display = "inline-flex";
+  document.getElementById("next-btn").textContent = isLast ? "See results →" : "Next →";
+  document.getElementById("hint-btn").style.display = "none";
 }
 
 function showHint() {
-  const q = qBank[qIdx];
-  const panel = document.getElementById('resultPanel');
-  panel.innerHTML = `<div class="result-box" style="background:var(--amber-light);border:1px solid #fde68a;">
-    <div class="result-title" style="color:#92400e;">💡 Hint</div>
-    <div class="result-exp">${q.tip || q.hint || 'Think carefully about each option.'}</div>
-  </div>`;
-  panel.style.display = 'block';
-}
-
-function nextQ() {
-  qIdx++;
-  if (qIdx >= qBank.length) showComplete();
-  else showQ();
-}
-
-// ── TIMERS ──
-function startTimer() {
-  qSecs = 0;
-  timerInt = setInterval(() => {
-    qSecs++;
-    const m = Math.floor(qSecs/60), s = qSecs%60;
-    document.getElementById('qTimer').textContent = m+':'+(s<10?'0':'')+s;
-  }, 1000);
-}
-function stopTimer() { if (timerInt) { clearInterval(timerInt); timerInt = null; } }
-function startQTimer() { stopTimer(); startTimer(); }
-function stopQTimer() { stopTimer(); }
-
-function leaveQ() {
-  stopTimer();
-  if (qIdx===0 || confirm("Leave session? Progress won't be saved.")) openSubject(curSubj);
-}
-
-// ── SESSION COMPLETE ──
-async function showComplete() {
-  stopTimer();
-  const total = qBank.length;
-  const acc = total > 0 ? Math.round(qCorrect/total*100) : 0;
-  const elapsed = Math.round((Date.now()-sesStart)/1000);
-  const m = Math.floor(elapsed/60), s = elapsed%60;
-
-  let trophy = 'none';
-  if (acc>=90) trophy='platinum';
-  else if (acc>=75) trophy='gold';
-  else if (acc>=60) trophy='silver';
-  else if (acc>=40) trophy='bronze';
-
-  const icons = {none:'📝',bronze:'🥉',silver:'🥈',gold:'🥇',platinum:'🏆'};
-  const msgs = {
-    none:"Keep practising — you'll get there!",
-    bronze:"Bronze trophy! Good effort.",
-    silver:"Silver trophy! You're improving.",
-    gold:"Gold trophy! Excellent work!",
-    platinum:"PLATINUM! Outstanding! 🎉"
-  };
-
-  document.getElementById('cTrophy').textContent = icons[trophy];
-  document.getElementById('cTitle').textContent = msgs[trophy];
-  document.getElementById('cSub').textContent = curTopic+' — '+SNAME[curSubj];
-  document.getElementById('cScore').textContent = qCorrect+'/'+total;
-  document.getElementById('cAcc').textContent = acc+'%';
-  document.getElementById('cTime').textContent = m+':'+(s<10?'0':'')+s;
-
-  await saveProgress(acc, trophy, elapsed);
-  showPage('complete');
-}
-
-// ── SAVE PROGRESS ──
-async function saveProgress(acc, trophy, elapsed) {
-  if (!user) return;
-  const total = qBank.length;
-  const existing = userProg[curSubj+'::'+curTopic];
-  const tRank = {none:0,bronze:1,silver:2,gold:3,platinum:4};
-  const bestTrophy = existing && tRank[existing.trophy||'none'] > tRank[trophy] ? existing.trophy : trophy;
-  const attNum = (existing?.attempt_number || 0) + (existing ? 0 : 0) || 1;
-
-  await sb.from('attempts').insert({
-    user_id: user.id, subject: curSubj, topic: curTopic,
-    attempt_number: existing?.attempt_number || 1,
-    score: qCorrect, total, accuracy_pct: acc,
-    duration_seconds: elapsed, trophy
-  });
-
-  await sb.from('progress').upsert({
-    user_id: user.id, subject: curSubj, topic: curTopic,
-    attempt_number: existing?.attempt_number || 1,
-    questions_attempted: total, questions_correct: qCorrect,
-    trophy: bestTrophy, completed: acc>=40,
-    duration_seconds: elapsed, updated_at: new Date().toISOString()
-  }, { onConflict: 'user_id,subject,topic' });
-
-  await updateStreak(total, qCorrect);
-  await loadProgress();
-}
-
-async function updateStreak(attempted, correct) {
-  if (!user) return;
-  const today = new Date().toISOString().split('T')[0];
-  const yest = new Date(Date.now()-86400000).toISOString().split('T')[0];
-  const { data } = await sb.from('streaks').select('*').eq('user_id', user.id).single();
-  if (data) {
-    const ns = data.last_active_date===today ? data.current_streak
-      : data.last_active_date===yest ? data.current_streak+1 : 1;
-    await sb.from('streaks').update({
-      current_streak: ns,
-      longest_streak: Math.max(data.longest_streak||0, ns),
-      last_active_date: today,
-      total_questions: (data.total_questions||0)+attempted,
-      total_correct: (data.total_correct||0)+correct,
-      updated_at: new Date().toISOString()
-    }).eq('user_id', user.id);
-  } else {
-    await sb.from('streaks').insert({
-      user_id: user.id, current_streak:1, longest_streak:1,
-      last_active_date: today, total_questions: attempted, total_correct: correct
-    });
+  if (questionAnswered) return;
+  const q = currentQuestions[currentQIndex];
+  if (q.tip) {
+    const hint = document.getElementById("hint-area");
+    hint.textContent = "💡 " + q.tip;
+    hint.className = "hint-area show";
+    hintShown = true;
   }
 }
 
-async function saveShadow(q, correct) {
-  if (!user) return;
-  try {
-    await sb.from('shadow_log').insert({
-      user_id: user.id, subject: curSubj, topic: curTopic,
-      question_text: (q.q||q.stem||'').substring(0,200),
-      was_correct: correct,
-      attempt_number: userProg[curSubj+'::'+curTopic]?.attempt_number || 1,
-      time_taken_seconds: qSecs
-    });
-  } catch(e) {}
+function nextQuestion() {
+  const isLast = currentQIndex >= currentQuestions.length - 1;
+  if (isLast) {
+    finishQuiz();
+  } else {
+    currentQIndex++;
+    renderQuestion();
+  }
 }
 
-function retryTopic() { startTopic(curSubj, encodeURIComponent(curTopic)); }
+async function finishQuiz() {
+  clearInterval(timerInterval);
+  const total = currentQuestions.length;
+  const pct = Math.round(currentScore / total * 100);
+  const trophy = trophyForScore(pct);
+  const tLabel = trophyLabel(pct);
 
-// ── RESET ──
-function confirmReset(s, tEnc) {
-  resetSubj = s; resetTopic = decodeURIComponent(tEnc);
-  document.getElementById('resetSub').textContent =
-    `"${resetTopic}" will reset to 0% and questions reshuffle. Your trophy is kept!`;
-  document.getElementById('resetOverlay').classList.add('open');
+  // Show results
+  document.getElementById("results-trophy").textContent = trophy || "📝";
+  document.getElementById("results-title").textContent = trophy ? tLabel + " Trophy!" : "Topic Complete";
+  document.getElementById("results-subtitle").textContent = trophy
+    ? "Well done — you earned the " + tLabel + " trophy for this topic!"
+    : "Keep practising to earn a trophy. You need 40% or more.";
+  document.getElementById("results-pct").textContent = pct + "%";
+  document.getElementById("res-correct").textContent = currentScore;
+  document.getElementById("res-total").textContent = total;
+  document.getElementById("res-time").textContent = fmtTime(timerSeconds);
+
+  // Ring colour
+  const ring = document.getElementById("results-ring");
+  const ringColor = pct >= 90 ? "#6366f1" : pct >= 75 ? "#f59e0b" : pct >= 60 ? "#94a3b8" : pct >= 40 ? "#cd7f32" : "#e2e8f0";
+  ring.style.borderColor = ringColor;
+
+  // Attempt comparison
+  const key = currentSubject + "::" + currentTopic;
+  const prevProg = progressCache[key];
+  if (prevProg && prevProg.attempt_number > 0 && prevProg.questions_attempted > 0) {
+    const prevPct = Math.round(prevProg.questions_correct / prevProg.questions_attempted * 100);
+    const diff = pct - prevPct;
+    const cmp = document.getElementById("attempt-comparison");
+    if (diff > 0) cmp.textContent = "▲ +" + diff + "% compared to your last attempt — great improvement!";
+    else if (diff < 0) cmp.textContent = "▼ " + Math.abs(diff) + "% compared to last time. Keep going — practice makes perfect.";
+    else cmp.textContent = "Same score as last time — try to push a bit higher next session.";
+  } else {
+    document.getElementById("attempt-comparison").textContent = "";
+  }
+
+  showView("results");
+
+  // Save to Supabase
+  await saveSession(total, pct, trophy || "none");
 }
-function closeReset() { document.getElementById('resetOverlay').classList.remove('open'); }
-async function doReset() {
-  closeReset();
-  if (!user) return;
-  const existing = userProg[resetSubj+'::'+resetTopic];
-  const nextAtt = (existing?.attempt_number || 1) + 1;
-  await sb.from('progress').upsert({
-    user_id: user.id, subject: resetSubj, topic: resetTopic,
-    attempt_number: nextAtt, questions_attempted: 0, questions_correct: 0,
-    completed: false, trophy: existing?.trophy || 'none',
+
+async function saveSession(total, pct, trophy) {
+  if (!currentUser) return;
+  const key = currentSubject + "::" + currentTopic;
+
+  // Upsert progress
+  const progData = {
+    user_id: currentUser.id,
+    subject: currentSubject,
+    topic: currentTopic,
+    attempt_number: currentAttemptNumber,
+    questions_attempted: total,
+    questions_correct: currentScore,
+    trophy,
+    completed: true,
+    duration_seconds: timerSeconds,
     updated_at: new Date().toISOString()
-  }, { onConflict: 'user_id,subject,topic' });
-  await loadProgress();
-  startTopic(resetSubj, encodeURIComponent(resetTopic));
+  };
+  await sb.from("progress").upsert(progData, { onConflict: "user_id,subject,topic" });
+
+  // Insert attempt record
+  const attemptData = {
+    user_id: currentUser.id,
+    subject: currentSubject,
+    topic: currentTopic,
+    attempt_number: currentAttemptNumber,
+    score: currentScore,
+    total,
+    accuracy_pct: pct,
+    duration_seconds: timerSeconds,
+    trophy
+  };
+  await sb.from("attempts").insert(attemptData);
+
+  // Insert shadow log entries
+  if (shadowLogEntries.length > 0) {
+    await sb.from("shadow_log").insert(shadowLogEntries);
+  }
+
+  // Update streaks
+  await sb.from("streaks").update({
+    total_questions: sb.rpc ? undefined : undefined, // handled by trigger ideally
+    last_active_date: new Date().toISOString().split("T")[0],
+    updated_at: new Date().toISOString()
+  }).eq("user_id", currentUser.id);
+
+  // Refresh cache
+  await loadProgressCache();
 }
 
-// ── PROGRESS PAGE ──
-async function buildProgressPage() {
-  const { data: prog } = await sb.from('progress').select('*').eq('user_id', user.id);
-  const { data: streak } = await sb.from('streaks').select('*').eq('user_id', user.id).single();
-  const { data: atts } = await sb.from('attempts').select('*').eq('user_id', user.id).order('created_at',{ascending:false}).limit(20);
+function retryTopic() {
+  if (currentSubject && currentTopic) startQuiz(currentSubject, currentTopic);
+}
 
-  const tQ = streak?.total_questions||0, tC = streak?.total_correct||0;
-  const acc = tQ>0?Math.round(tC/tQ*100):0;
-  const comp = (prog||[]).filter(p=>p.completed).length;
+function backToSubject() {
+  if (currentSubject) showSubject(currentSubject);
+}
 
-  document.getElementById('progSummary').innerHTML = `
-    <div class="stat"><div class="stat-val">${tQ.toLocaleString()}</div><div class="stat-lbl">Questions Done</div></div>
-    <div class="stat"><div class="stat-val g">${acc}%</div><div class="stat-lbl">Accuracy</div></div>
-    <div class="stat"><div class="stat-val a">${streak?.current_streak||0}</div><div class="stat-lbl">Streak</div></div>
-    <div class="stat"><div class="stat-val" style="color:var(--purple)">${comp}</div><div class="stat-lbl">Completed</div></div>
-  `;
+async function resetTopic(subj, topic) {
+  if (!confirm("Reset progress for this topic? Your trophy history will be cleared.")) return;
+  if (!currentUser) return;
+  await sb.from("progress").delete().eq("user_id", currentUser.id).eq("subject", subj).eq("topic", topic);
+  await loadProgressCache();
+  showSubject(subj);
+  toast("Topic reset successfully.", "success");
+}
 
-  const detail = document.getElementById('progDetail');
-  detail.innerHTML = ['english','maths','verbal','nvr'].map(s => {
-    const sp = (prog||[]).filter(p=>p.subject===s);
-    const sa = sp.reduce((sum,p)=>sum+(p.questions_attempted||0),0);
-    const sc = sp.reduce((sum,p)=>sum+(p.questions_correct||0),0);
-    const sa2 = sa>0?Math.round(sc/sa*100):0;
-    const color = SCOL[s]||'var(--accent)';
-    const rows = sp.map(p => {
-      const acc2 = p.questions_attempted>0?Math.round(p.questions_correct/p.questions_attempted*100):0;
-      const trophy = {none:'',bronze:'🥉',silver:'🥈',gold:'🥇',platinum:'🏆'}[p.trophy||'none'];
-      return `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;">
-        <span style="color:var(--text2);">${p.topic} ${trophy}</span>
-        <div style="display:flex;align-items:center;gap:8px;">
-          ${p.attempt_number>1?`<span style="font-size:11px;color:var(--text3);">Attempt ${p.attempt_number}</span>`:''}
-          <span style="font-weight:700;color:${p.completed?'var(--green)':'var(--text3)'};">${acc2}%</span>
-          <button class="reset-btn" onclick="confirmReset('${s}','${encodeURIComponent(p.topic)}')">🔄</button>
-        </div>
-      </div>`;
-    }).join('');
-    return `<div class="prog-subj">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-        <div style="font-weight:800;font-size:15px;">${SNAME[s]}</div>
-        <div style="font-weight:800;color:${color}">${sa2}%</div>
-      </div>
-      <div style="background:var(--bg);border-radius:100px;height:7px;overflow:hidden;margin-bottom:10px;">
-        <div style="width:${sa2}%;height:100%;background:${color};border-radius:100px;"></div>
-      </div>
-      ${rows||'<div style="color:var(--text3);font-size:13px;">No topics started yet.</div>'}
+// ── Progress View ──
+async function buildProgressView() {
+  const container = document.getElementById("progress-content");
+  container.innerHTML = '<div class="spinner"></div>';
+  await loadProgressCache();
+
+  let html = "";
+  const subjects = ["english", "maths", "verbal", "nvr"];
+
+  subjects.forEach(subj => {
+    const conf = SUBJECT_CONF[subj];
+    const bank = QB[subj === "english" ? "english" : subj === "maths" ? "maths" : subj === "verbal" ? "verbal" : "nvr"];
+    const topics = Object.keys(bank);
+    let hasAny = false;
+    let rows = "";
+
+    topics.forEach(t => {
+      const key = subj + "::" + t;
+      const prog = progressCache[key];
+      if (!prog || !prog.completed) return;
+      hasAny = true;
+      const pct = Math.round(prog.questions_correct / prog.questions_attempted * 100);
+      const trophy = trophyForScore(pct);
+      rows += `<tr>
+        <td>${t}</td>
+        <td>${prog.questions_correct}/${prog.questions_attempted}</td>
+        <td>${pct}%</td>
+        <td>${trophy ? trophy + " " + trophyLabel(pct) : "—"}</td>
+        <td>Attempt ${prog.attempt_number}</td>
+        <td><button class="btn btn-danger btn-xs" onclick="resetTopic('${subj}','${CSS.escape(t)}')">Reset</button></td>
+      </tr>`;
+    });
+
+    if (!hasAny) return;
+    html += `<div class="progress-section">
+      <h3>${conf.icon} ${conf.label}</h3>
+      <table class="attempt-table">
+        <thead><tr>
+          <th>Topic</th><th>Score</th><th>Accuracy</th><th>Trophy</th><th>Attempt</th><th></th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
     </div>`;
-  }).join('') + (atts&&atts.length>0?`
-    <div class="prog-subj">
-      <div style="font-weight:800;font-size:15px;margin-bottom:12px;">Recent Sessions</div>
-      ${atts.slice(0,8).map(a=>{
-        const color = a.accuracy_pct>=75?'var(--green)':a.accuracy_pct>=50?'var(--amber)':'var(--red)';
-        const date = new Date(a.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'short'});
-        const trophy = {none:'',bronze:'🥉',silver:'🥈',gold:'🥇',platinum:'🏆'}[a.trophy||'none'];
-        return `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;">
-          <div>
-            <div style="font-weight:700;">${a.topic} ${trophy}</div>
-            <div style="font-size:11px;color:var(--text3);">${SNAME[a.subject]||a.subject} · ${date}</div>
-          </div>
-          <div style="text-align:right;">
-            <div style="font-weight:800;color:${color}">${a.accuracy_pct}%</div>
-            <div style="font-size:11px;color:var(--text3);">${a.score}/${a.total}</div>
-          </div>
-        </div>`;
-      }).join('')}
-    </div>`:'');
-}
-
-// ── PARENT PAGE ──
-async function buildParentPage() {
-  const { data: prog } = await sb.from('progress').select('*').eq('user_id', user.id);
-  const { data: atts } = await sb.from('attempts').select('*').eq('user_id', user.id).order('created_at');
-  const { data: streak } = await sb.from('streaks').select('*').eq('user_id', user.id).single();
-
-  const tQ=streak?.total_questions||0, tC=streak?.total_correct||0;
-  const acc=tQ>0?Math.round(tC/tQ*100):0;
-  const comp=(prog||[]).filter(p=>p.completed).length;
-
-  // Improvement velocity
-  const topicMap = {};
-  (atts||[]).forEach(a => {
-    const k=a.subject+'::'+a.topic;
-    if (!topicMap[k]) topicMap[k]=[];
-    topicMap[k].push(a);
   });
-  const velRows = Object.entries(topicMap).filter(([,v])=>v.length>=2).map(([k,v]) => {
-    const [s,t]=k.split('::');
-    const first=v[0], last=v[v.length-1];
-    const gain=last.accuracy_pct-first.accuracy_pct;
-    const label=gain>=40?'🚀 High Mastery':gain>=20?'📈 Good Progress':gain>=0?'📊 Steady':'🔄 Needs Review';
-    const color=gain>=40?'var(--green)':gain>=20?'var(--blue)':gain>=0?'var(--amber)':'var(--red)';
-    return `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;">
-      <div><div style="font-weight:700;">${t}</div><div style="font-size:11px;color:var(--text3);">${SNAME[s]} · ${v.length} attempts</div></div>
-      <div style="text-align:right;">
-        <div style="font-size:12px;color:var(--text2);">${first.accuracy_pct}% → ${last.accuracy_pct}%</div>
-        <div style="font-weight:700;color:${color};font-size:12px;">${label}</div>
-      </div>
-    </div>`;
-  }).join('');
 
-  document.getElementById('parentContent').innerHTML = `
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px;">
-      <div class="stat"><div class="stat-val">${tQ.toLocaleString()}</div><div class="stat-lbl">Questions Done</div></div>
-      <div class="stat"><div class="stat-val g">${acc}%</div><div class="stat-lbl">Accuracy</div></div>
-      <div class="stat"><div class="stat-val a">${streak?.current_streak||0}</div><div class="stat-lbl">Streak</div></div>
-      <div class="stat"><div class="stat-val" style="color:var(--purple)">${comp}</div><div class="stat-lbl">Completed</div></div>
-    </div>
-    <div class="prog-subj">
-      <div style="font-weight:800;font-size:15px;margin-bottom:12px;">📈 Improvement Velocity</div>
-      ${velRows||'<div style="color:var(--text3);font-size:13px;">Complete a topic more than once to see improvement data.</div>'}
-    </div>
-    <div class="prog-subj">
-      <div style="font-weight:800;font-size:15px;margin-bottom:14px;">Progress by Subject</div>
-      ${['english','maths','verbal','nvr'].map(s=>{
-        const sp=(prog||[]).filter(p=>p.subject===s);
-        const sa=sp.reduce((sum,p)=>sum+(p.questions_attempted||0),0);
-        const sc=sp.reduce((sum,p)=>sum+(p.questions_correct||0),0);
-        const a=sa>0?Math.round(sc/sa*100):0;
-        const col=SCOL[s]||'var(--accent)';
-        return `<div style="margin-bottom:14px;">
-          <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
-            <span style="font-weight:700;">${SNAME[s]}</span>
-            <span style="font-weight:800;color:${col}">${a}%</span>
-          </div>
-          <div style="background:var(--bg);border-radius:100px;height:7px;overflow:hidden;">
-            <div style="width:${a}%;height:100%;background:${col};border-radius:100px;"></div>
-          </div>
-        </div>`;
-      }).join('')}
-    </div>
-  `;
+  if (!html) {
+    html = `<div style="text-align:center;padding:48px 0;color:var(--text3)">
+      <div style="font-size:3rem;margin-bottom:12px">📖</div>
+      <div style="font-weight:600">No completed topics yet</div>
+      <div style="font-size:0.875rem;margin-top:6px">Start practising to see your progress here.</div>
+    </div>`;
+  }
+
+  container.innerHTML = html;
 }
 
-// ── MOCK ──
-function openMock() { document.getElementById('mockOverlay').classList.add('open'); }
-function closeMock() { document.getElementById('mockOverlay').classList.remove('open'); }
-document.getElementById('mockOverlay').addEventListener('click', e => {
-  if (e.target.id==='mockOverlay') closeMock();
-});
-document.getElementById('resetOverlay').addEventListener('click', e => {
-  if (e.target.id==='resetOverlay') closeReset();
-});
+// ── Parent View ──
+async function buildParentView() {
+  const container = document.getElementById("parent-content");
+  container.innerHTML = '<div class="spinner"></div>';
+  await loadProgressCache();
 
-// ── START ──
-document.addEventListener('DOMContentLoaded', init);
+  // Accuracy by subject
+  const subjects = ["english", "maths", "verbal", "nvr"];
+  let accHtml = '<p class="section-heading">Accuracy by Subject</p><div class="accuracy-grid">';
+  subjects.forEach(subj => {
+    const conf = SUBJECT_CONF[subj];
+    const attempts = attemptsCache.filter(a => a.subject === subj);
+    const totalQ = attempts.reduce((s, a) => s + a.total, 0);
+    const totalC = attempts.reduce((s, a) => s + a.score, 0);
+    const pct = totalQ > 0 ? Math.round(totalC / totalQ * 100) : null;
+    accHtml += `<div class="accuracy-card">
+      <div class="ac-subject">${conf.icon} ${conf.label}</div>
+      <div class="ac-pct">${pct !== null ? pct + "%" : "—"}</div>
+      <div class="ac-detail">${totalQ} questions attempted</div>
+    </div>`;
+  });
+  accHtml += "</div>";
+
+  // Improvement velocity — compare first vs latest attempt per topic
+  let improvements = [];
+  const seenTopics = new Set();
+  // Group attempts by subject+topic
+  const topicAttempts = {};
+  attemptsCache.forEach(a => {
+    const key = a.subject + "::" + a.topic;
+    if (!topicAttempts[key]) topicAttempts[key] = [];
+    topicAttempts[key].push(a);
+  });
+  Object.entries(topicAttempts).forEach(([key, attempts]) => {
+    if (attempts.length < 2) return;
+    const sorted = [...attempts].sort((a, b) => a.attempt_number - b.attempt_number);
+    const first = sorted[0];
+    const latest = sorted[sorted.length - 1];
+    improvements.push({
+      topic: first.topic,
+      subject: first.subject,
+      first: first.accuracy_pct,
+      latest: latest.accuracy_pct,
+      delta: latest.accuracy_pct - first.accuracy_pct
+    });
+  });
+  improvements.sort((a, b) => b.delta - a.delta);
+
+  let velHtml = "";
+  if (improvements.length > 0) {
+    velHtml = `<p class="section-heading" style="margin-top:24px">Improvement (Attempt 1 vs Latest)</p>
+    <table class="attempt-table">
+      <thead><tr><th>Topic</th><th>Subject</th><th>First</th><th>Latest</th><th>Change</th></tr></thead>
+      <tbody>`;
+    improvements.forEach(imp => {
+      const delta = imp.delta > 0 ? "▲ +" + imp.delta + "%" : imp.delta < 0 ? "▼ " + imp.delta + "%" : "—";
+      const colour = imp.delta > 0 ? "var(--green)" : imp.delta < 0 ? "var(--red)" : "var(--text3)";
+      velHtml += `<tr>
+        <td>${imp.topic}</td>
+        <td>${SUBJECT_CONF[imp.subject].label}</td>
+        <td>${imp.first}%</td>
+        <td>${imp.latest}%</td>
+        <td style="color:${colour};font-weight:700">${delta}</td>
+      </tr>`;
+    });
+    velHtml += "</tbody></table>";
+  }
+
+  // Recent sessions
+  const recent = attemptsCache.slice(0, 10);
+  let recentHtml = "";
+  if (recent.length > 0) {
+    recentHtml = `<p class="section-heading" style="margin-top:24px">Recent Sessions</p>
+    <table class="attempt-table">
+      <thead><tr><th>Topic</th><th>Subject</th><th>Score</th><th>Accuracy</th><th>Trophy</th></tr></thead>
+      <tbody>`;
+    recent.forEach(a => {
+      const trophy = trophyForScore(a.accuracy_pct);
+      recentHtml += `<tr>
+        <td>${a.topic}</td>
+        <td>${SUBJECT_CONF[a.subject]?.label || a.subject}</td>
+        <td>${a.score}/${a.total}</td>
+        <td>${a.accuracy_pct}%</td>
+        <td>${trophy || "—"}</td>
+      </tr>`;
+    });
+    recentHtml += "</tbody></table>";
+  }
+
+  container.innerHTML = accHtml + velHtml + recentHtml;
+}
+
+// ── Ollie AI Tutor ──
+let ollieContext = "";
+
+function toggleOllie() {
+  const chat = document.getElementById("ollie-chat");
+  chat.classList.toggle("open");
+}
+
+async function sendOllieMsg() {
+  const input = document.getElementById("chat-input");
+  const msg = input.value.trim();
+  if (!msg) return;
+  input.value = "";
+  addChatMsg(msg, "user");
+  addChatMsg("Thinking…", "ollie", "thinking-msg");
+
+  try {
+    const context = currentTopic
+      ? "The student is currently practising the topic: " + currentTopic + " in " + currentSubject + "."
+      : "The student is on the T3 Academy platform.";
+
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": ANTHROPIC_KEY,
+        "anthropic-version": "2023-06-01"
+      },
+      body: JSON.stringify({
+        model: "claude-haiku-4-5-20251001",
+        max_tokens: 512,
+        system: "You are Ollie the Owl 🦉, a warm and encouraging AI tutor on T3 Academy, helping children aged 9-11 prepare for the 11+ GL Assessment exam. Your personality: friendly, patient, enthusiastic. Use simple language and fun analogies. Rules: never give the answer directly — guide the student to understand. Keep responses to 3-4 sentences. Always end with encouragement or a gentle question to check understanding. " + context,
+        messages: [{ role: "user", content: msg }]
+      })
+    });
+    const data = await res.json();
+    const reply = data.content?.[0]?.text || "I'm having a little trouble right now — try again in a moment!";
+    const thinking = document.getElementById("thinking-msg");
+    if (thinking) thinking.remove();
+    addChatMsg(reply, "ollie");
+  } catch (e) {
+    const thinking = document.getElementById("thinking-msg");
+    if (thinking) thinking.remove();
+    addChatMsg("Sorry, I couldn't connect just now. Try again!", "ollie");
+  }
+}
+
+function addChatMsg(text, who, id) {
+  const msgs = document.getElementById("chat-messages");
+  const div = document.createElement("div");
+  div.className = "chat-msg " + who;
+  div.textContent = text;
+  if (id) div.id = id;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+// ── Init ──
+async function init() {
+  const { data: { session } } = await sb.auth.getSession();
+  setLoading(false);
+  if (session?.user) {
+    await onSignedIn(session.user);
+  } else {
+    showPage("auth");
+  }
+}
+
+// Enter to submit on auth forms
+document.getElementById("login-password").addEventListener("keydown", e => { if (e.key === "Enter") doLogin(); });
+document.getElementById("reg-password").addEventListener("keydown",  e => { if (e.key === "Enter") doRegister(); });
+
+init();
+
 </script>
-
 </body>
 </html>
