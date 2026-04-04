@@ -624,47 +624,196 @@ input,textarea,select{font-family:inherit;}
 /* ═══════════════════════════
    OLLIE CHAT
 ═══════════════════════════ */
-.ollie-panel{position:fixed;bottom:24px;right:24px;z-index:200;}
+/* ═══ OLLIE GALACTIC SIDEBAR ═══ */
+/* FAB button */
+.ollie-panel{position:fixed;bottom:28px;right:28px;z-index:500;}
 .ollie-fab{
-  width:56px;height:56px;border-radius:50%;
-  background:linear-gradient(135deg,var(--accent),var(--purple));
+  width:58px;height:58px;border-radius:50%;
+  background:linear-gradient(135deg,#6366f1,#8b5cf6);
   border:none;display:flex;align-items:center;justify-content:center;
-  font-size:1.5rem;
-  box-shadow:0 4px 24px rgba(99,102,241,0.5), 0 0 40px rgba(99,102,241,0.15);
-  cursor:pointer;transition:all 0.2s;
+  font-size:1.6rem;cursor:pointer;transition:all 0.3s;
+  box-shadow:0 0 0 0 rgba(99,102,241,0.4),0 4px 24px rgba(99,102,241,0.5);
+  animation:fab-pulse 2.5s ease-in-out infinite;
+  position:relative;
 }
-.ollie-fab:hover{transform:scale(1.1);box-shadow:0 6px 32px rgba(99,102,241,0.6), 0 0 50px rgba(99,102,241,0.2);}
+@keyframes fab-pulse{
+  0%{box-shadow:0 0 0 0 rgba(99,102,241,0.5),0 4px 24px rgba(99,102,241,0.4);}
+  70%{box-shadow:0 0 0 14px rgba(99,102,241,0),0 4px 24px rgba(99,102,241,0.4);}
+  100%{box-shadow:0 0 0 0 rgba(99,102,241,0),0 4px 24px rgba(99,102,241,0.4);}
+}
+.ollie-fab:hover{transform:scale(1.1) rotate(-8deg);box-shadow:0 0 30px rgba(99,102,241,0.7),0 0 60px rgba(139,92,246,0.3);}
+.ollie-fab-label{
+  position:absolute;bottom:100%;right:0;margin-bottom:10px;
+  background:rgba(10,15,30,0.9);border:1px solid rgba(99,102,241,0.4);
+  color:#c7d2fe;font-size:0.72rem;font-weight:700;
+  padding:5px 10px;border-radius:8px;white-space:nowrap;
+  backdrop-filter:blur(8px);pointer-events:none;
+  opacity:0;transform:translateY(4px);transition:all 0.2s;
+}
+.ollie-fab:hover .ollie-fab-label{opacity:1;transform:translateY(0);}
 
-.ollie-chat{
-  position:absolute;bottom:68px;right:0;width:330px;
-  background:rgba(10,15,30,0.92);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
+/* Sidebar */
+.ollie-sidebar{
+  position:fixed;top:0;right:-420px;width:400px;height:100vh;
+  background:rgba(5,8,20,0.96);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-left:1px solid rgba(99,102,241,0.2);
+  box-shadow:-4px 0 40px rgba(0,0,0,0.6),-1px 0 0 rgba(99,102,241,0.1);
+  display:flex;flex-direction:column;
+  transition:right 0.35s cubic-bezier(0.4,0,0.2,1);
+  z-index:499;
+}
+.ollie-sidebar.open{right:0;}
+
+/* Sidebar header */
+.ollie-sidebar-header{
+  padding:20px 20px 16px;
+  background:linear-gradient(180deg,rgba(99,102,241,0.12) 0%,transparent 100%);
+  border-bottom:1px solid rgba(99,102,241,0.12);
+  display:flex;align-items:center;gap:14px;flex-shrink:0;
+}
+.ollie-avatar{
+  width:48px;height:48px;border-radius:14px;
+  background:linear-gradient(135deg,rgba(99,102,241,0.3),rgba(139,92,246,0.3));
+  border:1px solid rgba(99,102,241,0.4);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;
+  box-shadow:0 0 16px rgba(99,102,241,0.3),inset 0 1px 0 rgba(255,255,255,0.05);
+  flex-shrink:0;
+  filter:drop-shadow(0 0 6px rgba(99,102,241,0.5));
+}
+.ollie-sidebar-title{flex:1;}
+.ollie-sidebar-title h3{font-size:1rem;font-weight:800;color:#fff;margin-bottom:1px;}
+.ollie-sidebar-title p{font-size:0.72rem;color:var(--text3);}
+.ollie-status{display:flex;align-items:center;gap:5px;font-size:0.7rem;color:#4ade80;margin-top:2px;}
+.ollie-status-dot{width:6px;height:6px;border-radius:50%;background:#4ade80;box-shadow:0 0 6px #4ade80;animation:status-blink 2s ease-in-out infinite;}
+@keyframes status-blink{0%,100%{opacity:1;}50%{opacity:0.4;}}
+.ollie-sidebar-close{
+  width:32px;height:32px;border-radius:8px;background:rgba(99,102,241,0.1);
+  border:1px solid rgba(99,102,241,0.2);color:var(--text2);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:1rem;transition:all 0.15s;flex-shrink:0;
+}
+.ollie-sidebar-close:hover{background:rgba(99,102,241,0.2);color:#fff;}
+
+/* Context pill */
+.ollie-context-pill{
+  margin:12px 16px 0;padding:8px 14px;
+  background:rgba(99,102,241,0.06);
+  border:1px solid rgba(99,102,241,0.15);
+  border-radius:10px;font-size:0.75rem;color:var(--text2);
+  display:flex;align-items:center;gap:6px;flex-shrink:0;
+}
+.ollie-context-pill span{color:#a5b4fc;font-weight:600;}
+
+/* Messages */
+.ollie-messages{
+  flex:1;overflow-y:auto;padding:16px;
+  display:flex;flex-direction:column;gap:14px;
+}
+.ollie-messages::-webkit-scrollbar{width:4px;}
+.ollie-messages::-webkit-scrollbar-track{background:transparent;}
+.ollie-messages::-webkit-scrollbar-thumb{background:rgba(99,102,241,0.3);border-radius:2px;}
+
+.chat-msg{max-width:90%;font-size:0.875rem;line-height:1.6;}
+.chat-msg.ollie{align-self:flex-start;}
+.chat-msg.user{align-self:flex-end;}
+
+/* Holographic Ollie bubble */
+.chat-msg.ollie .msg-bubble{
+  background:linear-gradient(135deg,rgba(15,23,42,0.9),rgba(30,27,75,0.9));
   border:1px solid rgba(99,102,241,0.25);
-  border-radius:20px;
-  box-shadow:var(--shadow-lg), var(--glow-accent);
-  display:none;flex-direction:column;overflow:hidden;
-  animation:slideUp 0.25s ease;
+  border-radius:4px 16px 16px 16px;
+  padding:12px 16px;
+  box-shadow:0 0 20px rgba(99,102,241,0.08),inset 0 1px 0 rgba(255,255,255,0.04);
+  color:#e2e8f0;position:relative;
 }
-.ollie-chat.open{display:flex;}
-.ollie-chat-header{background:linear-gradient(135deg,rgba(99,102,241,0.4),rgba(139,92,246,0.4));border-bottom:1px solid rgba(99,102,241,0.2);padding:14px 16px;display:flex;align-items:center;gap:10px;}
-.ollie-chat-header .hdr-owl{font-size:1.5rem;filter:drop-shadow(0 0 8px rgba(99,102,241,0.6));}
-.hdr-text h4{font-size:0.9rem;font-weight:800;color:#fff;}
-.hdr-text p{font-size:0.72rem;color:rgba(255,255,255,0.6);}
-.ollie-close{margin-left:auto;background:none;border:none;color:rgba(255,255,255,0.5);font-size:1.2rem;cursor:pointer;padding:4px;line-height:1;transition:color 0.2s;}
-.ollie-close:hover{color:#fff;}
+.chat-msg.ollie .msg-bubble::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,rgba(99,102,241,0.6),rgba(139,92,246,0.3),transparent);
+  border-radius:4px 16px 0 0;
+}
+.chat-msg.ollie .msg-label{
+  font-size:0.65rem;font-weight:800;color:var(--text3);
+  text-transform:uppercase;letter-spacing:0.1em;
+  margin-bottom:6px;display:flex;align-items:center;gap:4px;
+}
 
-.chat-messages{padding:14px;flex:1;overflow-y:auto;max-height:280px;display:flex;flex-direction:column;gap:10px;}
-.chat-msg{max-width:88%;padding:10px 14px;border-radius:14px;font-size:0.85rem;line-height:1.55;}
-.chat-msg.ollie{background:rgba(30,41,59,0.8);color:var(--text);align-self:flex-start;border-bottom-left-radius:4px;border:1px solid rgba(99,102,241,0.1);}
-.chat-msg.user{background:linear-gradient(135deg,var(--accent),var(--purple));color:white;align-self:flex-end;border-bottom-right-radius:4px;}
+/* User bubble */
+.chat-msg.user .msg-bubble{
+  background:linear-gradient(135deg,#6366f1,#8b5cf6);
+  border-radius:16px 4px 16px 16px;
+  padding:12px 16px;color:#fff;
+  box-shadow:0 4px 16px rgba(99,102,241,0.3);
+}
 
-.chat-input-row{padding:10px 12px;border-top:1px solid rgba(99,102,241,0.1);display:flex;gap:8px;}
-.chat-input{flex:1;border:1px solid rgba(99,102,241,0.2);border-radius:8px;padding:8px 12px;font-size:0.85rem;outline:none;background:rgba(2,6,23,0.6);color:var(--text);transition:border-color 0.2s;}
-.chat-input:focus{border-color:rgba(99,102,241,0.5);}
+/* Typing animation */
+.typing-bubble{
+  align-self:flex-start;
+  background:linear-gradient(135deg,rgba(15,23,42,0.9),rgba(30,27,75,0.9));
+  border:1px solid rgba(99,102,241,0.2);
+  border-radius:4px 16px 16px 16px;
+  padding:14px 18px;
+  display:flex;align-items:center;gap:5px;
+}
+.typing-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:rgba(99,102,241,0.7);
+  animation:typing-bounce 1.2s ease-in-out infinite;
+}
+.typing-dot:nth-child(2){animation-delay:0.2s;background:rgba(139,92,246,0.7);}
+.typing-dot:nth-child(3){animation-delay:0.4s;background:rgba(59,130,246,0.7);}
+@keyframes typing-bounce{0%,80%,100%{transform:translateY(0);opacity:0.5;}40%{transform:translateY(-6px);opacity:1;}}
+
+/* Quick prompts */
+.ollie-quick-prompts{
+  padding:10px 16px;border-top:1px solid rgba(99,102,241,0.1);
+  display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0;
+}
+.quick-prompt{
+  font-size:0.72rem;font-weight:600;color:#a5b4fc;
+  background:rgba(99,102,241,0.08);
+  border:1px solid rgba(99,102,241,0.18);
+  border-radius:999px;padding:5px 12px;cursor:pointer;
+  transition:all 0.15s;white-space:nowrap;
+}
+.quick-prompt:hover{background:rgba(99,102,241,0.16);color:#c7d2fe;border-color:rgba(99,102,241,0.4);}
+
+/* Input */
+.ollie-input-row{
+  padding:12px 16px 16px;border-top:1px solid rgba(99,102,241,0.1);
+  display:flex;gap:8px;align-items:flex-end;flex-shrink:0;
+}
+.chat-input{
+  flex:1;border:1px solid rgba(99,102,241,0.2);border-radius:12px;
+  padding:10px 14px;font-size:0.875rem;outline:none;
+  background:rgba(2,6,23,0.7);color:var(--text);
+  transition:border-color 0.2s,box-shadow 0.2s;
+  resize:none;min-height:44px;max-height:120px;line-height:1.5;
+}
+.chat-input:focus{border-color:rgba(99,102,241,0.5);box-shadow:0 0 0 3px rgba(99,102,241,0.08);}
 .chat-input::placeholder{color:var(--text3);}
-.chat-send{background:linear-gradient(135deg,var(--accent),var(--purple));color:white;border:none;border-radius:8px;padding:8px 14px;font-size:0.85rem;font-weight:700;cursor:pointer;transition:all 0.2s;box-shadow:0 0 10px rgba(99,102,241,0.3);}
-.chat-send:hover{filter:brightness(1.15);}
+.chat-send{
+  width:44px;height:44px;border-radius:12px;flex-shrink:0;
+  background:linear-gradient(135deg,#6366f1,#8b5cf6);
+  color:white;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;transition:all 0.2s;
+  box-shadow:0 0 12px rgba(99,102,241,0.4);
+}
+.chat-send:hover{filter:brightness(1.15);transform:scale(1.05);}
+
+/* Overlay backdrop */
+.ollie-backdrop{
+  position:fixed;inset:0;background:rgba(2,6,23,0.5);
+  backdrop-filter:blur(2px);z-index:498;
+  display:none;
+}
+.ollie-backdrop.show{display:block;}
+
+@media(max-width:480px){
+  .ollie-sidebar{width:100%;right:-100%;}
+}
 
 /* ── Confetti ── */
 .confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:1000;}
@@ -1083,22 +1232,48 @@ input,textarea,select{font-family:inherit;}
 </div>
 
 <!-- Ollie -->
-<div class="ollie-panel" id="ollie-panel" style="display:none">
-  <div class="ollie-chat" id="ollie-chat">
-    <div class="ollie-chat-header">
-      <span class="hdr-owl">🦉</span>
-      <div class="hdr-text"><h4>Ollie</h4><p>Your AI Tutor</p></div>
-      <button class="ollie-close" onclick="toggleOllie()">✕</button>
+<!-- Ollie backdrop -->
+<div class="ollie-backdrop" id="ollie-backdrop" onclick="toggleOllie()"></div>
+
+<!-- Ollie Galactic Sidebar -->
+<div class="ollie-sidebar" id="ollie-sidebar">
+  <div class="ollie-sidebar-header">
+    <div class="ollie-avatar">🦉</div>
+    <div class="ollie-sidebar-title">
+      <h3>Ollie</h3>
+      <div class="ollie-status"><div class="ollie-status-dot"></div>Online · T3 Galactic Academy</div>
     </div>
-    <div class="chat-messages" id="chat-messages">
-      <div class="chat-msg ollie">Hi! I'm Ollie 🦉 — your personal 11+ tutor. Ask me anything about a question, a topic, or just say hello!</div>
-    </div>
-    <div class="chat-input-row">
-      <input class="chat-input" id="chat-input" placeholder="Ask Ollie…" onkeydown="if(event.key==='Enter')sendOllieMsg()">
-      <button class="chat-send" onclick="sendOllieMsg()">Send</button>
+    <div class="ollie-sidebar-close" onclick="toggleOllie()">✕</div>
+  </div>
+  <div class="ollie-context-pill" id="ollie-context-pill">
+    📍 Context: <span id="ollie-context-text">Dashboard</span>
+  </div>
+  <div class="ollie-messages" id="chat-messages">
+    <div class="chat-msg ollie">
+      <div class="msg-label">🦉 Ollie · T3 Academy</div>
+      <div class="msg-bubble">Greetings, explorer! I'm Ollie, your 11+ tutor. I can see what question you're working on and I'll guide you through it — without just giving you the answer. What would you like help with?</div>
     </div>
   </div>
-  <button class="ollie-fab" onclick="toggleOllie()" title="Ask Ollie">🦉</button>
+  <div class="ollie-quick-prompts">
+    <button class="quick-prompt" onclick="useQuickPrompt('Give me a hint')">💡 Hint</button>
+    <button class="quick-prompt" onclick="useQuickPrompt('Explain the strategy for this type of question')">🧠 Strategy</button>
+    <button class="quick-prompt" onclick="useQuickPrompt('What are the common traps to avoid here?')">⚠️ Traps</button>
+    <button class="quick-prompt" onclick="useQuickPrompt('Can you give me a similar example?')">📘 Example</button>
+  </div>
+  <div class="ollie-input-row">
+    <textarea class="chat-input" id="chat-input" placeholder="Ask Ollie…" rows="1"
+      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendOllieMsg();}"
+      oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"></textarea>
+    <button class="chat-send" onclick="sendOllieMsg()" title="Send">➤</button>
+  </div>
+</div>
+
+<!-- FAB trigger -->
+<div id="ollie-panel" style="display:none">
+  <button class="ollie-fab" onclick="toggleOllie()" title="Ask Ollie">
+    🦉
+    <span class="ollie-fab-label">Ask Ollie</span>
+  </button>
 </div>
 
 <script>
@@ -2672,9 +2847,32 @@ function showConfetti() {
   setTimeout(() => wrap.remove(), 4000);
 }
 
-// ── Ollie ──
+// ── Ollie Galactic Sidebar ──
 function toggleOllie() {
-  document.getElementById("ollie-chat").classList.toggle("open");
+  const sidebar = document.getElementById("ollie-sidebar");
+  const backdrop = document.getElementById("ollie-backdrop");
+  const isOpen = sidebar.classList.contains("open");
+  sidebar.classList.toggle("open");
+  backdrop.classList.toggle("show");
+  if (!isOpen) updateOllieContext();
+}
+
+function updateOllieContext() {
+  const pill = document.getElementById("ollie-context-text");
+  if (!pill) return;
+  if (currentTopic && currentSubject) {
+    pill.textContent = currentTopic + " (" + (SUBJ[currentSubject]?.label || currentSubject) + ")";
+  } else {
+    pill.textContent = "Dashboard";
+  }
+}
+
+function useQuickPrompt(text) {
+  const input = document.getElementById("chat-input");
+  input.value = text;
+  input.style.height = "auto";
+  input.style.height = input.scrollHeight + "px";
+  sendOllieMsg();
 }
 
 async function sendOllieMsg() {
@@ -2682,38 +2880,80 @@ async function sendOllieMsg() {
   const msg = input.value.trim();
   if (!msg) return;
   input.value = "";
+  input.style.height = "auto";
   addChatMsg(msg, "user");
-  const thinkId = "think-"+Date.now();
-  addChatMsg("Thinking…", "ollie", thinkId);
+  showTypingIndicator();
+
   try {
-    const context = currentTopic
-      ? "The student is currently practising: "+currentTopic+" ("+SUBJ[currentSubject]?.label+")."
-      : "The student is on the T3 Academy dashboard.";
+    // Build context — include current question if in quiz
+    let context = "The student is on the T3 Academy dashboard.";
+    if (currentTopic && currentSubject) {
+      context = "The student is practising: " + currentTopic + " (" + (SUBJ[currentSubject]?.label || currentSubject) + ").";
+      if (currentQs.length > 0 && currentQIdx < currentQs.length) {
+        const q = currentQs[currentQIdx];
+        context += " Current question: " + q.q + " Options: " + q.opts.join(", ") + ".";
+      }
+    }
+
     const res = await fetch("/api/ollie", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         model: "claude-haiku-4-5-20251001",
-        max_tokens: 512,
-        system: "You are Ollie the Owl 🦉, a warm and encouraging AI tutor on T3 Academy, helping children aged 9-11 prepare for the 11+ GL Assessment exam. Be friendly, patient and enthusiastic. Use simple language. Never give the answer directly — guide the student to understand. Keep responses to 3-4 sentences. Always end with encouragement or a question to check understanding. "+context,
+        max_tokens: 600,
+        system: "You are Ollie the Owl, a Master 11+ Tutor at T3 Galactic Academy. Help children aged 9-11 prepare for the GL Assessment. Never give the final answer directly. Instead, guide with: 1) The Strategy (how to think about it), 2) A helpful first step, 3) A warning about common traps. Keep responses concise — 4-6 sentences max. Be warm, encouraging and age-appropriate. " + context,
         messages: [{ role: "user", content: msg }]
       })
     });
+
+    removeTypingIndicator();
+
+    if (!res.ok) {
+      const errData = await res.json().catch(() => ({}));
+      if (res.status === 401) {
+        addChatMsg("Comms link down! My API key needs checking — contact your T3 Academy admin.", "ollie");
+      } else if (res.status === 429) {
+        addChatMsg("Comms link overloaded! Too many requests — wait a moment and try again.", "ollie");
+      } else {
+        addChatMsg("Comms link down! Check your galactic credits or connection. (Error " + res.status + ")", "ollie");
+      }
+      return;
+    }
+
     const data = await res.json();
-    const reply = data.content?.[0]?.text || "I'm having a little trouble right now — try again in a moment!";
-    document.getElementById(thinkId)?.remove();
-    addChatMsg(reply, "ollie");
+    const reply = data.content?.[0]?.text;
+    if (reply) addChatMsg(reply, "ollie");
+    else addChatMsg("I received a blank transmission — try again!", "ollie");
+
   } catch(e) {
-    document.getElementById(thinkId)?.remove();
-    addChatMsg("Sorry, I couldn't connect just now. Make sure the /api/ollie function is deployed!", "ollie");
+    removeTypingIndicator();
+    addChatMsg("Comms link down! Check your galactic credits or connection.", "ollie");
   }
+}
+
+function showTypingIndicator() {
+  const msgs = document.getElementById("chat-messages");
+  const div = document.createElement("div");
+  div.id = "typing-indicator";
+  div.className = "typing-bubble";
+  div.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function removeTypingIndicator() {
+  document.getElementById("typing-indicator")?.remove();
 }
 
 function addChatMsg(text, who, id) {
   const msgs = document.getElementById("chat-messages");
   const div = document.createElement("div");
-  div.className = "chat-msg "+who;
-  div.textContent = text;
+  div.className = "chat-msg " + who;
+  if (who === "ollie") {
+    div.innerHTML = '<div class="msg-label">🦉 Ollie</div><div class="msg-bubble">' + text.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g,"<br>") + "</div>";
+  } else {
+    div.innerHTML = '<div class="msg-bubble">' + text.replace(/</g,"&lt;").replace(/>/g,"&gt;") + "</div>";
+  }
   if (id) div.id = id;
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
