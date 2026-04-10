@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T3 Academy — AI-Powered Exam Preparation</title>
+<meta name="description" content="Master your exams with T3 Academy. Adaptive AI-powered preparation for 11+, MRCP, PLAB, MSRA and more. The T3 Method: Test, Teach, Test Again.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+
+/* ── Design tokens ── */
+:root {
+  --black:   #060608;
+  --deep:    #0c0d12;
+  --void:    #111318;
+  --surface: #16181f;
+  --raised:  #1d1f28;
+  --rim:     rgba(255,255,255,0.07);
+  --rim2:    rgba(255,255,255,0.12);
+  --accent:  #6366f1;
+  --accent2: #818cf8;
+  --glow:    rgba(99,102,241,0.18);
+  --text:    #f0f2f8;
+  --text2:   #8b90a8;
+  --text3:   #4a4e66;
+  --green:   #22c55e;
+  --amber:   #f59e0b;
+  --red:     #ef4444;
+  --teal:    #14b8a6;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--black);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── Texture overlay ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse 90% 60% at 50% -5%, rgba(99,102,241,0.10) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 85% 70%, rgba(139,92,246,0.05) 0%, transparent 55%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='1' cy='1' r='0.5' fill='rgba(255,255,255,0.018)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Utility ── */
+.container { max-width: 1140px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 1; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+/* ── Nav ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  border-bottom: 1px solid var(--rim);
+  background: rgba(6,6,8,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+.nav-inner {
+  max-width: 1140px; margin: 0 auto; padding: 0 28px;
+  height: 64px; display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 12px;
+  text-decoration: none;
+}
+.nav-logo-mark {
+  width: 36px; height: 36px; border-radius: 9px;
+  background: linear-gradient(135deg, var(--accent), #8b5cf6);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  box-shadow: 0 0 20px rgba(99,102,241,0.3);
+}
+.nav-logo-text {
+  font-family: var(--font-display);
+  font-size: 1.2rem; font-weight: 700;
+  color: var(--text); letter-spacing: -0.01em;
+}
+.nav-logo-text span { color: var(--accent2); }
+.nav-links { display: flex; align-items: center; gap: 8px; }
+.nav-link {
+  padding: 8px 16px; border-radius: 7px;
+  font-size: 0.85rem; font-weight: 500; color: var(--text2);
+  text-decoration: none; transition: all 0.2s;
+  background: none; border: none; cursor: pointer;
+}
+.nav-link:hover { color: var(--text); background: var(--rim); }
+.nav-cta {
+  padding: 8px 18px; border-radius: 7px;
+  font-size: 0.85rem; font-weight: 700;
+  background: var(--accent); color: #fff;
+  text-decoration: none; transition: all 0.2s;
+  box-shadow: 0 2px 12px rgba(99,102,241,0.3);
+}
+.nav-cta:hover { background: var(--accent2); box-shadow: 0 4px 20px rgba(99,102,241,0.45); transform: translateY(-1px); }
+
+/* ── Hero ── */
+.hero {
+  padding: 160px 0 100px;
+  text-align: center;
+  position: relative; z-index: 1;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(99,102,241,0.1);
+  border: 1px solid rgba(99,102,241,0.25);
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-size: 0.75rem; font-weight: 700;
+  color: var(--accent2);
+  text-transform: uppercase; letter-spacing: 0.12em;
+  margin-bottom: 28px;
+  animation: fadeUp 0.6s ease both;
+}
+.hero-eyebrow-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%,100% { opacity: 1; box-shadow: 0 0 6px var(--green); }
+  50% { opacity: 0.6; box-shadow: 0 0 12px var(--green); }
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin-bottom: 20px;
+  animation: fadeUp 0.6s 0.1s ease both;
+}
+.hero-title em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--accent2), #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--text2); font-weight: 400;
+  max-width: 560px; margin: 0 auto 40px;
+  line-height: 1.7;
+  animation: fadeUp 0.6s 0.2s ease both;
+}
+.hero-actions {
+  display: flex; align-items: center; justify-content: center; gap: 14px;
+  flex-wrap: wrap;
+  animation: fadeUp 0.6s 0.3s ease both;
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px; border-radius: 10px;
+  font-size: 0.95rem; font-weight: 700;
+  text-decoration: none; transition: all 0.2s;
+  cursor: pointer; border: none; font-family: var(--font-body);
+}
+.btn-primary {
+  background: var(--accent); color: #fff;
+  box-shadow: 0 4px 20px rgba(99,102,241,0.35);
+}
+.btn-primary:hover { background: var(--accent2); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(99,102,241,0.5); }
+.btn-ghost {
+  background: var(--rim); color: var(--text2);
+  border: 1px solid var(--rim2);
+}
+.btn-ghost:hover { background: var(--raised); color: var(--text); }
+
+.hero-stats {
+  display: flex; align-items: center; justify-content: center; gap: 40px;
+  margin-top: 64px; padding-top: 40px;
+  border-top: 1px solid var(--rim);
+  animation: fadeUp 0.6s 0.4s ease both;
+  flex-wrap: wrap;
+}
+.hero-stat-val {
+  font-family: var(--font-display);
+  font-size: 2rem; font-weight: 700; color: var(--text);
+  line-height: 1;
+}
+.hero-stat-val span { color: var(--accent2); }
+.hero-stat-label { font-size: 0.78rem; color: var(--text2); margin-top: 4px; font-weight: 500; }
+.hero-stat-sep { width: 1px; height: 36px; background: var(--rim2); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Section ── */
+.section { padding: 80px 0; position: relative; z-index: 1; }
+.section-label {
+  font-size: 0.7rem; font-weight: 800; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--accent2);
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 700; color: var(--text);
+  letter-spacing: -0.02em; line-height: 1.15;
+  margin-bottom: 16px;
+}
+.section-sub {
+  font-size: 1rem; color: var(--text2); max-width: 520px; line-height: 1.7;
+}
+
+/* ── Exam Grid ── */
+.exam-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 18px;
+  margin-top: 48px;
+}
+
+.exam-card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--rim);
+  border-radius: 18px;
+  padding: 28px;
+  transition: all 0.25s;
+  overflow: hidden;
+  text-decoration: none;
+  display: block;
+}
+.exam-card::before {
+  content: '';
+  position: absolute; inset: -1px;
+  border-radius: 19px;
+  background: linear-gradient(135deg, transparent, transparent);
+  transition: background 0.3s;
+  pointer-events: none;
+  z-index: 0;
+}
+.exam-card > * { position: relative; z-index: 1; }
+
+/* Live card */
+.exam-card.live {
+  border-color: rgba(99,102,241,0.3);
+  background: linear-gradient(135deg, rgba(22,24,31,1) 0%, rgba(25,20,45,1) 100%);
+  box-shadow: 0 0 0 1px rgba(99,102,241,0.15), 0 8px 40px rgba(99,102,241,0.08);
+}
+.exam-card.live::before {
+  background: linear-gradient(135deg, rgba(99,102,241,0.06), rgba(139,92,246,0.04));
+}
+.exam-card.live:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 0 1px rgba(99,102,241,0.4), 0 20px 60px rgba(99,102,241,0.18);
+  border-color: rgba(99,102,241,0.5);
+}
+
+/* Coming soon cards */
+.exam-card.soon {
+  border-color: var(--rim);
+  opacity: 0.75;
+  cursor: default;
+}
+.exam-card.soon:hover { opacity: 0.88; }
+
+.exam-card-top {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: 18px;
+}
+.exam-icon {
+  width: 52px; height: 52px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+.exam-badge {
+  font-size: 0.68rem; font-weight: 800;
+  padding: 4px 10px; border-radius: 999px;
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+.badge-live {
+  background: rgba(34,197,94,0.12);
+  border: 1px solid rgba(34,197,94,0.3);
+  color: var(--green);
+}
+.badge-soon {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--rim2);
+  color: var(--text3);
+}
+.badge-beta {
+  background: rgba(245,158,11,0.12);
+  border: 1px solid rgba(245,158,11,0.3);
+  color: var(--amber);
+}
+
+.exam-name {
+  font-size: 1.1rem; font-weight: 800; color: var(--text);
+  margin-bottom: 4px; letter-spacing: -0.01em;
+}
+.exam-full {
+  font-size: 0.78rem; color: var(--text2); margin-bottom: 12px;
+  font-weight: 500;
+}
+.exam-desc {
+  font-size: 0.85rem; color: var(--text2); line-height: 1.6;
+  margin-bottom: 20px;
+}
+.exam-meta {
+  display: flex; gap: 14px; margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.exam-meta-item {
+  font-size: 0.75rem; color: var(--text3); font-weight: 600;
+  display: flex; align-items: center; gap: 5px;
+}
+.exam-meta-item::before {
+  content: '';
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--text3); flex-shrink: 0;
+}
+
+.exam-enter {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px;
+  background: rgba(99,102,241,0.12);
+  border: 1px solid rgba(99,102,241,0.25);
+  border-radius: 10px;
+  font-size: 0.85rem; font-weight: 700; color: var(--accent2);
+  text-decoration: none; transition: all 0.2s;
+}
+.exam-enter:hover {
+  background: rgba(99,102,241,0.2);
+  border-color: rgba(99,102,241,0.5);
+}
+.exam-enter-arrow { font-size: 1rem; transition: transform 0.2s; }
+.exam-enter:hover .exam-enter-arrow { transform: translateX(4px); }
+
+.exam-soon-bar {
+  padding: 12px 16px;
+  background: var(--raised);
+  border: 1px solid var(--rim);
+  border-radius: 10px;
+  font-size: 0.82rem; font-weight: 600; color: var(--text3);
+  text-align: center;
+}
+
+/* Icon colour schemes */
+.icon-purple { background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.2); }
+.icon-teal   { background: rgba(20,184,166,0.12); border: 1px solid rgba(20,184,166,0.2); }
+.icon-amber  { background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.2); }
+.icon-blue   { background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.2); }
+.icon-red    { background: rgba(239,68,68,0.10);  border: 1px solid rgba(239,68,68,0.18); }
+.icon-green  { background: rgba(34,197,94,0.10);  border: 1px solid rgba(34,197,94,0.18); }
+
+/* ── T3 Method ── */
+.method-section { padding: 80px 0; border-top: 1px solid var(--rim); }
+.method-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 2px; margin-top: 48px;
+  border: 1px solid var(--rim); border-radius: 18px; overflow: hidden;
+}
+.method-card {
+  background: var(--surface);
+  padding: 36px 32px;
+  position: relative; overflow: hidden;
+  transition: background 0.2s;
+}
+.method-card:hover { background: var(--raised); }
+.method-card + .method-card { border-left: 1px solid var(--rim); }
+.method-num {
+  font-family: var(--font-display);
+  font-size: 4rem; font-weight: 900;
+  line-height: 1;
+  color: var(--accent);
+  opacity: 0.15;
+  position: absolute; top: 16px; right: 24px;
+  pointer-events: none;
+}
+.method-step {
+  font-size: 0.7rem; font-weight: 800; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--accent2); margin-bottom: 10px;
+}
+.method-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem; font-weight: 700; color: var(--text);
+  margin-bottom: 12px; letter-spacing: -0.01em;
+}
+.method-desc { font-size: 0.88rem; color: var(--text2); line-height: 1.7; }
+
+/* ── Why T3 ── */
+.why-grid {
+  display: grid; grid-template-columns: repeat(2,1fr);
+  gap: 16px; margin-top: 48px;
+}
+.why-card {
+  background: var(--surface);
+  border: 1px solid var(--rim);
+  border-radius: 16px; padding: 28px;
+  transition: border-color 0.2s;
+}
+.why-card:hover { border-color: var(--rim2); }
+.why-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: rgba(99,102,241,0.1);
+  border: 1px solid rgba(99,102,241,0.18);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; margin-bottom: 16px;
+}
+.why-title { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.why-desc { font-size: 0.85rem; color: var(--text2); line-height: 1.65; }
+
+/* ── CTA Banner ── */
+.cta-section {
+  padding: 80px 0;
+  border-top: 1px solid var(--rim);
+}
+.cta-box {
+  background: linear-gradient(135deg, rgba(99,102,241,0.08) 0%, rgba(139,92,246,0.06) 100%);
+  border: 1px solid rgba(99,102,241,0.2);
+  border-radius: 24px;
+  padding: 60px 48px;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.cta-box::before {
+  content: '';
+  position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
+  width: 400px; height: 200px;
+  background: radial-gradient(ellipse, rgba(99,102,241,0.12), transparent 70%);
+  pointer-events: none;
+}
+.cta-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700; color: var(--text);
+  letter-spacing: -0.02em; margin-bottom: 14px;
+}
+.cta-sub { font-size: 1rem; color: var(--text2); margin-bottom: 32px; }
+
+/* ── Footer ── */
+footer {
+  border-top: 1px solid var(--rim);
+  padding: 36px 0;
+  position: relative; z-index: 1;
+}
+.footer-inner {
+  max-width: 1140px; margin: 0 auto; padding: 0 28px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px; flex-wrap: wrap;
+}
+.footer-copy { font-size: 0.8rem; color: var(--text3); }
+.footer-links { display: flex; gap: 20px; }
+.footer-link { font-size: 0.8rem; color: var(--text3); text-decoration: none; transition: color 0.2s; }
+.footer-link:hover { color: var(--text2); }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .method-grid { grid-template-columns: 1fr; }
+  .method-card + .method-card { border-left: none; border-top: 1px solid var(--rim); }
+  .why-grid { grid-template-columns: 1fr; }
+  .hero { padding: 120px 0 72px; }
+  .hero-stats { gap: 24px; }
+  .hero-stat-sep { display: none; }
+  .cta-box { padding: 40px 24px; }
+  .nav-links .nav-link { display: none; }
+  .exam-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .hero-actions { flex-direction: column; align-items: stretch; text-align: center; }
+  .btn { justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <div class="nav-logo-mark">🦉</div>
+      <div class="nav-logo-text">T3 <span>Academy</span></div>
+    </a>
+    <div class="nav-links">
+      <a href="#exams" class="nav-link">Exams</a>
+      <a href="#method" class="nav-link">The T3 Method</a>
+      <a href="#why" class="nav-link">Why T3</a>
+      <a href="mailto:support@t3academy.co.uk" class="nav-link">Support</a>
+      <a href="/platform.html" class="nav-cta">Enter 11+ →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-dot"></span>
+      AI-Powered Exam Preparation · Now Live
+    </div>
+    <h1 class="hero-title">
+      Master Your Exams<br>with <em>T3 Academy</em>
+    </h1>
+    <p class="hero-sub">
+      Adaptive AI tutoring built on a single proven principle — Test, Teach, Test Again.
+      From 11+ to postgraduate medicine, precision preparation for every milestone.
+    </p>
+    <div class="hero-actions">
+      <a href="/platform.html" class="btn btn-primary">Start 11+ Preparation →</a>
+      <a href="#method" class="btn btn-ghost">How it works</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-val">515<span>+</span></div>
+        <div class="hero-stat-label">Vetted Questions</div>
+      </div>
+      <div class="hero-stat-sep"></div>
+      <div>
+        <div class="hero-stat-val">4</div>
+        <div class="hero-stat-label">Subjects Covered</div>
+      </div>
+      <div class="hero-stat-sep"></div>
+      <div>
+        <div class="hero-stat-val">AI</div>
+        <div class="hero-stat-label">Powered Tutor</div>
+      </div>
+      <div class="hero-stat-sep"></div>
+      <div>
+        <div class="hero-stat-val">GL</div>
+        <div class="hero-stat-label">Assessment Format</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Exam Grid ── -->
+<section class="section" id="exams">
+  <div class="container">
+    <div class="section-label">Examination Pathways</div>
+    <h2 class="section-title">Choose Your Preparation Track</h2>
+    <p class="section-sub">Each pathway is built to the exact format of its target examination, with subject-specific AI tutoring and adaptive question banks.</p>
+
+    <div class="exam-grid">
+
+      <!-- 11+ LIVE -->
+      <div class="exam-card live">
+        <div class="exam-card-top">
+          <div class="exam-icon icon-purple">🦉</div>
+          <span class="exam-badge badge-live">● Live</span>
+        </div>
+        <div class="exam-name">11+ GL Assessment</div>
+        <div class="exam-full">Grammar School Entrance Examination</div>
+        <div class="exam-desc">Comprehensive preparation across English, Maths, Verbal Reasoning and Non-Verbal Reasoning. GL Assessment format with Ollie the Owl AI tutor.</div>
+        <div class="exam-meta">
+          <span class="exam-meta-item">515 questions</span>
+          <span class="exam-meta-item">Mock exams</span>
+          <span class="exam-meta-item">Ages 9–11</span>
+          <span class="exam-meta-item">Trophy system</span>
+        </div>
+        <a href="/platform.html" class="exam-enter">
+          Enter Platform
+          <span class="exam-enter-arrow">→</span>
+        </a>
+      </div>
+
+      <!-- MRCP -->
+      <div class="exam-card soon">
+        <div class="exam-card-top">
+          <div class="exam-icon icon-teal">🏥</div>
+          <span class="exam-badge badge-soon">Coming Soon</span>
+        </div>
+        <div class="exam-name">MRCP (UK)</div>
+        <div class="exam-full">Membership of the Royal Colleges of Physicians</div>
+        <div class="exam-desc">Parts 1 and 2 Written preparation covering clinical sciences, medicine, and applied pathophysiology in MRCP SBA format.</div>
+        <div class="exam-meta">
+          <span class="exam-meta-item">Parts 1 & 2</span>
+          <span class="exam-meta-item">SBA format</span>
+          <span class="exam-meta-item">Core medicine</span>
+        </div>
+        <div class="exam-soon-bar">Notify me when available</div>
+      </div>
+
+      <!-- PLAB -->
+      <div class="exam-card soon">
+        <div class="exam-card-top">
+          <div class="exam-icon icon-blue">🌍</div>
+          <span class="exam-badge badge-soon">Coming Soon</span>
+        </div>
+        <div class="exam-name">PLAB</div>
+        <div class="exam-full">Professional and Linguistic Assessments Board</div>
+        <div class="exam-desc">GMC registration pathway for international medical graduates. PLAB 1 SBA preparation with scenario-based clinical reasoning.</div>
+        <div class="exam-meta">
+          <span class="exam-meta-item">PLAB 1 & 2</span>
+          <span class="exam-meta-item">GMC pathway</span>
+          <span class="exam-meta-item">IMG focus</span>
+        </div>
+        <div class="exam-soon-bar">Notify me when available</div>
+      </div>
+
+      <!-- MSRA -->
+      <div class="exam-card soon">
+        <div class="exam-card-top">
+          <div class="exam-icon icon-amber">🧠</div>
+          <span class="exam-badge badge-soon">Coming Soon</span>
+        </div>
+        <div class="exam-name">MSRA</div>
+        <div class="exam-full">Multi-Specialty Recruitment Assessment</div>
+        <div class="exam-desc">Specialty training application assessment covering clinical problem solving and professional dilemmas. Used for GP, psychiatry, and core training.</div>
+        <div class="exam-meta">
+          <span class="exam-meta-item">CPS + PDQ</span>
+          <span class="exam-meta-item">GP & psychiatry</span>
+          <span class="exam-meta-item">ST1 entry</span>
+        </div>
+        <div class="exam-soon-bar">Notify me when available</div>
+      </div>
+
+      <!-- Nursing -->
+      <div class="exam-card soon">
+        <div class="exam-card-top">
+          <div class="exam-icon icon-green">💊</div>
+          <span class="exam-badge badge-soon">Coming Soon</span>
+        </div>
+        <div class="exam-name">NMC OSCE</div>
+        <div class="exam-full">Nursing & Midwifery Council Registration</div>
+        <div class="exam-desc">CBT and OSCE preparation for overseas nurses seeking NMC registration. Covers medicines management, care and communication.</div>
+        <div class="exam-meta">
+          <span class="exam-meta-item">CBT + OSCE</span>
+          <span class="exam-meta-item">NMC pathway</span>
+          <span class="exam-meta-item">IEN focus</span>
+        </div>
+        <div class="exam-soon-bar">Notify me when available</div>
+      </div>
+
+      <!-- UCAT -->
+      <div class="exam-card soon">
+        <div class="exam-card-top">
+          <div class="exam-icon icon-red">⚕️</div>
+          <span class="exam-badge badge-soon">Coming Soon</span>
+        </div>
+        <div class="exam-name">UCAT</div>
+        <div class="exam-full">University Clinical Aptitude Test</div>
+        <div class="exam-desc">Medical school entry preparation covering verbal reasoning, decision making, quantitative reasoning, abstract reasoning, and situational judgement.</div>
+        <div class="exam-meta">
+          <span class="exam-meta-item">5 subtests</span>
+          <span class="exam-meta-item">Med school entry</span>
+          <span class="exam-meta-item">Timed practice</span>
+        </div>
+        <div class="exam-soon-bar">Notify me when available</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── T3 Method ── -->
+<section class="method-section" id="method">
+  <div class="container">
+    <div class="section-label">The Methodology</div>
+    <h2 class="section-title">The T3 Method</h2>
+    <p class="section-sub">A three-phase cycle that mirrors how memory and expertise are actually built — not passive reading, but active, adaptive engagement.</p>
+
+    <div class="method-grid">
+      <div class="method-card">
+        <div class="method-num">T1</div>
+        <div class="method-step">Phase One</div>
+        <div class="method-title">Test</div>
+        <div class="method-desc">Every session begins with questions — not revision. This activates retrieval practice, the most evidence-backed study technique in cognitive science. You discover exactly where your gaps are before you learn anything.</div>
+      </div>
+      <div class="method-card">
+        <div class="method-num">T2</div>
+        <div class="method-step">Phase Two</div>
+        <div class="method-title">Teach</div>
+        <div class="method-desc">After each answer — right or wrong — you receive a detailed explanation, a targeted tip, and a worked example from our AI tutor. The explanation is calibrated to the mistake you just made, not a generic textbook summary.</div>
+      </div>
+      <div class="method-card">
+        <div class="method-num">T3</div>
+        <div class="method-step">Phase Three</div>
+        <div class="method-title">Test Again</div>
+        <div class="method-desc">Questions shuffle. Answers re-order. Attempt numbers track your improvement. The same concept returns in a different form until your accuracy climbs through Bronze, Silver, Gold and Platinum. Mastery is confirmed, not assumed.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Why T3 ── -->
+<section class="section" id="why">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start">
+      <div>
+        <div class="section-label">Why T3 Academy</div>
+        <h2 class="section-title">Built differently.<br>By design.</h2>
+        <p class="section-sub" style="margin-top:16px">Most prep platforms give you content to consume. T3 gives you a performance loop — the same one elite athletes and surgeons use to build high-stakes competence under pressure.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon">🎯</div>
+          <div class="why-title">Adaptive Weak Area Detection</div>
+          <div class="why-desc">Your dashboard surfaces the exact topics where your accuracy drops below 60%, so every session is targeted, not random.</div>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🦉</div>
+          <div class="why-title">AI Tutor That Guides, Not Tells</div>
+          <div class="why-desc">Ollie never just gives you the answer. Using the Socratic method, it builds genuine understanding — the kind that holds up under exam pressure.</div>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">📋</div>
+          <div class="why-title">Exam-Format Fidelity</div>
+          <div class="why-desc">Every question bank is built to match the exact format, difficulty, and style of the real examination — not a generic textbook approximation.</div>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">📈</div>
+          <div class="why-title">Progress You Can Measure</div>
+          <div class="why-desc">Trophy progression, attempt comparison, accuracy trends and mock exam breakdowns give you and your family a clear picture of where you stand.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-box">
+      <div class="section-label" style="margin-bottom:16px">Get Started Today</div>
+      <div class="cta-title">Your preparation starts now.</div>
+      <p class="cta-sub">The 11+ platform is live and free to try. Register in under a minute — no payment required.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+        <a href="/platform.html" class="btn btn-primary">Start 11+ Preparation →</a>
+        <a href="mailto:support@t3academy.co.uk" class="btn btn-ghost">Contact Support</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-copy">© 2026 T3 Academy. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="mailto:support@t3academy.co.uk" class="footer-link">Support</a>
+      <a href="#" class="footer-link">Privacy Policy</a>
+      <a href="#" class="footer-link">Terms of Use</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// Intersection observer for fade-in on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.exam-card, .method-card, .why-card').forEach((el, i) => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = `opacity 0.5s ${i * 0.07}s ease, transform 0.5s ${i * 0.07}s ease`;
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
