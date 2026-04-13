@@ -1057,6 +1057,7 @@ input,textarea,select{font-family:inherit;}
         <div class="question-card">
           <div class="q-number" id="q-number">Question 1 of 10</div>
           <div class="q-text" id="q-text"></div>
+          <div class="nvr-diagram" id="nvr-diagram" style="display:none;margin:16px 0 8px;padding:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow-x:auto;"></div>
           <div class="options-list" id="options-list"></div>
           <div class="hint-area" id="hint-area"></div>
           <div class="explanation-box" id="explanation-box">
@@ -1175,6 +1176,7 @@ input,textarea,select{font-family:inherit;}
         <div class="question-card">
           <div class="q-number" id="mock-q-number">Question 1 of 80</div>
           <div class="q-text" id="mock-q-text"></div>
+          <div class="nvr-diagram" id="mock-nvr-diagram" style="display:none;margin:16px 0 8px;padding:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow-x:auto;"></div>
           <div class="options-list" id="mock-options-list"></div>
           <div class="explanation-box" id="mock-explanation-box" style="display:none"></div>
         </div>
@@ -2221,13 +2223,37 @@ function renderQuestion() {
   document.getElementById("q-number").textContent = "Question "+(currentQIdx+1)+" of "+total;
   document.getElementById("q-text").textContent = q.q;
   document.getElementById("quiz-progress-fill").style.width = (currentQIdx/total*100)+"%";
+  // NVR diagram: show svgQ if present
+  const diagramEl = document.getElementById("nvr-diagram");
+  if (q.svgQ) {
+    diagramEl.innerHTML = q.svgQ;
+    diagramEl.style.display = "block";
+    // Make SVG responsive
+    const svgEl = diagramEl.querySelector("svg");
+    if (svgEl) { svgEl.style.maxWidth = "100%"; svgEl.style.height = "auto"; svgEl.setAttribute("width","100%"); }
+  } else {
+    diagramEl.innerHTML = "";
+    diagramEl.style.display = "none";
+  }
   const opts = document.getElementById("options-list");
   opts.innerHTML = "";
   const letters = ["A","B","C","D","E"];
+  const isSvgOpts = q.opts && q.opts.length && typeof q.opts[0] === "string" && q.opts[0].trim().startsWith("<svg");
   q.opts.forEach((opt, i) => {
     const btn = document.createElement("button");
     btn.className = "option-btn";
-    btn.innerHTML = `<span class="option-letter">${letters[i]}</span><span>${opt}</span>`;
+    if (isSvgOpts) {
+      btn.style.alignItems = "center";
+      btn.style.gap = "12px";
+      const svgWrap = document.createElement("span");
+      svgWrap.innerHTML = opt;
+      const svgEl = svgWrap.querySelector("svg");
+      if (svgEl) { svgEl.style.maxWidth = "80px"; svgEl.style.height = "80px"; svgEl.style.flex = "0 0 auto"; svgEl.setAttribute("color","currentColor"); }
+      btn.innerHTML = `<span class="option-letter">${letters[i]}</span>`;
+      btn.appendChild(svgWrap);
+    } else {
+      btn.innerHTML = `<span class="option-letter">${letters[i]}</span><span>${opt}</span>`;
+    }
     btn.onclick = () => selectAnswer(i);
     opts.appendChild(btn);
   });
@@ -2260,7 +2286,7 @@ function selectAnswer(idx) {
   document.getElementById("tip-text").innerHTML = q.tip ? "<strong>💡 Tip:</strong> "+q.tip : "";
   // Track wrong answers for review
   if (!correct) {
-    wrongAnswers.push({ q: q.q, yourAns: q.opts[idx] || "—", correctAns: q.opts[q.ans], exp: q.exp });
+    wrongAnswers.push({ q: q.q, svgQ: q.svgQ || null, yourAns: q.opts[idx] || "—", correctAns: q.opts[q.ans], exp: q.exp });
   }
   shadowEntries.push({ user_id: currentUser.id, subject: currentSubject, topic: currentTopic, question_text: q.q.substring(0,200), was_correct: correct, attempt_number: currentAttempt, time_taken_seconds: timeTaken });
   const isLast = currentQIdx >= currentQs.length-1;
@@ -2360,6 +2386,7 @@ function showReview() {
     list.innerHTML = wrongAnswers.map((w,i) => `
       <div class="review-item wrong">
         <div class="review-q">${i+1}. ${w.q}</div>
+        ${w.svgQ ? `<div style="margin:8px 0;padding:10px;background:rgba(255,255,255,0.04);border-radius:8px;overflow-x:auto;">${w.svgQ}</div>` : ""}
         <div class="review-answers">
           <span style="color:var(--red);font-weight:600">✗ Your answer:</span> ${w.yourAns}<br>
           <span style="color:var(--green);font-weight:600">✓ Correct:</span> ${w.correctAns}<br>
@@ -2459,13 +2486,36 @@ function renderMockQuestion() {
   document.getElementById("mock-q-text").textContent = q.q;
   document.getElementById("mock-quiz-sub").textContent = SUBJ[q._subj]?.label || q._subj;
   document.getElementById("mock-progress-fill").style.width = (mockIdx/total*100)+"%";
+  // NVR diagram
+  const diagramEl = document.getElementById("mock-nvr-diagram");
+  if (q.svgQ) {
+    diagramEl.innerHTML = q.svgQ;
+    diagramEl.style.display = "block";
+    const svgEl = diagramEl.querySelector("svg");
+    if (svgEl) { svgEl.style.maxWidth = "100%"; svgEl.style.height = "auto"; svgEl.setAttribute("width","100%"); }
+  } else {
+    diagramEl.innerHTML = "";
+    diagramEl.style.display = "none";
+  }
   const opts = document.getElementById("mock-options-list");
   opts.innerHTML = "";
   const letters = ["A","B","C","D","E"];
+  const isSvgOpts = q.opts && q.opts.length && typeof q.opts[0] === "string" && q.opts[0].trim().startsWith("<svg");
   q.opts.forEach((opt, i) => {
     const btn = document.createElement("button");
     btn.className = "option-btn";
-    btn.innerHTML = `<span class="option-letter">${letters[i]}</span><span>${opt}</span>`;
+    if (isSvgOpts) {
+      btn.style.alignItems = "center";
+      btn.style.gap = "12px";
+      const svgWrap = document.createElement("span");
+      svgWrap.innerHTML = opt;
+      const svgEl = svgWrap.querySelector("svg");
+      if (svgEl) { svgEl.style.maxWidth = "80px"; svgEl.style.height = "80px"; svgEl.style.flex = "0 0 auto"; svgEl.setAttribute("color","currentColor"); }
+      btn.innerHTML = `<span class="option-letter">${letters[i]}</span>`;
+      btn.appendChild(svgWrap);
+    } else {
+      btn.innerHTML = `<span class="option-letter">${letters[i]}</span><span>${opt}</span>`;
+    }
     btn.onclick = () => selectMockAnswer(i);
     opts.appendChild(btn);
   });
