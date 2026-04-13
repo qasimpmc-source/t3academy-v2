@@ -1873,7 +1873,8 @@ function norm(q) {
     opts: q.options || q.opts || [],
     ans:  (q.correct !== undefined) ? q.correct : (q.ans !== undefined ? q.ans : 0),
     exp:  q.explanation || q.exp || "",
-    tip:  q.tip || ""
+    tip:  q.tip || "",
+    svgQ: q.svgQ || null
   };
 }
 
