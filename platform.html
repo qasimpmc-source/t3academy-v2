@@ -450,9 +450,52 @@ input,textarea,select{font-family:inherit;}
 /* ═══════════════════════════
    QUIZ
 ═══════════════════════════ */
-.quiz-shell{max-width:720px;margin:0 auto;}
+.quiz-shell{max-width:1280px;margin:0 auto;}
+.quiz-two-col{display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start;}
+.quiz-left-col{min-width:0;}
+.quiz-ollie-col{position:sticky;top:24px;}
 .quiz-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:12px;}
 .quiz-topbar-left{display:flex;flex-direction:column;}
+.ollie-inline-panel{background:linear-gradient(145deg,rgba(22,24,31,0.98),rgba(15,17,25,0.98));border:1px solid rgba(99,102,241,0.25);border-radius:20px;overflow:hidden;box-shadow:0 0 0 1px rgba(99,102,241,0.1),0 8px 40px rgba(0,0,0,0.4);display:flex;flex-direction:column;max-height:calc(100vh - 120px);transition:border-color 0.3s,box-shadow 0.3s;}
+.ollie-inline-panel:hover{border-color:rgba(99,102,241,0.4);box-shadow:0 0 0 1px rgba(99,102,241,0.15),0 8px 40px rgba(0,0,0,0.4),0 0 80px rgba(99,102,241,0.1);}
+.ollie-inline-header{display:flex;align-items:center;gap:12px;padding:16px 18px 12px;background:linear-gradient(135deg,rgba(99,102,241,0.12),rgba(139,92,246,0.08));border-bottom:1px solid rgba(99,102,241,0.15);flex-shrink:0;}
+.ollie-inline-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;box-shadow:0 0 16px rgba(99,102,241,0.4);animation:ollie-pulse 3s ease-in-out infinite;}
+@keyframes ollie-pulse{0%,100%{box-shadow:0 0 16px rgba(99,102,241,0.4);}50%{box-shadow:0 0 28px rgba(99,102,241,0.65);}}
+.ollie-inline-info{flex:1;}
+.ollie-inline-name{font-size:0.95rem;font-weight:800;color:#fff;letter-spacing:-0.01em;}
+.ollie-inline-status{display:flex;align-items:center;gap:5px;font-size:0.7rem;color:#4ade80;margin-top:2px;}
+.ollie-inline-badge{font-size:0.62rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;padding:4px 9px;border-radius:999px;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);color:#a5b4fc;}
+.ollie-inline-context{padding:8px 18px;font-size:0.72rem;color:#6b7280;background:rgba(0,0,0,0.2);border-bottom:1px solid rgba(255,255,255,0.04);flex-shrink:0;}
+.ollie-inline-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;min-height:200px;max-height:380px;scrollbar-width:thin;scrollbar-color:rgba(99,102,241,0.3) transparent;}
+.ollie-inline-messages::-webkit-scrollbar{width:4px;}
+.ollie-inline-messages::-webkit-scrollbar-thumb{background:rgba(99,102,241,0.3);border-radius:2px;}
+.inline-ollie-welcome{display:flex;flex-direction:column;align-items:center;text-align:center;padding:16px 8px;gap:10px;}
+.welcome-owl{font-size:2.2rem;animation:gentle-bob 2s ease-in-out infinite;}
+@keyframes gentle-bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+.welcome-text{font-size:0.82rem;color:var(--text2);line-height:1.6;max-width:260px;}
+.inline-msg{display:flex;flex-direction:column;gap:3px;max-width:90%;}
+.inline-msg.user{align-self:flex-end;}
+.inline-msg.ollie-msg{align-self:flex-start;}
+.inline-msg-label{font-size:0.65rem;font-weight:700;color:var(--text3);padding:0 4px;}
+.inline-msg.user .inline-msg-label{text-align:right;}
+.inline-msg-bubble{padding:10px 14px;border-radius:14px;font-size:0.83rem;line-height:1.65;}
+.inline-msg.user .inline-msg-bubble{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border-radius:14px 14px 4px 14px;}
+.inline-msg.ollie-msg .inline-msg-bubble{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);color:var(--text);border-radius:4px 14px 14px 14px;}
+.inline-typing{display:flex;align-items:center;gap:5px;padding:10px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:4px 14px 14px 14px;align-self:flex-start;}
+.inline-typing-dot{width:6px;height:6px;border-radius:50%;background:#6366f1;animation:typing-bounce 1.4s ease-in-out infinite;}
+.inline-typing-dot:nth-child(2){animation-delay:0.2s;}
+.inline-typing-dot:nth-child(3){animation-delay:0.4s;}
+@keyframes typing-bounce{0%,80%,100%{transform:scale(0.7);opacity:0.5;}40%{transform:scale(1);opacity:1;}}
+.ollie-inline-quick{display:flex;gap:6px;padding:10px 14px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,0.05);flex-shrink:0;}
+.inline-quick-btn{font-size:0.72rem;font-weight:600;padding:5px 10px;border-radius:999px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);color:#a5b4fc;cursor:pointer;transition:all 0.2s;}
+.inline-quick-btn:hover{background:rgba(99,102,241,0.2);border-color:rgba(99,102,241,0.4);color:#c7d2fe;}
+.ollie-inline-input-row{display:flex;align-items:flex-end;gap:8px;padding:12px 14px;border-top:1px solid rgba(255,255,255,0.06);flex-shrink:0;}
+.ollie-inline-input{flex:1;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 14px;color:var(--text);font-size:0.85rem;font-family:inherit;resize:none;outline:none;max-height:120px;line-height:1.5;transition:border-color 0.2s;}
+.ollie-inline-input:focus{border-color:rgba(99,102,241,0.5);}
+.ollie-inline-input::placeholder{color:var(--text3);}
+.ollie-inline-send{width:38px;height:38px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;cursor:pointer;font-size:0.9rem;transition:all 0.2s;display:flex;align-items:center;justify-content:center;}
+.ollie-inline-send:hover{transform:scale(1.08);box-shadow:0 4px 16px rgba(99,102,241,0.4);}
+@media(max-width:900px){.quiz-two-col{grid-template-columns:1fr;}.quiz-ollie-col{position:static;}.ollie-inline-messages{max-height:240px;}}
 .quiz-topic-label{font-size:1rem;font-weight:800;color:#fff;}
 .quiz-sub-label{font-size:0.8rem;color:var(--text2);}
 .quiz-timer{
@@ -1054,21 +1097,53 @@ input,textarea,select{font-family:inherit;}
         <div class="quiz-progress-outer">
           <div class="quiz-progress-fill" id="quiz-progress-fill" style="width:0%"></div>
         </div>
-        <div class="question-card">
-          <div class="q-number" id="q-number">Question 1 of 10</div>
-          <div class="q-text" id="q-text"></div>
-          <div class="nvr-diagram" id="nvr-diagram" style="display:none;margin:16px 0 8px;padding:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow-x:auto;"></div>
-          <div class="options-list" id="options-list"></div>
-          <div class="hint-area" id="hint-area"></div>
-          <div class="explanation-box" id="explanation-box">
-            <div class="exp-title" id="exp-title"></div>
-            <div class="exp-text" id="exp-text"></div>
-            <div class="tip-text" id="tip-text"></div>
+        <div class="quiz-two-col">
+          <div class="quiz-left-col">
+            <div class="question-card">
+              <div class="q-number" id="q-number">Question 1 of 10</div>
+              <div class="q-text" id="q-text"></div>
+              <div class="nvr-diagram" id="nvr-diagram" style="display:none;margin:16px 0 8px;padding:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow-x:auto;"></div>
+              <div class="options-list" id="options-list"></div>
+              <div class="hint-area" id="hint-area"></div>
+              <div class="explanation-box" id="explanation-box">
+                <div class="exp-title" id="exp-title"></div>
+                <div class="exp-text" id="exp-text"></div>
+                <div class="tip-text" id="tip-text"></div>
+              </div>
+            </div>
+            <div class="quiz-actions">
+              <button class="btn btn-secondary btn-sm" id="hint-btn" onclick="showHint()">💡 Hint</button>
+              <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none">Next →</button>
+            </div>
           </div>
-        </div>
-        <div class="quiz-actions">
-          <button class="btn btn-secondary btn-sm" id="hint-btn" onclick="showHint()">💡 Hint</button>
-          <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none">Next →</button>
+          <div class="quiz-ollie-col">
+            <div class="ollie-inline-panel" id="ollie-inline-panel">
+              <div class="ollie-inline-header">
+                <div class="ollie-inline-avatar">🦉</div>
+                <div class="ollie-inline-info">
+                  <div class="ollie-inline-name">Ollie</div>
+                  <div class="ollie-inline-status"><span class="ollie-status-dot"></span> Ready to help</div>
+                </div>
+                <div class="ollie-inline-badge">AI Tutor</div>
+              </div>
+              <div class="ollie-inline-context" id="ollie-inline-context-text">Ask me anything about this question</div>
+              <div class="ollie-inline-messages" id="inline-chat-messages">
+                <div class="inline-ollie-welcome">
+                  <div class="welcome-owl">🦉</div>
+                  <div class="welcome-text">Hi! I am Ollie. I am right here whenever you need a hint, an explanation, or want to understand why an answer is correct. Just ask!</div>
+                </div>
+              </div>
+              <div class="ollie-inline-quick">
+                <button class="inline-quick-btn" onclick="useInlinePrompt('I am stuck — can you give me a hint without telling me the answer?')">💡 Hint</button>
+                <button class="inline-quick-btn" onclick="useInlinePrompt('Can you explain how to approach this type of question?')">🧠 Method</button>
+                <button class="inline-quick-btn" onclick="useInlinePrompt('Why is the correct answer right? Explain step by step.')">✓ Explain</button>
+              </div>
+              <div class="ollie-inline-input-row">
+                <textarea class="ollie-inline-input" id="inline-chat-input" placeholder="Ask Ollie anything…" rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendInlineOllieMsg();}"></textarea>
+                <button class="ollie-inline-send" onclick="sendInlineOllieMsg()">➤</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -2264,6 +2339,7 @@ function renderQuestion() {
   document.getElementById("hint-btn").style.display = "inline-flex";
   document.getElementById("next-btn").style.display = "none";
   qStartTime = Date.now();
+  updateInlineOllieContext();
 }
 
 function selectAnswer(idx) {
@@ -2752,6 +2828,154 @@ function useQuickPrompt(text) {
   input.style.height = "auto";
   input.style.height = input.scrollHeight + "px";
   sendOllieMsg();
+}
+
+// ── INLINE OLLIE (quiz panel) ──────────────────────────────────
+function updateInlineOllieContext() {
+  const el = document.getElementById("ollie-inline-context-text");
+  if (!el) return;
+  if (currentTopic && currentSubject) {
+    el.textContent = "Topic: " + currentTopic + " · " + (SUBJ[currentSubject]?.label || currentSubject);
+  } else {
+    el.textContent = "Ask me anything about this question";
+  }
+}
+
+function useInlinePrompt(text) {
+  const input = document.getElementById("inline-chat-input");
+  if (!input) return;
+  input.value = text;
+  sendInlineOllieMsg();
+}
+
+function addInlineMsg(text, role) {
+  const msgs = document.getElementById("inline-chat-messages");
+  if (!msgs) return;
+  // Remove welcome message on first real message
+  const welcome = msgs.querySelector(".inline-ollie-welcome");
+  if (welcome) welcome.remove();
+  const wrap = document.createElement("div");
+  wrap.className = "inline-msg " + (role === "user" ? "user" : "ollie-msg");
+  const label = document.createElement("div");
+  label.className = "inline-msg-label";
+  label.textContent = role === "user" ? "You" : "Ollie";
+  const bubble = document.createElement("div");
+  bubble.className = "inline-msg-bubble";
+  bubble.textContent = text;
+  wrap.appendChild(label);
+  wrap.appendChild(bubble);
+  msgs.appendChild(wrap);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showInlineTyping() {
+  const msgs = document.getElementById("inline-chat-messages");
+  if (!msgs) return;
+  const div = document.createElement("div");
+  div.id = "inline-typing";
+  div.className = "inline-typing";
+  div.innerHTML = '<div class="inline-typing-dot"></div><div class="inline-typing-dot"></div><div class="inline-typing-dot"></div>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function removeInlineTyping() {
+  const t = document.getElementById("inline-typing");
+  if (t) t.remove();
+}
+
+async function sendInlineOllieMsg() {
+  const input = document.getElementById("inline-chat-input");
+  if (!input) return;
+  const msg = input.value.trim();
+  if (!msg) return;
+  input.value = "";
+  input.style.height = "auto";
+  addInlineMsg(msg, "user");
+  showInlineTyping();
+
+  // Build rich context
+  let questionContext = "";
+  let subjectContext = "";
+  if (currentSubject && currentTopic) {
+    subjectContext = "The student is currently practising: " + currentTopic + " (" + (SUBJ[currentSubject]?.label || currentSubject) + ").";
+  }
+  if (currentQs.length > 0 && currentQIdx < currentQs.length) {
+    const q = currentQs[currentQIdx];
+    questionContext = " The current question is: [" + q.q + "]. The answer options are: " + q.opts.map((o,i) => String.fromCharCode(65+i) + ") " + (typeof o === "string" && o.startsWith("<svg") ? "[shape diagram option " + String.fromCharCode(65+i) + "]" : o)).join(", ") + ".";
+    if (q.svgQ) questionContext += " This is a visual NVR question with a diagram.";
+  }
+
+  const OLLIE_SYSTEM = `You are Ollie the Owl — the world's finest 11+ exam tutor, embedded inside T3 Academy, a premium AI-powered exam preparation platform for children aged 9 to 11 preparing for the GL Assessment.
+
+YOUR IDENTITY
+You are warm, encouraging, deeply knowledgeable, and endlessly patient. You never give up on a student. You celebrate small wins. You have a gentle sense of humour. You are not a robot — you are a mentor who genuinely cares whether this child succeeds.
+
+YOUR EXPERTISE
+You have mastery-level knowledge of every topic in the GL Assessment 11+:
+- English: comprehension (literal retrieval, inference, language analysis, author technique), vocabulary in context, grammar, punctuation, spelling, figurative language
+- Maths: number and place value, fractions/decimals/percentages, ratio and proportion, algebra, geometry, area and perimeter, volume, data handling, probability, reasoning
+- Verbal Reasoning: synonyms, antonyms, hidden words, letter sequences, word analogies, word connections, logic puzzles, code breaking, number series
+- Non-Verbal Reasoning: shape series, analogies, similarities, odd one out, codes, matrix completion, reflections, rotations — you can describe spatial relationships clearly in text when no diagram is available
+
+YOUR TEACHING METHOD
+1. Never give the final answer directly unless the student explicitly says "just tell me the answer" AND they have already attempted the question.
+2. Use the Socratic method — guide with questions that lead the student to discover the answer themselves.
+3. Structure your help as: (a) Acknowledge what the student has said or tried, (b) Identify the exact concept or step they need, (c) Give a clear, concrete explanation with an example, (d) Ask a guiding question to check understanding.
+4. Use analogies and real-world examples that 9-11 year olds relate to — football, food, animals, school, family, games.
+5. Break complex problems into numbered steps. Never present a wall of text.
+6. After explaining, always end with a question that invites the student to try again: "Does that make sense? Now have a go — what do you think the answer might be?"
+
+ADAPTING TO DIFFERENT LEARNERS
+- If a student seems frustrated (short replies, says "I don't get it", "this is too hard"): slow down, zoom out to basics, use simpler language, praise their effort not their intelligence.
+- If a student has ADHD: keep each message short and punchy. Use bullet points. Give one instruction at a time. Celebrate every small step. Use "First... then... finally..." structures.
+- If a student has autism or needs literal language: be extremely precise. Avoid idioms and figurative language unless you explain them. Give explicit step-by-step instructions. Never say "kind of" or "sort of" — say exactly what you mean.
+- If a student has dyslexia: use shorter sentences. Break words down phonetically when relevant. Use "sounds like" comparisons. Avoid long paragraphs.
+- If a student is excelling: stretch them — ask "why does this work?", "can you think of another example?", "what would happen if...?"
+
+DESCRIBING VISUAL SHAPES (NVR)
+When a student asks about an NVR question involving shapes you cannot see, describe spatial relationships precisely using clock positions, compass directions, and simple geometry. For example: "Imagine the shape from the first box. The square has a line going from the top-left corner to the bottom-right corner — like a diagonal slash. Now look at box 2..."
+
+RESPONSE FORMAT
+- Keep responses focused and readable. Use short paragraphs or bullet points.
+- Use bold for key terms: **hidden word**, **rotation**, **denominator**
+- Never write more than 200 words unless the student asks for a detailed explanation.
+- Always end with either a question or an encouraging call to action.
+- Sign off with warmth but without being sycophantic.
+
+CONTEXT: ` + subjectContext + questionContext;
+
+  try {
+    const res = await fetch("/api/ollie", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-6",
+        max_tokens: 800,
+        system: OLLIE_SYSTEM,
+        messages: [{ role: "user", content: msg }]
+      })
+    });
+
+    removeInlineTyping();
+
+    if (!res.ok) {
+      const status = res.status;
+      if (status === 401) addInlineMsg("My connection needs a check — please contact your T3 Academy admin.", "ollie");
+      else if (status === 429) addInlineMsg("I am getting a lot of questions right now! Wait a moment and try again.", "ollie");
+      else addInlineMsg("Something went wrong on my end. Try again in a moment! (Error " + status + ")", "ollie");
+      return;
+    }
+
+    const data = await res.json();
+    const reply = data.content?.[0]?.text;
+    if (reply) addInlineMsg(reply, "ollie");
+    else addInlineMsg("I lost my train of thought there — try asking me again!", "ollie");
+
+  } catch(e) {
+    removeInlineTyping();
+    addInlineMsg("Connection issue — check your internet and try again.", "ollie");
+  }
 }
 
 async function sendOllieMsg() {
