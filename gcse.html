@@ -5,776 +5,726 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>T3 Academy — GCSE Revision</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg:       #09090f;
-    --bg2:      #0f0f1a;
-    --bg3:      #14141f;
-    --card:     #13131e;
-    --border:   rgba(255,255,255,0.07);
-    --text:     #f0f0f5;
-    --text2:    #9090a8;
-    --text3:    #55556a;
-    --elec:     #38bdf8;
-    --elec2:    #0ea5e9;
-    --light:    #fbbf24;
-    --light2:   #f59e0b;
-    --bio:      #34d399;
-    --bio2:     #10b981;
-    --nova:     #a78bfa;
-    --nova2:    #7c3aed;
-    --green:    #4ade80;
-    --red:      #f87171;
-    --font:     'DM Sans', sans-serif;
-    --heading:  'Syne', sans-serif;
-    --radius:   14px;
-  }
+:root {
+  --warm-bg:      #FDFBF7;
+  --warm-bg2:     #FFF8ED;
+  --warm-bg3:     #F5F0E8;
+  --warm-border:  #EDE8DF;
+  --warm-border2: #DDD5C8;
+  --charcoal:     #1C1710;
+  --charcoal2:    #3A3020;
+  --amber:        #BA7517;
+  --amber-light:  #FAEEDA;
+  --amber-mid:    #EF9F27;
+  --stone:        #A08050;
+  --stone-light:  #C8A878;
+  --text:         #1C1710;
+  --text2:        #5A4E3C;
+  --text3:        #A08050;
+  --text4:        #C8B898;
+  --green:        #3B6D11;
+  --green-bg:     #EAF3DE;
+  --red:          #A32D2D;
+  --red-bg:       #FCEBEB;
+  --blue:         #185FA5;
+  --blue-bg:      #E6F1FB;
+  --serif:        'Playfair Display', Georgia, serif;
+  --sans:         'Inter', system-ui, sans-serif;
+  --radius:       10px;
+  --radius-lg:    16px;
+}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
-    font-family: var(--font);
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    line-height: 1.6;
-  }
+body {
+  font-family: var(--sans);
+  background: var(--warm-bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
 
-  /* ── NAV ── */
-  .nav {
-    position: sticky; top: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 32px; height: 60px;
-    background: rgba(9,9,15,0.92);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-brand {
-    font-family: var(--heading);
-    font-size: 1rem; font-weight: 800;
-    letter-spacing: -0.02em; color: var(--text);
-    display: flex; align-items: center; gap: 8px;
-  }
-  .nav-brand span { color: var(--nova); }
-  .nav-links { display: flex; gap: 24px; align-items: center; }
-  .nav-link {
-    font-size: 0.82rem; font-weight: 500; color: var(--text2);
-    cursor: pointer; transition: color 0.2s;
-    background: none; border: none; padding: 0;
-  }
-  .nav-link:hover { color: var(--text); }
-  .nav-back {
-    font-size: 0.8rem; color: var(--text3);
-    cursor: pointer; transition: color 0.2s;
-    background: none; border: none;
-  }
-  .nav-back:hover { color: var(--text2); }
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--warm-border2); border-radius: 3px; }
 
-  /* ── VIEWS ── */
-  .view { display: none; }
-  .view.active { display: block; }
+/* ── NAV ── */
+.nav {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(253,251,247,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--warm-border);
+  padding: 0 32px; height: 56px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-brand {
+  font-family: var(--serif);
+  font-size: 1.1rem; color: var(--charcoal);
+  display: flex; align-items: center; gap: 2px;
+}
+.nav-brand em { color: var(--amber); font-style: italic; }
+.nav-links { display: flex; gap: 6px; align-items: center; }
+.nav-pill {
+  font-size: 0.75rem; font-weight: 500;
+  padding: 5px 12px; border-radius: 999px;
+  border: 1px solid var(--warm-border);
+  background: transparent; color: var(--text3);
+  cursor: pointer; transition: all 0.15s;
+}
+.nav-pill:hover { background: var(--warm-bg2); border-color: var(--amber); color: var(--amber); }
+.nav-pill.active { background: var(--amber); border-color: var(--amber); color: #fff; }
 
-  /* ── HOME ── */
-  .home-hero {
-    max-width: 900px; margin: 0 auto;
-    padding: 72px 32px 48px;
-    text-align: center;
-  }
-  .hero-eyebrow {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--nova);
-    background: rgba(167,139,250,0.1);
-    border: 1px solid rgba(167,139,250,0.2);
-    padding: 5px 12px; border-radius: 999px;
-    margin-bottom: 24px;
-  }
-  .hero-title {
-    font-family: var(--heading);
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 800; line-height: 1.1;
-    letter-spacing: -0.03em;
-    margin-bottom: 16px;
-  }
-  .hero-title .accent-elec { color: var(--elec); }
-  .hero-title .accent-light { color: var(--light); }
-  .hero-sub {
-    font-size: 1rem; color: var(--text2);
-    max-width: 500px; margin: 0 auto 48px;
-  }
+/* ── VIEWS ── */
+.view { display: none; animation: fadeIn 0.2s ease; }
+.view.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* Year selector */
-  .year-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    max-width: 700px; margin: 0 auto;
-  }
-  .year-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 28px 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative; overflow: hidden;
-  }
-  .year-card:hover { border-color: rgba(167,139,250,0.3); transform: translateY(-2px); }
-  .year-card.active-year {
-    border-color: var(--nova);
-    background: rgba(167,139,250,0.06);
-    cursor: default;
-  }
-  .year-card .year-num {
-    font-family: var(--heading);
-    font-size: 2rem; font-weight: 800;
-    color: var(--text3);
-  }
-  .year-card.active-year .year-num { color: var(--nova); }
-  .year-card .year-label { font-size: 0.78rem; color: var(--text3); margin-top: 4px; }
-  .year-card.active-year .year-label { color: var(--text2); }
-  .year-card .year-badge {
-    display: inline-block;
-    font-size: 0.62rem; font-weight: 700;
-    letter-spacing: 0.06em; text-transform: uppercase;
-    padding: 3px 8px; border-radius: 4px;
-    margin-top: 10px;
-  }
-  .badge-live { background: rgba(52,211,153,0.15); color: var(--green); border: 1px solid rgba(52,211,153,0.3); }
-  .badge-soon { background: rgba(255,255,255,0.04); color: var(--text3); border: 1px solid var(--border); }
+/* ── HOME ── */
+.home-wrap {
+  max-width: 860px; margin: 0 auto;
+  padding: 64px 32px 48px;
+}
+.home-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--amber);
+  background: var(--amber-light);
+  border: 1px solid rgba(186,117,23,0.2);
+  padding: 5px 12px; border-radius: 999px;
+  margin-bottom: 20px;
+}
+.home-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  font-weight: 400; line-height: 1.2;
+  color: var(--charcoal);
+  margin-bottom: 14px;
+}
+.home-title em { font-style: italic; color: var(--amber); }
+.home-sub {
+  font-size: 1rem; color: var(--text2);
+  max-width: 520px; margin-bottom: 48px;
+  line-height: 1.7; font-weight: 300;
+}
+.year-row {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 14px; max-width: 620px;
+}
+.year-card {
+  background: #fff;
+  border: 1px solid var(--warm-border);
+  border-radius: var(--radius-lg);
+  padding: 28px 20px; text-align: center;
+  cursor: pointer; transition: all 0.2s;
+}
+.year-card:hover:not(.locked) {
+  border-color: var(--amber);
+  box-shadow: 0 4px 20px rgba(186,117,23,0.1);
+  transform: translateY(-2px);
+}
+.year-card.locked { opacity: 0.5; cursor: default; }
+.year-card .yn {
+  font-family: var(--serif);
+  font-size: 2.2rem; font-weight: 600;
+  color: var(--warm-border2);
+  margin-bottom: 4px;
+}
+.year-card.live .yn { color: var(--amber); }
+.year-card .yl { font-size: 0.75rem; color: var(--text3); margin-bottom: 10px; }
+.ybadge {
+  display: inline-block; font-size: 0.62rem; font-weight: 600;
+  padding: 3px 9px; border-radius: 4px;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.ybadge-live { background: var(--green-bg); color: var(--green); }
+.ybadge-soon { background: var(--warm-bg3); color: var(--text3); }
 
-  /* ── YEAR 8 HUB ── */
-  .hub {
-    max-width: 900px; margin: 0 auto;
-    padding: 48px 32px;
-  }
-  .hub-header { margin-bottom: 36px; }
-  .hub-header h2 {
-    font-family: var(--heading);
-    font-size: 1.8rem; font-weight: 800;
-    letter-spacing: -0.02em;
-  }
-  .hub-header p { color: var(--text2); font-size: 0.9rem; margin-top: 6px; }
+/* ── HUB ── */
+.hub-wrap {
+  max-width: 860px; margin: 0 auto;
+  padding: 40px 32px;
+}
+.hub-top { margin-bottom: 32px; }
+.hub-top h2 {
+  font-family: var(--serif);
+  font-size: 1.7rem; font-weight: 400;
+  color: var(--charcoal); margin-bottom: 4px;
+}
+.hub-top p { font-size: 0.85rem; color: var(--text3); }
 
-  .subject-section { margin-bottom: 40px; }
-  .subject-label {
-    display: flex; align-items: center; gap: 10px;
-    margin-bottom: 16px;
-  }
-  .subject-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-  }
-  .subject-label h3 {
-    font-family: var(--heading);
-    font-size: 0.85rem; font-weight: 700;
-    letter-spacing: 0.06em; text-transform: uppercase;
-    color: var(--text2);
-  }
+.subject-block { margin-bottom: 32px; }
+.subject-head {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 14px;
+}
+.subject-rule {
+  flex: 1; height: 1px; background: var(--warm-border);
+}
+.subject-head span {
+  font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text3); white-space: nowrap;
+}
 
-  .topic-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 12px;
-  }
-  .topic-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex; align-items: flex-start; gap: 14px;
-  }
-  .topic-card:hover { transform: translateY(-2px); }
-  .topic-card.elec:hover { border-color: rgba(56,189,248,0.35); background: rgba(56,189,248,0.04); }
-  .topic-card.light-t:hover { border-color: rgba(251,191,36,0.35); background: rgba(251,191,36,0.04); }
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 10px;
+}
+.topic-card {
+  background: #fff;
+  border: 1px solid var(--warm-border);
+  border-radius: var(--radius);
+  padding: 16px;
+  cursor: pointer; transition: all 0.15s;
+  display: flex; gap: 12px; align-items: flex-start;
+  position: relative;
+}
+.topic-card:hover { border-color: var(--amber); background: var(--warm-bg2); transform: translateY(-1px); }
+.topic-card.locked { opacity: 0.45; cursor: default; }
+.topic-card.locked:hover { transform: none; border-color: var(--warm-border); background: #fff; }
 
-  .topic-icon {
-    width: 36px; height: 36px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.1rem; flex-shrink: 0;
-  }
-  .topic-icon.elec { background: rgba(56,189,248,0.12); }
-  .topic-icon.light-t { background: rgba(251,191,36,0.12); }
+.topic-card .tc-icon {
+  width: 34px; height: 34px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+  background: var(--amber-light);
+}
+.topic-card.bio-card .tc-icon { background: var(--green-bg); }
+.topic-info .tn { font-size: 0.88rem; font-weight: 500; color: var(--charcoal); margin-bottom: 2px; }
+.topic-info .td { font-size: 0.73rem; color: var(--text3); line-height: 1.4; }
+.topic-progress-dot {
+  position: absolute; top: 10px; right: 10px;
+  width: 7px; height: 7px; border-radius: 50%;
+}
+.dot-done { background: var(--green); }
+.dot-partial { background: var(--amber); }
 
-  .topic-info { flex: 1; min-width: 0; }
-  .topic-name {
-    font-size: 0.9rem; font-weight: 600;
-    color: var(--text); margin-bottom: 3px;
-    line-height: 1.3;
-  }
-  .topic-desc { font-size: 0.76rem; color: var(--text3); line-height: 1.4; }
+/* ── TUTOR VIEW ── */
+.tutor-outer {
+  max-width: 1100px; margin: 0 auto;
+  padding: 24px 32px;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 20px;
+  align-items: start;
+}
+.tutor-main { min-width: 0; }
 
-  .exam-badge {
-    display: inline-flex; align-items: center; gap: 5px;
-    font-size: 0.68rem; font-weight: 700;
-    color: var(--red); background: rgba(248,113,113,0.1);
-    border: 1px solid rgba(248,113,113,0.25);
-    padding: 3px 9px; border-radius: 4px;
-    margin-top: 12px;
-  }
+/* Topic header */
+.topic-header { margin-bottom: 18px; }
+.th-subject { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); margin-bottom: 5px; }
+.th-title {
+  font-family: var(--serif);
+  font-size: 1.5rem; font-weight: 400; color: var(--charcoal);
+  margin-bottom: 3px;
+}
+.th-sub { font-size: 0.78rem; color: var(--text3); }
 
-  /* ── TUTOR VIEW ── */
-  .tutor-wrap {
-    max-width: 920px; margin: 0 auto;
-    padding: 32px 32px 24px;
-    display: grid;
-    grid-template-columns: 1fr 340px;
-    gap: 24px;
-    min-height: calc(100vh - 60px);
-    align-items: start;
-  }
+/* Stage bar */
+.stage-track {
+  display: flex; gap: 6px; margin-bottom: 8px;
+}
+.stage-seg {
+  flex: 1; height: 3px; border-radius: 2px;
+  background: var(--warm-border);
+  cursor: pointer; transition: background 0.3s;
+  position: relative;
+}
+.stage-seg.done { background: var(--amber); }
+.stage-seg.active { background: var(--amber-mid); }
+.stage-seg:hover::after {
+  content: attr(data-label);
+  position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+  background: var(--charcoal); color: #fff;
+  font-size: 0.65rem; padding: 2px 7px; border-radius: 4px; white-space: nowrap;
+  pointer-events: none;
+}
+.stage-info { font-size: 0.72rem; color: var(--text3); margin-bottom: 16px; }
+.stage-info strong { color: var(--amber); font-weight: 500; }
 
-  /* Left: topic info + chat */
-  .tutor-main {}
+/* Chat */
+.chat-shell {
+  background: #fff;
+  border: 1px solid var(--warm-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.chat-msgs {
+  flex: 1; overflow-y: auto;
+  padding: 20px; display: flex; flex-direction: column; gap: 14px;
+  min-height: 300px; max-height: calc(100vh - 360px);
+}
+.msg { display: flex; flex-direction: column; gap: 3px; max-width: 86%; }
+.msg.user { align-self: flex-end; }
+.msg.nova { align-self: flex-start; }
+.msg-who { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text4); padding: 0 4px; }
+.msg.user .msg-who { text-align: right; }
+.msg-bubble {
+  padding: 11px 15px; border-radius: 12px;
+  font-size: 0.84rem; line-height: 1.7; white-space: pre-wrap;
+}
+.msg.user .msg-bubble {
+  background: var(--amber);
+  color: #fff; border-radius: 12px 12px 3px 12px;
+}
+.msg.nova .msg-bubble {
+  background: var(--warm-bg2);
+  border: 1px solid var(--warm-border);
+  color: var(--text);
+  border-radius: 3px 12px 12px 12px;
+}
+/* SVG diagram in bubble */
+.msg.nova .msg-bubble svg {
+  display: block; max-width: 100%;
+  margin-top: 10px; border-radius: 6px;
+}
+.typing-row {
+  align-self: flex-start;
+  background: var(--warm-bg2); border: 1px solid var(--warm-border);
+  border-radius: 3px 12px 12px 12px;
+  padding: 10px 14px; display: flex; gap: 5px; align-items: center;
+}
+.tdot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--amber); opacity: 0.5;
+  animation: tdot 1.4s ease-in-out infinite;
+}
+.tdot:nth-child(2) { animation-delay: 0.2s; }
+.tdot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes tdot { 0%,80%,100%{transform:scale(0.65);opacity:0.35;}40%{transform:scale(1);opacity:1;} }
 
-  .tutor-header {
-    margin-bottom: 20px;
-  }
-  .tutor-subject-tag {
-    font-size: 0.7rem; font-weight: 700;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--text3); margin-bottom: 8px;
-  }
-  .tutor-topic-title {
-    font-family: var(--heading);
-    font-size: 1.5rem; font-weight: 800;
-    letter-spacing: -0.02em; line-height: 1.2;
-    margin-bottom: 6px;
-  }
-  .tutor-topic-sub { font-size: 0.82rem; color: var(--text2); }
+/* Feedback chips */
+.feedback-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 0.7rem; font-weight: 600;
+  padding: 3px 9px; border-radius: 4px; margin-top: 6px;
+}
+.chip-right { background: var(--green-bg); color: var(--green); }
+.chip-part  { background: var(--amber-light); color: var(--amber); }
+.chip-wrong { background: var(--red-bg); color: var(--red); }
 
-  /* Stage progress */
-  .stage-bar {
-    display: flex; gap: 6px;
-    margin: 16px 0;
-  }
-  .stage-pip {
-    flex: 1; height: 4px; border-radius: 2px;
-    background: var(--bg3);
-    transition: background 0.4s;
-  }
-  .stage-pip.done { background: var(--nova); }
-  .stage-pip.active { background: var(--nova); opacity: 0.5; }
+/* Input bar */
+.input-bar {
+  border-top: 1px solid var(--warm-border);
+  padding: 10px 14px; display: flex; gap: 8px; align-items: flex-end;
+  background: var(--warm-bg);
+}
+.chat-input {
+  flex: 1; background: #fff;
+  border: 1px solid var(--warm-border); border-radius: 8px;
+  padding: 9px 13px; color: var(--text);
+  font-size: 0.85rem; font-family: var(--sans);
+  resize: none; outline: none; max-height: 120px; line-height: 1.5;
+  transition: border-color 0.15s;
+}
+.chat-input:focus { border-color: var(--amber); }
+.chat-input::placeholder { color: var(--text4); }
+.send-btn {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: var(--amber); color: #fff;
+  border: none; cursor: pointer; font-size: 0.9rem;
+  transition: all 0.15s; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.send-btn:hover { background: var(--charcoal); }
+.send-btn:disabled { opacity: 0.4; cursor: default; }
 
-  .stage-label {
-    font-size: 0.72rem; color: var(--text3);
-    margin-bottom: 16px;
-  }
-  .stage-label span { color: var(--nova); font-weight: 600; }
+/* Quick actions */
+.quick-bar {
+  border-top: 1px solid var(--warm-border);
+  padding: 8px 14px; display: flex; gap: 6px; flex-wrap: wrap;
+  background: var(--warm-bg);
+}
+.quick-btn {
+  font-size: 0.71rem; font-weight: 500;
+  padding: 4px 10px; border-radius: 999px;
+  border: 1px solid var(--warm-border2);
+  background: #fff; color: var(--text2);
+  cursor: pointer; transition: all 0.15s;
+}
+.quick-btn:hover { background: var(--amber-light); border-color: var(--amber); color: var(--amber); }
 
-  /* Chat area */
-  .chat-area {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    display: flex; flex-direction: column;
-    min-height: 420px; max-height: calc(100vh - 280px);
-  }
-  .chat-messages {
-    flex: 1; overflow-y: auto;
-    padding: 20px; display: flex; flex-direction: column; gap: 14px;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(167,139,250,0.2) transparent;
-  }
-  .chat-messages::-webkit-scrollbar { width: 4px; }
-  .chat-messages::-webkit-scrollbar-thumb { background: rgba(167,139,250,0.2); border-radius: 2px; }
+/* Below chat controls */
+.chat-controls {
+  display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;
+}
+.ctrl-btn {
+  font-size: 0.75rem; font-weight: 500; color: var(--text3);
+  background: #fff; border: 1px solid var(--warm-border);
+  padding: 7px 14px; border-radius: 8px;
+  cursor: pointer; transition: all 0.15s;
+}
+.ctrl-btn:hover { border-color: var(--amber); color: var(--amber); background: var(--warm-bg2); }
 
-  .msg { display: flex; flex-direction: column; gap: 3px; max-width: 88%; }
-  .msg.user { align-self: flex-end; }
-  .msg.nova { align-self: flex-start; }
+/* ── SIDEBAR ── */
+.sidebar {
+  position: sticky; top: 80px;
+  background: #fff;
+  border: 1px solid var(--warm-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.sidebar-tabs {
+  display: flex; border-bottom: 1px solid var(--warm-border);
+}
+.stab {
+  flex: 1; padding: 10px 0; text-align: center;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.05em;
+  text-transform: uppercase; color: var(--text3);
+  cursor: pointer; border-bottom: 2px solid transparent;
+  transition: all 0.15s; background: none; border-top: none; border-left: none; border-right: none;
+}
+.stab.active { color: var(--amber); border-bottom-color: var(--amber); background: var(--warm-bg2); }
+.stab:hover:not(.active) { color: var(--text2); background: var(--warm-bg); }
 
-  .msg-label {
-    font-size: 0.65rem; font-weight: 700;
-    color: var(--text3); padding: 0 4px;
-  }
-  .msg.user .msg-label { text-align: right; }
+.sidebar-body { padding: 16px; max-height: calc(100vh - 220px); overflow-y: auto; }
 
-  .msg-bubble {
-    padding: 11px 15px;
-    border-radius: 14px;
-    font-size: 0.85rem; line-height: 1.65;
-  }
-  .msg.user .msg-bubble {
-    background: var(--nova2);
-    color: #fff;
-    border-radius: 14px 14px 4px 14px;
-  }
-  .msg.nova .msg-bubble {
-    background: var(--card);
-    border: 1px solid var(--border);
-    color: var(--text);
-    border-radius: 4px 14px 14px 14px;
-  }
+/* Knowledge panel */
+.kf-item {
+  border-bottom: 1px solid var(--warm-border);
+  padding: 0;
+}
+.kf-item:last-child { border-bottom: none; }
+.kf-header {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 10px 0; cursor: pointer;
+  user-select: none;
+}
+.kf-arrow {
+  font-size: 0.6rem; color: var(--text4);
+  margin-top: 3px; transition: transform 0.2s; flex-shrink: 0;
+}
+.kf-item.open .kf-arrow { transform: rotate(90deg); }
+.kf-title { font-size: 0.82rem; font-weight: 500; color: var(--charcoal); line-height: 1.4; flex: 1; }
+.kf-body {
+  display: none; padding: 0 0 12px 14px;
+}
+.kf-item.open .kf-body { display: block; }
+.kf-body p { font-size: 0.78rem; color: var(--text2); line-height: 1.7; margin-bottom: 8px; }
+.kf-body .kf-example {
+  background: var(--warm-bg2); border-left: 3px solid var(--amber);
+  padding: 8px 10px; border-radius: 0 6px 6px 0;
+  font-size: 0.76rem; color: var(--text2); margin-bottom: 8px;
+  font-family: var(--serif); font-style: italic;
+}
+.kf-body svg { display: block; max-width: 100%; margin: 8px auto; }
+.kf-ask-btn {
+  font-size: 0.7rem; color: var(--amber);
+  background: var(--amber-light); border: 1px solid rgba(186,117,23,0.2);
+  padding: 4px 10px; border-radius: 4px;
+  cursor: pointer; transition: all 0.15s; margin-top: 4px;
+}
+.kf-ask-btn:hover { background: var(--amber); color: #fff; }
 
-  .typing-indicator {
-    display: flex; align-items: center; gap: 5px;
-    padding: 11px 15px;
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 4px 14px 14px 14px;
-    align-self: flex-start; width: fit-content;
-  }
-  .typing-dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--nova); opacity: 0.6;
-    animation: tdot 1.4s ease-in-out infinite;
-  }
-  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes tdot { 0%,80%,100%{transform:scale(0.7);opacity:0.4;} 40%{transform:scale(1);opacity:1;} }
+/* Progress tab */
+.prog-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 0; border-bottom: 1px solid var(--warm-border);
+}
+.prog-item:last-child { border-bottom: none; }
+.prog-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.prog-dot.done { background: var(--green); }
+.prog-dot.partial { background: var(--amber); }
+.prog-dot.untouched { background: var(--warm-border2); }
+.prog-name { font-size: 0.78rem; color: var(--text); flex: 1; }
+.prog-score { font-size: 0.72rem; font-weight: 600; color: var(--text3); }
 
-  /* Score pills */
-  .score-pill {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 0.72rem; font-weight: 700;
-    padding: 4px 10px; border-radius: 999px;
-    margin-top: 8px; align-self: flex-start;
-  }
-  .score-pill.correct { background: rgba(74,222,128,0.1); color: var(--green); border: 1px solid rgba(74,222,128,0.25); }
-  .score-pill.partial { background: rgba(251,191,36,0.1); color: var(--light); border: 1px solid rgba(251,191,36,0.25); }
-  .score-pill.wrong { background: rgba(248,113,113,0.1); color: var(--red); border: 1px solid rgba(248,113,113,0.25); }
+/* Session score block */
+.session-block {
+  background: var(--warm-bg2); border: 1px solid var(--warm-border);
+  border-radius: 8px; padding: 12px; margin-top: 12px;
+}
+.session-block .sb-title {
+  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--amber); margin-bottom: 8px;
+}
+.sb-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
+.sb-label { font-size: 0.74rem; color: var(--text3); }
+.sb-val { font-size: 0.74rem; font-weight: 600; color: var(--charcoal); }
+.sb-bar { height: 4px; background: var(--warm-border); border-radius: 2px; margin-top: 8px; }
+.sb-fill { height: 100%; background: var(--amber); border-radius: 2px; transition: width 0.4s; }
 
-  /* Input */
-  .chat-input-area {
-    border-top: 1px solid var(--border);
-    padding: 12px 16px;
-    display: flex; gap: 8px; align-items: flex-end;
-    background: rgba(0,0,0,0.2);
-  }
-  .chat-input {
-    flex: 1;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 10px;
-    padding: 10px 14px;
-    color: var(--text);
-    font-size: 0.86rem;
-    font-family: var(--font);
-    resize: none; outline: none;
-    max-height: 120px;
-    line-height: 1.5;
-    transition: border-color 0.2s;
-  }
-  .chat-input:focus { border-color: rgba(167,139,250,0.45); }
-  .chat-input::placeholder { color: var(--text3); }
-  .send-btn {
-    width: 38px; height: 38px;
-    border-radius: 10px; flex-shrink: 0;
-    background: var(--nova2);
-    color: #fff; border: none; cursor: pointer;
-    font-size: 1rem; transition: all 0.2s;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .send-btn:hover { transform: scale(1.08); background: var(--nova); }
-  .send-btn:disabled { opacity: 0.4; cursor: default; transform: none; }
+/* ── TIMED MODE ── */
+.timer-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 0.72rem; font-weight: 600;
+  background: var(--warm-bg3); border: 1px solid var(--warm-border2);
+  color: var(--text2); padding: 4px 10px; border-radius: 6px;
+  margin-left: auto;
+}
+.timer-badge.warn { background: #FFF3CD; border-color: #BA7517; color: #854F0B; }
+.timer-badge.danger { background: var(--red-bg); border-color: var(--red); color: var(--red); }
 
-  /* Right: Nova panel */
-  .nova-panel {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    position: sticky; top: 80px;
-  }
-  .nova-header {
-    display: flex; align-items: center; gap: 12px;
-    margin-bottom: 16px;
-  }
-  .nova-avatar {
-    width: 40px; height: 40px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--nova), var(--nova2));
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.1rem; font-weight: 800;
-    color: #fff; font-family: var(--heading);
-    flex-shrink: 0;
-  }
-  .nova-name {
-    font-family: var(--heading);
-    font-size: 0.95rem; font-weight: 800;
-    color: var(--text);
-  }
-  .nova-status {
-    font-size: 0.68rem; color: var(--green);
-    display: flex; align-items: center; gap: 4px;
-    margin-top: 2px;
-  }
-  .nova-status-dot {
-    width: 5px; height: 5px; border-radius: 50%;
-    background: var(--green);
-  }
+/* ── RESULTS ── */
+.results-wrap {
+  max-width: 580px; margin: 60px auto;
+  padding: 0 32px; text-align: center;
+}
+.results-wrap .trophy { font-size: 3.5rem; margin-bottom: 14px; }
+.results-wrap h2 {
+  font-family: var(--serif);
+  font-size: 1.8rem; font-weight: 400; margin-bottom: 8px; color: var(--charcoal);
+}
+.results-wrap .res-sub { font-size: 0.9rem; color: var(--text2); margin-bottom: 28px; }
+.res-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+.res-stat {
+  background: #fff; border: 1px solid var(--warm-border);
+  border-radius: var(--radius); padding: 16px;
+}
+.rs-val { font-family: var(--serif); font-size: 1.8rem; color: var(--amber); margin-bottom: 2px; }
+.rs-lbl { font-size: 0.72rem; color: var(--text3); }
+.nova-summary {
+  background: var(--warm-bg2); border: 1px solid var(--warm-border);
+  border-left: 3px solid var(--amber);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 14px 16px; margin-bottom: 24px;
+  font-size: 0.84rem; color: var(--text2); line-height: 1.7;
+  text-align: left;
+}
+.nova-summary .ns-header {
+  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--amber); margin-bottom: 6px;
+}
+.btn-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.btn {
+  font-size: 0.82rem; font-weight: 500;
+  padding: 9px 20px; border-radius: 8px;
+  border: none; cursor: pointer; transition: all 0.15s;
+  font-family: var(--sans);
+}
+.btn-primary { background: var(--amber); color: #fff; }
+.btn-primary:hover { background: var(--charcoal); }
+.btn-secondary { background: #fff; border: 1px solid var(--warm-border2); color: var(--text2); }
+.btn-secondary:hover { border-color: var(--amber); color: var(--amber); }
 
-  .nova-context {
-    font-size: 0.73rem; color: var(--text3);
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--border);
-    border-radius: 8px; padding: 8px 12px;
-    margin-bottom: 14px;
-    line-height: 1.5;
-  }
-  .nova-context strong { color: var(--nova); }
-
-  .nova-key-facts h4 {
-    font-size: 0.7rem; font-weight: 700;
-    letter-spacing: 0.07em; text-transform: uppercase;
-    color: var(--text3); margin-bottom: 10px;
-  }
-  .fact-item {
-    font-size: 0.76rem; color: var(--text2);
-    padding: 6px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    line-height: 1.4;
-  }
-  .fact-item:last-child { border-bottom: none; }
-  .fact-item .fact-icon { color: var(--nova); margin-right: 6px; }
-
-  /* Session score */
-  .session-score {
-    margin-top: 16px;
-    background: rgba(167,139,250,0.08);
-    border: 1px solid rgba(167,139,250,0.15);
-    border-radius: 10px; padding: 12px 14px;
-  }
-  .session-score .score-title {
-    font-size: 0.68rem; font-weight: 700;
-    letter-spacing: 0.07em; text-transform: uppercase;
-    color: var(--nova); margin-bottom: 8px;
-  }
-  .score-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
-  .score-row .slabel { font-size: 0.75rem; color: var(--text2); }
-  .score-row .sval { font-size: 0.75rem; font-weight: 700; color: var(--text); }
-
-  /* Results screen */
-  .results-wrap {
-    max-width: 600px; margin: 60px auto;
-    padding: 0 32px; text-align: center;
-  }
-  .results-wrap .trophy { font-size: 4rem; margin-bottom: 16px; }
-  .results-wrap h2 {
-    font-family: var(--heading);
-    font-size: 1.8rem; font-weight: 800;
-    margin-bottom: 8px;
-  }
-  .results-wrap p { color: var(--text2); margin-bottom: 32px; }
-  .results-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
-    margin-bottom: 32px;
-  }
-  .res-stat {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 16px;
-  }
-  .res-stat .rs-val {
-    font-family: var(--heading);
-    font-size: 1.8rem; font-weight: 800; color: var(--nova);
-  }
-  .res-stat .rs-lbl { font-size: 0.75rem; color: var(--text3); margin-top: 4px; }
-
-  /* Buttons */
-  .btn {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 10px 20px; border-radius: 10px;
-    font-size: 0.85rem; font-weight: 600;
-    font-family: var(--font); cursor: pointer;
-    border: none; transition: all 0.2s;
-  }
-  .btn-primary { background: var(--nova2); color: #fff; }
-  .btn-primary:hover { background: var(--nova); }
-  .btn-secondary {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--text2);
-  }
-  .btn-secondary:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
-  .btn-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-
-  /* Responsive */
-  @media(max-width: 768px) {
-    .tutor-wrap { grid-template-columns: 1fr; }
-    .nova-panel { display: none; }
-    .year-grid { grid-template-columns: repeat(3, 1fr); }
-    .topic-grid { grid-template-columns: 1fr; }
-    .nav { padding: 0 16px; }
-    .hub, .home-hero { padding-left: 16px; padding-right: 16px; }
-    .tutor-wrap { padding: 16px; }
-  }
+/* ── RESPONSIVE ── */
+@media(max-width: 860px) {
+  .tutor-outer { grid-template-columns: 1fr; padding: 16px; }
+  .sidebar { position: static; }
+  .chat-msgs { max-height: 50vh; }
+  .nav { padding: 0 16px; }
+  .hub-wrap, .home-wrap { padding-left: 16px; padding-right: 16px; }
+  .year-row { gap: 8px; }
+}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav class="nav">
-  <div class="nav-brand">T3 <span>GCSE</span></div>
+  <div class="nav-brand">T3 <em>Academy</em></div>
   <div class="nav-links">
-    <button class="nav-link" onclick="showView('home')">Home</button>
-    <button class="nav-back" onclick="window.location.href='/'">← Back to 11+</button>
+    <button class="nav-pill" onclick="showView('home')">GCSE Home</button>
+    <button class="nav-pill" id="nav-y8-btn" onclick="showView('y8')" style="display:none;">Year 8</button>
+    <a href="/platform.html" style="text-decoration:none;">
+      <button class="nav-pill">11+ Platform →</button>
+    </a>
   </div>
 </nav>
 
-<!-- HOME VIEW -->
+<!-- ── HOME ── -->
 <div class="view active" id="view-home">
-  <div class="home-hero">
-    <div class="hero-eyebrow">🎓 GCSE Revision Platform</div>
-    <h1 class="hero-title">
-      Revise smarter.<br>
-      <span class="accent-elec">Physics.</span>
-      <span class="accent-light"> Chemistry.</span>
-      Biology.
-    </h1>
-    <p class="hero-sub">AI-powered topic tutors built from your actual school syllabus. Ask anything. Get challenged. Understand it.</p>
-
-    <div class="year-grid">
-      <div class="year-card" onclick="showView('y7')">
-        <div class="year-num">7</div>
-        <div class="year-label">Year 7</div>
-        <div class="year-badge badge-soon">Coming Soon</div>
+  <div class="home-wrap">
+    <div class="home-badge">🎓 GCSE Revision Platform</div>
+    <h1 class="home-title">Revise smarter.<br><em>Understand deeper.</em></h1>
+    <p class="home-sub">An AI tutor that knows your syllabus, draws diagrams on demand, and keeps going as long as you're curious. Not just questions — proper understanding.</p>
+    <div class="year-row">
+      <div class="year-card locked">
+        <div class="yn">7</div>
+        <div class="yl">Year 7</div>
+        <span class="ybadge ybadge-soon">Coming Soon</span>
       </div>
-      <div class="year-card active-year" onclick="showView('y8')">
-        <div class="year-num">8</div>
-        <div class="year-label">Year 8</div>
-        <div class="year-badge badge-live">Live Now</div>
+      <div class="year-card live" onclick="showView('y8'); document.getElementById('nav-y8-btn').style.display='block';">
+        <div class="yn">8</div>
+        <div class="yl">Year 8</div>
+        <span class="ybadge ybadge-live">Live Now</span>
       </div>
-      <div class="year-card" onclick="showView('y9')">
-        <div class="year-num">9</div>
-        <div class="year-label">Year 9</div>
-        <div class="year-badge badge-soon">Coming Soon</div>
+      <div class="year-card locked">
+        <div class="yn">9</div>
+        <div class="yl">Year 9</div>
+        <span class="ybadge ybadge-soon">Coming Soon</span>
       </div>
     </div>
   </div>
 </div>
 
-<!-- YEAR 7 / 9 placeholder -->
-<div class="view" id="view-y7">
-  <div class="hub">
-    <div class="hub-header">
-      <h2>Year 7</h2>
-      <p style="color:var(--text2);margin-top:8px">Coming soon. <button class="btn btn-secondary" style="margin-top:12px;padding:8px 16px;font-size:0.8rem;" onclick="showView('home')">← Go back</button></p>
-    </div>
-  </div>
-</div>
-<div class="view" id="view-y9">
-  <div class="hub">
-    <div class="hub-header">
-      <h2>Year 9</h2>
-      <p style="color:var(--text2);margin-top:8px">Coming soon. <button class="btn btn-secondary" style="margin-top:12px;padding:8px 16px;font-size:0.8rem;" onclick="showView('home')">← Go back</button></p>
-    </div>
-  </div>
-</div>
-
-<!-- YEAR 8 HUB -->
+<!-- ── YEAR 8 HUB ── -->
 <div class="view" id="view-y8">
-  <div class="hub">
-    <div class="hub-header">
-      <h2>Year 8 Revision</h2>
-      <p>Camp Hill — Summer Exams · 18 May · Physics &amp; Biology</p>
-      <div class="exam-badge">⚡ 18 May exam — Physics up first</div>
+  <div class="hub-wrap">
+    <div class="hub-top">
+      <h2>Year 8 — Physics &amp; Biology</h2>
+      <p>Select a topic to start a guided revision session with Nova</p>
     </div>
 
-    <div class="subject-section">
-      <div class="subject-label">
-        <div class="subject-dot" style="background:var(--elec)"></div>
-        <h3>Physics — Electricity</h3>
+    <div class="subject-block">
+      <div class="subject-head">
+        <span>Physics — Electricity</span>
+        <div class="subject-rule"></div>
       </div>
-      <div class="topic-grid">
-        <div class="topic-card elec" onclick="startTutor('electricity', 'charge')">
-          <div class="topic-icon elec">⚛️</div>
-          <div class="topic-info">
-            <div class="topic-name">Electric Charge</div>
-            <div class="topic-desc">Atoms, protons, electrons, static electricity, Van de Graaff</div>
-          </div>
+      <div class="topic-grid" id="elec-grid">
+        <div class="topic-card" onclick="startTutor('electricity','charge')">
+          <div class="tc-icon">⚛️</div>
+          <div class="topic-info"><div class="tn">Electric Charge</div><div class="td">Atoms, static electricity, Van de Graaff generator</div></div>
         </div>
-        <div class="topic-card elec" onclick="startTutor('electricity', 'current')">
-          <div class="topic-icon elec">🔌</div>
-          <div class="topic-info">
-            <div class="topic-name">Current &amp; Circuits</div>
-            <div class="topic-desc">What current is, complete circuits, conductors and insulators</div>
-          </div>
+        <div class="topic-card" onclick="startTutor('electricity','current')">
+          <div class="tc-icon">🔌</div>
+          <div class="topic-info"><div class="tn">Current &amp; Circuits</div><div class="td">What current is, complete circuits, conductors</div></div>
         </div>
-        <div class="topic-card elec" onclick="startTutor('electricity', 'voltage')">
-          <div class="topic-icon elec">🔋</div>
-          <div class="topic-info">
-            <div class="topic-name">Voltage &amp; EMF</div>
-            <div class="topic-desc">Potential difference, how a battery works, volts</div>
-          </div>
+        <div class="topic-card" onclick="startTutor('electricity','voltage')">
+          <div class="tc-icon">🔋</div>
+          <div class="topic-info"><div class="tn">Voltage &amp; EMF</div><div class="td">Potential difference, the battery as a pump</div></div>
         </div>
-        <div class="topic-card elec" onclick="startTutor('electricity', 'ohms')">
-          <div class="topic-icon elec">📐</div>
-          <div class="topic-info">
-            <div class="topic-name">Ohm's Law</div>
-            <div class="topic-desc">V = IR, calculations, resistors in series</div>
-          </div>
+        <div class="topic-card" onclick="startTutor('electricity','ohms')">
+          <div class="tc-icon">📐</div>
+          <div class="topic-info"><div class="tn">Ohm's Law</div><div class="td">V = IR, rearranging, series resistors, calculations</div></div>
         </div>
-        <div class="topic-card elec" onclick="startTutor('electricity', 'circuits')">
-          <div class="topic-icon elec">🔗</div>
-          <div class="topic-info">
-            <div class="topic-name">Series &amp; Parallel</div>
-            <div class="topic-desc">Rules for current/voltage, brightness, why houses use parallel</div>
-          </div>
+        <div class="topic-card" onclick="startTutor('electricity','circuits')">
+          <div class="tc-icon">🔗</div>
+          <div class="topic-info"><div class="tn">Series &amp; Parallel</div><div class="td">Rules for current and voltage, brightness, real-world use</div></div>
         </div>
-        <div class="topic-card elec" onclick="startTutor('electricity', 'nonohmic')">
-          <div class="topic-icon elec">💡</div>
-          <div class="topic-info">
-            <div class="topic-name">Non-Ohmic Conductors</div>
-            <div class="topic-desc">Filament lamp I-V graph, thermistors, resistance &amp; temperature</div>
-          </div>
+        <div class="topic-card" onclick="startTutor('electricity','nonohmic')">
+          <div class="tc-icon">💡</div>
+          <div class="topic-info"><div class="tn">Non-Ohmic Conductors</div><div class="td">Filament lamp I-V curve, thermistors, temperature effects</div></div>
         </div>
       </div>
     </div>
 
-    <div class="subject-section">
-      <div class="subject-label">
-        <div class="subject-dot" style="background:var(--light)"></div>
-        <h3>Physics — Light</h3>
+    <div class="subject-block">
+      <div class="subject-head">
+        <span>Physics — Light</span>
+        <div class="subject-rule"></div>
       </div>
-      <div class="topic-grid">
-        <div class="topic-card light-t" onclick="startTutor('light', 'luminous')">
-          <div class="topic-icon light-t">👁️</div>
-          <div class="topic-info">
-            <div class="topic-name">Luminous &amp; Non-Luminous</div>
-            <div class="topic-desc">How we see, speed of light, luminous vs non-luminous objects</div>
-          </div>
+      <div class="topic-grid" id="light-grid">
+        <div class="topic-card" onclick="startTutor('light','seeing')">
+          <div class="tc-icon">👁️</div>
+          <div class="topic-info"><div class="tn">How We See</div><div class="td">Luminous vs non-luminous, the eye, speed of light</div></div>
         </div>
-        <div class="topic-card light-t" onclick="startTutor('light', 'shadows')">
-          <div class="topic-icon light-t">🌑</div>
-          <div class="topic-info">
-            <div class="topic-name">Shadows &amp; Eclipses</div>
-            <div class="topic-desc">Umbra, penumbra, point vs extended source, solar/lunar eclipses</div>
-          </div>
+        <div class="topic-card" onclick="startTutor('light','shadows')">
+          <div class="tc-icon">🌑</div>
+          <div class="topic-info"><div class="tn">Shadows &amp; Eclipses</div><div class="td">Umbra, penumbra, solar and lunar eclipses, pinhole camera</div></div>
         </div>
-        <div class="topic-card light-t" onclick="startTutor('light', 'reflection')">
-          <div class="topic-icon light-t">🪞</div>
-          <div class="topic-info">
-            <div class="topic-name">Reflection</div>
-            <div class="topic-desc">Law of reflection, plane mirror images, periscopes, diffuse reflection</div>
-          </div>
+        <div class="topic-card" onclick="startTutor('light','reflection')">
+          <div class="tc-icon">🪞</div>
+          <div class="topic-info"><div class="tn">Reflection</div><div class="td">Law of reflection, plane mirror images, specular vs diffuse</div></div>
         </div>
-        <div class="topic-card light-t" onclick="startTutor('light', 'refraction')">
-          <div class="topic-icon light-t">🌊</div>
-          <div class="topic-info">
-            <div class="topic-name">Refraction</div>
-            <div class="topic-desc">Speed change, bending at boundaries, refractive index, real/apparent depth</div>
-          </div>
+        <div class="topic-card" onclick="startTutor('light','refraction')">
+          <div class="tc-icon">🌊</div>
+          <div class="topic-info"><div class="tn">Refraction</div><div class="td">Speed change, bending, refractive index, apparent depth</div></div>
         </div>
-        <div class="topic-card light-t" onclick="startTutor('light', 'tir')">
-          <div class="topic-icon light-t">💎</div>
-          <div class="topic-info">
-            <div class="topic-name">Total Internal Reflection</div>
-            <div class="topic-desc">Critical angle, when TIR occurs, optical fibres, prisms</div>
-          </div>
+        <div class="topic-card" onclick="startTutor('light','tir')">
+          <div class="tc-icon">💎</div>
+          <div class="topic-info"><div class="tn">Total Internal Reflection</div><div class="td">Critical angle, optical fibres, diamonds, prism periscopes</div></div>
         </div>
-        <div class="topic-card light-t" onclick="startTutor('light', 'colour')">
-          <div class="topic-icon light-t">🌈</div>
-          <div class="topic-info">
-            <div class="topic-name">Colour &amp; Spectrum</div>
-            <div class="topic-desc">Dispersion, white light, primary/secondary colours, colour filters</div>
-          </div>
+        <div class="topic-card" onclick="startTutor('light','colour')">
+          <div class="tc-icon">🌈</div>
+          <div class="topic-info"><div class="tn">Colour &amp; Spectrum</div><div class="td">Dispersion, ROYGBIV, primary colours, filters, mixing</div></div>
         </div>
       </div>
     </div>
 
-    <div class="subject-section">
-      <div class="subject-label">
-        <div class="subject-dot" style="background:var(--bio)"></div>
-        <h3>Biology</h3>
+    <div class="subject-block">
+      <div class="subject-head">
+        <span>Biology</span>
+        <div class="subject-rule"></div>
       </div>
       <div class="topic-grid">
-        <div class="topic-card" style="opacity:0.45;cursor:default;">
-          <div class="topic-icon" style="background:rgba(52,211,153,0.12);">🧬</div>
-          <div class="topic-info">
-            <div class="topic-name">Evolution &amp; Inheritance</div>
-            <div class="topic-desc badge-soon" style="display:inline-block;margin-top:4px;font-size:0.68rem;padding:2px 7px;border-radius:4px;background:rgba(255,255,255,0.05);color:var(--text3);">Coming soon</div>
-          </div>
+        <div class="topic-card locked bio-card">
+          <div class="tc-icon">🧬</div>
+          <div class="topic-info"><div class="tn">Evolution &amp; Inheritance</div><div class="td" style="color:var(--text4);">Coming soon</div></div>
         </div>
-        <div class="topic-card" style="opacity:0.45;cursor:default;">
-          <div class="topic-icon" style="background:rgba(52,211,153,0.12);">🫀</div>
-          <div class="topic-info">
-            <div class="topic-name">Breathing &amp; Respiration</div>
-            <div class="topic-desc badge-soon" style="display:inline-block;margin-top:4px;font-size:0.68rem;padding:2px 7px;border-radius:4px;background:rgba(255,255,255,0.05);color:var(--text3);">Coming soon</div>
-          </div>
+        <div class="topic-card locked bio-card">
+          <div class="tc-icon">🫁</div>
+          <div class="topic-info"><div class="tn">Breathing &amp; Respiration</div><div class="td" style="color:var(--text4);">Coming soon</div></div>
         </div>
-        <div class="topic-card" style="opacity:0.45;cursor:default;">
-          <div class="topic-icon" style="background:rgba(52,211,153,0.12);">🍎</div>
-          <div class="topic-info">
-            <div class="topic-name">Food &amp; Digestion</div>
-            <div class="topic-desc badge-soon" style="display:inline-block;margin-top:4px;font-size:0.68rem;padding:2px 7px;border-radius:4px;background:rgba(255,255,255,0.05);color:var(--text3);">Coming soon</div>
-          </div>
+        <div class="topic-card locked bio-card">
+          <div class="tc-icon">🍎</div>
+          <div class="topic-info"><div class="tn">Food &amp; Digestion</div><div class="td" style="color:var(--text4);">Coming soon</div></div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- TUTOR VIEW -->
+<!-- ── TUTOR VIEW ── -->
 <div class="view" id="view-tutor">
-  <div class="tutor-wrap">
+  <div class="tutor-outer">
+
+    <!-- Left: chat -->
     <div class="tutor-main">
-      <div class="tutor-header">
-        <div class="tutor-subject-tag" id="tutor-subject-tag">Physics — Electricity</div>
-        <div class="tutor-topic-title" id="tutor-topic-title">Electric Charge</div>
-        <div class="tutor-topic-sub" id="tutor-topic-sub">4 stages · Recall → Understanding → Application → Exam Technique</div>
+      <div class="topic-header">
+        <div class="th-subject" id="th-subject">Physics — Electricity</div>
+        <div style="display:flex;align-items:baseline;gap:12px;">
+          <div class="th-title" id="th-title">Electric Charge</div>
+          <div class="timer-badge" id="timer-badge" style="display:none;">⏱ <span id="timer-display">10:00</span></div>
+        </div>
+        <div class="th-sub" id="th-sub">4 stages · Recall → Understanding → Application → Exam Technique</div>
       </div>
 
-      <div class="stage-bar" id="stage-bar">
-        <div class="stage-pip active" id="pip-1"></div>
-        <div class="stage-pip" id="pip-2"></div>
-        <div class="stage-pip" id="pip-3"></div>
-        <div class="stage-pip" id="pip-4"></div>
+      <div class="stage-track" id="stage-track">
+        <div class="stage-seg active" id="seg1" data-label="Stage 1: Recall" onclick="jumpStage(1)"></div>
+        <div class="stage-seg" id="seg2" data-label="Stage 2: Understanding" onclick="jumpStage(2)"></div>
+        <div class="stage-seg" id="seg3" data-label="Stage 3: Application" onclick="jumpStage(3)"></div>
+        <div class="stage-seg" id="seg4" data-label="Stage 4: Exam Technique" onclick="jumpStage(4)"></div>
       </div>
-      <div class="stage-label" id="stage-label">Stage 1 of 4 — <span>Recall</span></div>
+      <div class="stage-info" id="stage-info">Stage 1 of 4 — <strong>Recall</strong></div>
 
-      <div class="chat-area">
-        <div class="chat-messages" id="chat-messages"></div>
-        <div class="chat-input-area">
-          <textarea class="chat-input" id="chat-input" placeholder="Type your answer or ask a question…" rows="1"
+      <div class="chat-shell">
+        <div class="chat-msgs" id="chat-msgs"></div>
+        <div class="quick-bar" id="quick-bar">
+          <button class="quick-btn" onclick="useQuick('I am stuck — give me a hint without the answer')">💡 Hint</button>
+          <button class="quick-btn" onclick="useQuick('Draw me a diagram to explain this')">📐 Diagram</button>
+          <button class="quick-btn" onclick="useQuick('Give me a real-world example of this')">🌍 Example</button>
+          <button class="quick-btn" onclick="useQuick('Go deeper on this topic — I want to understand it properly')">🔬 Go deeper</button>
+          <button class="quick-btn" onclick="useQuick('How would I answer this in an exam for full marks?')">📝 Exam tip</button>
+        </div>
+        <div class="input-bar">
+          <textarea class="chat-input" id="chat-input" placeholder="Type your answer or ask anything…" rows="1"
             onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg();}"></textarea>
           <button class="send-btn" id="send-btn" onclick="sendMsg()">➤</button>
         </div>
       </div>
 
-      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
-        <button class="btn btn-secondary" style="font-size:0.75rem;padding:7px 14px;" onclick="showView('y8')">← Topics</button>
-        <button class="btn btn-secondary" style="font-size:0.75rem;padding:7px 14px;" onclick="nextStage()">Next stage →</button>
-        <button class="btn btn-secondary" style="font-size:0.75rem;padding:7px 14px;" onclick="restartTopic()">↺ Restart</button>
+      <div class="chat-controls">
+        <button class="ctrl-btn" onclick="showView('y8')">← Topics</button>
+        <button class="ctrl-btn" onclick="advanceStage()">Next stage →</button>
+        <button class="ctrl-btn" onclick="restartTopic()">↺ Restart</button>
+        <button class="ctrl-btn" onclick="startTimedMode()">⏱ Timed mode</button>
       </div>
     </div>
 
-    <div class="nova-panel">
-      <div class="nova-header">
-        <div class="nova-avatar">N</div>
-        <div>
-          <div class="nova-name">Nova</div>
-          <div class="nova-status"><div class="nova-status-dot"></div> Active</div>
-        </div>
+    <!-- Right: sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-tabs">
+        <button class="stab active" id="tab-knowledge" onclick="switchTab('knowledge')">Knowledge</button>
+        <button class="stab" id="tab-progress" onclick="switchTab('progress')">Progress</button>
+        <button class="stab" id="tab-session" onclick="switchTab('session')">Session</button>
       </div>
-      <div class="nova-context" id="nova-context">
-        Currently revising <strong id="nova-topic-name">Electric Charge</strong> — your Year 8 Camp Hill Physics exam is on <strong>18 May</strong>.
-      </div>
-      <div class="nova-key-facts" id="nova-key-facts">
-        <h4>Key Facts</h4>
-        <!-- Dynamically populated -->
-      </div>
-      <div class="session-score">
-        <div class="score-title">Session</div>
-        <div class="score-row"><span class="slabel">Stage</span><span class="sval" id="score-stage">1 / 4</span></div>
-        <div class="score-row"><span class="slabel">Questions</span><span class="sval" id="score-qs">0</span></div>
-        <div class="score-row"><span class="slabel">Score</span><span class="sval" id="score-pct">—</span></div>
+      <div class="sidebar-body" id="sidebar-body">
+        <!-- dynamically populated -->
       </div>
     </div>
+
   </div>
 </div>
 
-<!-- RESULTS VIEW -->
+<!-- ── RESULTS ── -->
 <div class="view" id="view-results">
   <div class="results-wrap">
-    <div class="trophy" id="results-trophy">🏆</div>
-    <h2 id="results-title">Topic Complete!</h2>
-    <p id="results-sub">Here's how you got on across all four stages.</p>
-    <div class="results-grid">
+    <div class="trophy" id="r-trophy">🏆</div>
+    <h2 id="r-title">Topic Complete</h2>
+    <p class="res-sub" id="r-sub">Here is how you got on.</p>
+    <div class="res-grid">
       <div class="res-stat"><div class="rs-val" id="r-score">—</div><div class="rs-lbl">Score</div></div>
       <div class="res-stat"><div class="rs-val" id="r-qs">—</div><div class="rs-lbl">Questions</div></div>
-      <div class="res-stat"><div class="rs-val" id="r-stage">4</div><div class="rs-lbl">Stages done</div></div>
+      <div class="res-stat"><div class="rs-val" id="r-stages">4</div><div class="rs-lbl">Stages</div></div>
+    </div>
+    <div class="nova-summary" id="nova-summary">
+      <div class="ns-header">Nova's assessment</div>
+      <div id="nova-summary-text">Generating your personalised summary…</div>
     </div>
     <div class="btn-row">
       <button class="btn btn-primary" onclick="restartTopic()">↺ Try again</button>
@@ -784,268 +734,837 @@
 </div>
 
 <script>
-// ── STATE ──
-let currentSubject = 'electricity';
-let currentTopic   = 'charge';
-let currentStage   = 1;
-let sessionQs      = 0;
-let sessionScore   = 0;
-let chatHistory    = [];
-let isLoading      = false;
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let subj = 'electricity', topic = 'charge';
+let stage = 1, sessionQs = 0, sessionScore = 0;
+let chatHistory = [], isLoading = false;
+let timedMode = false, timerSecs = 600, timerInterval = null;
+let activeTab = 'knowledge';
+let topicProgress = {}; // { 'electricity:charge': { score, qs, done } }
 
-// ── TOPIC METADATA ──
+// ══════════════════════════════════════════
+// TOPIC DATABASE
+// ══════════════════════════════════════════
 const TOPICS = {
   electricity: {
     charge: {
-      name: 'Electric Charge',
-      tag:  'Physics — Electricity',
-      facts: ['Atoms contain protons (+), neutrons (0) and electrons (−)', 'Like charges repel; opposite charges attract', 'Static charge = charge that is not moving', 'Van de Graaff removes electrons → dome becomes positive', 'A spark occurs when charge jumps through the air to equalise'],
-      stages: ['Recall: name the particles and their charges', 'Understanding: explain static and the Van de Graaff', 'Application: predict what happens in new charge scenarios', 'Exam technique: write answers using correct mark-scheme language']
+      name: 'Electric Charge', tag: 'Physics — Electricity',
+      knowledge: [
+        {
+          title: 'Atomic structure and charge',
+          body: 'Every atom has a nucleus at its centre containing protons (positive charge) and neutrons (no charge). Orbiting the nucleus are electrons, which carry a negative charge. In a neutral atom the number of protons equals the number of electrons — the charges balance perfectly.',
+          example: 'Think of the nucleus as the sun and electrons as planets. Take a planet away (lose an electron) and the "sun" wins — the atom becomes positive.',
+          svg: `<svg viewBox="0 0 180 100" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+            <circle cx="90" cy="50" r="18" fill="#FAEEDA" stroke="#BA7517" stroke-width="1.5"/>
+            <text x="90" y="46" text-anchor="middle" font-size="8" fill="#854F0B" font-family="Inter,sans-serif">p+  n</text>
+            <text x="90" y="57" text-anchor="middle" font-size="7" fill="#A08050" font-family="Inter,sans-serif">nucleus</text>
+            <ellipse cx="90" cy="50" rx="55" ry="28" fill="none" stroke="#DDD5C8" stroke-width="1" stroke-dasharray="3,2"/>
+            <circle cx="145" cy="50" r="5" fill="#185FA5" stroke="#0C447C" stroke-width="1"/>
+            <text x="145" y="68" text-anchor="middle" font-size="7" fill="#185FA5" font-family="Inter,sans-serif">e⁻</text>
+            <ellipse cx="90" cy="50" rx="72" ry="40" fill="none" stroke="#DDD5C8" stroke-width="1" stroke-dasharray="3,2"/>
+            <circle cx="162" cy="50" r="5" fill="#185FA5" stroke="#0C447C" stroke-width="1"/>
+            <circle cx="90" cy="90" r="5" fill="#185FA5" stroke="#0C447C" stroke-width="1"/>
+          </svg>`
+        },
+        {
+          title: 'Like charges repel, opposites attract',
+          body: 'Two objects with the same charge (both positive or both negative) push each other away. Objects with opposite charges pull each other together. This is why the charged pie dishes on the Van de Graaff dome all fly off — they all carry the same positive charge.',
+          example: 'Two north poles of a magnet repel. Two positive charges do the same. Remember: same = shame (they want nothing to do with each other).'
+        },
+        {
+          title: 'Static electricity',
+          body: 'When two insulating materials are rubbed together, electrons transfer from one to the other. The material that gains electrons becomes negatively charged; the one that loses electrons becomes positively charged. The charge cannot flow through an insulator — it stays put. This is static electricity.',
+          example: 'Rub a balloon on your hair. Electrons move from hair to balloon. Balloon becomes negative, hair becomes positive. The balloon then sticks to the wall because the wall is attracted to its charge.',
+          svg: `<svg viewBox="0 0 200 70" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+            <rect x="10" y="20" width="60" height="30" rx="4" fill="#FAEEDA" stroke="#BA7517" stroke-width="1"/>
+            <text x="40" y="33" text-anchor="middle" font-size="8" fill="#854F0B" font-family="Inter,sans-serif">Material A</text>
+            <text x="40" y="43" text-anchor="middle" font-size="7" fill="#854F0B" font-family="Inter,sans-serif">loses e⁻ → +</text>
+            <rect x="130" y="20" width="60" height="30" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+            <text x="160" y="33" text-anchor="middle" font-size="8" fill="#0C447C" font-family="Inter,sans-serif">Material B</text>
+            <text x="160" y="43" text-anchor="middle" font-size="7" fill="#0C447C" font-family="Inter,sans-serif">gains e⁻ → −</text>
+            <text x="100" y="38" text-anchor="middle" font-size="12" fill="#BA7517" font-family="Inter,sans-serif">→</text>
+            <text x="100" y="55" text-anchor="middle" font-size="7" fill="#A08050" font-family="Inter,sans-serif">electrons transfer</text>
+          </svg>`
+        },
+        {
+          title: 'The Van de Graaff generator',
+          body: 'A rubber belt rotates and rubs against a comb at the base, removing electrons from the belt. These electrons drain away to earth. The positively charged belt then moves up and touches a metal dome, drawing electrons out of the dome through the top comb. The dome loses electrons and becomes increasingly positively charged. When the charge is large enough, electrons in the air are attracted and a spark jumps across.',
+          example: 'The dome is like a bucket with a hole. The belt keeps scooping out electrons (water). Eventually the bucket is so empty (positive) that electrons jump across from anything nearby.'
+        }
+      ],
+      stages: ['Recall: name the particles, their charges, and define static electricity', 'Understanding: explain the Van de Graaff and charge transfer', 'Application: predict what happens in new electrostatic scenarios', 'Exam technique: write complete explanations using charge, transfer, and force language']
     },
     current: {
-      name: 'Current & Circuits',
-      tag:  'Physics — Electricity',
-      facts: ['Current = flow of electric charge (electrons)', 'Measured in amps (A) — symbol I', 'A complete circuit is needed for current to flow', 'Conductors have free electrons; insulators do not', 'Metals are good conductors because electrons are free to move'],
-      stages: ['Recall: define current and what flows in a circuit', 'Understanding: explain why a complete circuit is needed', 'Application: predict current in different circuit setups', 'Exam technique: answer circuit questions to exam standard']
+      name: 'Current & Circuits', tag: 'Physics — Electricity',
+      knowledge: [
+        {
+          title: 'What electric current actually is',
+          body: 'Electric current is the rate of flow of electric charge. In a metal wire it is the electrons that move — billions of them drifting slowly in one direction. Current is measured in amperes (A). One ampere means one coulomb of charge passing a point every second (I = Q/t). A milliamp (mA) is one thousandth of an amp.',
+          example: 'Imagine a crowded corridor. Each person is an electron. Current is how many people walk past a door per second. Double the crowd speed = double the current.',
+          svg: `<svg viewBox="0 0 220 55" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+            <rect x="5" y="20" width="210" height="15" rx="3" fill="#FAEEDA" stroke="#BA7517" stroke-width="1"/>
+            <circle cx="30" cy="27" r="5" fill="#185FA5"/><text x="30" y="30" text-anchor="middle" font-size="6" fill="#fff" font-family="Inter">e</text>
+            <circle cx="60" cy="27" r="5" fill="#185FA5"/><text x="60" y="30" text-anchor="middle" font-size="6" fill="#fff" font-family="Inter">e</text>
+            <circle cx="90" cy="27" r="5" fill="#185FA5"/><text x="90" y="30" text-anchor="middle" font-size="6" fill="#fff" font-family="Inter">e</text>
+            <circle cx="120" cy="27" r="5" fill="#185FA5"/><text x="120" y="30" text-anchor="middle" font-size="6" fill="#fff" font-family="Inter">e</text>
+            <text x="175" y="30" text-anchor="middle" font-size="9" fill="#BA7517" font-family="Inter,sans-serif">→ →</text>
+            <text x="110" y="50" text-anchor="middle" font-size="7" fill="#A08050" font-family="Inter,sans-serif">electrons drift this way (conventional current →)</text>
+          </svg>`
+        },
+        {
+          title: 'Why a complete circuit is essential',
+          body: 'Electrons need a continuous conducting path to flow. If there is a gap anywhere in the circuit — a broken wire, an open switch — the flow stops instantly everywhere in the circuit. It is not like water flowing into a bucket. Every electron in the loop starts or stops simultaneously.',
+          example: 'A fairground ride circuit. Every car on the track must keep moving together. One car stopping (a gap in the wire) stops all the cars at once.'
+        },
+        {
+          title: 'Conductors and insulators',
+          body: 'Metals are good conductors because their outer electrons are loosely held and free to move through the material. Insulators (rubber, plastic, wood) have electrons tightly bound to atoms — none are free to move. Semiconductors (silicon) sit between these extremes and are the basis of all modern electronics.',
+          example: 'Metal atoms are like a crowd where everyone has loose change in open hands — easy to pass coins (charge) along. Rubber atoms hold onto everything — nothing moves.'
+        }
+      ],
+      stages: ['Recall: define current, state its unit, and explain what flows', 'Understanding: explain why complete circuits are needed and the difference between conductors and insulators', 'Application: predict current behaviour in different circuit configurations', 'Exam technique: define current precisely using charge and time']
     },
     voltage: {
-      name: 'Voltage & EMF',
-      tag:  'Physics — Electricity',
-      facts: ['Voltage = potential difference, measured in volts (V)', 'The battery pushes charge around the circuit — like a pump', 'EMF (electro-motive force) = scientific name for battery voltage', 'Higher voltage → more energy given to each coulomb of charge', 'Voltmeter connected in parallel to measure pd across a component'],
-      stages: ['Recall: define voltage and its units', 'Understanding: explain voltage as energy per coulomb', 'Application: voltage calculations and circuit problems', 'Exam technique: explain voltage using the energy model']
+      name: 'Voltage & EMF', tag: 'Physics — Electricity',
+      knowledge: [
+        {
+          title: 'What voltage really means',
+          body: 'Voltage (potential difference) is the energy transferred per unit of charge. If a battery has a voltage of 6V, it gives 6 joules of energy to every coulomb of charge that passes through it. Voltage is measured in volts (V). The formula is V = E/Q where E is energy in joules and Q is charge in coulombs.',
+          example: 'The battery is a hill. Voltage is the height of the hill. Electrons are balls rolling down. A higher hill (higher voltage) gives the balls more energy and they move faster (more current for a given resistance).',
+          svg: `<svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+            <path d="M10 65 Q50 10 100 65 Q150 65 190 65" fill="none" stroke="#DDD5C8" stroke-width="1.5"/>
+            <path d="M30 65 L30 30" stroke="#BA7517" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <text x="40" y="30" font-size="8" fill="#854F0B" font-family="Inter,sans-serif">High V</text>
+            <text x="40" y="40" font-size="7" fill="#A08050" font-family="Inter,sans-serif">= more energy</text>
+            <circle cx="50" cy="45" r="5" fill="#BA7517"/>
+            <text x="50" y="48" text-anchor="middle" font-size="6" fill="#fff" font-family="Inter">Q</text>
+            <text x="100" y="75" text-anchor="middle" font-size="7" fill="#A08050" font-family="Inter,sans-serif">charge gains energy in battery, loses it in resistor</text>
+          </svg>`
+        },
+        {
+          title: 'EMF — what the battery actually does',
+          body: 'EMF (electromotive force) is the scientific term for the voltage of a battery or power supply. It measures how much energy the battery gives to each coulomb of charge. A 1.5V cell gives 1.5J to each coulomb. Three cells in series give 4.5V (3 × 1.5J per coulomb).',
+          example: 'Each cell is a pump that lifts the charge up to a higher energy level. More cells = bigger lift = higher voltage.'
+        },
+        {
+          title: 'Voltmeter placement — why it matters',
+          body: 'A voltmeter measures the potential difference across a component. It must be connected in parallel — across the component, not in series with it. A voltmeter has very high resistance so barely any current flows through it, meaning it does not disturb the circuit.',
+          example: 'The voltmeter is an observer, not a participant. It peeks at the voltage from the side without affecting the flow.'
+        }
+      ],
+      stages: ['Recall: define voltage, state its unit and symbol, explain EMF', 'Understanding: explain voltage as energy per coulomb with examples', 'Application: voltage calculations and multi-cell circuits', 'Exam technique: explain voltage using energy transfer language']
     },
     ohms: {
-      name: "Ohm's Law",
-      tag:  'Physics — Electricity',
-      facts: ['V = I × R (Voltage = Current × Resistance)', 'Resistance measured in ohms (Ω); symbol R', 'Rearrange: I = V/R and R = V/I', 'Series resistors: R_total = R1 + R2', '1 kΩ = 1000 Ω; convert mA to A before using V = IR'],
-      stages: ["Recall: state Ohm's Law and rearrange it", 'Understanding: explain what resistance means physically', 'Application: V=IR calculations with series resistors', 'Exam technique: show working clearly to gain all marks']
+      name: "Ohm's Law", tag: 'Physics — Electricity',
+      knowledge: [
+        {
+          title: "Ohm's Law and the formula triangle",
+          body: "Ohm's Law states that the current through a conductor is directly proportional to the voltage across it, provided temperature stays constant. This gives us V = IR. The triangle helps you rearrange: cover V to get IR, cover I to get V/R, cover R to get V/I.",
+          example: "Water pipe analogy: V is the water pressure, I is the flow rate, R is how narrow the pipe is. A narrower pipe (higher R) means less flow (lower I) for the same pressure (V).",
+          svg: `<svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+            <polygon points="60,5 5,75 115,75" fill="#FAEEDA" stroke="#BA7517" stroke-width="1.5"/>
+            <line x1="60" y1="42" x2="5" y2="42" stroke="#BA7517" stroke-width="1" stroke-dasharray="2,2"/>
+            <line x1="60" y1="42" x2="115" y2="42" stroke="#BA7517" stroke-width="1" stroke-dasharray="2,2"/>
+            <text x="60" y="35" text-anchor="middle" font-size="14" font-weight="bold" fill="#854F0B" font-family="Georgia,serif">V</text>
+            <text x="30" y="65" text-anchor="middle" font-size="12" font-weight="bold" fill="#854F0B" font-family="Georgia,serif">I</text>
+            <text x="90" y="65" text-anchor="middle" font-size="12" font-weight="bold" fill="#854F0B" font-family="Georgia,serif">R</text>
+            <text x="60" y="78" text-anchor="middle" font-size="6" fill="#A08050" font-family="Inter,sans-serif">Cover what you want to find</text>
+          </svg>`
+        },
+        {
+          title: 'Units and conversions',
+          body: 'Current is in amps (A). Resistance is in ohms (Ω). Voltage is in volts (V). In calculations, always convert milliamps to amps first (divide by 1000) and kilohms to ohms (multiply by 1000). A common exam trap is using 150mA instead of 0.15A.',
+          example: '150mA = 0.15A. 2kΩ = 2000Ω. Always check units before substituting into V = IR.'
+        },
+        {
+          title: 'Resistors in series',
+          body: 'When resistors are connected in series (end-to-end in a single loop), the total resistance is simply the sum: R_total = R1 + R2 + R3... Adding more resistors in series always increases the total resistance, which reduces the current.',
+          example: 'Traffic lights on a single road, one after another. Each light (resistor) causes a delay. More lights = longer total journey time = less flow.'
+        }
+      ],
+      stages: ["Recall: state Ohm's Law, write V=IR, rearrange for I and R", 'Understanding: explain resistance physically and the water pipe analogy', 'Application: multi-step V=IR calculations including unit conversions', 'Exam technique: show all working clearly — examiners award method marks']
     },
     circuits: {
-      name: 'Series & Parallel',
-      tag:  'Physics — Electricity',
-      facts: ['Series: same current everywhere; voltage splits by resistance', 'Parallel: same voltage across each branch; current splits', 'Adding bulbs in series → each gets dimmer (more resistance)', 'Adding bulbs in parallel → each stays same brightness', 'Houses wired in parallel so devices work independently'],
-      stages: ['Recall: state the rules for series and parallel circuits', 'Understanding: explain brightness and current changes', 'Application: calculate values in series/parallel circuits', 'Exam technique: explain parallel wiring in houses']
+      name: 'Series & Parallel', tag: 'Physics — Electricity',
+      knowledge: [
+        {
+          title: 'Series circuit rules',
+          body: 'In a series circuit, all components share the same current — there is only one path for electrons to take. The total voltage from the battery is shared (split) across the components in proportion to their resistance. Total resistance = sum of all individual resistances.',
+          example: 'Christmas tree lights in series. One bulb blows → circuit breaks → all go out. The current is the same through every bulb.',
+          svg: `<svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+            <rect x="5" y="10" width="25" height="14" rx="2" fill="#FAEEDA" stroke="#BA7517" stroke-width="1.2"/>
+            <text x="17" y="20" text-anchor="middle" font-size="7" fill="#854F0B" font-family="Inter,sans-serif">6V</text>
+            <line x1="30" y1="17" x2="55" y2="17" stroke="#3A3020" stroke-width="1.5"/>
+            <rect x="55" y="10" width="30" height="14" rx="2" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+            <text x="70" y="20" text-anchor="middle" font-size="7" fill="#185FA5" font-family="Inter,sans-serif">R1=2Ω</text>
+            <line x1="85" y1="17" x2="110" y2="17" stroke="#3A3020" stroke-width="1.5"/>
+            <rect x="110" y="10" width="30" height="14" rx="2" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+            <text x="125" y="20" text-anchor="middle" font-size="7" fill="#185FA5" font-family="Inter,sans-serif">R2=4Ω</text>
+            <line x1="140" y1="17" x2="195" y2="17" stroke="#3A3020" stroke-width="1.5"/>
+            <line x1="195" y1="17" x2="195" y2="60" stroke="#3A3020" stroke-width="1.5"/>
+            <line x1="5" y1="60" x2="195" y2="60" stroke="#3A3020" stroke-width="1.5"/>
+            <line x1="5" y1="24" x2="5" y2="60" stroke="#3A3020" stroke-width="1.5"/>
+            <text x="100" y="73" text-anchor="middle" font-size="7" fill="#A08050" font-family="Inter,sans-serif">RT = 6Ω · I = 1A · V1=2V · V2=4V</text>
+          </svg>`
+        },
+        {
+          title: 'Parallel circuit rules',
+          body: 'In a parallel circuit, each branch has the same voltage across it. Current splits between branches — more current flows through lower resistance branches. Total resistance is always less than the smallest individual resistance. Adding branches always reduces total resistance and increases total current drawn.',
+          example: 'Home electricity is wired in parallel. Switching off one appliance does not affect others. Each appliance gets the full mains voltage (230V).',
+          svg: `<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+            <rect x="5" y="40" width="25" height="14" rx="2" fill="#FAEEDA" stroke="#BA7517" stroke-width="1.2"/>
+            <text x="17" y="50" text-anchor="middle" font-size="7" fill="#854F0B" font-family="Inter,sans-serif">6V</text>
+            <line x1="30" y1="47" x2="60" y2="47" stroke="#3A3020" stroke-width="1.5"/>
+            <line x1="60" y1="20" x2="60" y2="75" stroke="#3A3020" stroke-width="1.5"/>
+            <rect x="75" y="13" width="50" height="14" rx="2" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+            <text x="100" y="23" text-anchor="middle" font-size="7" fill="#185FA5" font-family="Inter,sans-serif">Branch 1: 2Ω</text>
+            <rect x="75" y="68" width="50" height="14" rx="2" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+            <text x="100" y="78" text-anchor="middle" font-size="7" fill="#185FA5" font-family="Inter,sans-serif">Branch 2: 4Ω</text>
+            <line x1="60" y1="20" x2="75" y2="20" stroke="#3A3020" stroke-width="1.5"/>
+            <line x1="60" y1="75" x2="75" y2="75" stroke="#3A3020" stroke-width="1.5"/>
+            <line x1="125" y1="20" x2="140" y2="20" stroke="#3A3020" stroke-width="1.5"/>
+            <line x1="125" y1="75" x2="140" y2="75" stroke="#3A3020" stroke-width="1.5"/>
+            <line x1="140" y1="20" x2="140" y2="75" stroke="#3A3020" stroke-width="1.5"/>
+            <line x1="140" y1="47" x2="195" y2="47" stroke="#3A3020" stroke-width="1.5"/>
+            <line x1="195" y1="47" x2="5" y2="47" stroke="none"/>
+            <text x="155" y="92" text-anchor="middle" font-size="6.5" fill="#A08050" font-family="Inter,sans-serif">both branches: 6V across each</text>
+          </svg>`
+        },
+        {
+          title: 'Why houses use parallel wiring',
+          body: 'Parallel wiring means each appliance gets the full mains voltage regardless of how many other devices are on. Devices can be switched independently. A fault in one branch does not affect other branches. In series wiring, voltage would be shared and all devices would fail together — impractical for a home.',
+          example: 'Every socket in your house is a parallel branch. Plugging in more devices draws more current from the mains but each device still gets its full 230V.'
+        }
+      ],
+      stages: ['Recall: state the rules for current, voltage and resistance in series and parallel circuits', 'Understanding: explain brightness changes and why houses use parallel', 'Application: calculate current and voltage in mixed series/parallel circuits', 'Exam technique: state rules clearly — examiners want the specific words']
     },
     nonohmic: {
-      name: 'Non-Ohmic Conductors',
-      tag:  'Physics — Electricity',
-      facts: ['Filament lamp: resistance increases as temperature rises', 'Filament lamp I-V graph is a curve (not a straight line)', 'Ohmic conductor: straight-line I-V graph through origin', 'Thermistor: resistance decreases as temperature increases', 'Metal resistance increases with temperature (more vibration)'],
-      stages: ['Recall: describe ohmic vs non-ohmic conductors', 'Understanding: explain the filament lamp I-V curve', 'Application: interpret I-V graphs and calculate resistance', 'Exam technique: describe graphs precisely using correct terms']
+      name: 'Non-Ohmic Conductors', tag: 'Physics — Electricity',
+      knowledge: [
+        {
+          title: 'The I-V graph and what shape means',
+          body: 'An ohmic conductor gives a straight line through the origin on an I-V graph — current is directly proportional to voltage. A filament lamp gives a curve that flattens at high voltages. This tells you resistance is increasing as current increases, because the filament gets hotter. The resistance at any point = gradient of V/I at that point.',
+          example: 'Straight line = constant resistance (same slope everywhere). Curve flattening = increasing resistance (slope getting less steep). The slope is resistance.',
+          svg: `<svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+            <line x1="20" y1="100" x2="190" y2="100" stroke="#DDD5C8" stroke-width="1.2"/>
+            <line x1="20" y1="100" x2="20" y2="10" stroke="#DDD5C8" stroke-width="1.2"/>
+            <text x="105" y="113" text-anchor="middle" font-size="8" fill="#A08050" font-family="Inter,sans-serif">Voltage (V)</text>
+            <text x="10" y="55" text-anchor="middle" font-size="8" fill="#A08050" font-family="Inter,sans-serif" transform="rotate(-90,10,55)">Current (A)</text>
+            <line x1="20" y1="100" x2="170" y2="15" stroke="#185FA5" stroke-width="1.8"/>
+            <text x="175" y="18" font-size="7" fill="#185FA5" font-family="Inter,sans-serif">Ohmic</text>
+            <path d="M20 100 Q80 90 120 65 Q160 42 175 30" fill="none" stroke="#BA7517" stroke-width="1.8"/>
+            <text x="178" y="33" font-size="7" fill="#BA7517" font-family="Inter,sans-serif">Lamp</text>
+          </svg>`
+        },
+        {
+          title: 'Why filament resistance increases with temperature',
+          body: 'At higher temperatures, the metal atoms in the filament vibrate more vigorously. These vibrating atoms obstruct the flow of electrons more — like trying to walk through a crowd that is dancing versus standing still. The result is higher resistance. This means the filament lamp is non-ohmic: resistance is not constant.',
+          example: 'Cold filament when you first switch on: low resistance, briefly high current. Within milliseconds it heats up, resistance rises, current stabilises. That initial surge is why bulbs often fail at switch-on.'
+        },
+        {
+          title: 'Thermistors — resistance goes down as temperature rises',
+          body: 'A thermistor is a semiconductor. Unlike a metal, heating a thermistor frees more electrons from their atoms — conductivity increases. So resistance decreases as temperature rises. The opposite of a metal. Thermistors are used in thermostats, digital thermometers, and engine management systems in cars.',
+          example: 'A thermistor is like a jar of marbles with a heater. Heat the jar and the marbles start popping out — more free to move, so more current flows (lower resistance).'
+        }
+      ],
+      stages: ['Recall: describe the I-V graph of a filament lamp and define ohmic conductor', 'Understanding: explain why filament resistance increases with temperature', 'Application: calculate resistance from I-V graph data points', 'Exam technique: describe I-V graphs using precise language about proportionality and gradient']
     }
   },
   light: {
-    luminous: {
-      name: 'Luminous & Non-Luminous',
-      tag:  'Physics — Light',
-      facts: ['Luminous objects emit their own light (Sun, LED, fire)', 'Non-luminous objects reflect light from another source', 'We see objects when reflected light enters our eye and hits the retina', 'Speed of light = 300,000 km/s', 'Non-luminous objects appear brighter if more light shines on them'],
-      stages: ['Recall: distinguish luminous from non-luminous objects', 'Understanding: explain how we see non-luminous objects', 'Application: classify objects and predict brightness', 'Exam technique: describe seeing objects using correct physics language']
+    seeing: {
+      name: 'How We See', tag: 'Physics — Light',
+      knowledge: [
+        {
+          title: 'Luminous and non-luminous objects',
+          body: 'A luminous object produces its own light — the Sun, a candle flame, an LED, a television screen. A non-luminous object is only visible when light from a luminous source hits it and reflects into our eyes. The Moon is non-luminous: we see it because sunlight reflects off its surface and travels to our eyes. In complete darkness with no light source, non-luminous objects are invisible.',
+          example: 'At night: strike a match (luminous source). The match lights up your book (non-luminous). Cover the match — the book disappears. The book never made its own light.'
+        },
+        {
+          title: 'How the eye works',
+          body: 'Light enters the eye through the cornea (curved front surface that does most of the focusing), then through the pupil (the gap in the iris). The lens fine-tunes the focus onto the retina. The retina contains rods (detect brightness) and cones (detect colour). The optic nerve sends electrical signals to the brain. The image on the retina is actually inverted — the brain flips it.',
+          example: 'The eye is a biological camera. Cornea + lens = the camera lens. Retina = the sensor. Optic nerve = the cable to the laptop (brain).',
+          svg: `<svg viewBox="0 0 200 90" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+            <ellipse cx="100" cy="45" rx="70" ry="40" fill="white" stroke="#BA7517" stroke-width="1.5"/>
+            <circle cx="100" cy="45" r="18" fill="#EDE8DF" stroke="#DDD5C8" stroke-width="1"/>
+            <circle cx="100" cy="45" r="9" fill="#1C1710"/>
+            <circle cx="104" cy="41" r="2" fill="white" opacity="0.6"/>
+            <path d="M170 45 Q180 45 190 45" fill="none" stroke="#DDD5C8" stroke-width="1.2" stroke-dasharray="3,2"/>
+            <text x="100" y="80" text-anchor="middle" font-size="7" fill="#A08050" font-family="Inter,sans-serif">pupil / iris</text>
+            <text x="30" y="48" text-anchor="middle" font-size="7" fill="#A08050" font-family="Inter,sans-serif">cornea</text>
+            <line x1="5" y1="20" x2="30" y2="45" stroke="#BA7517" stroke-width="1.2"/>
+            <line x1="5" y1="70" x2="30" y2="45" stroke="#BA7517" stroke-width="1.2"/>
+            <text x="5" y="15" font-size="7" fill="#BA7517" font-family="Inter,sans-serif">light</text>
+          </svg>`
+        },
+        {
+          title: 'Speed of light and what it means',
+          body: 'Light travels at approximately 300,000 km/s (3 × 10⁸ m/s) in a vacuum. This is the fastest anything can travel. Even at this speed, light from the Sun takes about 8 minutes to reach Earth. When light enters a denser medium like glass or water, it slows down — this is what causes refraction. In glass, light travels at roughly 200,000 km/s.',
+          example: 'When you see a lightning bolt, you hear the thunder seconds later. Sound is slow (340 m/s). Light arrives almost instantly. Stars you see at night may have exploded thousands of years ago — you are seeing old light.'
+        }
+      ],
+      stages: ['Recall: define luminous and non-luminous, list parts of the eye and their function', 'Understanding: explain how we see a non-luminous object step by step', 'Application: classify objects and explain vision in unusual scenarios', 'Exam technique: describe seeing objects using light-source, reflection, and eye-entry language']
     },
     shadows: {
-      name: 'Shadows & Eclipses',
-      tag:  'Physics — Light',
-      facts: ['Light travels in straight lines (shadows prove this)', 'Umbra = region of total shadow (no light from any part of source)', 'Penumbra = partial shadow (some light, not all, reaches it)', 'Point source → sharp shadow with umbra only', 'Extended source → umbra + penumbra; solar eclipse has both'],
-      stages: ['Recall: define umbra and penumbra', 'Understanding: explain why extended sources give penumbra', 'Application: predict shadow regions in new scenarios', 'Exam technique: draw and label shadow diagrams accurately']
+      name: 'Shadows & Eclipses', tag: 'Physics — Light',
+      knowledge: [
+        {
+          title: 'Why shadows form',
+          body: 'Light travels in straight lines. When an opaque object blocks a light source, the object prevents light reaching the region behind it — this region is a shadow. The sharpness and shape of the shadow depends on the size of the light source. A small (point) source creates a sharp shadow with a single dark region (umbra only). A large (extended) source creates a shadow with two zones.',
+          example: 'Hold your hand under a small torch — sharp shadow. Hold it under a fluorescent tube ceiling light — soft, blurry edges. The tube light sends rays from many different positions, so the shadow edge is gradual.',
+          svg: `<svg viewBox="0 0 230 90" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+            <circle cx="25" cy="45" r="7" fill="#FAEEDA" stroke="#BA7517" stroke-width="1.5"/>
+            <text x="25" y="60" text-anchor="middle" font-size="6" fill="#A08050" font-family="Inter,sans-serif">point</text>
+            <text x="25" y="67" text-anchor="middle" font-size="6" fill="#A08050" font-family="Inter,sans-serif">source</text>
+            <rect x="100" y="30" width="10" height="30" rx="2" fill="#3A3020"/>
+            <text x="105" y="75" text-anchor="middle" font-size="6" fill="#A08050" font-family="Inter,sans-serif">object</text>
+            <line x1="32" y1="45" x2="100" y2="45" stroke="#BA7517" stroke-width="0.8" stroke-dasharray="2,2"/>
+            <line x1="32" y1="38" x2="110" y2="30" stroke="#BA7517" stroke-width="0.8" stroke-dasharray="2,2"/>
+            <line x1="32" y1="38" x2="110" y2="30" stroke="#BA7517" stroke-width="0.8"/>
+            <line x1="110" y1="30" x2="225" y2="10" stroke="#BA7517" stroke-width="0.8" stroke-dasharray="2,2"/>
+            <line x1="32" y1="52" x2="110" y2="60" stroke="#BA7517" stroke-width="0.8"/>
+            <line x1="110" y1="60" x2="225" y2="80" stroke="#BA7517" stroke-width="0.8" stroke-dasharray="2,2"/>
+            <polygon points="110,30 225,10 225,80 110,60" fill="#3A3020" opacity="0.25"/>
+            <text x="175" y="47" text-anchor="middle" font-size="7" fill="#1C1710" font-family="Inter,sans-serif">umbra</text>
+          </svg>`
+        },
+        {
+          title: 'Umbra and penumbra — the two shadow zones',
+          body: 'The umbra is the region of total shadow where no light from the source reaches. The penumbra is the region of partial shadow — light from some parts of the source reaches it, but not all. An extended source (like the Sun) creates both. The penumbra surrounds the umbra. Inside the penumbra you get partial illumination.',
+          example: 'Stand under a large tree on a sunny day. Directly under a dense branch = umbra (no direct sunlight). Just outside that = penumbra (some sunlight gets through gaps). Lawn beyond the tree = fully lit.'
+        },
+        {
+          title: 'Solar and lunar eclipses',
+          body: 'A solar eclipse occurs when the Moon passes between the Earth and the Sun. People in the Moon\'s umbra see a total eclipse (the Sun completely blocked). People in the penumbra see a partial eclipse. A lunar eclipse occurs when the Earth passes between the Sun and the Moon — the Earth\'s shadow falls on the Moon. The Moon turns red-brown because Earth\'s atmosphere refracts some red light onto the Moon\'s surface.',
+          example: 'Solar eclipse: Moon\'s shadow lands on Earth. Lunar eclipse: Earth\'s shadow lands on Moon. The Moon turns copper-red because it is lit by all Earth\'s sunrises and sunsets at once.'
+        },
+        {
+          title: 'The pinhole camera',
+          body: 'A pinhole camera is a box with a tiny hole in one end and a screen at the other. Light from each part of the object travels in a straight line through the hole and hits a different part of the screen, creating an image. The image is inverted (upside down and reversed) because rays from the top of the object go to the bottom of the screen and vice versa. A smaller hole = sharper image but dimmer. A larger hole = brighter but blurrier.',
+          example: 'The pinhole is why the image is inverted. Think of two people crossing a doorway — the one on the left enters the doorway and ends up on the right side of the room.',
+          svg: `<svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+            <text x="15" y="25" font-size="8" fill="#854F0B" font-family="Inter,sans-serif">Object</text>
+            <line x1="20" y1="15" x2="20" y2="65" stroke="#BA7517" stroke-width="1.5"/>
+            <rect x="80" y="10" width="4" height="60" rx="1" fill="#3A3020"/>
+            <circle cx="82" cy="40" r="2" fill="#FFF8ED"/>
+            <text x="82" y="78" text-anchor="middle" font-size="6" fill="#A08050" font-family="Inter,sans-serif">pinhole</text>
+            <rect x="155" y="10" width="3" height="60" rx="1" fill="#FAEEDA" stroke="#BA7517" stroke-width="1"/>
+            <text x="157" y="78" text-anchor="middle" font-size="6" fill="#A08050" font-family="Inter,sans-serif">screen</text>
+            <line x1="20" y1="15" x2="82" y2="40" stroke="#BA7517" stroke-width="0.8"/>
+            <line x1="82" y1="40" x2="157" y2="63" stroke="#BA7517" stroke-width="0.8" stroke-dasharray="2,2"/>
+            <line x1="20" y1="65" x2="82" y2="40" stroke="#185FA5" stroke-width="0.8"/>
+            <line x1="82" y1="40" x2="157" y2="18" stroke="#185FA5" stroke-width="0.8" stroke-dasharray="2,2"/>
+            <text x="157" y="68" font-size="7" fill="#854F0B" font-family="Inter,sans-serif">↑ inverted</text>
+          </svg>`
+        }
+      ],
+      stages: ['Recall: define umbra and penumbra, state what happens during a solar eclipse', 'Understanding: explain why extended sources create penumbra using ray diagrams', 'Application: describe what observers in different positions see during eclipses', 'Exam technique: draw accurate shadow diagrams with labelled umbra and penumbra']
     },
     reflection: {
-      name: 'Reflection',
-      tag:  'Physics — Light',
-      facts: ['Law of reflection: angle of incidence = angle of reflection', 'Angles measured from the normal (not the surface)', 'Plane mirror image: virtual, same size, upright, laterally inverted, same distance behind mirror', 'Diffuse reflection: irregular surface scatters light in all directions', 'Regular reflection: smooth surface obeys law of reflection'],
-      stages: ['Recall: state the law of reflection and 5 properties of a plane mirror image', 'Understanding: explain regular vs diffuse reflection', 'Application: ray diagrams and angle calculations', 'Exam technique: describe image properties using all 5 key terms']
+      name: 'Reflection', tag: 'Physics — Light',
+      knowledge: [
+        {
+          title: 'The law of reflection',
+          body: 'When light reflects off a surface, the angle of incidence equals the angle of reflection. Both angles are measured from the normal — an imaginary line perpendicular to the surface at the point of contact. This is always true for any reflecting surface, smooth or rough.',
+          example: 'Bounce a ball at a wall at 30° to the normal — it bounces back at 30°. Light does exactly the same thing, just much faster.',
+          svg: `<svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+            <line x1="10" y1="90" x2="190" y2="90" stroke="#DDD5C8" stroke-width="1.5"/>
+            <line x1="100" y1="90" x2="100" y2="15" stroke="#DDD5C8" stroke-width="1" stroke-dasharray="3,2"/>
+            <text x="100" y="10" text-anchor="middle" font-size="7" fill="#A08050" font-family="Inter,sans-serif">normal</text>
+            <line x1="30" y1="20" x2="100" y2="90" stroke="#BA7517" stroke-width="1.8"/>
+            <text x="25" y="15" font-size="7" fill="#BA7517" font-family="Inter,sans-serif">incident</text>
+            <line x1="100" y1="90" x2="170" y2="20" stroke="#185FA5" stroke-width="1.8"/>
+            <text x="165" y="15" font-size="7" fill="#185FA5" font-family="Inter,sans-serif">reflected</text>
+            <path d="M100 70 A20,20 0 0,0 86,78" fill="none" stroke="#BA7517" stroke-width="1"/>
+            <text x="78" y="68" font-size="7" fill="#854F0B" font-family="Inter,sans-serif">i</text>
+            <path d="M100 70 A20,20 0 0,1 114,78" fill="none" stroke="#185FA5" stroke-width="1"/>
+            <text x="117" y="68" font-size="7" fill="#185FA5" font-family="Inter,sans-serif">r</text>
+            <text x="100" y="108" text-anchor="middle" font-size="7.5" fill="#3B6D11" font-family="Inter,sans-serif">angle i = angle r (always)</text>
+          </svg>`
+        },
+        {
+          title: 'The five properties of a plane mirror image',
+          body: 'A plane (flat) mirror produces an image that is: (1) the same size as the object, (2) the same distance behind the mirror as the object is in front, (3) upright (not inverted top-to-bottom), (4) virtual — the light does not actually come from behind the mirror, the image cannot be projected onto a screen, (5) laterally inverted — left and right are swapped.',
+          example: 'Text in a plane mirror reads backwards — laterally inverted. But it is not upside down — upright. The ambulance word on the front of ambulances is written reversed so it reads correctly in your rear-view mirror.'
+        },
+        {
+          title: 'Specular vs diffuse reflection',
+          body: 'Specular (regular) reflection occurs on smooth surfaces like mirrors or still water. All light rays obey the law of reflection precisely, so the reflected beam is well-defined and you see a clear image. Diffuse reflection occurs on rough surfaces like paper or walls. Each ray obeys the law of reflection locally, but the surface is so uneven that the normals point in different directions, scattering light in all directions. This is why you can read a book from any angle.',
+          example: 'A calm lake gives a perfect reflection (specular). Ruffled water gives broken reflections (diffuse). Same law of reflection — different surface geometry.'
+        }
+      ],
+      stages: ['Recall: state the law of reflection and list the 5 properties of a plane mirror image', 'Understanding: explain specular vs diffuse reflection and draw a ray diagram', 'Application: determine image position and properties for given object distances', 'Exam technique: describe images using all 5 key terms — examiners expect all five']
     },
     refraction: {
-      name: 'Refraction',
-      tag:  'Physics — Light',
-      facts: ['Refraction = change of speed when light crosses a boundary', 'Air to glass: bends towards the normal (slows down)', 'Glass to air: bends away from the normal (speeds up)', 'Refractive index = real depth / apparent depth', 'A pool looks shallower than it is because of refraction'],
-      stages: ['Recall: define refraction and state which way light bends', 'Understanding: explain why refraction happens in terms of speed', 'Application: ray diagrams and refractive index calculations', 'Exam technique: describe refraction precisely with normal and angles']
+      name: 'Refraction', tag: 'Physics — Light',
+      knowledge: [
+        {
+          title: 'Why refraction happens',
+          body: 'When light passes from one medium to another, its speed changes. If it enters at an angle, one side of the wavefront slows before the other, causing the beam to change direction — refraction. Into a denser medium (air to glass): light slows down and bends towards the normal. Into a less dense medium (glass to air): light speeds up and bends away from the normal. If light hits the boundary at exactly 90° (along the normal) it slows down but does not change direction.',
+          example: 'Imagine a row of soldiers marching on tarmac and hitting sand at an angle. The left side of the line hits the sand first and slows, while the right side is still on tarmac. The whole line pivots — bends towards the slower medium.',
+          svg: `<svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+            <rect x="0" y="65" width="200" height="65" rx="0" fill="#E6F1FB" opacity="0.5"/>
+            <text x="170" y="80" font-size="7" fill="#185FA5" font-family="Inter,sans-serif">glass</text>
+            <text x="170" y="60" font-size="7" fill="#A08050" font-family="Inter,sans-serif">air</text>
+            <line x1="0" y1="65" x2="200" y2="65" stroke="#DDD5C8" stroke-width="1"/>
+            <line x1="100" y1="10" x2="100" y2="125" stroke="#DDD5C8" stroke-width="1" stroke-dasharray="3,2"/>
+            <text x="100" y="7" text-anchor="middle" font-size="6" fill="#A08050" font-family="Inter,sans-serif">normal</text>
+            <line x1="30" y1="15" x2="100" y2="65" stroke="#BA7517" stroke-width="1.8"/>
+            <text x="22" y="12" font-size="7" fill="#BA7517" font-family="Inter,sans-serif">incident</text>
+            <line x1="100" y1="65" x2="140" y2="125" stroke="#185FA5" stroke-width="1.8"/>
+            <text x="148" y="120" font-size="7" fill="#185FA5" font-family="Inter,sans-serif">refracted</text>
+            <text x="100" y="138" text-anchor="middle" font-size="7" fill="#3B6D11" font-family="Inter,sans-serif">bends TOWARDS normal (slows in glass)</text>
+          </svg>`
+        },
+        {
+          title: 'Refractive index and apparent depth',
+          body: 'Refractive index (n) = real depth / apparent depth. A swimming pool looks shallower than it is because light from the bottom bends away from the normal as it enters the air, making the bottom appear to be closer to the surface. The refractive index of glass is approximately 1.5 — meaning glass is 1.5 times denser optically than air.',
+          example: 'A coin at the bottom of a bowl of water appears to float above the bottom. The rays from the coin bend away from the normal as they leave the water, and your brain traces them back in straight lines — placing the coin higher than it really is.'
+        }
+      ],
+      stages: ['Recall: define refraction and state which way light bends going air-to-glass and glass-to-air', 'Understanding: explain why refraction happens using the wave speed model', 'Application: ray diagrams and apparent depth calculations using n = real/apparent', 'Exam technique: describe refraction using boundary, normal, speed, and direction language']
     },
     tir: {
-      name: 'Total Internal Reflection',
-      tag:  'Physics — Light',
-      facts: ['TIR occurs when light travels from denser to less dense medium', 'Angle of incidence must exceed the critical angle (~42° for glass)', 'Below critical angle: refraction occurs (some light gets through)', 'Above critical angle: all light is reflected back (TIR)', 'Applications: optical fibres, diamond brilliance, prism periscopes'],
-      stages: ['Recall: state conditions for TIR', 'Understanding: explain critical angle and when TIR occurs', 'Application: predict whether TIR occurs in given scenarios', 'Exam technique: answer TIR questions with correct terminology']
+      name: 'Total Internal Reflection', tag: 'Physics — Light',
+      knowledge: [
+        {
+          title: 'When and why TIR occurs',
+          body: 'Total internal reflection (TIR) occurs only when light is travelling from a denser medium into a less dense one (e.g. glass to air) AND the angle of incidence exceeds the critical angle. Below the critical angle, light refracts out — mostly. Above it, all light is reflected back inside. At exactly the critical angle, the refracted ray travels along the boundary (90° to the normal).',
+          example: 'Swim underwater and look up at the surface at a steep angle — you see through to the air above. Look at a shallow angle — you see a mirror-like reflection. That shallow angle is beyond the critical angle.',
+          svg: `<svg viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+            <rect x="0" y="0" width="220" height="55" rx="0" fill="#E6F1FB" opacity="0.45"/>
+            <text x="5" y="12" font-size="7" fill="#185FA5" font-family="Inter,sans-serif">glass</text>
+            <text x="5" y="65" font-size="7" fill="#A08050" font-family="Inter,sans-serif">air</text>
+            <line x1="0" y1="55" x2="220" y2="55" stroke="#DDD5C8" stroke-width="1"/>
+            <line x1="60" y1="5" x2="60" y2="55" stroke="#BA7517" stroke-width="1.5"/>
+            <line x1="60" y1="55" x2="30" y2="95" stroke="#BA7517" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.5"/>
+            <line x1="60" y1="55" x2="90" y2="95" stroke="#BA7517" stroke-width="0.8" stroke-dasharray="2,1" opacity="0.4"/>
+            <text x="60" y="103" text-anchor="middle" font-size="6.5" fill="#BA7517" font-family="Inter,sans-serif">below critical: refraction</text>
+            <line x1="150" y1="5" x2="150" y2="55" stroke="#185FA5" stroke-width="1.5"/>
+            <line x1="150" y1="55" x2="200" y2="55" stroke="#185FA5" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.5"/>
+            <text x="185" y="50" font-size="6" fill="#185FA5" font-family="Inter,sans-serif">critical</text>
+            <line x1="150" y1="55" x2="150" y2="5" stroke="#3B6D11" stroke-width="0.8" stroke-dasharray="2,1" opacity="0.5"/>
+            <line x1="150" y1="5" x2="220" y2="40" stroke="#3B6D11" stroke-width="1.5"/>
+            <text x="170" y="103" text-anchor="middle" font-size="6.5" fill="#3B6D11" font-family="Inter,sans-serif">above critical: TIR</text>
+          </svg>`
+        },
+        {
+          title: 'The critical angle',
+          body: 'The critical angle for glass to air is approximately 42°. For water to air it is approximately 49°. Any ray hitting the boundary at an angle greater than the critical angle undergoes TIR — no light escapes into the less dense medium. The critical angle can be calculated using: sin(c) = 1/n, where n is the refractive index.',
+          example: 'A diamond\'s critical angle is about 24°. Diamonds are cut so that light entering bounces around inside many times before escaping from the top — giving the sparkle. If the critical angle were larger, the sparkle would be lost.'
+        },
+        {
+          title: 'Applications of TIR',
+          body: 'Optical fibres use TIR to carry light signals along curved paths. The fibre is made of glass with a higher refractive index core surrounded by a lower index cladding. Light entering the end hits the boundary at more than the critical angle and bounces along — no light escapes out the sides. Used in broadband internet, endoscopes in medicine, and decorative lighting.',
+          example: 'An endoscope lets surgeons see around corners inside the body. One bundle of fibres carries light in, another bundle carries the image out. TIR keeps the light trapped inside each fibre.'
+        }
+      ],
+      stages: ['Recall: state conditions for TIR and the critical angle for glass', 'Understanding: explain why TIR happens using speed and angle concepts', 'Application: predict whether TIR occurs for given angles and media', 'Exam technique: answer TIR questions with: denser-to-less-dense, exceeds critical angle, all light reflected']
     },
     colour: {
-      name: 'Colour & Spectrum',
-      tag:  'Physics — Light',
-      facts: ['White light is a mixture of all colours of the spectrum', 'Prism disperses white light: violet refracted most, red least', 'Primary colours of light: red, green, blue', 'Secondary colours: yellow (R+G), cyan (B+G), magenta (R+B)', 'A filter transmits its own colour and absorbs others'],
-      stages: ['Recall: state primary colours and what a filter does', 'Understanding: explain dispersion and how we see colours', 'Application: predict colours seen through filters and in different light', 'Exam technique: explain colour mixing and filtering correctly']
+      name: 'Colour & Spectrum', tag: 'Physics — Light',
+      knowledge: [
+        {
+          title: 'Dispersion and the visible spectrum',
+          body: 'White light is a mixture of all the colours of the visible spectrum. When it enters a prism, each colour refracts by a slightly different amount — violet is refracted the most, red the least. This separates the colours into a spectrum: Red, Orange, Yellow, Green, Blue, Indigo, Violet (ROYGBIV). This is called dispersion. A raindrop acts as a tiny prism — sunlight enters, disperses inside, and exits creating a rainbow.',
+          example: 'The prism does not add colours — it reveals colours already inside the white light. Separate them with a prism; recombine them with another prism and you get white light back.',
+          svg: `<svg viewBox="0 0 220 80" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+            <polygon points="90,10 130,75 50,75" fill="#FAEEDA" stroke="#BA7517" stroke-width="1.5"/>
+            <text x="90" y="50" text-anchor="middle" font-size="7" fill="#854F0B" font-family="Inter,sans-serif">prism</text>
+            <line x1="5" y1="40" x2="68" y2="40" stroke="#C8C8C8" stroke-width="2"/>
+            <text x="20" y="35" font-size="7" fill="#A08050" font-family="Inter,sans-serif">white</text>
+            <line x1="105" y1="47" x2="215" y2="15" stroke="#A32D2D" stroke-width="1.4"/>
+            <line x1="105" y1="50" x2="215" y2="22" stroke="#EF9F27" stroke-width="1.2"/>
+            <line x1="105" y1="52" x2="215" y2="30" stroke="#639922" stroke-width="1.2"/>
+            <line x1="105" y1="55" x2="215" y2="40" stroke="#185FA5" stroke-width="1.2"/>
+            <line x1="105" y1="57" x2="215" y2="55" stroke="#534AB7" stroke-width="1.2"/>
+            <text x="218" y="18" font-size="6.5" fill="#A32D2D" font-family="Inter,sans-serif">Red</text>
+            <text x="218" y="44" font-size="6.5" fill="#185FA5" font-family="Inter,sans-serif">Blue</text>
+            <text x="218" y="58" font-size="6.5" fill="#534AB7" font-family="Inter,sans-serif">Violet</text>
+            <text x="218" y="30" font-size="6" fill="#A08050" font-family="Inter,sans-serif">→ most</text>
+          </svg>`
+        },
+        {
+          title: 'Primary and secondary colours of light',
+          body: 'The three primary colours of light are Red, Green, and Blue (RGB). Mix all three and you get white light. Mix pairs: Red + Green = Yellow, Red + Blue = Magenta, Green + Blue = Cyan. These pairs are the secondary colours. This is additive colour mixing — you add light together. (Different from mixing paints, which is subtractive.)',
+          example: 'Your phone screen has millions of tiny red, green and blue dots. A "white" pixel is all three at full brightness. A "yellow" pixel has red and green dots on, blue off. Your eye combines them.'
+        },
+        {
+          title: 'Colour filters — what they do and why',
+          body: 'A colour filter transmits (lets through) its own colour and absorbs all other colours. A red filter absorbs green and blue light, transmitting only red. If you shine white light through a red filter then a blue filter, no light gets through — the red filter has already removed the blue and green, and the blue filter removes the red. Coloured objects work the same way — a red object absorbs all colours except red, which it reflects.',
+          example: 'Put on red-tinted sunglasses in a disco with blue lights — everything looks black. The glasses filter out blue; the blue light has nothing to transmit. A red object in blue light also looks black — no red light to reflect.'
+        }
+      ],
+      stages: ['Recall: list primary colours, state ROYGBIV order, explain what a filter does', 'Understanding: explain dispersion and why violet refracts more than red', 'Application: predict what colour is seen through filters and under different light sources', 'Exam technique: explain colour using transmit, absorb, and reflect — examiners want all three terms']
     }
   }
 };
 
-// ── NOVA SYSTEM PROMPT ──
-function buildSystemPrompt() {
-  const topic = TOPICS[currentSubject]?.[currentTopic];
-  const stageName = topic?.stages?.[currentStage - 1] || '';
-  const keyFacts = topic?.facts?.join('\n') || '';
-
-  return `You are Nova — a sharp, direct, knowledgeable physics tutor embedded in T3 Academy. You are tutoring Abdullah, a Year 8 student at King Edward VI Camp Hill School for Boys in Birmingham, preparing for his physics exam on 18 May.
-
-YOUR PERSONALITY
-You are confident and direct. You don't over-explain. You speak like a knowledgeable older student who genuinely finds physics interesting — not a textbook, not a cheerleader. You call things out if they're wrong. You acknowledge when something is genuinely tricky. You don't pad responses with fluff. You're concise.
-
-CURRENT SESSION
-Subject: ${currentSubject === 'electricity' ? 'Electricity' : 'Light'}
-Topic: ${topic?.name}
-Stage ${currentStage} of 4: ${stageName}
-
-KEY FACTS FOR THIS TOPIC (from Abdullah's actual Camp Hill workbook):
-${keyFacts}
-
-TEACHING METHOD
-Stage 1 (Recall): Ask direct recall questions. One at a time. Check definitions, names, units, symbols. No calculation yet.
-Stage 2 (Understanding): Ask "explain why" and "describe how" questions. Push for mechanistic understanding.
-Stage 3 (Application): Give unfamiliar scenarios. Ask him to apply the concepts to new situations.
-Stage 4 (Exam technique): Focus on how to phrase answers for the mark scheme. Show how marks are awarded.
-
-RULES
-1. Ask ONE question at a time. Wait for his answer before moving on.
-2. Never just give the answer. If he's wrong, ask a guiding question. If he's clearly stuck after two attempts, then explain it briefly and directly.
-3. When he gets something right, acknowledge it specifically — not generically. Name what he got right.
-4. Keep responses short. 2-4 sentences max unless explaining something complex.
-5. Use analogies from everyday life when helpful — but only when they actually clarify, not just to seem relatable.
-6. At the end of each stage (after 3-4 questions), tell him clearly what stage is complete and what's next.
-7. When something is directly from the Camp Hill workbook, you can reference it — "Your workbook calls this..." — to make it feel relevant to his actual exam.
-
-START THE SESSION by welcoming him briefly (one sentence) and asking the first question for Stage ${currentStage}.`;
-}
-
-// ── VIEWS ──
+// ══════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════
 function showView(id) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById('view-' + id)?.classList.add('active');
-  window.scrollTo(0,0);
+  window.scrollTo(0, 0);
+  if (id === 'y8') updateHubDots();
 }
 
-// ── START TUTOR ──
-function startTutor(subject, topic) {
-  currentSubject = subject;
-  currentTopic   = topic;
-  currentStage   = 1;
-  sessionQs      = 0;
-  sessionScore   = 0;
-  chatHistory    = [];
-  isLoading      = false;
-
-  const t = TOPICS[subject]?.[topic];
-  if (!t) return;
-
-  document.getElementById('tutor-subject-tag').textContent = t.tag;
-  document.getElementById('tutor-topic-title').textContent = t.name;
-  document.getElementById('nova-topic-name').textContent = t.name;
-  document.getElementById('chat-messages').innerHTML = '';
-
-  updateStageUI();
-  populateKeyFacts();
-  updateScoreUI();
-  showView('tutor');
-
-  // Auto-start: Nova sends first message
-  setTimeout(() => sendToNova('__start__'), 400);
-}
-
-// ── STAGE UI ──
-function updateStageUI() {
-  const topic = TOPICS[currentSubject]?.[currentTopic];
-  const stageNames = ['Recall', 'Understanding', 'Application', 'Exam Technique'];
-  document.getElementById('stage-label').innerHTML =
-    `Stage ${currentStage} of 4 — <span>${stageNames[currentStage-1]}</span>`;
-
-  for (let i = 1; i <= 4; i++) {
-    const pip = document.getElementById('pip-' + i);
-    pip.className = 'stage-pip' + (i < currentStage ? ' done' : i === currentStage ? ' active' : '');
-  }
-
-  document.getElementById('score-stage').textContent = currentStage + ' / 4';
-}
-
-// ── KEY FACTS ──
-function populateKeyFacts() {
-  const t = TOPICS[currentSubject]?.[currentTopic];
-  const container = document.getElementById('nova-key-facts');
-  if (!t) return;
-  container.innerHTML = '<h4>Key Facts</h4>';
-  t.facts.forEach(fact => {
-    const div = document.createElement('div');
-    div.className = 'fact-item';
-    div.innerHTML = `<span class="fact-icon">→</span>${fact}`;
-    container.appendChild(div);
+function updateHubDots() {
+  Object.entries(topicProgress).forEach(([key, prog]) => {
+    const [s, t] = key.split(':');
+    // find card by onclick attribute — mark with dot
+    const cards = document.querySelectorAll('.topic-card');
+    cards.forEach(card => {
+      const fn = card.getAttribute('onclick') || '';
+      if (fn.includes(`'${s}'`) && fn.includes(`'${t}'`)) {
+        let dot = card.querySelector('.topic-progress-dot');
+        if (!dot) {
+          dot = document.createElement('div');
+          dot.className = 'topic-progress-dot';
+          card.appendChild(dot);
+        }
+        const pct = prog.qs > 0 ? prog.score / prog.qs : 0;
+        dot.classList.toggle('dot-done', pct >= 0.7);
+        dot.classList.toggle('dot-partial', pct > 0 && pct < 0.7);
+        dot.classList.toggle('dot-untouched', pct === 0);
+      }
+    });
   });
 }
 
-// ── SCORE UI ──
-function updateScoreUI() {
-  document.getElementById('score-qs').textContent = sessionQs;
-  document.getElementById('score-pct').textContent =
-    sessionQs > 0 ? Math.round(sessionScore / sessionQs * 100) + '%' : '—';
+// ══════════════════════════════════════════
+// START TUTOR
+// ══════════════════════════════════════════
+function startTutor(s, t) {
+  subj = s; topic = t; stage = 1;
+  sessionQs = 0; sessionScore = 0;
+  chatHistory = []; isLoading = false;
+  timedMode = false; clearInterval(timerInterval);
+  document.getElementById('timer-badge').style.display = 'none';
+  activeTab = 'knowledge';
+
+  const td = TOPICS[s]?.[t];
+  if (!td) return;
+
+  document.getElementById('th-subject').textContent = td.tag;
+  document.getElementById('th-title').textContent = td.name;
+  document.getElementById('chat-msgs').innerHTML = '';
+  updateStageUI();
+  renderSidebar();
+  showView('tutor');
+  setTimeout(() => novaSend('__start__'), 350);
 }
 
-// ── ADD MESSAGE ──
+// ══════════════════════════════════════════
+// STAGE MANAGEMENT
+// ══════════════════════════════════════════
+const STAGE_NAMES = ['Recall', 'Understanding', 'Application', 'Exam Technique'];
+const STAGE_DESCS = [
+  'Can you name it, define it, and state it?',
+  'Can you explain why and how?',
+  'Can you use it in an unfamiliar situation?',
+  'Can you answer it the way the mark scheme expects?'
+];
+
+function updateStageUI() {
+  for (let i = 1; i <= 4; i++) {
+    const seg = document.getElementById('seg' + i);
+    seg.className = 'stage-seg' + (i < stage ? ' done' : i === stage ? ' active' : '');
+  }
+  document.getElementById('stage-info').innerHTML =
+    `Stage ${stage} of 4 — <strong>${STAGE_NAMES[stage-1]}</strong> · ${STAGE_DESCS[stage-1]}`;
+  renderSessionTab();
+}
+
+function jumpStage(n) {
+  if (n > stage) return; // can't skip ahead
+  if (n === stage) return;
+  stage = n;
+  updateStageUI();
+  chatHistory = [];
+  addMsg(`— Returning to Stage ${stage}: ${STAGE_NAMES[stage-1]} —`, 'system');
+  setTimeout(() => novaSend('__start__'), 400);
+}
+
+function advanceStage() {
+  if (stage >= 4) { finishTopic(); return; }
+  stage++;
+  chatHistory = [];
+  updateStageUI();
+  addMsg(`— Stage ${stage-1} complete. Moving to Stage ${stage}: ${STAGE_NAMES[stage-1]} —`, 'system');
+  setTimeout(() => novaSend('__start__'), 400);
+}
+
+function restartTopic() { startTutor(subj, topic); }
+
+// ══════════════════════════════════════════
+// SIDEBAR
+// ══════════════════════════════════════════
+function switchTab(tab) {
+  activeTab = tab;
+  ['knowledge','progress','session'].forEach(t => {
+    document.getElementById('tab-' + t).classList.toggle('active', t === tab);
+  });
+  renderSidebar();
+}
+
+function renderSidebar() {
+  if (activeTab === 'knowledge') renderKnowledgeTab();
+  else if (activeTab === 'progress') renderProgressTab();
+  else renderSessionTab();
+}
+
+function renderKnowledgeTab() {
+  const body = document.getElementById('sidebar-body');
+  const td = TOPICS[subj]?.[topic];
+  if (!td) return;
+
+  body.innerHTML = '';
+  td.knowledge.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'kf-item';
+    div.innerHTML = `
+      <div class="kf-header" onclick="toggleKF(${idx})">
+        <span class="kf-arrow">▶</span>
+        <span class="kf-title">${item.title}</span>
+      </div>
+      <div class="kf-body" id="kf-body-${idx}">
+        <p>${item.body}</p>
+        ${item.example ? `<div class="kf-example">${item.example}</div>` : ''}
+        ${item.svg || ''}
+        <button class="kf-ask-btn" onclick="askAbout(${idx})">Ask Nova about this ↗</button>
+      </div>`;
+    body.appendChild(div);
+  });
+}
+
+function toggleKF(idx) {
+  const item = document.getElementById('kf-body-' + idx)?.closest('.kf-item');
+  if (item) item.classList.toggle('open');
+}
+
+function askAbout(idx) {
+  const item = TOPICS[subj]?.[topic]?.knowledge[idx];
+  if (!item) return;
+  switchTab('knowledge');
+  useQuick(`Tell me more about "${item.title}" — explain it in depth and draw a diagram if it helps`);
+}
+
+function renderProgressTab() {
+  const body = document.getElementById('sidebar-body');
+  body.innerHTML = '<div style="font-size:0.68rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--stone-light);margin-bottom:12px;">Topics attempted</div>';
+
+  const allTopics = [];
+  Object.entries(TOPICS).forEach(([s, topics]) => {
+    Object.entries(topics).forEach(([t, td]) => {
+      allTopics.push({ key: s+':'+t, name: td.name, tag: td.tag.split(' — ')[1] || td.tag });
+    });
+  });
+
+  allTopics.forEach(({ key, name, tag }) => {
+    const prog = topicProgress[key];
+    const div = document.createElement('div');
+    div.className = 'prog-item';
+    const pct = prog && prog.qs > 0 ? Math.round(prog.score / prog.qs * 100) : null;
+    const dotClass = !prog ? 'untouched' : pct >= 70 ? 'done' : 'partial';
+    div.innerHTML = `
+      <div class="prog-dot ${dotClass}"></div>
+      <div>
+        <div class="prog-name">${name}</div>
+        <div style="font-size:0.68rem;color:var(--text4);">${tag}</div>
+      </div>
+      <div class="prog-score">${pct !== null ? pct + '%' : '—'}</div>`;
+    body.appendChild(div);
+  });
+}
+
+function renderSessionTab() {
+  const body = document.getElementById('sidebar-body');
+  const pct = sessionQs > 0 ? Math.round(sessionScore / sessionQs * 100) : 0;
+  const fillW = pct + '%';
+  body.innerHTML = `
+    <div class="session-block">
+      <div class="sb-title">Current session</div>
+      <div class="sb-row"><span class="sb-label">Topic</span><span class="sb-val">${TOPICS[subj]?.[topic]?.name || '—'}</span></div>
+      <div class="sb-row"><span class="sb-label">Stage</span><span class="sb-val">${stage} / 4 — ${STAGE_NAMES[stage-1]}</span></div>
+      <div class="sb-row"><span class="sb-label">Questions</span><span class="sb-val">${sessionQs}</span></div>
+      <div class="sb-row"><span class="sb-label">Score</span><span class="sb-val">${sessionQs > 0 ? pct + '%' : '—'}</span></div>
+      <div class="sb-bar"><div class="sb-fill" style="width:${fillW}"></div></div>
+    </div>
+    <div style="margin-top:14px;font-size:0.68rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--stone-light);margin-bottom:8px;">Stage guide</div>
+    ${STAGE_NAMES.map((n, i) => `
+      <div style="display:flex;gap:8px;align-items:flex-start;padding:6px 0;border-bottom:1px solid var(--warm-border);">
+        <div style="width:18px;height:18px;border-radius:50%;background:${i+1 <= stage ? 'var(--amber)' : 'var(--warm-bg3)'};color:${i+1 <= stage ? '#fff' : 'var(--text4)'};font-size:0.65rem;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">${i+1}</div>
+        <div>
+          <div style="font-size:0.78rem;font-weight:500;color:var(--charcoal);">${n}</div>
+          <div style="font-size:0.72rem;color:var(--text3);">${STAGE_DESCS[i]}</div>
+        </div>
+      </div>`).join('')}`;
+}
+
+// ══════════════════════════════════════════
+// TIMED MODE
+// ══════════════════════════════════════════
+function startTimedMode() {
+  if (timedMode) { stopTimedMode(); return; }
+  timedMode = true;
+  timerSecs = 600; // 10 minutes
+  document.getElementById('timer-badge').style.display = 'inline-flex';
+  timerInterval = setInterval(() => {
+    timerSecs--;
+    const m = Math.floor(timerSecs / 60);
+    const s = String(timerSecs % 60).padStart(2, '0');
+    document.getElementById('timer-display').textContent = m + ':' + s;
+    const badge = document.getElementById('timer-badge');
+    badge.className = 'timer-badge' + (timerSecs < 120 ? ' danger' : timerSecs < 300 ? ' warn' : '');
+    if (timerSecs <= 0) { stopTimedMode(); finishTopic(); }
+  }, 1000);
+  addMsg('⏱ Timed mode started. 10 minutes. No hints — exam conditions. Go.', 'system');
+  document.querySelector('.quick-bar').style.display = 'none';
+}
+
+function stopTimedMode() {
+  timedMode = false;
+  clearInterval(timerInterval);
+  document.getElementById('timer-badge').style.display = 'none';
+  document.querySelector('.quick-bar').style.display = 'flex';
+}
+
+// ══════════════════════════════════════════
+// CHAT
+// ══════════════════════════════════════════
 function addMsg(text, role) {
-  const msgs = document.getElementById('chat-messages');
+  const msgs = document.getElementById('chat-msgs');
+  if (role === 'system') {
+    const div = document.createElement('div');
+    div.style.cssText = 'text-align:center;font-size:0.7rem;color:var(--text4);padding:4px 0;';
+    div.textContent = text;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+    return;
+  }
   const wrap = document.createElement('div');
-  wrap.className = 'msg ' + role;
-
-  const label = document.createElement('div');
-  label.className = 'msg-label';
-  label.textContent = role === 'user' ? 'You' : 'Nova';
-
+  wrap.className = 'msg ' + (role === 'user' ? 'user' : 'nova');
+  const who = document.createElement('div');
+  who.className = 'msg-who';
+  who.textContent = role === 'user' ? 'You' : 'Nova';
   const bubble = document.createElement('div');
   bubble.className = 'msg-bubble';
-  bubble.textContent = text;
-
-  wrap.appendChild(label);
+  // Allow SVG tags to render as HTML
+  bubble.innerHTML = text.replace(/</g, '&lt;').replace(/&lt;svg/g, '<svg').replace(/&lt;\/svg>/g, '</svg>')
+    .replace(/&lt;rect/g,'<rect').replace(/&lt;circle/g,'<circle').replace(/&lt;line/g,'<line')
+    .replace(/&lt;text/g,'<text').replace(/&lt;\/text>/g,'</text>').replace(/&lt;path/g,'<path')
+    .replace(/&lt;polygon/g,'<polygon').replace(/&lt;ellipse/g,'<ellipse')
+    .replace(/&lt;defs/g,'<defs').replace(/&lt;\/defs>/g,'</defs>')
+    .replace(/&lt;marker/g,'<marker').replace(/&lt;\/marker>/g,'</marker>')
+    .replace(/&lt;line /g,'<line ');
+  // Simpler: just set textContent for user, innerHTML for Nova (Nova might return SVG descriptions)
+  if (role === 'user') { bubble.textContent = text; }
+  else { bubble.innerHTML = text; }
+  wrap.appendChild(who);
   wrap.appendChild(bubble);
   msgs.appendChild(wrap);
   msgs.scrollTop = msgs.scrollHeight;
 }
 
-// ── TYPING ──
 function showTyping() {
-  const msgs = document.getElementById('chat-messages');
+  const msgs = document.getElementById('chat-msgs');
   const div = document.createElement('div');
-  div.id = 'typing';
-  div.className = 'typing-indicator';
-  div.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+  div.id = 'typing'; div.className = 'typing-row';
+  div.innerHTML = '<div class="tdot"></div><div class="tdot"></div><div class="tdot"></div>';
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
 }
-function removeTyping() {
-  document.getElementById('typing')?.remove();
-}
+function removeTyping() { document.getElementById('typing')?.remove(); }
 
-// ── SEND USER MESSAGE ──
 function sendMsg() {
   if (isLoading) return;
   const input = document.getElementById('chat-input');
   const msg = input.value.trim();
   if (!msg) return;
-  input.value = '';
-  input.style.height = 'auto';
+  input.value = ''; input.style.height = 'auto';
   addMsg(msg, 'user');
-  sendToNova(msg);
+  novaSend(msg);
 }
 
-// ── SEND TO NOVA (API) ──
-async function sendToNova(userMsg) {
+function useQuick(text) {
+  document.getElementById('chat-input').value = text;
+  sendMsg();
+}
+
+// ══════════════════════════════════════════
+// NOVA SYSTEM PROMPT
+// ══════════════════════════════════════════
+function buildSystemPrompt() {
+  const td = TOPICS[subj]?.[topic];
+  const stageName = td?.stages?.[stage-1] || '';
+
+  const knowledgeDump = td?.knowledge?.map(k =>
+    `[${k.title}]\n${k.body}${k.example ? '\nExample: ' + k.example : ''}`
+  ).join('\n\n') || '';
+
+  return `You are Nova — a sharp, confident, direct science tutor embedded in T3 Academy, an AI-powered GCSE revision platform. You are tutoring a Year 8 student preparing for their physics exam.
+
+YOUR VOICE
+You are knowledgeable and direct. You speak like a brilliant older student who actually finds science fascinating — not a teacher reading from a textbook. You are precise, honest, and engaged. When something is genuinely interesting you say so. When an answer is wrong you say it clearly but constructively. You never pad with hollow phrases.
+
+CURRENT SESSION
+Subject: ${subj === 'electricity' ? 'Physics — Electricity' : 'Physics — Light'}
+Topic: ${td?.name}
+Stage ${stage} of 4: ${stageName}
+Timed mode: ${timedMode ? 'YES — no hints, exam conditions' : 'no'}
+
+YOUR KNOWLEDGE FOR THIS TOPIC
+${knowledgeDump}
+
+BEYOND THE SYLLABUS
+You know this topic far beyond GCSE level. When a student shows genuine curiosity — asks "but why does that happen?" or "what about..." — you follow the thread. You can explain:
+- The wave nature of light and electromagnetic spectrum beyond visible
+- Quantum mechanics of electron energy levels (briefly, accessibly)
+- Why superconductors have zero resistance
+- How fibre optic internet actually works at the engineering level
+- The physics of rainbows, mirages, and optical illusions
+- Real applications in medicine, engineering, technology
+Keep it accessible. Start with the GCSE concept and extend naturally if they want to go deeper.
+
+DIAGRAMS
+You can describe diagrams in your response. When asked to draw something or when a diagram would genuinely help, use this SVG format embedded in your response — keep it simple, line-art style, on a cream background (#FFF8ED). Viewbox should be reasonable (e.g. "0 0 200 100"). Use stroke colors from: #BA7517 (amber/main), #185FA5 (blue), #3A3020 (dark), #DDD5C8 (grey lines), #3B6D11 (green for correct). Text in diagrams: font-family="Inter,sans-serif", font-size 7-9. Always make diagrams genuinely useful — show ray directions with arrows, label key parts, make the physics visible.
+
+TEACHING METHOD BY STAGE
+Stage 1 (Recall): Quick-fire. One question at a time. Definitions, units, symbols, names. No extended explanation yet — you are testing what they know.
+Stage 2 (Understanding): Ask them to explain mechanisms. "Why does this happen?" "What would change if...?" Push for causal reasoning, not just memorised facts.
+Stage 3 (Application): Give an unfamiliar scenario. They must apply the concept to something they haven't seen before. Real-world, slightly tricky.
+Stage 4 (Exam technique): Ask them to write an exam-quality answer. Give them the question. Grade their response against what a mark scheme would award. Tell them exactly what marks they would get and what they missed.
+
+RULES
+1. Ask one question at a time. Never dump multiple questions.
+2. Never give the answer without effort from the student — unless they have genuinely tried twice and are stuck.
+3. When they get something right, name exactly what they got right. Never "well done" — always specific.
+4. When they are wrong, identify exactly what went wrong, not just "try again".
+5. Keep responses concise unless explaining something complex. 2-4 sentences for standard exchanges.
+6. In timed mode: no hints, no encouragement beyond acknowledgement. Exam conditions.
+7. If they ask for a diagram, draw one using SVG. If a diagram would genuinely help even without being asked, offer it.
+8. Follow genuine curiosity wherever it leads — this is one of the great joys of physics. A student who wants to know why metals become superconducting at low temperatures deserves a real answer.
+
+Start by greeting them briefly (one sentence, no more) and asking the first question for Stage ${stage}.`;
+}
+
+// ══════════════════════════════════════════
+// API CALL
+// ══════════════════════════════════════════
+async function novaSend(userMsg) {
   if (isLoading) return;
   isLoading = true;
   document.getElementById('send-btn').disabled = true;
 
-  const systemPrompt = buildSystemPrompt();
-
-  // Build messages array
   let messages = [...chatHistory];
   if (userMsg !== '__start__') {
     messages.push({ role: 'user', content: userMsg });
     chatHistory.push({ role: 'user', content: userMsg });
     sessionQs++;
-    updateScoreUI();
-  }
-
-  // If starting, no user message — just let Nova open
-  if (userMsg === '__start__') {
-    messages = [];
+    renderSessionTab();
   }
 
   showTyping();
@@ -1056,10 +1575,10 @@ async function sendToNova(userMsg) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-sonnet-4-6',
-        max_tokens: 600,
-        system: systemPrompt,
+        max_tokens: 900,
+        system: buildSystemPrompt(),
         messages: userMsg === '__start__'
-          ? [{ role: 'user', content: 'Please start the session.' }]
+          ? [{ role: 'user', content: 'Start the session.' }]
           : messages
       })
     });
@@ -1067,83 +1586,87 @@ async function sendToNova(userMsg) {
     removeTyping();
 
     if (!res.ok) {
-      const status = res.status;
-      const errMsg = status === 401
-        ? 'Connection issue — API key needs checking.'
-        : status === 429
-        ? 'Too many requests right now — try again in a moment.'
-        : 'Something went wrong. Try again. (' + status + ')';
-      addMsg(errMsg, 'nova');
-      isLoading = false;
-      document.getElementById('send-btn').disabled = false;
-      return;
-    }
-
-    const data = await res.json();
-    const reply = data.content?.[0]?.text;
-    if (reply) {
-      addMsg(reply, 'nova');
-      chatHistory.push({ role: 'assistant', content: reply });
-      // Estimate score from reply
-      if (userMsg !== '__start__') {
-        const lower = reply.toLowerCase();
-        if (lower.includes('exactly right') || lower.includes('spot on') || lower.includes('correct') || lower.includes('nailed it')) {
-          sessionScore++;
-        } else if (lower.includes('partially') || lower.includes('almost') || lower.includes('close')) {
-          sessionScore += 0.5;
-        }
-        updateScoreUI();
-      }
+      const s = res.status;
+      const err = s === 401 ? 'API key issue — contact T3 Academy support.'
+        : s === 429 ? 'Too many requests. Wait a moment and try again.'
+        : 'Connection error (' + s + '). Try again.';
+      addMsg(err, 'nova');
     } else {
-      addMsg('Lost the signal there — try again.', 'nova');
+      const data = await res.json();
+      const reply = data.content?.[0]?.text;
+      if (reply) {
+        addMsg(reply, 'nova');
+        chatHistory.push({ role: 'assistant', content: reply });
+        // Rough scoring from Nova's language
+        if (userMsg !== '__start__') {
+          const low = reply.toLowerCase();
+          if (/(exactly right|correct|spot on|perfect|nailed|yes[,!]|that's it)/.test(low)) sessionScore++;
+          else if (/(almost|partially|close|mostly right|nearly)/.test(low)) sessionScore += 0.5;
+          // save progress
+          topicProgress[subj + ':' + topic] = { score: sessionScore, qs: sessionQs, done: stage >= 4 };
+          renderSessionTab();
+        }
+      } else {
+        addMsg('Lost the thread — try again.', 'nova');
+      }
     }
-
   } catch(e) {
     removeTyping();
-    addMsg('Connection error. Check your internet and try again.', 'nova');
+    addMsg('Connection lost. Check your internet and try again.', 'nova');
   }
 
   isLoading = false;
   document.getElementById('send-btn').disabled = false;
 }
 
-// ── NEXT STAGE ──
-function nextStage() {
-  if (currentStage >= 4) {
-    finishTopic();
-    return;
-  }
-  currentStage++;
-  updateStageUI();
-  addMsg(`— Stage ${currentStage - 1} complete. Moving to Stage ${currentStage}. —`, 'nova');
-  chatHistory = []; // Fresh context for each stage
-  setTimeout(() => sendToNova('__start__'), 500);
-}
-
-// ── FINISH ──
-function finishTopic() {
+// ══════════════════════════════════════════
+// FINISH & RESULTS
+// ══════════════════════════════════════════
+async function finishTopic() {
+  if (timedMode) stopTimedMode();
   const pct = sessionQs > 0 ? Math.round(sessionScore / sessionQs * 100) : 0;
-  document.getElementById('results-title').textContent = TOPICS[currentSubject]?.[currentTopic]?.name + ' — Done!';
-  document.getElementById('results-sub').textContent = pct >= 80
-    ? 'Solid session. You know this topic well.'
+  document.getElementById('r-trophy').textContent = pct >= 80 ? '🏆' : pct >= 50 ? '⚡' : '📖';
+  document.getElementById('r-title').textContent = TOPICS[subj]?.[topic]?.name + ' — Complete';
+  document.getElementById('r-sub').textContent = pct >= 80
+    ? 'Strong session. You have a solid grasp of this topic.'
     : pct >= 50
-    ? 'Good progress. Review the key facts once more before the exam.'
-    : 'Keep practising. Go through the key facts panel and try again.';
+    ? 'Good progress. Review the knowledge panel and try once more.'
+    : 'Keep at it. Physics rewards persistence — go through the key facts and come back.';
   document.getElementById('r-score').textContent = pct + '%';
   document.getElementById('r-qs').textContent = sessionQs;
-  document.getElementById('results-trophy').textContent = pct >= 80 ? '🏆' : pct >= 50 ? '⚡' : '📖';
+  document.getElementById('r-stages').textContent = stage;
+  topicProgress[subj + ':' + topic] = { score: sessionScore, qs: sessionQs, done: true };
   showView('results');
+
+  // Generate Nova's personalised summary
+  try {
+    const summaryRes = await fetch('/api/ollie', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 250,
+        system: 'You are Nova, a science tutor. Write a concise 3-4 sentence personalised assessment of how a student did in this revision session. Be specific and honest. Reference the topic. End with one targeted revision suggestion. No markdown formatting.',
+        messages: [{
+          role: 'user',
+          content: `Topic: ${TOPICS[subj]?.[topic]?.name}. Stage reached: ${stage}/4. Score: ${pct}%. Questions answered: ${sessionQs}. Chat history summary: ${chatHistory.slice(-6).map(m => m.role + ': ' + m.content.substring(0, 80)).join(' | ')}. Write the assessment now.`
+        }]
+      })
+    });
+    const sumData = await summaryRes.json();
+    const sumText = sumData.content?.[0]?.text || 'Session complete. Review the key facts and try again for a higher score.';
+    document.getElementById('nova-summary-text').textContent = sumText;
+  } catch(e) {
+    document.getElementById('nova-summary-text').textContent = 'Session complete. Review the knowledge panel and try this topic again.';
+  }
 }
 
-// ── RESTART ──
-function restartTopic() {
-  startTutor(currentSubject, currentTopic);
-}
-
-// ── AUTO-RESIZE TEXTAREA ──
+// ══════════════════════════════════════════
+// AUTO-RESIZE TEXTAREA
+// ══════════════════════════════════════════
 document.getElementById('chat-input')?.addEventListener('input', function() {
   this.style.height = 'auto';
-  this.style.height = this.scrollHeight + 'px';
+  this.style.height = Math.min(this.scrollHeight, 120) + 'px';
 });
 </script>
 </body>
