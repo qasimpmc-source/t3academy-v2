@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T3 Academy — GCSE Revision</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #09090f;
+    --bg2:      #0f0f1a;
+    --bg3:      #14141f;
+    --card:     #13131e;
+    --border:   rgba(255,255,255,0.07);
+    --text:     #f0f0f5;
+    --text2:    #9090a8;
+    --text3:    #55556a;
+    --elec:     #38bdf8;
+    --elec2:    #0ea5e9;
+    --light:    #fbbf24;
+    --light2:   #f59e0b;
+    --bio:      #34d399;
+    --bio2:     #10b981;
+    --nova:     #a78bfa;
+    --nova2:    #7c3aed;
+    --green:    #4ade80;
+    --red:      #f87171;
+    --font:     'DM Sans', sans-serif;
+    --heading:  'Syne', sans-serif;
+    --radius:   14px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 60px;
+    background: rgba(9,9,15,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand {
+    font-family: var(--heading);
+    font-size: 1rem; font-weight: 800;
+    letter-spacing: -0.02em; color: var(--text);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-brand span { color: var(--nova); }
+  .nav-links { display: flex; gap: 24px; align-items: center; }
+  .nav-link {
+    font-size: 0.82rem; font-weight: 500; color: var(--text2);
+    cursor: pointer; transition: color 0.2s;
+    background: none; border: none; padding: 0;
+  }
+  .nav-link:hover { color: var(--text); }
+  .nav-back {
+    font-size: 0.8rem; color: var(--text3);
+    cursor: pointer; transition: color 0.2s;
+    background: none; border: none;
+  }
+  .nav-back:hover { color: var(--text2); }
+
+  /* ── VIEWS ── */
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* ── HOME ── */
+  .home-hero {
+    max-width: 900px; margin: 0 auto;
+    padding: 72px 32px 48px;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--nova);
+    background: rgba(167,139,250,0.1);
+    border: 1px solid rgba(167,139,250,0.2);
+    padding: 5px 12px; border-radius: 999px;
+    margin-bottom: 24px;
+  }
+  .hero-title {
+    font-family: var(--heading);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800; line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+  .hero-title .accent-elec { color: var(--elec); }
+  .hero-title .accent-light { color: var(--light); }
+  .hero-sub {
+    font-size: 1rem; color: var(--text2);
+    max-width: 500px; margin: 0 auto 48px;
+  }
+
+  /* Year selector */
+  .year-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    max-width: 700px; margin: 0 auto;
+  }
+  .year-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .year-card:hover { border-color: rgba(167,139,250,0.3); transform: translateY(-2px); }
+  .year-card.active-year {
+    border-color: var(--nova);
+    background: rgba(167,139,250,0.06);
+    cursor: default;
+  }
+  .year-card .year-num {
+    font-family: var(--heading);
+    font-size: 2rem; font-weight: 800;
+    color: var(--text3);
+  }
+  .year-card.active-year .year-num { color: var(--nova); }
+  .year-card .year-label { font-size: 0.78rem; color: var(--text3); margin-top: 4px; }
+  .year-card.active-year .year-label { color: var(--text2); }
+  .year-card .year-badge {
+    display: inline-block;
+    font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 4px;
+    margin-top: 10px;
+  }
+  .badge-live { background: rgba(52,211,153,0.15); color: var(--green); border: 1px solid rgba(52,211,153,0.3); }
+  .badge-soon { background: rgba(255,255,255,0.04); color: var(--text3); border: 1px solid var(--border); }
+
+  /* ── YEAR 8 HUB ── */
+  .hub {
+    max-width: 900px; margin: 0 auto;
+    padding: 48px 32px;
+  }
+  .hub-header { margin-bottom: 36px; }
+  .hub-header h2 {
+    font-family: var(--heading);
+    font-size: 1.8rem; font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .hub-header p { color: var(--text2); font-size: 0.9rem; margin-top: 6px; }
+
+  .subject-section { margin-bottom: 40px; }
+  .subject-label {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px;
+  }
+  .subject-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+  }
+  .subject-label h3 {
+    font-family: var(--heading);
+    font-size: 0.85rem; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text2);
+  }
+
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+  }
+  .topic-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .topic-card:hover { transform: translateY(-2px); }
+  .topic-card.elec:hover { border-color: rgba(56,189,248,0.35); background: rgba(56,189,248,0.04); }
+  .topic-card.light-t:hover { border-color: rgba(251,191,36,0.35); background: rgba(251,191,36,0.04); }
+
+  .topic-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
+  }
+  .topic-icon.elec { background: rgba(56,189,248,0.12); }
+  .topic-icon.light-t { background: rgba(251,191,36,0.12); }
+
+  .topic-info { flex: 1; min-width: 0; }
+  .topic-name {
+    font-size: 0.9rem; font-weight: 600;
+    color: var(--text); margin-bottom: 3px;
+    line-height: 1.3;
+  }
+  .topic-desc { font-size: 0.76rem; color: var(--text3); line-height: 1.4; }
+
+  .exam-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 0.68rem; font-weight: 700;
+    color: var(--red); background: rgba(248,113,113,0.1);
+    border: 1px solid rgba(248,113,113,0.25);
+    padding: 3px 9px; border-radius: 4px;
+    margin-top: 12px;
+  }
+
+  /* ── TUTOR VIEW ── */
+  .tutor-wrap {
+    max-width: 920px; margin: 0 auto;
+    padding: 32px 32px 24px;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 24px;
+    min-height: calc(100vh - 60px);
+    align-items: start;
+  }
+
+  /* Left: topic info + chat */
+  .tutor-main {}
+
+  .tutor-header {
+    margin-bottom: 20px;
+  }
+  .tutor-subject-tag {
+    font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--text3); margin-bottom: 8px;
+  }
+  .tutor-topic-title {
+    font-family: var(--heading);
+    font-size: 1.5rem; font-weight: 800;
+    letter-spacing: -0.02em; line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .tutor-topic-sub { font-size: 0.82rem; color: var(--text2); }
+
+  /* Stage progress */
+  .stage-bar {
+    display: flex; gap: 6px;
+    margin: 16px 0;
+  }
+  .stage-pip {
+    flex: 1; height: 4px; border-radius: 2px;
+    background: var(--bg3);
+    transition: background 0.4s;
+  }
+  .stage-pip.done { background: var(--nova); }
+  .stage-pip.active { background: var(--nova); opacity: 0.5; }
+
+  .stage-label {
+    font-size: 0.72rem; color: var(--text3);
+    margin-bottom: 16px;
+  }
+  .stage-label span { color: var(--nova); font-weight: 600; }
+
+  /* Chat area */
+  .chat-area {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    min-height: 420px; max-height: calc(100vh - 280px);
+  }
+  .chat-messages {
+    flex: 1; overflow-y: auto;
+    padding: 20px; display: flex; flex-direction: column; gap: 14px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(167,139,250,0.2) transparent;
+  }
+  .chat-messages::-webkit-scrollbar { width: 4px; }
+  .chat-messages::-webkit-scrollbar-thumb { background: rgba(167,139,250,0.2); border-radius: 2px; }
+
+  .msg { display: flex; flex-direction: column; gap: 3px; max-width: 88%; }
+  .msg.user { align-self: flex-end; }
+  .msg.nova { align-self: flex-start; }
+
+  .msg-label {
+    font-size: 0.65rem; font-weight: 700;
+    color: var(--text3); padding: 0 4px;
+  }
+  .msg.user .msg-label { text-align: right; }
+
+  .msg-bubble {
+    padding: 11px 15px;
+    border-radius: 14px;
+    font-size: 0.85rem; line-height: 1.65;
+  }
+  .msg.user .msg-bubble {
+    background: var(--nova2);
+    color: #fff;
+    border-radius: 14px 14px 4px 14px;
+  }
+  .msg.nova .msg-bubble {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 4px 14px 14px 14px;
+  }
+
+  .typing-indicator {
+    display: flex; align-items: center; gap: 5px;
+    padding: 11px 15px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 4px 14px 14px 14px;
+    align-self: flex-start; width: fit-content;
+  }
+  .typing-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--nova); opacity: 0.6;
+    animation: tdot 1.4s ease-in-out infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes tdot { 0%,80%,100%{transform:scale(0.7);opacity:0.4;} 40%{transform:scale(1);opacity:1;} }
+
+  /* Score pills */
+  .score-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.72rem; font-weight: 700;
+    padding: 4px 10px; border-radius: 999px;
+    margin-top: 8px; align-self: flex-start;
+  }
+  .score-pill.correct { background: rgba(74,222,128,0.1); color: var(--green); border: 1px solid rgba(74,222,128,0.25); }
+  .score-pill.partial { background: rgba(251,191,36,0.1); color: var(--light); border: 1px solid rgba(251,191,36,0.25); }
+  .score-pill.wrong { background: rgba(248,113,113,0.1); color: var(--red); border: 1px solid rgba(248,113,113,0.25); }
+
+  /* Input */
+  .chat-input-area {
+    border-top: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex; gap: 8px; align-items: flex-end;
+    background: rgba(0,0,0,0.2);
+  }
+  .chat-input {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: var(--text);
+    font-size: 0.86rem;
+    font-family: var(--font);
+    resize: none; outline: none;
+    max-height: 120px;
+    line-height: 1.5;
+    transition: border-color 0.2s;
+  }
+  .chat-input:focus { border-color: rgba(167,139,250,0.45); }
+  .chat-input::placeholder { color: var(--text3); }
+  .send-btn {
+    width: 38px; height: 38px;
+    border-radius: 10px; flex-shrink: 0;
+    background: var(--nova2);
+    color: #fff; border: none; cursor: pointer;
+    font-size: 1rem; transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .send-btn:hover { transform: scale(1.08); background: var(--nova); }
+  .send-btn:disabled { opacity: 0.4; cursor: default; transform: none; }
+
+  /* Right: Nova panel */
+  .nova-panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    position: sticky; top: 80px;
+  }
+  .nova-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 16px;
+  }
+  .nova-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--nova), var(--nova2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; font-weight: 800;
+    color: #fff; font-family: var(--heading);
+    flex-shrink: 0;
+  }
+  .nova-name {
+    font-family: var(--heading);
+    font-size: 0.95rem; font-weight: 800;
+    color: var(--text);
+  }
+  .nova-status {
+    font-size: 0.68rem; color: var(--green);
+    display: flex; align-items: center; gap: 4px;
+    margin-top: 2px;
+  }
+  .nova-status-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--green);
+  }
+
+  .nova-context {
+    font-size: 0.73rem; color: var(--text3);
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 8px; padding: 8px 12px;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+  .nova-context strong { color: var(--nova); }
+
+  .nova-key-facts h4 {
+    font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    color: var(--text3); margin-bottom: 10px;
+  }
+  .fact-item {
+    font-size: 0.76rem; color: var(--text2);
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    line-height: 1.4;
+  }
+  .fact-item:last-child { border-bottom: none; }
+  .fact-item .fact-icon { color: var(--nova); margin-right: 6px; }
+
+  /* Session score */
+  .session-score {
+    margin-top: 16px;
+    background: rgba(167,139,250,0.08);
+    border: 1px solid rgba(167,139,250,0.15);
+    border-radius: 10px; padding: 12px 14px;
+  }
+  .session-score .score-title {
+    font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    color: var(--nova); margin-bottom: 8px;
+  }
+  .score-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
+  .score-row .slabel { font-size: 0.75rem; color: var(--text2); }
+  .score-row .sval { font-size: 0.75rem; font-weight: 700; color: var(--text); }
+
+  /* Results screen */
+  .results-wrap {
+    max-width: 600px; margin: 60px auto;
+    padding: 0 32px; text-align: center;
+  }
+  .results-wrap .trophy { font-size: 4rem; margin-bottom: 16px; }
+  .results-wrap h2 {
+    font-family: var(--heading);
+    font-size: 1.8rem; font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .results-wrap p { color: var(--text2); margin-bottom: 32px; }
+  .results-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    margin-bottom: 32px;
+  }
+  .res-stat {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px;
+  }
+  .res-stat .rs-val {
+    font-family: var(--heading);
+    font-size: 1.8rem; font-weight: 800; color: var(--nova);
+  }
+  .res-stat .rs-lbl { font-size: 0.75rem; color: var(--text3); margin-top: 4px; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 10px 20px; border-radius: 10px;
+    font-size: 0.85rem; font-weight: 600;
+    font-family: var(--font); cursor: pointer;
+    border: none; transition: all 0.2s;
+  }
+  .btn-primary { background: var(--nova2); color: #fff; }
+  .btn-primary:hover { background: var(--nova); }
+  .btn-secondary {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text2);
+  }
+  .btn-secondary:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+  .btn-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+  /* Responsive */
+  @media(max-width: 768px) {
+    .tutor-wrap { grid-template-columns: 1fr; }
+    .nova-panel { display: none; }
+    .year-grid { grid-template-columns: repeat(3, 1fr); }
+    .topic-grid { grid-template-columns: 1fr; }
+    .nav { padding: 0 16px; }
+    .hub, .home-hero { padding-left: 16px; padding-right: 16px; }
+    .tutor-wrap { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">T3 <span>GCSE</span></div>
+  <div class="nav-links">
+    <button class="nav-link" onclick="showView('home')">Home</button>
+    <button class="nav-back" onclick="window.location.href='/'">← Back to 11+</button>
+  </div>
+</nav>
+
+<!-- HOME VIEW -->
+<div class="view active" id="view-home">
+  <div class="home-hero">
+    <div class="hero-eyebrow">🎓 GCSE Revision Platform</div>
+    <h1 class="hero-title">
+      Revise smarter.<br>
+      <span class="accent-elec">Physics.</span>
+      <span class="accent-light"> Chemistry.</span>
+      Biology.
+    </h1>
+    <p class="hero-sub">AI-powered topic tutors built from your actual school syllabus. Ask anything. Get challenged. Understand it.</p>
+
+    <div class="year-grid">
+      <div class="year-card" onclick="showView('y7')">
+        <div class="year-num">7</div>
+        <div class="year-label">Year 7</div>
+        <div class="year-badge badge-soon">Coming Soon</div>
+      </div>
+      <div class="year-card active-year" onclick="showView('y8')">
+        <div class="year-num">8</div>
+        <div class="year-label">Year 8</div>
+        <div class="year-badge badge-live">Live Now</div>
+      </div>
+      <div class="year-card" onclick="showView('y9')">
+        <div class="year-num">9</div>
+        <div class="year-label">Year 9</div>
+        <div class="year-badge badge-soon">Coming Soon</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- YEAR 7 / 9 placeholder -->
+<div class="view" id="view-y7">
+  <div class="hub">
+    <div class="hub-header">
+      <h2>Year 7</h2>
+      <p style="color:var(--text2);margin-top:8px">Coming soon. <button class="btn btn-secondary" style="margin-top:12px;padding:8px 16px;font-size:0.8rem;" onclick="showView('home')">← Go back</button></p>
+    </div>
+  </div>
+</div>
+<div class="view" id="view-y9">
+  <div class="hub">
+    <div class="hub-header">
+      <h2>Year 9</h2>
+      <p style="color:var(--text2);margin-top:8px">Coming soon. <button class="btn btn-secondary" style="margin-top:12px;padding:8px 16px;font-size:0.8rem;" onclick="showView('home')">← Go back</button></p>
+    </div>
+  </div>
+</div>
+
+<!-- YEAR 8 HUB -->
+<div class="view" id="view-y8">
+  <div class="hub">
+    <div class="hub-header">
+      <h2>Year 8 Revision</h2>
+      <p>Camp Hill — Summer Exams · 18 May · Physics &amp; Biology</p>
+      <div class="exam-badge">⚡ 18 May exam — Physics up first</div>
+    </div>
+
+    <div class="subject-section">
+      <div class="subject-label">
+        <div class="subject-dot" style="background:var(--elec)"></div>
+        <h3>Physics — Electricity</h3>
+      </div>
+      <div class="topic-grid">
+        <div class="topic-card elec" onclick="startTutor('electricity', 'charge')">
+          <div class="topic-icon elec">⚛️</div>
+          <div class="topic-info">
+            <div class="topic-name">Electric Charge</div>
+            <div class="topic-desc">Atoms, protons, electrons, static electricity, Van de Graaff</div>
+          </div>
+        </div>
+        <div class="topic-card elec" onclick="startTutor('electricity', 'current')">
+          <div class="topic-icon elec">🔌</div>
+          <div class="topic-info">
+            <div class="topic-name">Current &amp; Circuits</div>
+            <div class="topic-desc">What current is, complete circuits, conductors and insulators</div>
+          </div>
+        </div>
+        <div class="topic-card elec" onclick="startTutor('electricity', 'voltage')">
+          <div class="topic-icon elec">🔋</div>
+          <div class="topic-info">
+            <div class="topic-name">Voltage &amp; EMF</div>
+            <div class="topic-desc">Potential difference, how a battery works, volts</div>
+          </div>
+        </div>
+        <div class="topic-card elec" onclick="startTutor('electricity', 'ohms')">
+          <div class="topic-icon elec">📐</div>
+          <div class="topic-info">
+            <div class="topic-name">Ohm's Law</div>
+            <div class="topic-desc">V = IR, calculations, resistors in series</div>
+          </div>
+        </div>
+        <div class="topic-card elec" onclick="startTutor('electricity', 'circuits')">
+          <div class="topic-icon elec">🔗</div>
+          <div class="topic-info">
+            <div class="topic-name">Series &amp; Parallel</div>
+            <div class="topic-desc">Rules for current/voltage, brightness, why houses use parallel</div>
+          </div>
+        </div>
+        <div class="topic-card elec" onclick="startTutor('electricity', 'nonohmic')">
+          <div class="topic-icon elec">💡</div>
+          <div class="topic-info">
+            <div class="topic-name">Non-Ohmic Conductors</div>
+            <div class="topic-desc">Filament lamp I-V graph, thermistors, resistance &amp; temperature</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subject-section">
+      <div class="subject-label">
+        <div class="subject-dot" style="background:var(--light)"></div>
+        <h3>Physics — Light</h3>
+      </div>
+      <div class="topic-grid">
+        <div class="topic-card light-t" onclick="startTutor('light', 'luminous')">
+          <div class="topic-icon light-t">👁️</div>
+          <div class="topic-info">
+            <div class="topic-name">Luminous &amp; Non-Luminous</div>
+            <div class="topic-desc">How we see, speed of light, luminous vs non-luminous objects</div>
+          </div>
+        </div>
+        <div class="topic-card light-t" onclick="startTutor('light', 'shadows')">
+          <div class="topic-icon light-t">🌑</div>
+          <div class="topic-info">
+            <div class="topic-name">Shadows &amp; Eclipses</div>
+            <div class="topic-desc">Umbra, penumbra, point vs extended source, solar/lunar eclipses</div>
+          </div>
+        </div>
+        <div class="topic-card light-t" onclick="startTutor('light', 'reflection')">
+          <div class="topic-icon light-t">🪞</div>
+          <div class="topic-info">
+            <div class="topic-name">Reflection</div>
+            <div class="topic-desc">Law of reflection, plane mirror images, periscopes, diffuse reflection</div>
+          </div>
+        </div>
+        <div class="topic-card light-t" onclick="startTutor('light', 'refraction')">
+          <div class="topic-icon light-t">🌊</div>
+          <div class="topic-info">
+            <div class="topic-name">Refraction</div>
+            <div class="topic-desc">Speed change, bending at boundaries, refractive index, real/apparent depth</div>
+          </div>
+        </div>
+        <div class="topic-card light-t" onclick="startTutor('light', 'tir')">
+          <div class="topic-icon light-t">💎</div>
+          <div class="topic-info">
+            <div class="topic-name">Total Internal Reflection</div>
+            <div class="topic-desc">Critical angle, when TIR occurs, optical fibres, prisms</div>
+          </div>
+        </div>
+        <div class="topic-card light-t" onclick="startTutor('light', 'colour')">
+          <div class="topic-icon light-t">🌈</div>
+          <div class="topic-info">
+            <div class="topic-name">Colour &amp; Spectrum</div>
+            <div class="topic-desc">Dispersion, white light, primary/secondary colours, colour filters</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subject-section">
+      <div class="subject-label">
+        <div class="subject-dot" style="background:var(--bio)"></div>
+        <h3>Biology</h3>
+      </div>
+      <div class="topic-grid">
+        <div class="topic-card" style="opacity:0.45;cursor:default;">
+          <div class="topic-icon" style="background:rgba(52,211,153,0.12);">🧬</div>
+          <div class="topic-info">
+            <div class="topic-name">Evolution &amp; Inheritance</div>
+            <div class="topic-desc badge-soon" style="display:inline-block;margin-top:4px;font-size:0.68rem;padding:2px 7px;border-radius:4px;background:rgba(255,255,255,0.05);color:var(--text3);">Coming soon</div>
+          </div>
+        </div>
+        <div class="topic-card" style="opacity:0.45;cursor:default;">
+          <div class="topic-icon" style="background:rgba(52,211,153,0.12);">🫀</div>
+          <div class="topic-info">
+            <div class="topic-name">Breathing &amp; Respiration</div>
+            <div class="topic-desc badge-soon" style="display:inline-block;margin-top:4px;font-size:0.68rem;padding:2px 7px;border-radius:4px;background:rgba(255,255,255,0.05);color:var(--text3);">Coming soon</div>
+          </div>
+        </div>
+        <div class="topic-card" style="opacity:0.45;cursor:default;">
+          <div class="topic-icon" style="background:rgba(52,211,153,0.12);">🍎</div>
+          <div class="topic-info">
+            <div class="topic-name">Food &amp; Digestion</div>
+            <div class="topic-desc badge-soon" style="display:inline-block;margin-top:4px;font-size:0.68rem;padding:2px 7px;border-radius:4px;background:rgba(255,255,255,0.05);color:var(--text3);">Coming soon</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TUTOR VIEW -->
+<div class="view" id="view-tutor">
+  <div class="tutor-wrap">
+    <div class="tutor-main">
+      <div class="tutor-header">
+        <div class="tutor-subject-tag" id="tutor-subject-tag">Physics — Electricity</div>
+        <div class="tutor-topic-title" id="tutor-topic-title">Electric Charge</div>
+        <div class="tutor-topic-sub" id="tutor-topic-sub">4 stages · Recall → Understanding → Application → Exam Technique</div>
+      </div>
+
+      <div class="stage-bar" id="stage-bar">
+        <div class="stage-pip active" id="pip-1"></div>
+        <div class="stage-pip" id="pip-2"></div>
+        <div class="stage-pip" id="pip-3"></div>
+        <div class="stage-pip" id="pip-4"></div>
+      </div>
+      <div class="stage-label" id="stage-label">Stage 1 of 4 — <span>Recall</span></div>
+
+      <div class="chat-area">
+        <div class="chat-messages" id="chat-messages"></div>
+        <div class="chat-input-area">
+          <textarea class="chat-input" id="chat-input" placeholder="Type your answer or ask a question…" rows="1"
+            onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg();}"></textarea>
+          <button class="send-btn" id="send-btn" onclick="sendMsg()">➤</button>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn btn-secondary" style="font-size:0.75rem;padding:7px 14px;" onclick="showView('y8')">← Topics</button>
+        <button class="btn btn-secondary" style="font-size:0.75rem;padding:7px 14px;" onclick="nextStage()">Next stage →</button>
+        <button class="btn btn-secondary" style="font-size:0.75rem;padding:7px 14px;" onclick="restartTopic()">↺ Restart</button>
+      </div>
+    </div>
+
+    <div class="nova-panel">
+      <div class="nova-header">
+        <div class="nova-avatar">N</div>
+        <div>
+          <div class="nova-name">Nova</div>
+          <div class="nova-status"><div class="nova-status-dot"></div> Active</div>
+        </div>
+      </div>
+      <div class="nova-context" id="nova-context">
+        Currently revising <strong id="nova-topic-name">Electric Charge</strong> — your Year 8 Camp Hill Physics exam is on <strong>18 May</strong>.
+      </div>
+      <div class="nova-key-facts" id="nova-key-facts">
+        <h4>Key Facts</h4>
+        <!-- Dynamically populated -->
+      </div>
+      <div class="session-score">
+        <div class="score-title">Session</div>
+        <div class="score-row"><span class="slabel">Stage</span><span class="sval" id="score-stage">1 / 4</span></div>
+        <div class="score-row"><span class="slabel">Questions</span><span class="sval" id="score-qs">0</span></div>
+        <div class="score-row"><span class="slabel">Score</span><span class="sval" id="score-pct">—</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESULTS VIEW -->
+<div class="view" id="view-results">
+  <div class="results-wrap">
+    <div class="trophy" id="results-trophy">🏆</div>
+    <h2 id="results-title">Topic Complete!</h2>
+    <p id="results-sub">Here's how you got on across all four stages.</p>
+    <div class="results-grid">
+      <div class="res-stat"><div class="rs-val" id="r-score">—</div><div class="rs-lbl">Score</div></div>
+      <div class="res-stat"><div class="rs-val" id="r-qs">—</div><div class="rs-lbl">Questions</div></div>
+      <div class="res-stat"><div class="rs-val" id="r-stage">4</div><div class="rs-lbl">Stages done</div></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="restartTopic()">↺ Try again</button>
+      <button class="btn btn-secondary" onclick="showView('y8')">← All topics</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── STATE ──
+let currentSubject = 'electricity';
+let currentTopic   = 'charge';
+let currentStage   = 1;
+let sessionQs      = 0;
+let sessionScore   = 0;
+let chatHistory    = [];
+let isLoading      = false;
+
+// ── TOPIC METADATA ──
+const TOPICS = {
+  electricity: {
+    charge: {
+      name: 'Electric Charge',
+      tag:  'Physics — Electricity',
+      facts: ['Atoms contain protons (+), neutrons (0) and electrons (−)', 'Like charges repel; opposite charges attract', 'Static charge = charge that is not moving', 'Van de Graaff removes electrons → dome becomes positive', 'A spark occurs when charge jumps through the air to equalise'],
+      stages: ['Recall: name the particles and their charges', 'Understanding: explain static and the Van de Graaff', 'Application: predict what happens in new charge scenarios', 'Exam technique: write answers using correct mark-scheme language']
+    },
+    current: {
+      name: 'Current & Circuits',
+      tag:  'Physics — Electricity',
+      facts: ['Current = flow of electric charge (electrons)', 'Measured in amps (A) — symbol I', 'A complete circuit is needed for current to flow', 'Conductors have free electrons; insulators do not', 'Metals are good conductors because electrons are free to move'],
+      stages: ['Recall: define current and what flows in a circuit', 'Understanding: explain why a complete circuit is needed', 'Application: predict current in different circuit setups', 'Exam technique: answer circuit questions to exam standard']
+    },
+    voltage: {
+      name: 'Voltage & EMF',
+      tag:  'Physics — Electricity',
+      facts: ['Voltage = potential difference, measured in volts (V)', 'The battery pushes charge around the circuit — like a pump', 'EMF (electro-motive force) = scientific name for battery voltage', 'Higher voltage → more energy given to each coulomb of charge', 'Voltmeter connected in parallel to measure pd across a component'],
+      stages: ['Recall: define voltage and its units', 'Understanding: explain voltage as energy per coulomb', 'Application: voltage calculations and circuit problems', 'Exam technique: explain voltage using the energy model']
+    },
+    ohms: {
+      name: "Ohm's Law",
+      tag:  'Physics — Electricity',
+      facts: ['V = I × R (Voltage = Current × Resistance)', 'Resistance measured in ohms (Ω); symbol R', 'Rearrange: I = V/R and R = V/I', 'Series resistors: R_total = R1 + R2', '1 kΩ = 1000 Ω; convert mA to A before using V = IR'],
+      stages: ["Recall: state Ohm's Law and rearrange it", 'Understanding: explain what resistance means physically', 'Application: V=IR calculations with series resistors', 'Exam technique: show working clearly to gain all marks']
+    },
+    circuits: {
+      name: 'Series & Parallel',
+      tag:  'Physics — Electricity',
+      facts: ['Series: same current everywhere; voltage splits by resistance', 'Parallel: same voltage across each branch; current splits', 'Adding bulbs in series → each gets dimmer (more resistance)', 'Adding bulbs in parallel → each stays same brightness', 'Houses wired in parallel so devices work independently'],
+      stages: ['Recall: state the rules for series and parallel circuits', 'Understanding: explain brightness and current changes', 'Application: calculate values in series/parallel circuits', 'Exam technique: explain parallel wiring in houses']
+    },
+    nonohmic: {
+      name: 'Non-Ohmic Conductors',
+      tag:  'Physics — Electricity',
+      facts: ['Filament lamp: resistance increases as temperature rises', 'Filament lamp I-V graph is a curve (not a straight line)', 'Ohmic conductor: straight-line I-V graph through origin', 'Thermistor: resistance decreases as temperature increases', 'Metal resistance increases with temperature (more vibration)'],
+      stages: ['Recall: describe ohmic vs non-ohmic conductors', 'Understanding: explain the filament lamp I-V curve', 'Application: interpret I-V graphs and calculate resistance', 'Exam technique: describe graphs precisely using correct terms']
+    }
+  },
+  light: {
+    luminous: {
+      name: 'Luminous & Non-Luminous',
+      tag:  'Physics — Light',
+      facts: ['Luminous objects emit their own light (Sun, LED, fire)', 'Non-luminous objects reflect light from another source', 'We see objects when reflected light enters our eye and hits the retina', 'Speed of light = 300,000 km/s', 'Non-luminous objects appear brighter if more light shines on them'],
+      stages: ['Recall: distinguish luminous from non-luminous objects', 'Understanding: explain how we see non-luminous objects', 'Application: classify objects and predict brightness', 'Exam technique: describe seeing objects using correct physics language']
+    },
+    shadows: {
+      name: 'Shadows & Eclipses',
+      tag:  'Physics — Light',
+      facts: ['Light travels in straight lines (shadows prove this)', 'Umbra = region of total shadow (no light from any part of source)', 'Penumbra = partial shadow (some light, not all, reaches it)', 'Point source → sharp shadow with umbra only', 'Extended source → umbra + penumbra; solar eclipse has both'],
+      stages: ['Recall: define umbra and penumbra', 'Understanding: explain why extended sources give penumbra', 'Application: predict shadow regions in new scenarios', 'Exam technique: draw and label shadow diagrams accurately']
+    },
+    reflection: {
+      name: 'Reflection',
+      tag:  'Physics — Light',
+      facts: ['Law of reflection: angle of incidence = angle of reflection', 'Angles measured from the normal (not the surface)', 'Plane mirror image: virtual, same size, upright, laterally inverted, same distance behind mirror', 'Diffuse reflection: irregular surface scatters light in all directions', 'Regular reflection: smooth surface obeys law of reflection'],
+      stages: ['Recall: state the law of reflection and 5 properties of a plane mirror image', 'Understanding: explain regular vs diffuse reflection', 'Application: ray diagrams and angle calculations', 'Exam technique: describe image properties using all 5 key terms']
+    },
+    refraction: {
+      name: 'Refraction',
+      tag:  'Physics — Light',
+      facts: ['Refraction = change of speed when light crosses a boundary', 'Air to glass: bends towards the normal (slows down)', 'Glass to air: bends away from the normal (speeds up)', 'Refractive index = real depth / apparent depth', 'A pool looks shallower than it is because of refraction'],
+      stages: ['Recall: define refraction and state which way light bends', 'Understanding: explain why refraction happens in terms of speed', 'Application: ray diagrams and refractive index calculations', 'Exam technique: describe refraction precisely with normal and angles']
+    },
+    tir: {
+      name: 'Total Internal Reflection',
+      tag:  'Physics — Light',
+      facts: ['TIR occurs when light travels from denser to less dense medium', 'Angle of incidence must exceed the critical angle (~42° for glass)', 'Below critical angle: refraction occurs (some light gets through)', 'Above critical angle: all light is reflected back (TIR)', 'Applications: optical fibres, diamond brilliance, prism periscopes'],
+      stages: ['Recall: state conditions for TIR', 'Understanding: explain critical angle and when TIR occurs', 'Application: predict whether TIR occurs in given scenarios', 'Exam technique: answer TIR questions with correct terminology']
+    },
+    colour: {
+      name: 'Colour & Spectrum',
+      tag:  'Physics — Light',
+      facts: ['White light is a mixture of all colours of the spectrum', 'Prism disperses white light: violet refracted most, red least', 'Primary colours of light: red, green, blue', 'Secondary colours: yellow (R+G), cyan (B+G), magenta (R+B)', 'A filter transmits its own colour and absorbs others'],
+      stages: ['Recall: state primary colours and what a filter does', 'Understanding: explain dispersion and how we see colours', 'Application: predict colours seen through filters and in different light', 'Exam technique: explain colour mixing and filtering correctly']
+    }
+  }
+};
+
+// ── NOVA SYSTEM PROMPT ──
+function buildSystemPrompt() {
+  const topic = TOPICS[currentSubject]?.[currentTopic];
+  const stageName = topic?.stages?.[currentStage - 1] || '';
+  const keyFacts = topic?.facts?.join('\n') || '';
+
+  return `You are Nova — a sharp, direct, knowledgeable physics tutor embedded in T3 Academy. You are tutoring Abdullah, a Year 8 student at King Edward VI Camp Hill School for Boys in Birmingham, preparing for his physics exam on 18 May.
+
+YOUR PERSONALITY
+You are confident and direct. You don't over-explain. You speak like a knowledgeable older student who genuinely finds physics interesting — not a textbook, not a cheerleader. You call things out if they're wrong. You acknowledge when something is genuinely tricky. You don't pad responses with fluff. You're concise.
+
+CURRENT SESSION
+Subject: ${currentSubject === 'electricity' ? 'Electricity' : 'Light'}
+Topic: ${topic?.name}
+Stage ${currentStage} of 4: ${stageName}
+
+KEY FACTS FOR THIS TOPIC (from Abdullah's actual Camp Hill workbook):
+${keyFacts}
+
+TEACHING METHOD
+Stage 1 (Recall): Ask direct recall questions. One at a time. Check definitions, names, units, symbols. No calculation yet.
+Stage 2 (Understanding): Ask "explain why" and "describe how" questions. Push for mechanistic understanding.
+Stage 3 (Application): Give unfamiliar scenarios. Ask him to apply the concepts to new situations.
+Stage 4 (Exam technique): Focus on how to phrase answers for the mark scheme. Show how marks are awarded.
+
+RULES
+1. Ask ONE question at a time. Wait for his answer before moving on.
+2. Never just give the answer. If he's wrong, ask a guiding question. If he's clearly stuck after two attempts, then explain it briefly and directly.
+3. When he gets something right, acknowledge it specifically — not generically. Name what he got right.
+4. Keep responses short. 2-4 sentences max unless explaining something complex.
+5. Use analogies from everyday life when helpful — but only when they actually clarify, not just to seem relatable.
+6. At the end of each stage (after 3-4 questions), tell him clearly what stage is complete and what's next.
+7. When something is directly from the Camp Hill workbook, you can reference it — "Your workbook calls this..." — to make it feel relevant to his actual exam.
+
+START THE SESSION by welcoming him briefly (one sentence) and asking the first question for Stage ${currentStage}.`;
+}
+
+// ── VIEWS ──
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + id)?.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ── START TUTOR ──
+function startTutor(subject, topic) {
+  currentSubject = subject;
+  currentTopic   = topic;
+  currentStage   = 1;
+  sessionQs      = 0;
+  sessionScore   = 0;
+  chatHistory    = [];
+  isLoading      = false;
+
+  const t = TOPICS[subject]?.[topic];
+  if (!t) return;
+
+  document.getElementById('tutor-subject-tag').textContent = t.tag;
+  document.getElementById('tutor-topic-title').textContent = t.name;
+  document.getElementById('nova-topic-name').textContent = t.name;
+  document.getElementById('chat-messages').innerHTML = '';
+
+  updateStageUI();
+  populateKeyFacts();
+  updateScoreUI();
+  showView('tutor');
+
+  // Auto-start: Nova sends first message
+  setTimeout(() => sendToNova('__start__'), 400);
+}
+
+// ── STAGE UI ──
+function updateStageUI() {
+  const topic = TOPICS[currentSubject]?.[currentTopic];
+  const stageNames = ['Recall', 'Understanding', 'Application', 'Exam Technique'];
+  document.getElementById('stage-label').innerHTML =
+    `Stage ${currentStage} of 4 — <span>${stageNames[currentStage-1]}</span>`;
+
+  for (let i = 1; i <= 4; i++) {
+    const pip = document.getElementById('pip-' + i);
+    pip.className = 'stage-pip' + (i < currentStage ? ' done' : i === currentStage ? ' active' : '');
+  }
+
+  document.getElementById('score-stage').textContent = currentStage + ' / 4';
+}
+
+// ── KEY FACTS ──
+function populateKeyFacts() {
+  const t = TOPICS[currentSubject]?.[currentTopic];
+  const container = document.getElementById('nova-key-facts');
+  if (!t) return;
+  container.innerHTML = '<h4>Key Facts</h4>';
+  t.facts.forEach(fact => {
+    const div = document.createElement('div');
+    div.className = 'fact-item';
+    div.innerHTML = `<span class="fact-icon">→</span>${fact}`;
+    container.appendChild(div);
+  });
+}
+
+// ── SCORE UI ──
+function updateScoreUI() {
+  document.getElementById('score-qs').textContent = sessionQs;
+  document.getElementById('score-pct').textContent =
+    sessionQs > 0 ? Math.round(sessionScore / sessionQs * 100) + '%' : '—';
+}
+
+// ── ADD MESSAGE ──
+function addMsg(text, role) {
+  const msgs = document.getElementById('chat-messages');
+  const wrap = document.createElement('div');
+  wrap.className = 'msg ' + role;
+
+  const label = document.createElement('div');
+  label.className = 'msg-label';
+  label.textContent = role === 'user' ? 'You' : 'Nova';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+  bubble.textContent = text;
+
+  wrap.appendChild(label);
+  wrap.appendChild(bubble);
+  msgs.appendChild(wrap);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+// ── TYPING ──
+function showTyping() {
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.id = 'typing';
+  div.className = 'typing-indicator';
+  div.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+function removeTyping() {
+  document.getElementById('typing')?.remove();
+}
+
+// ── SEND USER MESSAGE ──
+function sendMsg() {
+  if (isLoading) return;
+  const input = document.getElementById('chat-input');
+  const msg = input.value.trim();
+  if (!msg) return;
+  input.value = '';
+  input.style.height = 'auto';
+  addMsg(msg, 'user');
+  sendToNova(msg);
+}
+
+// ── SEND TO NOVA (API) ──
+async function sendToNova(userMsg) {
+  if (isLoading) return;
+  isLoading = true;
+  document.getElementById('send-btn').disabled = true;
+
+  const systemPrompt = buildSystemPrompt();
+
+  // Build messages array
+  let messages = [...chatHistory];
+  if (userMsg !== '__start__') {
+    messages.push({ role: 'user', content: userMsg });
+    chatHistory.push({ role: 'user', content: userMsg });
+    sessionQs++;
+    updateScoreUI();
+  }
+
+  // If starting, no user message — just let Nova open
+  if (userMsg === '__start__') {
+    messages = [];
+  }
+
+  showTyping();
+
+  try {
+    const res = await fetch('/api/ollie', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 600,
+        system: systemPrompt,
+        messages: userMsg === '__start__'
+          ? [{ role: 'user', content: 'Please start the session.' }]
+          : messages
+      })
+    });
+
+    removeTyping();
+
+    if (!res.ok) {
+      const status = res.status;
+      const errMsg = status === 401
+        ? 'Connection issue — API key needs checking.'
+        : status === 429
+        ? 'Too many requests right now — try again in a moment.'
+        : 'Something went wrong. Try again. (' + status + ')';
+      addMsg(errMsg, 'nova');
+      isLoading = false;
+      document.getElementById('send-btn').disabled = false;
+      return;
+    }
+
+    const data = await res.json();
+    const reply = data.content?.[0]?.text;
+    if (reply) {
+      addMsg(reply, 'nova');
+      chatHistory.push({ role: 'assistant', content: reply });
+      // Estimate score from reply
+      if (userMsg !== '__start__') {
+        const lower = reply.toLowerCase();
+        if (lower.includes('exactly right') || lower.includes('spot on') || lower.includes('correct') || lower.includes('nailed it')) {
+          sessionScore++;
+        } else if (lower.includes('partially') || lower.includes('almost') || lower.includes('close')) {
+          sessionScore += 0.5;
+        }
+        updateScoreUI();
+      }
+    } else {
+      addMsg('Lost the signal there — try again.', 'nova');
+    }
+
+  } catch(e) {
+    removeTyping();
+    addMsg('Connection error. Check your internet and try again.', 'nova');
+  }
+
+  isLoading = false;
+  document.getElementById('send-btn').disabled = false;
+}
+
+// ── NEXT STAGE ──
+function nextStage() {
+  if (currentStage >= 4) {
+    finishTopic();
+    return;
+  }
+  currentStage++;
+  updateStageUI();
+  addMsg(`— Stage ${currentStage - 1} complete. Moving to Stage ${currentStage}. —`, 'nova');
+  chatHistory = []; // Fresh context for each stage
+  setTimeout(() => sendToNova('__start__'), 500);
+}
+
+// ── FINISH ──
+function finishTopic() {
+  const pct = sessionQs > 0 ? Math.round(sessionScore / sessionQs * 100) : 0;
+  document.getElementById('results-title').textContent = TOPICS[currentSubject]?.[currentTopic]?.name + ' — Done!';
+  document.getElementById('results-sub').textContent = pct >= 80
+    ? 'Solid session. You know this topic well.'
+    : pct >= 50
+    ? 'Good progress. Review the key facts once more before the exam.'
+    : 'Keep practising. Go through the key facts panel and try again.';
+  document.getElementById('r-score').textContent = pct + '%';
+  document.getElementById('r-qs').textContent = sessionQs;
+  document.getElementById('results-trophy').textContent = pct >= 80 ? '🏆' : pct >= 50 ? '⚡' : '📖';
+  showView('results');
+}
+
+// ── RESTART ──
+function restartTopic() {
+  startTutor(currentSubject, currentTopic);
+}
+
+// ── AUTO-RESIZE TEXTAREA ──
+document.getElementById('chat-input')?.addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = this.scrollHeight + 'px';
+});
+</script>
+</body>
+</html>
