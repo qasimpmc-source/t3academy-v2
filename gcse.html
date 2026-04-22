@@ -632,17 +632,17 @@ body {
         <div class="subject-rule"></div>
       </div>
       <div class="topic-grid">
-        <div class="topic-card locked bio-card">
+        <div class="topic-card bio-card" onclick="startTutor('biology','evolution')">
           <div class="tc-icon">🧬</div>
-          <div class="topic-info"><div class="tn">Evolution &amp; Inheritance</div><div class="td" style="color:var(--text4);">Coming soon</div></div>
+          <div class="topic-info"><div class="tn">Evolution &amp; Variation</div><div class="td">Natural selection, mutations, fossils, selective breeding</div></div>
         </div>
-        <div class="topic-card locked bio-card">
-          <div class="tc-icon">🫁</div>
-          <div class="topic-info"><div class="tn">Breathing &amp; Respiration</div><div class="td" style="color:var(--text4);">Coming soon</div></div>
-        </div>
-        <div class="topic-card locked bio-card">
+        <div class="topic-card bio-card" onclick="startTutor('biology','digestion')">
           <div class="tc-icon">🍎</div>
-          <div class="topic-info"><div class="tn">Food &amp; Digestion</div><div class="td" style="color:var(--text4);">Coming soon</div></div>
+          <div class="topic-info"><div class="tn">Food &amp; Digestion</div><div class="td">Digestive system, enzymes, nutrients, villi, food tests</div></div>
+        </div>
+        <div class="topic-card bio-card" onclick="startTutor('biology','breathing')">
+          <div class="tc-icon">🫁</div>
+          <div class="topic-info"><div class="tn">Breathing &amp; Respiration</div><div class="td">Breathing mechanics, gas exchange, aerobic and anaerobic</div></div>
         </div>
       </div>
     </div>
@@ -1198,7 +1198,294 @@ const TOPICS = {
       ],
       stages: ['Recall: list primary colours, state ROYGBIV order, explain what a filter does', 'Understanding: explain dispersion and why violet refracts more than red', 'Application: predict what colour is seen through filters and under different light sources', 'Exam technique: explain colour using transmit, absorb, and reflect — examiners want all three terms']
     }
-  }
+  },
+    biology: {
+      evolution: {
+        name: 'Evolution & Variation', tag: 'Biology — Genetics & Evolution',
+        knowledge: [
+          {
+            title: 'What variation is and what causes it',
+            body: 'Variation means the differences in characteristics between individuals of the same species. It has three causes: genetic (the genes you inherited such as eye colour), environmental (how you developed such as language and accent), and a combination of both genes and environment (height depends on genetics AND diet). Most interesting characteristics are influenced by both.',
+            example: 'Identical twins have identical genes but can end up different heights if one had a poor diet as a child. Genes set the potential; environment determines how much of that potential is reached.',
+            svg: `<svg viewBox="0 0 220 90" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+              <rect x="5" y="10" width="60" height="30" rx="4" fill="#FAEEDA" stroke="#BA7517" stroke-width="1"/>
+              <text x="35" y="23" text-anchor="middle" font-size="8" font-weight="bold" fill="#854F0B" font-family="Inter,sans-serif">Genetic</text>
+              <text x="35" y="33" text-anchor="middle" font-size="7" fill="#A08050" font-family="Inter,sans-serif">eye colour, blood type</text>
+              <rect x="80" y="10" width="60" height="30" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+              <text x="110" y="23" text-anchor="middle" font-size="8" font-weight="bold" fill="#185FA5" font-family="Inter,sans-serif">Environmental</text>
+              <text x="110" y="33" text-anchor="middle" font-size="7" fill="#185FA5" font-family="Inter,sans-serif">language, scars, tan</text>
+              <rect x="155" y="10" width="60" height="30" rx="4" fill="#EAF2E1" stroke="#3B6D11" stroke-width="1"/>
+              <text x="185" y="23" text-anchor="middle" font-size="8" font-weight="bold" fill="#3B6D11" font-family="Inter,sans-serif">Both</text>
+              <text x="185" y="33" text-anchor="middle" font-size="7" fill="#3B6D11" font-family="Inter,sans-serif">height, weight, IQ</text>
+              <rect x="70" y="55" width="80" height="28" rx="4" fill="#FAEEDA" stroke="#BA7517" stroke-width="1.2"/>
+              <text x="110" y="67" text-anchor="middle" font-size="8" font-weight="bold" fill="#854F0B" font-family="Inter,sans-serif">VARIATION</text>
+              <text x="110" y="77" text-anchor="middle" font-size="7" fill="#A08050" font-family="Inter,sans-serif">differences between individuals</text>
+              <line x1="35" y1="40" x2="90" y2="55" stroke="#DDD5C8" stroke-width="1"/>
+              <line x1="110" y1="40" x2="110" y2="55" stroke="#DDD5C8" stroke-width="1"/>
+              <line x1="185" y1="40" x2="130" y2="55" stroke="#DDD5C8" stroke-width="1"/>
+            </svg>`
+          },
+          {
+            title: 'Mutations and natural selection',
+            body: 'A mutation is a random change in a DNA sequence. Most mutations have no effect. Occasionally one creates a new phenotype. If that new phenotype is better suited to the environment it gives a survival advantage. Natural selection: variation exists in a population, some variants survive and reproduce better, they pass on their advantageous alleles, over many generations the advantageous trait becomes more common. This is evolution.',
+            example: 'Black pocket mouse on black volcanic rock. Random mutation caused black fur. On black rock, black mice are invisible to owls. Grey mice get eaten. Black mice survive, reproduce, pass on black fur gene. Population becomes mostly black over generations.',
+            svg: `<svg viewBox="0 0 240 95" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+              <rect x="2" y="5" width="44" height="24" rx="3" fill="#FAEEDA" stroke="#BA7517" stroke-width="1"/>
+              <text x="24" y="15" text-anchor="middle" font-size="6.5" fill="#854F0B" font-family="Inter,sans-serif">Variation</text>
+              <text x="24" y="24" text-anchor="middle" font-size="6" fill="#A08050" font-family="Inter,sans-serif">in population</text>
+              <line x1="46" y1="17" x2="56" y2="17" stroke="#BA7517" stroke-width="1"/>
+              <rect x="56" y="5" width="44" height="24" rx="3" fill="#FAEEDA" stroke="#BA7517" stroke-width="1"/>
+              <text x="78" y="15" text-anchor="middle" font-size="6.5" fill="#854F0B" font-family="Inter,sans-serif">Selection</text>
+              <text x="78" y="24" text-anchor="middle" font-size="6" fill="#A08050" font-family="Inter,sans-serif">pressure</text>
+              <line x1="100" y1="17" x2="110" y2="17" stroke="#BA7517" stroke-width="1"/>
+              <rect x="110" y="5" width="44" height="24" rx="3" fill="#FAEEDA" stroke="#BA7517" stroke-width="1"/>
+              <text x="132" y="15" text-anchor="middle" font-size="6.5" fill="#854F0B" font-family="Inter,sans-serif">Survival +</text>
+              <text x="132" y="24" text-anchor="middle" font-size="6" fill="#A08050" font-family="Inter,sans-serif">reproduction</text>
+              <line x1="154" y1="17" x2="164" y2="17" stroke="#BA7517" stroke-width="1"/>
+              <rect x="164" y="5" width="44" height="24" rx="3" fill="#EAF2E1" stroke="#3B6D11" stroke-width="1"/>
+              <text x="186" y="15" text-anchor="middle" font-size="6.5" fill="#3B6D11" font-family="Inter,sans-serif">Inheritance</text>
+              <text x="186" y="24" text-anchor="middle" font-size="6" fill="#3B6D11" font-family="Inter,sans-serif">of trait</text>
+              <line x1="186" y1="29" x2="186" y2="42" stroke="#3B6D11" stroke-width="1"/>
+              <rect x="60" y="42" width="120" height="24" rx="3" fill="#EAF2E1" stroke="#3B6D11" stroke-width="1.2"/>
+              <text x="120" y="57" text-anchor="middle" font-size="7" font-weight="bold" fill="#3B6D11" font-family="Inter,sans-serif">Allele frequency changes over generations</text>
+              <line x1="120" y1="66" x2="120" y2="76" stroke="#3B6D11" stroke-width="1"/>
+              <rect x="80" y="76" width="80" height="16" rx="3" fill="#3B6D11"/>
+              <text x="120" y="87" text-anchor="middle" font-size="7.5" font-weight="bold" fill="#fff" font-family="Inter,sans-serif">EVOLUTION</text>
+            </svg>`
+          },
+          {
+            title: 'The fossil record',
+            body: 'Fossils form when: hard parts such as bones and shells do not decay and are replaced by minerals over millions of years, or organisms are trapped in amber, ice, or peat. Older rock layers contain simpler organisms. Younger layers show progressively more complex organisms. This progression is direct evidence that life has changed over time. The fossil record is incomplete because soft tissue rarely fossilises and many fossils have not yet been found.',
+            example: 'Trilobites appear only in the oldest rock layers. Fish appear in later layers. Amphibians after that. Always the same sequence globally — this consistency rules out coincidence.',
+            svg: `<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+              <rect x="10" y="75" width="180" height="18" rx="2" fill="#DDD5C8"/>
+              <text x="100" y="87" text-anchor="middle" font-size="7" fill="#3A3020" font-family="Inter,sans-serif">Oldest layer — simplest organisms</text>
+              <rect x="10" y="54" width="180" height="18" rx="2" fill="#E8E1D6"/>
+              <text x="100" y="66" text-anchor="middle" font-size="7" fill="#3A3020" font-family="Inter,sans-serif">Middle layer — more complex organisms</text>
+              <rect x="10" y="33" width="180" height="18" rx="2" fill="#F0EBE1"/>
+              <text x="100" y="45" text-anchor="middle" font-size="7" fill="#3A3020" font-family="Inter,sans-serif">Upper layer — complex organisms</text>
+              <rect x="10" y="12" width="180" height="18" rx="2" fill="#FFF8ED" stroke="#EDE8DF" stroke-width="1"/>
+              <text x="100" y="24" text-anchor="middle" font-size="7" fill="#3A3020" font-family="Inter,sans-serif">Surface — modern organisms (most recent)</text>
+              <line x1="6" y1="12" x2="6" y2="93" stroke="#DDD5C8" stroke-width="1"/>
+              <text x="4" y="54" text-anchor="middle" font-size="6" fill="#A08050" font-family="Inter,sans-serif" writing-mode="tb">Older ↓</text>
+            </svg>`
+          },
+          {
+            title: 'Selective breeding and genetic engineering',
+            body: 'Selective breeding: humans choose which individuals breed to get desired characteristics. Four steps: choose parents with desired trait, breed them, select offspring with desired trait, repeat over many generations. Genetic engineering: uses restriction enzymes to cut out a desired gene, inserts it into a vector (plasmid or virus), vector delivers gene into target organism. Benefits: producing human insulin in bacteria, disease-resistant crops. Risks: reduced genetic variation, spread of engineered genes to wildlife, ethical concerns.',
+            example: 'All dog breeds descended from wolves through thousands of years of selective breeding. Every chihuahua and every Great Dane is the same species Canis lupus familiaris — human selection shaped them all.'
+          }
+        ],
+        stages: ['Recall: define variation, mutation, natural selection, and fossil', 'Understanding: explain the complete natural selection sequence using the pocket mouse example', 'Application: apply natural selection logic to an unfamiliar organism and environment', 'Exam technique: write exam-quality natural selection answers in the correct sequence with all required steps']
+      },
+      digestion: {
+        name: 'Food & Digestion', tag: 'Biology — Food & Digestion',
+        knowledge: [
+          {
+            title: 'The digestive system — organs and functions',
+            body: 'The digestive system breaks large insoluble food molecules into small soluble ones for absorption. Mouth: mechanical breakdown, amylase in saliva begins starch digestion. Oesophagus: muscular tube, moves food by peristalsis. Stomach: churns food, produces hydrochloric acid and protease, very low pH around 2. Liver: produces bile. Gall bladder: stores bile, releases it into small intestine. Pancreas: produces amylase, protease, and lipase. Small intestine: digestion completes here, digested food absorbed into blood via villi. Large intestine: water absorbed, bacteria make vitamin K. Rectum: stores faeces until excreted.',
+            example: 'Think of the digestive system as an assembly line running in reverse — a disassembly line. Each station (organ) breaks food down further until the molecules are small enough to pass through the gut wall into the blood.',
+            svg: `<svg viewBox="0 0 180 265" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+              <text x="90" y="12" text-anchor="middle" font-size="8" font-weight="bold" fill="#3A3020" font-family="Inter,sans-serif">Digestive System</text>
+              <ellipse cx="90" cy="28" rx="20" ry="10" fill="#FAEEDA" stroke="#BA7517" stroke-width="1.2"/>
+              <text x="90" y="31" text-anchor="middle" font-size="7" fill="#854F0B" font-family="Inter,sans-serif">Mouth</text>
+              <rect x="84" y="38" width="12" height="20" rx="3" fill="#EDE8DF" stroke="#A08050" stroke-width="1"/>
+              <text x="130" y="50" font-size="6" fill="#A08050" font-family="Inter,sans-serif">Oesophagus</text>
+              <line x1="96" y1="49" x2="127" y2="49" stroke="#DDD5C8" stroke-width="0.8"/>
+              <path d="M82 58 Q68 64 66 80 Q64 96 78 100 Q92 104 100 92 Q108 80 100 62 Z" fill="#FAEEDA" stroke="#BA7517" stroke-width="1.2"/>
+              <text x="83" y="82" text-anchor="middle" font-size="6.5" fill="#854F0B" font-family="Inter,sans-serif">Stomach</text>
+              <rect x="50" y="74" width="14" height="14" rx="2" fill="#EAF2E1" stroke="#3B6D11" stroke-width="1"/>
+              <text x="25" y="83" font-size="6" fill="#3B6D11" font-family="Inter,sans-serif">Liver</text>
+              <line x1="50" y1="82" x2="38" y2="82" stroke="#DDD5C8" stroke-width="0.8"/>
+              <ellipse cx="58" cy="100" rx="6" ry="5" fill="#FAEEDA" stroke="#BA7517" stroke-width="1"/>
+              <text x="22" y="102" font-size="6" fill="#A08050" font-family="Inter,sans-serif">Gall bladder</text>
+              <line x1="52" y1="100" x2="40" y2="100" stroke="#DDD5C8" stroke-width="0.8"/>
+              <rect x="112" y="86" width="22" height="10" rx="2" fill="#EAF2E1" stroke="#3B6D11" stroke-width="1"/>
+              <text x="123" y="93" text-anchor="middle" font-size="5.5" fill="#3B6D11" font-family="Inter,sans-serif">Pancreas</text>
+              <path d="M80 100 Q55 112 50 130 Q45 148 55 162 Q72 180 90 176 Q128 174 132 152 Q136 132 118 114 Q106 102 100 100" fill="none" stroke="#185FA5" stroke-width="2"/>
+              <text x="92" y="138" text-anchor="middle" font-size="6.5" fill="#185FA5" font-family="Inter,sans-serif">Small</text>
+              <text x="92" y="147" text-anchor="middle" font-size="6.5" fill="#185FA5" font-family="Inter,sans-serif">intestine</text>
+              <path d="M55 162 Q40 172 44 190 Q48 208 62 213 Q90 218 118 212 Q132 207 136 190 Q140 172 132 162" fill="none" stroke="#A08050" stroke-width="2.5"/>
+              <text x="90" y="195" text-anchor="middle" font-size="6.5" fill="#A08050" font-family="Inter,sans-serif">Large intestine</text>
+              <rect x="84" y="220" width="12" height="18" rx="3" fill="#EDE8DF" stroke="#A08050" stroke-width="1"/>
+              <text x="118" y="231" font-size="6" fill="#A08050" font-family="Inter,sans-serif">Rectum</text>
+              <line x1="96" y1="230" x2="115" y2="230" stroke="#DDD5C8" stroke-width="0.8"/>
+            </svg>`
+          },
+          {
+            title: 'Enzymes — lock and key model',
+            body: 'Enzymes are biological catalysts — proteins that speed up chemical reactions. Each enzyme has an active site with a specific shape. The substrate fits the active site like a key fits a lock. Three key digestive enzymes: Carbohydrase (including amylase) breaks starch into sugars. Protease breaks proteins into amino acids. Lipase breaks lipids into glycerol and fatty acids. Enzymes have an optimum temperature (around 37C in humans) and optimum pH. Too hot causes denaturation — the active site shape is permanently destroyed.',
+            example: 'Amylase is in your saliva. Start chewing a piece of plain bread and keep chewing. After about 30 seconds it tastes sweet. Amylase has broken the starch down to glucose right in your mouth.',
+            svg: `<svg viewBox="0 0 220 90" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+              <text x="110" y="10" text-anchor="middle" font-size="7.5" font-weight="bold" fill="#3A3020" font-family="Inter,sans-serif">Lock and Key Model</text>
+              <rect x="15" y="22" width="40" height="28" rx="5" fill="#FAEEDA" stroke="#BA7517" stroke-width="1.5"/>
+              <path d="M35 33 Q47 28 55 33 Q47 38 35 33" fill="#FFF8ED" stroke="#BA7517" stroke-width="1"/>
+              <text x="35" y="62" text-anchor="middle" font-size="6.5" fill="#854F0B" font-family="Inter,sans-serif">Enzyme + active site</text>
+              <ellipse cx="90" cy="34" rx="14" ry="10" fill="#E6F1FB" stroke="#185FA5" stroke-width="1.5"/>
+              <text x="90" y="37" text-anchor="middle" font-size="6.5" fill="#185FA5" font-family="Inter,sans-serif">Substrate</text>
+              <text x="90" y="62" text-anchor="middle" font-size="6" fill="#A08050" font-family="Inter,sans-serif">e.g. starch molecule</text>
+              <text x="112" y="38" font-size="12" fill="#BA7517">→</text>
+              <rect x="122" y="22" width="40" height="28" rx="5" fill="#FAEEDA" stroke="#BA7517" stroke-width="1.5"/>
+              <ellipse cx="142" cy="36" rx="14" ry="10" fill="#E6F1FB" stroke="#185FA5" stroke-width="1" opacity="0.8"/>
+              <text x="142" y="62" text-anchor="middle" font-size="6.5" fill="#A08050" font-family="Inter,sans-serif">Complex formed</text>
+              <text x="168" y="38" font-size="12" fill="#3B6D11">→</text>
+              <rect x="180" y="24" width="14" height="9" rx="2" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+              <rect x="180" y="37" width="14" height="9" rx="2" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+              <text x="187" y="62" text-anchor="middle" font-size="6" fill="#3B6D11" font-family="Inter,sans-serif">Products</text>
+              <text x="187" y="70" text-anchor="middle" font-size="6" fill="#3B6D11" font-family="Inter,sans-serif">(e.g. sugars)</text>
+            </svg>`
+          },
+          {
+            title: 'Nutrients, food tests and deficiency diseases',
+            body: 'Six nutrient groups: Carbohydrates provide energy (starch breaks to glucose). Proteins for growth and repair (break to amino acids). Lipids for energy storage, insulation, cell membranes (break to glycerol and fatty acids). Vitamins and minerals for specific body functions. Dietary fibre aids gut movement. Water for all reactions. Food tests: starch with iodine gives blue-black. Sugars with heated Benedicts gives orange-red. Protein with Biuret gives purple. Lipids with ethanol gives cloudy white. Deficiency diseases: rickets (vitamin D), anaemia (iron), scurvy (vitamin C), night blindness (vitamin A).',
+            svg: `<svg viewBox="0 0 220 80" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+              <text x="110" y="10" text-anchor="middle" font-size="7.5" font-weight="bold" fill="#3A3020" font-family="Inter,sans-serif">Food Tests</text>
+              <rect x="5" y="18" width="48" height="35" rx="3" fill="#FAEEDA" stroke="#BA7517" stroke-width="1"/>
+              <text x="29" y="28" text-anchor="middle" font-size="7" font-weight="bold" fill="#854F0B" font-family="Inter,sans-serif">Starch</text>
+              <text x="29" y="38" text-anchor="middle" font-size="6.5" fill="#A08050" font-family="Inter,sans-serif">Iodine</text>
+              <text x="29" y="48" text-anchor="middle" font-size="6" fill="#3A3020" font-family="Inter,sans-serif">Blue-black ✓</text>
+              <rect x="58" y="18" width="48" height="35" rx="3" fill="#EAF2E1" stroke="#3B6D11" stroke-width="1"/>
+              <text x="82" y="28" text-anchor="middle" font-size="7" font-weight="bold" fill="#3B6D11" font-family="Inter,sans-serif">Sugars</text>
+              <text x="82" y="38" text-anchor="middle" font-size="6.5" fill="#3B6D11" font-family="Inter,sans-serif">Benedicts + heat</text>
+              <text x="82" y="48" text-anchor="middle" font-size="6" fill="#3A3020" font-family="Inter,sans-serif">Orange-red ✓</text>
+              <rect x="111" y="18" width="48" height="35" rx="3" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+              <text x="135" y="28" text-anchor="middle" font-size="7" font-weight="bold" fill="#185FA5" font-family="Inter,sans-serif">Protein</text>
+              <text x="135" y="38" text-anchor="middle" font-size="6.5" fill="#185FA5" font-family="Inter,sans-serif">Biuret</text>
+              <text x="135" y="48" text-anchor="middle" font-size="6" fill="#3A3020" font-family="Inter,sans-serif">Purple ✓</text>
+              <rect x="164" y="18" width="48" height="35" rx="3" fill="#F5F0E8" stroke="#A08050" stroke-width="1"/>
+              <text x="188" y="28" text-anchor="middle" font-size="7" font-weight="bold" fill="#5A4E3C" font-family="Inter,sans-serif">Lipids</text>
+              <text x="188" y="38" text-anchor="middle" font-size="6.5" fill="#A08050" font-family="Inter,sans-serif">Ethanol</text>
+              <text x="188" y="48" text-anchor="middle" font-size="6" fill="#3A3020" font-family="Inter,sans-serif">Cloudy ✓</text>
+              <text x="110" y="68" text-anchor="middle" font-size="6" fill="#A08050" font-family="Inter,sans-serif">Blue = negative for all tests</text>
+            </svg>`
+          },
+          {
+            title: 'Villi and absorption',
+            body: 'The small intestine is lined with millions of villi — finger-like projections that massively increase surface area for absorption. Each villus has a capillary network absorbing glucose and amino acids into the blood, and a lacteal absorbing glycerol and fatty acids into the lymph system. Three adaptations maximise absorption: enormous surface area from villi, walls only one cell thick giving a short diffusion distance, and a rich blood supply maintaining a steep concentration gradient. Peristalsis — rhythmic muscle contraction and relaxation — pushes food along the entire digestive tract.',
+            svg: `<svg viewBox="0 0 200 110" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+              <text x="100" y="10" text-anchor="middle" font-size="7.5" font-weight="bold" fill="#3A3020" font-family="Inter,sans-serif">Villi in the Small Intestine</text>
+              <rect x="10" y="85" width="180" height="18" rx="2" fill="#EDE8DF" stroke="#DDD5C8" stroke-width="1"/>
+              <text x="100" y="97" text-anchor="middle" font-size="6.5" fill="#A08050" font-family="Inter,sans-serif">Intestine wall (circular + longitudinal muscle)</text>
+              <path d="M32 85 Q36 50 40 22 Q44 50 48 85" fill="#FAEEDA" stroke="#BA7517" stroke-width="1.2"/>
+              <path d="M58 85 Q62 50 66 22 Q70 50 74 85" fill="#FAEEDA" stroke="#BA7517" stroke-width="1.2"/>
+              <path d="M84 85 Q88 50 92 22 Q96 50 100 85" fill="#FAEEDA" stroke="#BA7517" stroke-width="1.2"/>
+              <path d="M110 85 Q114 50 118 22 Q122 50 126 85" fill="#FAEEDA" stroke="#BA7517" stroke-width="1.2"/>
+              <path d="M136 85 Q140 50 144 22 Q148 50 152 85" fill="#FAEEDA" stroke="#BA7517" stroke-width="1.2"/>
+              <line x1="40" y1="54" x2="40" y2="72" stroke="#A32D2D" stroke-width="1.5"/>
+              <line x1="66" y1="54" x2="66" y2="72" stroke="#A32D2D" stroke-width="1.5"/>
+              <line x1="92" y1="54" x2="92" y2="72" stroke="#A32D2D" stroke-width="1.5"/>
+              <line x1="118" y1="54" x2="118" y2="72" stroke="#A32D2D" stroke-width="1.5"/>
+              <line x1="144" y1="54" x2="144" y2="72" stroke="#A32D2D" stroke-width="1.5"/>
+              <text x="166" y="60" font-size="6" fill="#A32D2D" font-family="Inter,sans-serif">blood</text>
+              <text x="166" y="67" font-size="6" fill="#A32D2D" font-family="Inter,sans-serif">capillary</text>
+              <text x="22" y="22" font-size="6" fill="#854F0B" font-family="Inter,sans-serif">villus</text>
+            </svg>`
+          }
+        ],
+        stages: ['Recall: name digestive organs and their functions, state what each enzyme breaks down and into what', 'Understanding: explain the lock-and-key model and how villi are adapted for absorption', 'Application: apply digestion knowledge to unfamiliar scenarios such as what happens when the pancreas fails', 'Exam technique: write full answers using substrate, product, active site, surface area, and concentration gradient language']
+      },
+      breathing: {
+        name: 'Breathing & Respiration', tag: 'Biology — Breathing & Respiration',
+        knowledge: [
+          {
+            title: 'The breathing system structure',
+            body: 'Path of air into the body: Nose or mouth (warms and filters air) → Trachea (windpipe reinforced with cartilage rings to prevent collapse) → Bronchi (two branches, one to each lung) → Bronchioles (smaller branches within each lung) → Alveoli (tiny air sacs where gas exchange occurs). The lungs sit inside the ribcage. The diaphragm is a dome-shaped muscle sheet below the lungs. The intercostal muscles run between the ribs.',
+            svg: `<svg viewBox="0 0 180 200" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+              <text x="90" y="12" text-anchor="middle" font-size="8" font-weight="bold" fill="#3A3020" font-family="Inter,sans-serif">Breathing System</text>
+              <ellipse cx="90" cy="28" rx="20" ry="10" fill="#FAEEDA" stroke="#BA7517" stroke-width="1"/>
+              <text x="90" y="31" text-anchor="middle" font-size="6.5" fill="#854F0B" font-family="Inter,sans-serif">Nose / Mouth</text>
+              <rect x="85" y="38" width="10" height="18" rx="2" fill="#EDE8DF" stroke="#A08050" stroke-width="1"/>
+              <text x="120" y="48" font-size="6" fill="#A08050" font-family="Inter,sans-serif">Trachea</text>
+              <line x1="95" y1="47" x2="117" y2="47" stroke="#DDD5C8" stroke-width="0.8"/>
+              <path d="M85 56 Q74 62 70 82" fill="none" stroke="#BA7517" stroke-width="1.5"/>
+              <path d="M95" y1="56 Q106 62 110 82" fill="none" stroke="#BA7517" stroke-width="1.5"/>
+              <line x1="85" y1="56" x2="74" y2="68" stroke="#BA7517" stroke-width="1.5"/>
+              <line x1="95" y1="56" x2="106" y2="68" stroke="#BA7517" stroke-width="1.5"/>
+              <text x="50" y="62" text-anchor="middle" font-size="6" fill="#854F0B" font-family="Inter,sans-serif">Bronchi</text>
+              <ellipse cx="70" cy="118" rx="25" ry="40" fill="#FAEEDA" stroke="#BA7517" stroke-width="1.2"/>
+              <ellipse cx="110" cy="118" rx="25" ry="40" fill="#FAEEDA" stroke="#BA7517" stroke-width="1.2"/>
+              <text x="70" y="116" text-anchor="middle" font-size="7" fill="#854F0B" font-family="Inter,sans-serif">Left</text>
+              <text x="70" y="125" text-anchor="middle" font-size="7" fill="#854F0B" font-family="Inter,sans-serif">Lung</text>
+              <text x="110" y="116" text-anchor="middle" font-size="7" fill="#854F0B" font-family="Inter,sans-serif">Right</text>
+              <text x="110" y="125" text-anchor="middle" font-size="7" fill="#854F0B" font-family="Inter,sans-serif">Lung</text>
+              <path d="M44 162 Q90 176 136 162" fill="none" stroke="#3B6D11" stroke-width="2.5"/>
+              <text x="90" y="185" text-anchor="middle" font-size="7" font-weight="bold" fill="#3B6D11" font-family="Inter,sans-serif">Diaphragm</text>
+              <text x="10" y="105" font-size="6" fill="#185FA5" font-family="Inter,sans-serif">Alveoli</text>
+              <text x="10" y="113" font-size="6" fill="#185FA5" font-family="Inter,sans-serif">inside lungs</text>
+            </svg>`
+          },
+          {
+            title: 'Inhalation and exhalation — the mechanics',
+            body: 'Inhalation: diaphragm contracts and flattens, ribcage moves up and out, chest volume increases, pressure inside lungs drops below atmospheric pressure, air rushes in down the pressure gradient. Exhalation: diaphragm relaxes and domes upward, ribcage moves down and in, chest volume decreases, pressure inside rises above atmospheric, air is pushed out. The key principle is that air always flows from high pressure to low pressure.',
+            example: 'Squeeze a plastic bottle and air comes out (volume down, pressure up). Release it and air rushes back in (volume up, pressure down). Your chest works exactly the same way. The diaphragm is what squeezes and releases.',
+            svg: `<svg viewBox="0 0 220 95" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+              <text x="55" y="10" text-anchor="middle" font-size="7.5" font-weight="bold" fill="#3B6D11" font-family="Inter,sans-serif">Inhalation</text>
+              <ellipse cx="55" cy="48" rx="30" ry="28" fill="#EAF2E1" stroke="#3B6D11" stroke-width="1.5"/>
+              <path d="M30 65 Q55 78 80 65" fill="none" stroke="#3B6D11" stroke-width="1.5"/>
+              <text x="55" y="44" text-anchor="middle" font-size="6.5" fill="#3B6D11" font-family="Inter,sans-serif">Diaphragm contracts</text>
+              <text x="55" y="53" text-anchor="middle" font-size="6.5" fill="#3B6D11" font-family="Inter,sans-serif">Volume increases</text>
+              <text x="55" y="80" text-anchor="middle" font-size="6.5" fill="#3B6D11" font-family="Inter,sans-serif">Pressure falls — air IN</text>
+              <text x="38" y="8" font-size="10" fill="#3B6D11" font-family="Inter,sans-serif">↑</text>
+              <text x="62" y="8" font-size="10" fill="#3B6D11" font-family="Inter,sans-serif">↑</text>
+              <text x="160" y="10" text-anchor="middle" font-size="7.5" font-weight="bold" fill="#A32D2D" font-family="Inter,sans-serif">Exhalation</text>
+              <ellipse cx="160" cy="52" rx="28" ry="24" fill="#FCEBEB" stroke="#A32D2D" stroke-width="1.5"/>
+              <path d="M140 66 Q160 58 180 66" fill="none" stroke="#A32D2D" stroke-width="1.5"/>
+              <text x="160" y="48" text-anchor="middle" font-size="6.5" fill="#A32D2D" font-family="Inter,sans-serif">Diaphragm relaxes</text>
+              <text x="160" y="57" text-anchor="middle" font-size="6.5" fill="#A32D2D" font-family="Inter,sans-serif">Volume decreases</text>
+              <text x="160" y="80" text-anchor="middle" font-size="6.5" fill="#A32D2D" font-family="Inter,sans-serif">Pressure rises — air OUT</text>
+              <text x="150" y="24" font-size="10" fill="#A32D2D" font-family="Inter,sans-serif">↓</text>
+              <text x="162" y="24" font-size="10" fill="#A32D2D" font-family="Inter,sans-serif">↓</text>
+            </svg>`
+          },
+          {
+            title: 'Gas exchange in the alveoli',
+            body: 'Alveoli are the site of gas exchange between air and blood. Oxygen diffuses from the alveolus (high O2 concentration) into the surrounding blood capillary (low O2 concentration). Carbon dioxide diffuses the other way. Four adaptations make this highly efficient: enormous surface area (300 million alveoli per lung gives the surface area of a tennis court), walls only one cell thick (very short diffusion distance), moist lining (gases dissolve and diffuse faster), rich capillary blood supply (blood carries O2 away and brings CO2, maintaining a steep concentration gradient at all times).',
+            example: 'A single alveolus is 0.2mm across. Stack 300 million of them and you get a surface area of about 70 square metres. That is why gas exchange can supply your whole body — the area is enormous despite fitting inside your chest.',
+            svg: `<svg viewBox="0 0 200 105" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+              <text x="100" y="10" text-anchor="middle" font-size="7.5" font-weight="bold" fill="#3A3020" font-family="Inter,sans-serif">Gas Exchange at the Alveolus</text>
+              <ellipse cx="100" cy="58" rx="42" ry="36" fill="#EAF2E1" stroke="#3B6D11" stroke-width="1.5"/>
+              <text x="100" y="54" text-anchor="middle" font-size="7" fill="#3B6D11" font-family="Inter,sans-serif">Alveolus</text>
+              <text x="100" y="64" text-anchor="middle" font-size="6" fill="#3B6D11" font-family="Inter,sans-serif">(air inside)</text>
+              <rect x="4" y="40" width="16" height="36" rx="3" fill="#FCEBEB" stroke="#A32D2D" stroke-width="1.2"/>
+              <text x="12" y="62" text-anchor="middle" font-size="5.5" fill="#A32D2D" font-family="Inter,sans-serif" transform="rotate(-90,12,62)">capillary</text>
+              <rect x="180" y="40" width="16" height="36" rx="3" fill="#FCEBEB" stroke="#A32D2D" stroke-width="1.2"/>
+              <text x="188" y="62" text-anchor="middle" font-size="5.5" fill="#A32D2D" font-family="Inter,sans-serif" transform="rotate(90,188,62)">capillary</text>
+              <line x1="58" y1="48" x2="22" y2="52" stroke="#185FA5" stroke-width="1.5"/>
+              <text x="40" y="44" text-anchor="middle" font-size="7" fill="#185FA5" font-family="Inter,sans-serif">O₂ →</text>
+              <line x1="22" y1="66" x2="58" y2="68" stroke="#A32D2D" stroke-width="1.5"/>
+              <text x="40" y="78" text-anchor="middle" font-size="7" fill="#A32D2D" font-family="Inter,sans-serif">← CO₂</text>
+              <text x="100" y="98" text-anchor="middle" font-size="6" fill="#A08050" font-family="Inter,sans-serif">1 cell thick wall · moist · rich blood supply → steep gradient</text>
+            </svg>`
+          },
+          {
+            title: 'Aerobic and anaerobic respiration',
+            body: 'Respiration is how cells release energy from glucose. It is not the same as breathing. Aerobic respiration uses oxygen and occurs in the mitochondria: glucose + oxygen → carbon dioxide + water + lots of energy. Anaerobic respiration occurs without oxygen during intense exercise when oxygen supply cannot keep up with demand: glucose → lactic acid + small amount of energy. Lactic acid builds up and causes muscle fatigue and the burning sensation. An oxygen debt builds — you continue breathing heavily after exercise to oxidise the lactic acid.',
+            example: 'Walk up stairs: aerobic respiration, comfortable. Sprint up stairs: anaerobic kicks in, legs burn. After you stop, you still breathe hard — that is repaying the oxygen debt, breaking down the lactic acid that built up.',
+            svg: `<svg viewBox="0 0 220 85" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+              <text x="55" y="10" text-anchor="middle" font-size="7" font-weight="bold" fill="#3B6D11" font-family="Inter,sans-serif">Aerobic Respiration</text>
+              <rect x="5" y="18" width="45" height="16" rx="3" fill="#EAF2E1" stroke="#3B6D11" stroke-width="1"/>
+              <text x="27" y="29" text-anchor="middle" font-size="7" fill="#3B6D11" font-family="Inter,sans-serif">Glucose + O₂</text>
+              <text x="55" y="34" font-size="10" fill="#3B6D11">→</text>
+              <rect x="62" y="18" width="48" height="16" rx="3" fill="#EAF2E1" stroke="#3B6D11" stroke-width="1"/>
+              <text x="86" y="29" text-anchor="middle" font-size="7" fill="#3B6D11" font-family="Inter,sans-serif">CO₂ + H₂O</text>
+              <text x="55" y="52" text-anchor="middle" font-size="6.5" fill="#3B6D11" font-family="Inter,sans-serif">Lots of energy released</text>
+              <text x="55" y="62" text-anchor="middle" font-size="6" fill="#A08050" font-family="Inter,sans-serif">In mitochondria · needs oxygen</text>
+              <text x="160" y="10" text-anchor="middle" font-size="7" font-weight="bold" fill="#A32D2D" font-family="Inter,sans-serif">Anaerobic Respiration</text>
+              <rect x="113" y="18" width="38" height="16" rx="3" fill="#FCEBEB" stroke="#A32D2D" stroke-width="1"/>
+              <text x="132" y="29" text-anchor="middle" font-size="7" fill="#A32D2D" font-family="Inter,sans-serif">Glucose</text>
+              <text x="155" y="34" font-size="10" fill="#A32D2D">→</text>
+              <rect x="162" y="18" width="50" height="16" rx="3" fill="#FCEBEB" stroke="#A32D2D" stroke-width="1"/>
+              <text x="187" y="29" text-anchor="middle" font-size="7" fill="#A32D2D" font-family="Inter,sans-serif">Lactic acid</text>
+              <text x="160" y="52" text-anchor="middle" font-size="6.5" fill="#A32D2D" font-family="Inter,sans-serif">Little energy released</text>
+              <text x="160" y="62" text-anchor="middle" font-size="6" fill="#A08050" font-family="Inter,sans-serif">No oxygen · causes fatigue · oxygen debt</text>
+              <text x="110" y="78" text-anchor="middle" font-size="6.5" fill="#A08050" font-family="Inter,sans-serif">Respiration is NOT the same as breathing</text>
+            </svg>`
+          }
+        ],
+        stages: ['Recall: name parts of the breathing system, state both respiration equations', 'Understanding: explain inhalation and exhalation using pressure and volume changes, and explain alveoli adaptations', 'Application: apply breathing and respiration knowledge to exercise scenarios and unfamiliar situations', 'Exam technique: use volume, pressure, diffusion, concentration gradient, and surface area correctly in extended answers']
+      }
+    }
+
 };
 
 // ══════════════════════════════════════════
