@@ -1176,9 +1176,19 @@ input, button, textarea, select { font-family: var(--sans); }
           <div class="results-title" id="results-title">Topic Complete!</div>
           <div class="results-subtitle" id="results-subtitle">Here is how you did.</div>
           <div class="results-stats">
-            <div class="result-stat"><div class="rs-val" id="results-score">—</div><div class="rs-lbl">Score</div></div>
-            <div class="result-stat"><div class="rs-val" id="results-correct">—</div><div class="rs-lbl">Correct</div></div>
-            <div class="result-stat"><div class="rs-val" id="results-time">—</div><div class="rs-lbl">Time</div></div>
+            <div class="result-stat">
+              <div style="position:relative;display:flex;align-items:center;justify-content:center;margin-bottom:6px;">
+                <svg width="64" height="64" style="transform:rotate(-90deg)">
+                  <circle cx="32" cy="32" r="27" fill="none" stroke="var(--border)" stroke-width="5"/>
+                  <circle id="score-ring-circle" cx="32" cy="32" r="27" fill="none" stroke="var(--amber)" stroke-width="5" stroke-dasharray="169.6" stroke-dashoffset="169.6" stroke-linecap="round"/>
+                </svg>
+                <div id="mock-score-ring" style="position:absolute;font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--text)">—</div>
+              </div>
+              <div class="rs-val" id="results-pct">—</div><div class="rs-lbl">Score</div>
+            </div>
+            <div class="result-stat"><div class="rs-val" id="res-correct">—</div><div class="rs-lbl">Correct</div></div>
+            <div class="result-stat"><div class="rs-val" id="res-total">—</div><div class="rs-lbl">Total</div></div>
+            <div class="result-stat"><div class="rs-val" id="res-time">—</div><div class="rs-lbl">Time</div></div>
           </div>
           <div class="results-actions">
             <button class="btn btn-secondary btn-sm" onclick="showView('subject')">Try another topic</button>
@@ -1283,10 +1293,13 @@ input, button, textarea, select { font-family: var(--sans); }
         <div class="results-card">
           <div class="results-trophy" id="mock-results-trophy">📋</div>
           <div class="results-title" id="mock-results-title">Mock Exam Complete</div>
+          <div id="mock-results-subtitle" class="results-subtitle" style="display:none;"></div>
           <div class="results-subtitle" id="mock-results-sub">Here is your result.</div>
           <div class="results-stats">
             <div class="result-stat"><div class="rs-val" id="mock-res-score">—</div><div class="rs-lbl">Score</div></div>
-            <div class="result-stat"><div class="rs-val" id="mock-res-pct">—</div><div class="rs-lbl">Percentage</div></div>
+            <div class="result-stat"><div class="rs-val" id="mock-results-pct" style="display:none;"></div><div class="rs-val" id="mock-res-pct">—</div><div class="rs-lbl">Percentage</div></div>
+            <div class="result-stat"><div class="rs-val" id="mock-res-correct">—</div><div class="rs-lbl">Correct</div></div>
+            <div class="result-stat"><div class="rs-val" id="mock-res-total">—</div><div class="rs-lbl">Total</div></div>
             <div class="result-stat"><div class="rs-val" id="mock-res-time">—</div><div class="rs-lbl">Time taken</div></div>
           </div>
           <div class="mock-breakdown" id="mock-breakdown"></div>
@@ -1302,6 +1315,7 @@ input, button, textarea, select { font-family: var(--sans); }
     <div class="view" id="view-progress">
       <h2 style="font-family:var(--serif);font-size:1.5rem;font-weight:600;margin-bottom:24px;letter-spacing:-0.01em;">My Progress</h2>
       <div id="progress-content"><div class="spinner"></div></div>
+      <div id="comparison-box" style="display:none;"></div>
     </div>
 
     <!-- PARENT REPORTS -->
@@ -1340,11 +1354,11 @@ input, button, textarea, select { font-family: var(--sans); }
     <button class="quick-prompt" onclick="useQuickPrompt('Can you give me a similar example?')">📘 Example</button>
   </div>
   <div class="ollie-input-row">
-    <textarea class="ollie-input" id="ollie-input" placeholder="Ask Ollie anything…" rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendOllieMsg();}"></textarea>
+    <textarea class="ollie-input" id="chat-input" placeholder="Ask Ollie anything…" rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendOllieMsg();}"></textarea>
     <button class="chat-send" onclick="sendOllieMsg()" title="Send">➤</button>
   </div>
 </div>
-<button class="ollie-fab" onclick="toggleOllie()" id="ollie-fab-btn">
+<button class="ollie-fab" onclick="toggleOllie()" id="ollie-panel">
   <span class="ollie-fab-icon">🦉</span>
   <span class="ollie-fab-label">Ask Ollie</span>
 </button>
