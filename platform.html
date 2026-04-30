@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 /* ═══════════════════════════════════════════════════════
@@ -116,90 +115,6 @@ input, button, textarea, select { font-family: var(--sans); }
 /* ── PAGE SYSTEM ── */
 .page { display: none; min-height: 100vh; }
 .page.active { display: block; }
-
-/* ── AUTH PAGE ── */
-#auth-page {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #FDF9F3 0%, #FEF6E8 50%, #F8F2E8 100%);
-  display: flex; align-items: center; justify-content: center;
-  padding: 24px;
-  position: relative; overflow: hidden;
-}
-#auth-page::before {
-  content: '🦉';
-  position: absolute; top: -40px; right: -20px;
-  font-size: 280px; opacity: 0.04;
-  pointer-events: none;
-  transform: rotate(-15deg);
-}
-.auth-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
-  padding: 44px 40px;
-  width: 100%; max-width: 420px;
-  box-shadow: var(--shadow-lg);
-  position: relative;
-  animation: auth-enter 0.5s ease;
-}
-@keyframes auth-enter {
-  from { opacity: 0; transform: translateY(20px) scale(0.98); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
-}
-.auth-logo {
-  text-align: center; margin-bottom: 32px;
-}
-.auth-owl {
-  width: 72px; height: 72px; border-radius: 20px;
-  background: linear-gradient(135deg, var(--amber-light), #FEF3C7);
-  border: 2px solid rgba(212,134,10,0.2);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 2.2rem; margin: 0 auto 14px;
-  box-shadow: 0 4px 16px rgba(212,134,10,0.15);
-}
-.auth-logo h1 {
-  font-family: var(--serif);
-  font-size: 1.6rem; font-weight: 600;
-  color: var(--text); letter-spacing: -0.02em;
-  margin-bottom: 4px;
-}
-.auth-logo h1 em { font-style: italic; color: var(--amber); }
-.auth-logo p {
-  font-size: 0.82rem; color: var(--text3);
-}
-.auth-tabs {
-  display: flex; gap: 4px;
-  background: var(--bg3);
-  padding: 4px; border-radius: var(--radius);
-  margin-bottom: 28px;
-}
-.auth-tab {
-  flex: 1; padding: 9px;
-  font-size: 0.83rem; font-weight: 600;
-  border: none; border-radius: 8px;
-  cursor: pointer; transition: all 0.2s;
-  background: transparent; color: var(--text3);
-}
-.auth-tab.active {
-  background: var(--card); color: var(--text);
-  box-shadow: var(--shadow);
-}
-.form-group { margin-bottom: 16px; }
-.form-label {
-  display: block; font-size: 0.78rem; font-weight: 600;
-  color: var(--text2); margin-bottom: 6px;
-  letter-spacing: 0.01em;
-}
-.form-input {
-  width: 100%; padding: 11px 14px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius); background: var(--bg);
-  font-size: 0.88rem; color: var(--text);
-  outline: none; transition: border-color 0.2s;
-}
-.form-input:focus { border-color: var(--amber); background: #fff; }
-.form-hint { font-size: 0.74rem; color: var(--text3); margin-top: 4px; }
-.hidden { display: none; }
 
 /* ── BUTTONS ── */
 .btn {
@@ -906,57 +821,8 @@ input, button, textarea, select { font-family: var(--sans); }
 <div id="loading-overlay"><div class="spinner"></div><p>Loading T3 Academy…</p></div>
 <div id="toast"></div>
 
-<!-- ═══════════════ AUTH ═══════════════ -->
-<div id="auth-page" class="page active">
-  <div class="auth-card">
-    <div class="auth-logo">
-      <div class="auth-owl">🦉</div>
-      <h1>T3 <em>Academy</em></h1>
-      <p>11+ GL Assessment Preparation</p>
-    </div>
-    <div class="auth-tabs">
-      <button class="auth-tab active" onclick="switchAuthTab('login')">Log in</button>
-      <button class="auth-tab" onclick="switchAuthTab('register')">Register</button>
-    </div>
-    <div id="login-form">
-      <div class="form-group">
-        <label class="form-label">Email address</label>
-        <input id="login-email" class="form-input" type="email" placeholder="your@email.com" autocomplete="email">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Password</label>
-        <input id="login-password" class="form-input" type="password" placeholder="Password" autocomplete="current-password">
-      </div>
-      <button class="btn btn-primary w-full" onclick="doLogin()">Log in →</button>
-    </div>
-    <div id="register-form" class="hidden">
-      <div class="form-group">
-        <label class="form-label">Full name</label>
-        <input id="reg-name" class="form-input" type="text" placeholder="e.g. Aisha Rahman" autocomplete="name">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Email address</label>
-        <input id="reg-email" class="form-input" type="email" placeholder="your@email.com" autocomplete="email">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Password</label>
-        <input id="reg-password" class="form-input" type="password" placeholder="At least 6 characters" autocomplete="new-password">
-      </div>
-      <div class="form-group">
-        <label class="form-label">I am a…</label>
-        <select id="reg-role" class="form-input">
-          <option value="student">Student</option>
-          <option value="parent">Parent</option>
-        </select>
-        <p class="form-hint">Parents can view progress reports and accuracy charts.</p>
-      </div>
-      <button class="btn btn-primary w-full" onclick="doRegister()">Create account →</button>
-    </div>
-  </div>
-</div>
-
 <!-- ═══════════════ APP ═══════════════ -->
-<div id="app-page" class="page">
+<div id="app-page" class="page active">
   <nav class="top-nav">
     <div class="nav-logo">
       <div class="nav-logo-icon">🦉</div>
@@ -969,8 +835,8 @@ input, button, textarea, select { font-family: var(--sans); }
       <button class="nav-link hidden" id="nav-parent" onclick="showView('parent')">Reports</button>
     </div>
     <div class="nav-right">
-      <div class="nav-avatar" id="nav-avatar">?</div>
-      <button class="btn btn-secondary btn-sm" onclick="doLogout()">Log out</button>
+      <div class="nav-avatar" id="nav-avatar">S</div>
+      <a href="/"><button class="btn btn-secondary btn-sm">← Home</button></a>
     </div>
   </nav>
 
@@ -1909,10 +1775,8 @@ const QB = {
 //  T3 ACADEMY — MAIN APP
 // ═══════════════════════════════════════════════════════════════
 
-const SUPABASE_URL  = "https://tsfiaqunaasthbmuxvdx.supabase.co";
-const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRzZmlhcXVuYWFzdGhibXV4dmR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4MTU1NTEsImV4cCI6MjA5MDM5MTU1MX0.vaMgcIS3u_ROflDlm3DuXlb-tb4vmOi4uPYJNaKsT2k";
-
-const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+// Guest mode — no login required. Progress saved in localStorage.
+const sb = null; // stub — not used
 
 // ── State ──
 let currentUser = null;
@@ -2039,429 +1903,23 @@ function switchAuthTab(tab) {
   document.getElementById("register-form").classList.toggle("hidden", tab!=="register");
 }
 
-async function doLogin() {
-  const email = document.getElementById("login-email").value.trim();
-  const pass  = document.getElementById("login-password").value;
-  if (!email||!pass) { toast("Please fill in email and password.","error"); return; }
-  setLoading(true);
-  const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
-  setLoading(false);
-  if (error) { toast(error.message,"error"); return; }
-  await onSignedIn(data.user);
-}
+async function doLogin() { await onSignedIn({ id:"guest", email:"guest", user_metadata:{full_name:"Student",role:"student"} }); }
 
-async function doRegister() {
-  const name  = document.getElementById("reg-name").value.trim();
-  const email = document.getElementById("reg-email").value.trim();
-  const pass  = document.getElementById("reg-password").value;
-  const role  = document.getElementById("reg-role").value;
-  if (!name||!email||!pass) { toast("Please fill in all fields.","error"); return; }
-  if (pass.length < 6) { toast("Password must be at least 6 characters.","error"); return; }
-  setLoading(true);
-  const { data, error } = await sb.auth.signUp({
-    email, password: pass,
-    options: { data: { full_name: name, role } }
-  });
-  setLoading(false);
-  if (error) { toast(error.message,"error"); return; }
-  if (data.user) await onSignedIn(data.user);
-  else toast("Check your email to confirm your account.","success");
-}
+async function doRegister() { await onSignedIn({ id:"guest", email:"guest", user_metadata:{full_name:"Student",role:"student"} }); }
 
-async function doLogout() {
-  await sb.auth.signOut();
-  currentUser = null; currentProfile = null;
-  progressCache = {}; attemptsCache = [];
-  clearInterval(timerInterval);
-  clearInterval(mockTimerInterval);
-  document.getElementById("ollie-panel").style.display = "none";
-  showPage("auth");
-}
+async function doLogout() { window.location.reload(); }
 
 async function onSignedIn(user) {
   currentUser = user;
-  let { data: prof } = await sb.from("profiles").select("*").eq("id", user.id).single();
-  if (!prof) {
-    await new Promise(r => setTimeout(r, 900));
-    const r2 = await sb.from("profiles").select("*").eq("id", user.id).single();
-    prof = r2.data;
-  }
-  if (!prof) {
-    const name = user.user_metadata?.full_name || user.email.split("@")[0];
-    const role = user.user_metadata?.role || "student";
-    await sb.from("profiles").upsert({ id: user.id, email: user.email, full_name: name, role });
-    await sb.from("streaks").upsert({ user_id: user.id });
-    const r3 = await sb.from("profiles").select("*").eq("id", user.id).single();
-    prof = r3.data;
-  }
-  currentProfile = prof || { id: user.id, email: user.email, full_name: user.email.split("@")[0], role: "student" };
-  setupAppUI();
-  await loadCache();
-  refreshDashboard();
+  currentProfile = { id: 'guest', full_name: 'Student', role: 'student' };
+  try {
+    const sp = localStorage.getItem('t3_progress');
+    if (sp) progressCache = JSON.parse(sp);
+    const sa = localStorage.getItem('t3_attempts');
+    if (sa) attemptsCache = JSON.parse(sa);
+  } catch(e) {}
   showPage("app");
-  showView("dashboard");
   document.getElementById("ollie-panel").style.display = "block";
-  startStreakCheck();
-}
-
-function setupAppUI() {
-  const initial = (currentProfile.full_name || currentProfile.email || "?")[0].toUpperCase();
-  document.getElementById("nav-avatar").textContent = initial;
-  if (currentProfile.role === "parent") {
-    document.getElementById("nav-parent").classList.remove("hidden");
-  }
-}
-
-async function startStreakCheck() {
-  if (!currentUser) return;
-  const today = new Date().toISOString().split("T")[0];
-  const { data: streak } = await sb.from("streaks").select("*").eq("user_id", currentUser.id).single();
-  if (!streak) return;
-  if (streak.last_active_date !== today) {
-    const yesterday = new Date(Date.now()-86400000).toISOString().split("T")[0];
-    const newStreak = streak.last_active_date === yesterday ? streak.current_streak+1 : 1;
-    await sb.from("streaks").update({
-      current_streak: newStreak,
-      longest_streak: Math.max(newStreak, streak.longest_streak),
-      last_active_date: today,
-      updated_at: new Date().toISOString()
-    }).eq("user_id", currentUser.id);
-  }
-}
-
-async function loadCache() {
-  if (!currentUser) return;
-  progressCache = {}; attemptsCache = [];
-  const [pr, ar] = await Promise.all([
-    sb.from("progress").select("*").eq("user_id", currentUser.id),
-    sb.from("attempts").select("*").eq("user_id", currentUser.id).order("created_at", {ascending:false})
-  ]);
-  if (pr.data) pr.data.forEach(r => { progressCache[r.subject+"::"+r.topic] = r; });
-  if (ar.data) attemptsCache = ar.data;
-}
-
-// ── Dashboard ──
-function refreshDashboard() {
-  if (!currentProfile) return;
-  const name = (currentProfile.full_name || "").split(" ")[0] || "there";
-  const h = new Date().getHours();
-  const greeting = h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
-  document.getElementById("dash-greeting").textContent = greeting + ", " + name + "! 🦉";
-
-  const tips = [
-    "Pick up where you left off — consistency is everything.",
-    "Little and often is the best way to prepare for the 11+.",
-    "Try a topic you haven't done before today.",
-    "Stuck on something? Ask Ollie for a hint!",
-    "Check your weak areas below and focus there today."
-  ];
-  document.getElementById("dash-tip").textContent = tips[Math.floor(Math.random()*tips.length)];
-
-  // Stats from cache
-  let totalQ = 0, totalC = 0, trophyCount = 0;
-  attemptsCache.forEach(a => { totalQ += a.total; totalC += a.score; });
-  Object.values(progressCache).forEach(p => { if (p.completed && trophyForPct(Math.round(p.questions_correct/p.questions_attempted*100))) trophyCount++; });
-
-  animateCounter("stat-q", totalQ);
-  document.getElementById("stat-acc").textContent = totalQ > 0 ? Math.round(totalC/totalQ*100)+"%" : "—";
-  animateCounter("stat-trophies", trophyCount);
-
-  loadStreakBadge();
-  updateSubjectRings();
-  buildWeakPanel();
-}
-
-function animateCounter(id, target) {
-  const el = document.getElementById(id);
-  const start = parseInt(el.textContent) || 0;
-  const diff = target - start;
-  if (diff === 0) return;
-  const steps = 20;
-  let step = 0;
-  const interval = setInterval(() => {
-    step++;
-    el.textContent = Math.round(start + diff * (step/steps));
-    if (step >= steps) clearInterval(interval);
-  }, 20);
-}
-
-async function loadStreakBadge() {
-  if (!currentUser) return;
-  const { data: streak } = await sb.from("streaks").select("current_streak").eq("user_id", currentUser.id).single();
-  if (streak) document.getElementById("dash-streak-badge").textContent = "🔥 " + streak.current_streak + " day streak";
-}
-
-function updateSubjectRings() {
-  const circumference = 106.8;
-  ["english","maths","verbal","nvr"].forEach(subj => {
-    const bank = QB[subj];
-    const topics = Object.keys(bank);
-    const total = topics.length;
-    let done = 0, totalQ = 0, totalC = 0;
-    topics.forEach(t => {
-      const p = progressCache[subj+"::"+t];
-      if (p && p.completed) done++;
-      if (p) { totalQ += p.questions_attempted; totalC += p.questions_correct; }
-    });
-    const pct = done/total;
-    const offset = circumference - (pct * circumference);
-    const ring = document.getElementById("ring-"+subj);
-    if (ring) ring.style.strokeDashoffset = offset;
-    document.getElementById("done-"+subj).textContent = done+"/"+total;
-    document.getElementById("acc-"+subj).textContent = totalQ > 0 ? Math.round(totalC/totalQ*100)+"%" : "—";
-  });
-}
-
-function buildWeakPanel() {
-  const weak = [];
-  Object.entries(progressCache).forEach(([key, p]) => {
-    if (!p.completed || p.questions_attempted === 0) return;
-    const pct = Math.round(p.questions_correct/p.questions_attempted*100);
-    if (pct < 60) {
-      const [subj, topic] = key.split("::");
-      weak.push({ subj, topic, pct });
-    }
-  });
-  weak.sort((a,b) => a.pct - b.pct);
-  const wrap = document.getElementById("weak-panel-wrap");
-  if (weak.length === 0) { wrap.innerHTML = ""; return; }
-  let html = `<div class="weak-panel"><h3>⚠️ Areas needing attention</h3>`;
-  weak.slice(0,4).forEach(w => {
-    html += `<div class="weak-item">
-      <span class="weak-item-name">${w.topic} <span style="color:var(--text3);font-weight:400;font-size:0.75rem">(${SUBJ[w.subj].label})</span></span>
-      <span class="weak-item-pct">${w.pct}%</span>
-    </div>`;
-  });
-  html += "</div>";
-  wrap.innerHTML = html;
-}
-
-// ── Subject View ──
-function showSubject(subj) {
-  currentSubject = subj;
-  const conf = SUBJ[subj];
-  document.getElementById("subject-title").textContent = conf.icon + " " + conf.label;
-  const bank = QB[subj];
-  const topics = Object.keys(bank);
-  const grid = document.getElementById("topic-grid");
-  grid.innerHTML = "";
-  topics.forEach(topic => {
-    const qs = bank[topic];
-    const key = subj+"::"+topic;
-    const prog = progressCache[key];
-    const attNum = prog ? prog.attempt_number : 0;
-    const pct = (prog && prog.questions_attempted > 0) ? Math.round(prog.questions_correct/prog.questions_attempted*100) : 0;
-    const trophy = prog && prog.completed ? trophyForPct(pct) : "";
-    const acc = prog && prog.questions_attempted > 0 ? pct+"%" : "—";
-    const safeKey = topic.replace(/'/g,"\\'");
-
-    const subjColours = { english:"var(--subj-english)", maths:"var(--subj-maths)", verbal:"var(--subj-verbal)", nvr:"var(--subj-nvr)" };
-    const colour = subjColours[subj];
-
-    const card = document.createElement("div");
-    card.className = "topic-card";
-    card.innerHTML = `
-      <div class="topic-card-top">
-        <div class="topic-name">${topic}</div>
-        <div class="trophy-badge">${trophy}</div>
-      </div>
-      <div class="topic-meta">${qs.length} questions &bull; Accuracy: ${acc} &bull; ${attNum > 0 ? "Attempt "+attNum : "Not started"}</div>
-      <div class="topic-acc-bar"><div class="topic-acc-fill" style="width:${pct}%;background:${colour}"></div></div>
-      <div class="topic-actions">
-        <button class="btn btn-primary btn-sm" onclick="startQuiz('${subj}','${safeKey}')">${attNum > 0 ? "Practice again" : "Start"}</button>
-        ${attNum > 0 ? `<button class="btn btn-secondary btn-sm" onclick="resetTopic('${subj}','${safeKey}')">Reset</button>` : ""}
-        <button class="btn btn-ghost btn-sm" onclick="startQuiz('${subj}','${safeKey}',true)">🔀 Shuffle</button>
-      </div>`;
-    grid.appendChild(card);
-  });
-  showView("subject");
-}
-
-function startQuiz(subj, topic, reshuffle) {
-  currentSubject = subj;
-  currentTopic = topic;
-  const rawQs = QB[subj][topic] || [];
-  currentQs = shuffle(rawQs).map(q => shuffleQ(q));
-  currentQIdx = 0;
-  currentScore = 0;
-  shadowEntries = [];
-  wrongAnswers = [];
-  questionAnswered = false;
-  const key = subj+"::"+topic;
-  const prog = progressCache[key];
-  currentAttempt = prog ? prog.attempt_number+1 : 1;
-  timerSecs = 0;
-  clearInterval(timerInterval);
-  timerInterval = setInterval(() => {
-    timerSecs++;
-    document.getElementById("quiz-timer").textContent = "⏱ "+fmtTime(timerSecs);
-  }, 1000);
-  document.getElementById("quiz-topic-label").textContent = topic;
-  document.getElementById("quiz-sub-label").textContent = SUBJ[subj].label + " · Attempt " + currentAttempt;
-  showView("quiz");
-  renderQuestion();
-}
-
-function renderQuestion() {
-  const q = currentQs[currentQIdx];
-  const total = currentQs.length;
-  questionAnswered = false;
-  document.getElementById("q-number").textContent = "Question "+(currentQIdx+1)+" of "+total;
-  document.getElementById("q-text").textContent = q.q;
-  document.getElementById("quiz-progress-fill").style.width = (currentQIdx/total*100)+"%";
-  // NVR diagram: show svgQ if present
-  const diagramEl = document.getElementById("nvr-diagram");
-  if (q.svgQ) {
-    diagramEl.innerHTML = q.svgQ;
-    diagramEl.style.display = "block";
-    // Make SVG responsive
-    const svgEl = diagramEl.querySelector("svg");
-    if (svgEl) { svgEl.style.maxWidth = "100%"; svgEl.style.height = "auto"; svgEl.setAttribute("width","100%"); }
-  } else {
-    diagramEl.innerHTML = "";
-    diagramEl.style.display = "none";
-  }
-  const opts = document.getElementById("options-list");
-  opts.innerHTML = "";
-  const letters = ["A","B","C","D","E"];
-  const isSvgOpts = q.opts && q.opts.length && typeof q.opts[0] === "string" && q.opts[0].trim().startsWith("<svg");
-  q.opts.forEach((opt, i) => {
-    const btn = document.createElement("button");
-    btn.className = "option-btn";
-    if (isSvgOpts) {
-      btn.style.alignItems = "center";
-      btn.style.gap = "12px";
-      const svgWrap = document.createElement("span");
-      svgWrap.innerHTML = opt;
-      const svgEl = svgWrap.querySelector("svg");
-      if (svgEl) { svgEl.style.maxWidth = "80px"; svgEl.style.height = "80px"; svgEl.style.flex = "0 0 auto"; svgEl.setAttribute("color","currentColor"); }
-      btn.innerHTML = `<span class="option-letter">${letters[i]}</span>`;
-      btn.appendChild(svgWrap);
-    } else {
-      btn.innerHTML = `<span class="option-letter">${letters[i]}</span><span>${opt}</span>`;
-    }
-    btn.onclick = () => selectAnswer(i);
-    opts.appendChild(btn);
-  });
-  document.getElementById("hint-area").className = "hint-area";
-  document.getElementById("hint-area").textContent = "";
-  document.getElementById("explanation-box").className = "explanation-box";
-  document.getElementById("hint-btn").style.display = "inline-flex";
-  document.getElementById("next-btn").style.display = "none";
-  qStartTime = Date.now();
-  updateInlineOllieContext();
-}
-
-function selectAnswer(idx) {
-  if (questionAnswered) return;
-  questionAnswered = true;
-  const q = currentQs[currentQIdx];
-  const correct = idx === q.ans;
-  const timeTaken = Math.round((Date.now()-qStartTime)/1000);
-  if (correct) currentScore++;
-  const btns = document.querySelectorAll("#options-list .option-btn");
-  btns.forEach((btn, i) => {
-    btn.disabled = true;
-    if (i === q.ans) btn.classList.add("correct");
-    else if (i === idx && !correct) btn.classList.add("selected-wrong");
-  });
-  // Explanation
-  const expBox = document.getElementById("explanation-box");
-  expBox.className = "explanation-box show "+(correct ? "correct-exp" : "wrong-exp");
-  document.getElementById("exp-title").textContent = correct ? "✓ Correct!" : "✗ Not quite";
-  document.getElementById("exp-text").textContent = q.exp;
-  document.getElementById("tip-text").innerHTML = q.tip ? "<strong>💡 Tip:</strong> "+q.tip : "";
-  // Track wrong answers for review
-  if (!correct) {
-    wrongAnswers.push({ q: q.q, svgQ: q.svgQ || null, yourAns: q.opts[idx] || "—", correctAns: q.opts[q.ans], exp: q.exp });
-  }
-  shadowEntries.push({ user_id: currentUser.id, subject: currentSubject, topic: currentTopic, question_text: q.q.substring(0,200), was_correct: correct, attempt_number: currentAttempt, time_taken_seconds: timeTaken });
-  const isLast = currentQIdx >= currentQs.length-1;
-  document.getElementById("next-btn").style.display = "inline-flex";
-  document.getElementById("next-btn").textContent = isLast ? "See results →" : "Next →";
-  document.getElementById("hint-btn").style.display = "none";
-  // Live dashboard stats update
-  updateLiveDashStats(correct);
-}
-
-function updateLiveDashStats(correct) {
-  // Update the in-memory attemptsCache for live dashboard refresh
-  // This is a lightweight update without Supabase round-trip
-  const totalEl = document.getElementById("stat-q");
-  const accEl = document.getElementById("stat-acc");
-  if (totalEl) {
-    const curTotal = parseInt(totalEl.textContent) || 0;
-    totalEl.textContent = curTotal+1;
-  }
-  // Recalculate accuracy from cache + current session
-  let totalQ = 1, totalC = correct ? 1 : 0;
-  attemptsCache.forEach(a => { totalQ += a.total; totalC += a.score; });
-  // Add questions answered so far this session
-  totalQ += currentQIdx;
-  totalC += currentScore - (correct ? 1 : 0); // already added above
-  if (accEl && totalQ > 0) accEl.textContent = Math.round(totalC/totalQ*100)+"%";
-}
-
-function showHint() {
-  if (questionAnswered) return;
-  const q = currentQs[currentQIdx];
-  if (q.tip) {
-    const h = document.getElementById("hint-area");
-    h.textContent = "💡 "+q.tip;
-    h.className = "hint-area show";
-  }
-}
-
-function nextQuestion() {
-  if (currentQIdx >= currentQs.length-1) finishQuiz();
-  else { currentQIdx++; renderQuestion(); }
-}
-
-async function finishQuiz() {
-  clearInterval(timerInterval);
-  const total = currentQs.length;
-  const pct = Math.round(currentScore/total*100);
-  const trophy = trophyForPct(pct);
-  const tLabel = trophyLabel(pct);
-
-  document.getElementById("results-trophy").textContent = trophy || "📝";
-  document.getElementById("results-title").textContent = trophy ? tLabel+" Trophy!" : "Topic Complete";
-  document.getElementById("results-subtitle").textContent = trophy
-    ? "You earned the "+tLabel+" trophy for "+currentTopic+"!"
-    : "Keep practising — you need 40% or above to earn a trophy.";
-  document.getElementById("results-pct").textContent = pct+"%";
-  document.getElementById("res-correct").textContent = currentScore;
-  document.getElementById("res-total").textContent = total;
-  document.getElementById("res-time").textContent = fmtTime(timerSecs);
-
-  // Animate score ring
-  const ringEl = document.getElementById("score-ring-circle");
-  const circumference = 345.4;
-  const offset = circumference - (pct/100 * circumference);
-  ringEl.style.transition = "stroke-dashoffset 1s ease";
-  ringEl.style.strokeDashoffset = offset;
-  const ringColour = pct >= 90 ? "#6366f1" : pct >= 75 ? "#f59e0b" : pct >= 60 ? "#94a3b8" : pct >= 40 ? "#cd7f32" : "#e2e8f0";
-  ringEl.style.stroke = ringColour;
-
-  // Attempt comparison
-  const key = currentSubject+"::"+currentTopic;
-  const prev = progressCache[key];
-  const cmpBox = document.getElementById("comparison-box");
-  if (prev && prev.questions_attempted > 0) {
-    const prevPct = Math.round(prev.questions_correct/prev.questions_attempted*100);
-    const diff = pct - prevPct;
-    cmpBox.className = "comparison-box";
-    cmpBox.textContent = diff > 0 ? "▲ +" +diff+"% vs your last attempt — great improvement!"
-      : diff < 0 ? "▼ " +Math.abs(diff)+"% vs last time. Keep going!"
-      : "Same score as last time — push a little harder next session.";
-  } else {
-    cmpBox.className = "comparison-box hidden";
-  }
-
-  showView("results");
-  if (trophy) showConfetti();
-  await saveSession(total, pct, trophy || "none");
-  await loadCache();
   refreshDashboard();
 }
 
@@ -2487,11 +1945,11 @@ function showReview() {
 async function saveSession(total, pct, trophy) {
   if (!currentUser) return;
   const progData = { user_id: currentUser.id, subject: currentSubject, topic: currentTopic, attempt_number: currentAttempt, questions_attempted: total, questions_correct: currentScore, trophy, completed: true, duration_seconds: timerSecs, updated_at: new Date().toISOString() };
-  await sb.from("progress").upsert(progData, { onConflict: "user_id,subject,topic" });
-  await sb.from("attempts").insert({ user_id: currentUser.id, subject: currentSubject, topic: currentTopic, attempt_number: currentAttempt, score: currentScore, total, accuracy_pct: pct, duration_seconds: timerSecs, trophy });
-  if (shadowEntries.length > 0) await sb.from("shadow_log").insert(shadowEntries);
+  try { progressCache[currentSubject]=progressCache[currentSubject]||{}; progressCache[currentSubject][currentTopic]=progData; localStorage.setItem("t3_progress",JSON.stringify(progressCache)); } catch(e) {}
+  try { attemptsCache.unshift({subject:currentSubject,topic:currentTopic,score:currentScore,total,accuracy_pct:pct,created_at:new Date().toISOString()}); if(attemptsCache.length>200)attemptsCache=attemptsCache.slice(0,200); localStorage.setItem("t3_attempts",JSON.stringify(attemptsCache)); } catch(e) {}
+  // shadow log skipped in guest mode
   const today = new Date().toISOString().split("T")[0];
-  await sb.from("streaks").update({ last_active_date: today, updated_at: new Date().toISOString() }).eq("user_id", currentUser.id);
+  // streak update skipped in guest mode
 }
 
 function retryTopic() { if (currentSubject && currentTopic) startQuiz(currentSubject, currentTopic); }
@@ -2499,7 +1957,7 @@ function backToSubject() { if (currentSubject) showSubject(currentSubject); }
 
 async function resetTopic(subj, topic) {
   if (!confirm("Reset progress for this topic? Your attempt history will be cleared.")) return;
-  await sb.from("progress").delete().eq("user_id", currentUser.id).eq("subject", subj).eq("topic", topic);
+  try { if(progressCache[subj]) { delete progressCache[subj][topic]; localStorage.setItem("t3_progress",JSON.stringify(progressCache)); } } catch(e) {}
   await loadCache();
   showSubject(subj);
   toast("Topic reset.", "success");
@@ -2674,7 +2132,7 @@ async function finishMockExam() {
 
   // Save attempt
   if (currentUser) {
-    await sb.from("attempts").insert({ user_id: currentUser.id, subject: "mock", topic: MOCK_CONF[mockType].label, attempt_number: 1, score: mockScore, total, accuracy_pct: pct, duration_seconds: timeTaken, trophy: trophy || "none" });
+    try { attemptsCache.unshift({subject:"mock",topic:MOCK_CONF[mockType].label,score:mockScore,total,accuracy_pct:pct,created_at:new Date().toISOString()}); localStorage.setItem("t3_attempts",JSON.stringify(attemptsCache)); } catch(e) {}
     await loadCache();
   }
 
@@ -3120,15 +2578,11 @@ function addChatMsg(text, who, id) {
 }
 
 // ── Enter key shortcuts ──
-document.getElementById("login-password").addEventListener("keydown", e => { if(e.key==="Enter") doLogin(); });
-document.getElementById("reg-password").addEventListener("keydown",  e => { if(e.key==="Enter") doRegister(); });
 
 // ── Init ──
 async function init() {
-  const { data: { session } } = await sb.auth.getSession();
   setLoading(false);
-  if (session?.user) await onSignedIn(session.user);
-  else showPage("auth");
+  await onSignedIn({ id: 'guest', email: 'guest', user_metadata: { full_name: 'Student', role: 'student' } });
 }
 
 init();
