@@ -2579,6 +2579,416 @@ function addChatMsg(text, who, id) {
 
 // ── Enter key shortcuts ──
 
+
+// ═══════════════════════════════════════════════════════════
+//  SUBJECT + TOPIC NAVIGATION
+// ═══════════════════════════════════════════════════════════
+
+const TOPIC_LABELS = {
+  english: {
+    'Comprehension: Literal Retrieval': { label: 'Comprehension: Literal Retrieval', icon: '📄' },
+    'Comprehension: Inference':         { label: 'Comprehension: Inference',         icon: '🔍' },
+    'Vocabulary in Context':            { label: 'Vocabulary in Context',            icon: '📝' },
+    'Grammar & Word Classes':           { label: 'Grammar & Word Classes',           icon: '✏️' },
+    'Punctuation':                      { label: 'Punctuation',                      icon: '❗' },
+    'Spelling':                         { label: 'Spelling',                         icon: '🔤' },
+  },
+  maths: {
+    numberAndPlaceValue:              { label: 'Number & Place Value',             icon: '🔢' },
+    fractionsDecimalsPercentages:     { label: 'Fractions, Decimals & %',          icon: '½' },
+    moneyAndMeasures:                 { label: 'Money & Measures',                 icon: '💰' },
+    shapesAndGeometry:                { label: 'Shapes & Geometry',                icon: '📐' },
+    dataAndGraphs:                    { label: 'Data & Graphs',                    icon: '📊' },
+    reasoningAndLogic:                { label: 'Reasoning & Logic',                icon: '🧠' },
+  },
+  verbal: {
+    synonyms:        { label: 'Synonyms',          icon: '🔄' },
+    antonyms:        { label: 'Antonyms',           icon: '↔️' },
+    letterSequences: { label: 'Letter Sequences',   icon: '🔡' },
+    hiddenWords:     { label: 'Hidden Words',        icon: '🔎' },
+    wordConnections: { label: 'Word Connections',    icon: '🔗' },
+    wordAnalogies:   { label: 'Word Analogies',      icon: '⚖️' },
+    logicPuzzles:    { label: 'Logic Puzzles',        icon: '🧩' },
+  },
+  nvr: {
+    series:       { label: 'Series',               icon: '➡️' },
+    analogies:    { label: 'Analogies',             icon: '🔀' },
+    similarities: { label: 'Similarities',          icon: '👥' },
+    oddOneOut:    { label: 'Odd One Out',            icon: '❌' },
+    codes:        { label: 'Codes',                  icon: '🔐' },
+    matrices:     { label: 'Matrices',               icon: '⊞' },
+    reflections:  { label: 'Reflections',            icon: '🪞' },
+    rotations:    { label: 'Rotations',              icon: '🔁' },
+  }
+};
+
+function showSubject(subj) {
+  currentSubject = subj;
+  const conf = SUBJ[subj];
+  document.getElementById('subject-title').textContent = conf.icon + ' ' + conf.label;
+
+  const topics = QB[subj];
+  const grid = document.getElementById('topic-grid');
+  grid.innerHTML = '';
+
+  Object.keys(topics).forEach(topicKey => {
+    const meta = TOPIC_LABELS[subj]?.[topicKey] || { label: topicKey, icon: '📋' };
+    const qs = topics[topicKey] || [];
+    const prog = progressCache[subj]?.[topicKey];
+    const acc = prog ? Math.round(prog.questions_correct / prog.questions_attempted * 100) : null;
+    const trophy = prog?.trophy || '';
+
+    const btn = document.createElement('div');
+    btn.className = 'topic-btn';
+    btn.innerHTML = `
+      <div>
+        <div class="topic-btn-text">${meta.icon} ${meta.label}</div>
+        <div class="topic-btn-sub">${qs.length} questions${acc !== null ? ' · ' + acc + '% accuracy' : ''}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        ${trophy ? '<span class="trophy-badge">' + trophy + '</span>' : ''}
+        <span class="topic-btn-arrow">→</span>
+      </div>`;
+    btn.onclick = () => startQuiz(subj, topicKey);
+    grid.appendChild(btn);
+  });
+
+  showView('subject');
+}
+
+// ═══════════════════════════════════════════════════════════
+//  QUIZ ENGINE
+// ═══════════════════════════════════════════════════════════
+
+function startQuiz(subj, topic) {
+  currentSubject = subj;
+  currentTopic   = topic;
+  currentQs      = [];
+  currentQIdx    = 0;
+  currentScore   = 0;
+  questionAnswered = false;
+  wrongAnswers   = [];
+  shadowEntries  = [];
+  qStartTime     = Date.now();
+
+  // Get attempt number
+  const prev = progressCache[subj]?.[topic];
+  currentAttempt = prev ? (prev.attempt_number || 0) + 1 : 1;
+
+  // Build question set — shuffle and take 10
+  const allQs = QB[subj]?.[topic] || [];
+  currentQs = shuffle(allQs.map(q => shuffleQ(q))).slice(0, Math.min(10, allQs.length));
+
+  // Timer: 2 min per question
+  timerSecs = currentQs.length * 120;
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timerSecs--;
+    const el = document.getElementById('quiz-timer');
+    el.textContent = '⏱ ' + fmtTime(timerSecs);
+    el.className = 'quiz-timer' + (timerSecs < 60 ? ' danger' : timerSecs < 180 ? ' warning' : '');
+    if (timerSecs <= 0) { clearInterval(timerInterval); finishQuiz(); }
+  }, 1000);
+
+  const topicMeta = TOPIC_LABELS[subj]?.[topic];
+  document.getElementById('quiz-topic-label').textContent = topicMeta?.label || topic;
+  document.getElementById('quiz-sub-label').textContent   = SUBJ[subj].label + ' · Attempt ' + currentAttempt;
+
+  showView('quiz');
+  renderQuestion();
+  updateInlineOllieContext();
+}
+
+function renderQuestion() {
+  const q = currentQs[currentQIdx];
+  const total = currentQs.length;
+  questionAnswered = false;
+  qStartTime = Date.now();
+
+  document.getElementById('q-number').textContent = 'Question ' + (currentQIdx + 1) + ' of ' + total;
+  document.getElementById('q-text').textContent = q.q;
+  document.getElementById('quiz-progress-fill').style.width = (currentQIdx / total * 100) + '%';
+  document.getElementById('explanation-box').classList.remove('visible');
+  document.getElementById('hint-area').innerHTML = '';
+  document.getElementById('hint-btn').style.display = 'inline-flex';
+  document.getElementById('next-btn').style.display = 'none';
+
+  // NVR diagram
+  const diagramEl = document.getElementById('nvr-diagram');
+  if (q.svgQ) {
+    diagramEl.innerHTML = q.svgQ;
+    diagramEl.style.display = 'block';
+    const svgEl = diagramEl.querySelector('svg');
+    if (svgEl) { svgEl.style.maxWidth = '100%'; svgEl.style.height = 'auto'; }
+  } else {
+    diagramEl.innerHTML = '';
+    diagramEl.style.display = 'none';
+  }
+
+  // Options
+  const opts = document.getElementById('options-list');
+  opts.innerHTML = '';
+  const letters = ['A','B','C','D','E'];
+  const isSvgOpts = q.opts?.length && typeof q.opts[0] === 'string' && q.opts[0].trim().startsWith('<svg');
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    if (isSvgOpts) {
+      const svgWrap = document.createElement('span');
+      svgWrap.innerHTML = opt;
+      const svgEl = svgWrap.querySelector('svg');
+      if (svgEl) { svgEl.style.maxWidth = '80px'; svgEl.style.height = '80px'; svgEl.style.flex = '0 0 auto'; }
+      btn.innerHTML = '<span class="option-letter">' + letters[i] + '</span>';
+      btn.appendChild(svgWrap);
+    } else {
+      btn.innerHTML = '<span class="option-letter">' + letters[i] + '</span><span>' + opt + '</span>';
+    }
+    btn.onclick = () => selectAnswer(i);
+    opts.appendChild(btn);
+  });
+
+  updateInlineOllieContext();
+}
+
+function selectAnswer(idx) {
+  if (questionAnswered) return;
+  questionAnswered = true;
+
+  const q = currentQs[currentQIdx];
+  const correct = (idx === q.ans);
+  const timeTaken = Math.round((Date.now() - qStartTime) / 1000);
+
+  if (correct) currentScore++;
+
+  // Style buttons
+  const btns = document.getElementById('options-list').querySelectorAll('.option-btn');
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.ans) btn.classList.add('correct');
+    else if (i === idx && !correct) btn.classList.add('wrong');
+  });
+
+  // Explanation
+  const expBox = document.getElementById('explanation-box');
+  document.getElementById('exp-title').textContent = correct ? '✓ Correct!' : '✗ Not quite';
+  document.getElementById('exp-text').textContent = q.exp || '';
+  document.getElementById('tip-text').innerHTML = q.tip ? '<strong>💡 Tip:</strong> ' + q.tip : '';
+  expBox.classList.add('visible');
+
+  // Track wrong answers
+  if (!correct) {
+    wrongAnswers.push({ q: q.q, svgQ: q.svgQ || null, yourAns: q.opts[idx] || '—', correctAns: q.opts[q.ans], exp: q.exp });
+  }
+
+  shadowEntries.push({ subject: currentSubject, topic: currentTopic, question_text: q.q.substring(0,200), was_correct: correct, attempt_number: currentAttempt, time_taken_seconds: timeTaken });
+
+  const isLast = currentQIdx >= currentQs.length - 1;
+  document.getElementById('hint-btn').style.display = 'none';
+  document.getElementById('next-btn').style.display = 'inline-flex';
+  document.getElementById('next-btn').textContent = isLast ? 'See results →' : 'Next →';
+}
+
+function nextQuestion() {
+  currentQIdx++;
+  if (currentQIdx >= currentQs.length) {
+    finishQuiz();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showHint() {
+  const q = currentQs[currentQIdx];
+  const hintArea = document.getElementById('hint-area');
+  if (q.tip) {
+    hintArea.innerHTML = '<div class="hint-box">💡 ' + q.tip + '</div>';
+  } else {
+    hintArea.innerHTML = '<div class="hint-box">💡 Read the question carefully and eliminate options you are sure are wrong.</div>';
+  }
+  document.getElementById('hint-btn').style.display = 'none';
+}
+
+function finishQuiz() {
+  clearInterval(timerInterval);
+  const total = currentQs.length;
+  const pct = total > 0 ? Math.round(currentScore / total * 100) : 0;
+  const trophy = pct >= 90 ? '🏆' : pct >= 70 ? '⭐' : pct >= 50 ? '✅' : '';
+
+  // Save progress
+  const progData = {
+    user_id: 'guest',
+    subject: currentSubject,
+    topic: currentTopic,
+    attempt_number: currentAttempt,
+    questions_attempted: total,
+    questions_correct: currentScore,
+    trophy,
+    completed: true,
+    duration_seconds: timerSecs,
+    updated_at: new Date().toISOString()
+  };
+  try {
+    progressCache[currentSubject] = progressCache[currentSubject] || {};
+    progressCache[currentSubject][currentTopic] = progData;
+    localStorage.setItem('t3_progress', JSON.stringify(progressCache));
+    attemptsCache.unshift({ subject: currentSubject, topic: currentTopic, score: currentScore, total, accuracy_pct: pct, created_at: new Date().toISOString() });
+    if (attemptsCache.length > 200) attemptsCache = attemptsCache.slice(0, 200);
+    localStorage.setItem('t3_attempts', JSON.stringify(attemptsCache));
+  } catch(e) {}
+
+  // Results screen
+  const ringCircle = document.getElementById('score-ring-circle');
+  if (ringCircle) {
+    const offset = 169.6 - (169.6 * pct / 100);
+    ringCircle.style.strokeDashoffset = offset;
+  }
+  const mockScoreRing = document.getElementById('mock-score-ring');
+  if (mockScoreRing) mockScoreRing.textContent = pct + '%';
+
+  document.getElementById('results-trophy').textContent = trophy || (pct >= 50 ? '⭐' : '📝');
+  document.getElementById('results-title').textContent  = TOPIC_LABELS[currentSubject]?.[currentTopic]?.label || currentTopic;
+  document.getElementById('results-pct').textContent    = pct + '%';
+
+  const resCorrect = document.getElementById('res-correct');
+  const resTotal   = document.getElementById('res-total');
+  const resTime    = document.getElementById('res-time');
+  if (resCorrect) resCorrect.textContent = currentScore;
+  if (resTotal)   resTotal.textContent   = total;
+  if (resTime)    resTime.textContent    = fmtTime(timerSecs);
+
+  // Wrong answers review
+  const reviewList = document.getElementById('review-list');
+  if (wrongAnswers.length === 0) {
+    reviewList.innerHTML = '<p style="color:var(--green);font-size:0.85rem;text-align:center;padding:12px;">🎉 Perfect score — every question correct!</p>';
+  } else {
+    reviewList.innerHTML = wrongAnswers.map((w, i) =>
+      '<div class="review-item wrong">' +
+        '<div class="review-q">' + (i+1) + '. ' + w.q + '</div>' +
+        (w.svgQ ? '<div style="margin:8px 0;padding:10px;background:var(--bg3);border-radius:8px;overflow-x:auto;">' + w.svgQ + '</div>' : '') +
+        '<div class="review-answers">' +
+          '<span style="color:var(--red);font-weight:600">✗ Your answer:</span> ' + w.yourAns + '<br>' +
+          '<span style="color:var(--green);font-weight:600">✓ Correct:</span> ' + w.correctAns + '<br>' +
+          '<span style="color:var(--text3)">' + w.exp + '</span>' +
+        '</div>' +
+      '</div>'
+    ).join('');
+  }
+
+  const retryBtn = document.getElementById('retry-btn');
+  if (retryBtn) retryBtn.onclick = () => startQuiz(currentSubject, currentTopic);
+
+  if (trophy) showConfetti();
+  showView('results');
+}
+
+// ═══════════════════════════════════════════════════════════
+//  DASHBOARD
+// ═══════════════════════════════════════════════════════════
+
+async function refreshDashboard() {
+  // Stats
+  let totalQs = 0, totalCorrect = 0, trophies = 0;
+  Object.values(progressCache).forEach(subj => {
+    Object.values(subj).forEach(prog => {
+      totalQs      += prog.questions_attempted || 0;
+      totalCorrect += prog.questions_correct   || 0;
+      if (prog.trophy) trophies++;
+    });
+  });
+
+  document.getElementById('stat-q').textContent        = totalQs;
+  document.getElementById('stat-acc').textContent       = totalQs > 0 ? Math.round(totalCorrect / totalQs * 100) + '%' : '—';
+  document.getElementById('stat-trophies').textContent  = trophies;
+
+  // Progress rings per subject
+  Object.keys(SUBJ).forEach(subj => {
+    const topics  = QB[subj] ? Object.keys(QB[subj]) : [];
+    const done    = Object.keys(progressCache[subj] || {}).length;
+    const total   = topics.length;
+    const pct     = total > 0 ? done / total : 0;
+    const offset  = 106.8 - (106.8 * pct);
+    const ring    = document.getElementById('ring-' + subj);
+    if (ring) ring.style.strokeDashoffset = offset;
+
+    const doneEl  = document.getElementById('done-' + subj);
+    const accEl   = document.getElementById('acc-' + subj);
+    if (doneEl) doneEl.textContent = done + '/' + total;
+
+    // Accuracy for subject
+    let sc = 0, sa = 0;
+    Object.values(progressCache[subj] || {}).forEach(p => {
+      sc += p.questions_correct   || 0;
+      sa += p.questions_attempted || 0;
+    });
+    if (accEl) accEl.textContent = sa > 0 ? Math.round(sc / sa * 100) + '%' : '—';
+  });
+
+  // Streak badge
+  updateStreakDisplay();
+
+  // Greeting
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? 'Good morning!' : hour < 17 ? 'Good afternoon!' : 'Good evening!';
+  const greetEl = document.getElementById('dash-greeting');
+  if (greetEl) greetEl.textContent = greeting + (currentProfile?.full_name ? ' ' + currentProfile.full_name.split(' ')[0] + '!' : '');
+
+  // Weak areas panel
+  buildWeakPanel();
+}
+
+function updateStreakDisplay() {
+  const badge = document.getElementById('dash-streak-badge');
+  if (!badge) return;
+  const today = new Date().toISOString().split('T')[0];
+  let streak = 0;
+  try {
+    const s = localStorage.getItem('t3_streak');
+    const streakData = s ? JSON.parse(s) : {};
+    const last = streakData.last_date;
+    streak = streakData.count || 0;
+    if (last !== today) {
+      const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+      if (last === yesterday) {
+        streak++;
+      } else if (last !== today) {
+        streak = 1;
+      }
+      localStorage.setItem('t3_streak', JSON.stringify({ last_date: today, count: streak }));
+    }
+  } catch(e) { streak = 1; }
+  badge.textContent = '🔥 ' + streak + ' day streak';
+}
+
+function buildWeakPanel() {
+  const wrap = document.getElementById("weak-panel-wrap");
+  if (!wrap) return;
+  const weak = [];
+  Object.entries(progressCache).forEach(([subj, topics]) => {
+    Object.entries(topics).forEach(([topic, prog]) => {
+      if (prog.questions_attempted >= 5) {
+        const acc = prog.questions_correct / prog.questions_attempted;
+        if (acc < 0.7) {
+          weak.push({ subj, topic, label: TOPIC_LABELS[subj]?.[topic]?.label || topic, acc: Math.round(acc * 100) });
+        }
+      }
+    });
+  });
+  if (weak.length === 0) { wrap.innerHTML = ""; return; }
+  weak.sort((a, b) => a.acc - b.acc);
+  wrap.innerHTML = "";
+  const panel = document.createElement("div");
+  panel.className = "weak-panel";
+  panel.innerHTML = "<div class=\"weak-panel-title\">⚡ Focus areas — below 70%</div><div class=\"weak-pills\" id=\"weak-pills-inner\"></div>";
+  wrap.appendChild(panel);
+  weak.forEach(w => {
+    const btn = document.createElement("button");
+    btn.className = "weak-pill";
+    btn.textContent = w.label + " " + w.acc + "%";
+    btn.onclick = () => startQuiz(w.subj, w.topic);
+    document.getElementById("weak-pills-inner").appendChild(btn);
+  });
+}
+
 // ── Init ──
 async function init() {
   setLoading(false);
