@@ -194,6 +194,7 @@ body {
   background: var(--amber-light);
 }
 .topic-card.bio-card .tc-icon { background: var(--green-bg); }
+.topic-card.chem-card .tc-icon { background: #EEF2FF; }
 .topic-info .tn { font-size: 0.88rem; font-weight: 500; color: var(--charcoal); margin-bottom: 2px; }
 .topic-info .td { font-size: 0.73rem; color: var(--text3); line-height: 1.4; }
 .topic-progress-dot {
@@ -705,7 +706,36 @@ body {
       </div>
       <div class="sidebar-body" id="sidebar-body">
         <!-- dynamically populated -->
+      
+
+    <div class="subject-block">
+      <div class="subject-head">
+        <span>Chemistry</span>
+        <div class="subject-rule"></div>
       </div>
+      <div class="topic-grid">
+        <div class="topic-card" onclick="startTutor('chemistry','elements')" style="border-left:3px solid #6366f1;">
+          <div class="tc-icon" style="background:#EEF2FF;">⚗️</div>
+          <div class="topic-info"><div class="tn">Elements, Compounds &amp; Mixtures</div><div class="td">Periodic table, metals, separation techniques, burning</div></div>
+        </div>
+        <div class="topic-card" onclick="startTutor('chemistry','reactivity')" style="border-left:3px solid #6366f1;">
+          <div class="tc-icon" style="background:#EEF2FF;">🔥</div>
+          <div class="topic-info"><div class="tn">Reactivity Series</div><div class="td">Displacement, reactions with water and acids, rusting</div></div>
+        </div>
+        <div class="topic-card" onclick="startTutor('chemistry','formulae')" style="border-left:3px solid #6366f1;">
+          <div class="tc-icon" style="background:#EEF2FF;">⚖️</div>
+          <div class="topic-info"><div class="tn">Formulae &amp; Equations</div><div class="td">Ionic charges, writing formulae, balancing equations</div></div>
+        </div>
+        <div class="topic-card" onclick="startTutor('chemistry','water')" style="border-left:3px solid #6366f1;">
+          <div class="tc-icon" style="background:#EEF2FF;">💧</div>
+          <div class="topic-info"><div class="tn">Water, Limestone &amp; Iron</div><div class="td">Water treatment, limestone cycle, blast furnace, solubility</div></div>
+        </div>
+        <div class="topic-card" onclick="startTutor('chemistry','earth')" style="border-left:3px solid #6366f1;">
+          <div class="tc-icon" style="background:#EEF2FF;">🌍</div>
+          <div class="topic-info"><div class="tn">Earth, Rocks &amp; Materials</div><div class="td">Earth structure, rock cycle, ceramics, composites</div></div>
+        </div>
+      </div>
+    </div></div>
     </div>
 
   </div>
@@ -1485,6 +1515,290 @@ const TOPICS = {
         stages: ['Recall: name parts of the breathing system, state both respiration equations', 'Understanding: explain inhalation and exhalation using pressure and volume changes, and explain alveoli adaptations', 'Application: apply breathing and respiration knowledge to exercise scenarios and unfamiliar situations', 'Exam technique: use volume, pressure, diffusion, concentration gradient, and surface area correctly in extended answers']
       }
     }
+,
+
+    chemistry: {
+      elements: {
+        name: 'Elements, Compounds & Mixtures', tag: 'Chemistry — Atoms & Matter',
+        knowledge: [
+          {
+            title: 'Elements, compounds and mixtures — the key differences',
+            body: 'An element contains only one type of atom — it cannot be broken down into simpler substances by chemical means. There are 118 known elements, all listed in the periodic table. A compound is a substance formed when two or more elements are chemically joined together in fixed proportions. The properties of a compound are completely different from the elements it is made from — water (H₂O) is nothing like hydrogen gas or oxygen gas. A mixture contains two or more substances that are not chemically combined. The substances in a mixture keep their own properties and can be separated by physical means.',
+            example: 'Iron filings and sulfur powder mixed together is a mixture — you can separate them with a magnet. But if you heat them together, they react to form iron sulfide — a compound. You cannot unmix a compound with a magnet.',
+            svg: `<svg viewBox="0 0 220 80" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+              <rect x="5" y="15" width="60" height="50" rx="4" fill="#FAEEDA" stroke="#BA7517" stroke-width="1"/>
+              <text x="35" y="30" text-anchor="middle" font-size="8" font-weight="bold" fill="#854F0B" font-family="Inter,sans-serif">Element</text>
+              <circle cx="20" cy="48" r="7" fill="#BA7517" opacity="0.8"/>
+              <circle cx="35" cy="48" r="7" fill="#BA7517" opacity="0.8"/>
+              <circle cx="50" cy="48" r="7" fill="#BA7517" opacity="0.8"/>
+              <text x="35" y="57" text-anchor="middle" font-size="6" fill="#A08050" font-family="Inter,sans-serif">one type</text>
+              <rect x="80" y="15" width="60" height="50" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+              <text x="110" y="30" text-anchor="middle" font-size="8" font-weight="bold" fill="#185FA5" font-family="Inter,sans-serif">Compound</text>
+              <circle cx="95" cy="46" r="6" fill="#185FA5" opacity="0.8"/>
+              <circle cx="108" cy="46" r="6" fill="#A32D2D" opacity="0.8"/>
+              <circle cx="121" cy="46" r="6" fill="#185FA5" opacity="0.8"/>
+              <text x="110" y="57" text-anchor="middle" font-size="6" fill="#A08050" font-family="Inter,sans-serif">chemically joined</text>
+              <rect x="155" y="15" width="60" height="50" rx="4" fill="#EAF2E1" stroke="#3B6D11" stroke-width="1"/>
+              <text x="185" y="30" text-anchor="middle" font-size="8" font-weight="bold" fill="#3B6D11" font-family="Inter,sans-serif">Mixture</text>
+              <circle cx="168" cy="46" r="6" fill="#BA7517" opacity="0.8"/>
+              <circle cx="185" cy="46" r="6" fill="#185FA5" opacity="0.8"/>
+              <circle cx="198" cy="50" r="5" fill="#BA7517" opacity="0.8"/>
+              <text x="185" y="57" text-anchor="middle" font-size="6" fill="#A08050" font-family="Inter,sans-serif">not joined</text>
+            </svg>`
+          },
+          {
+            title: 'Metals and non-metals — properties and the periodic table',
+            body: 'Metals are on the left and centre of the periodic table. They are typically shiny, good conductors of heat and electricity, malleable (can be hammered into shape), ductile (can be drawn into wires), and have high melting points. Non-metals are on the right of the periodic table. They are typically dull, poor conductors (except graphite), brittle when solid, and have lower melting points. The dividing line between metals and non-metals runs diagonally — elements near this line (like silicon) are called metalloids or semi-metals.',
+            example: 'Copper is a metal — shiny, conducts electricity, can be stretched into wires for cables. Sulfur is a non-metal — yellow, crumbly, does not conduct electricity. The zigzag line on the periodic table is the boundary.',
+            svg: `<svg viewBox="0 0 200 90" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+              <text x="100" y="12" text-anchor="middle" font-size="8" font-weight="bold" fill="#3A3020" font-family="Inter,sans-serif">Simplified Periodic Table</text>
+              <rect x="5" y="20" width="110" height="60" rx="3" fill="#FAEEDA" stroke="#BA7517" stroke-width="1" opacity="0.7"/>
+              <text x="55" y="55" text-anchor="middle" font-size="9" font-weight="bold" fill="#BA7517" font-family="Inter,sans-serif">METALS</text>
+              <text x="55" y="67" text-anchor="middle" font-size="6.5" fill="#A08050" font-family="Inter,sans-serif">shiny · conduct · malleable</text>
+              <rect x="115" y="20" width="80" height="60" rx="3" fill="#E6F1FB" stroke="#185FA5" stroke-width="1" opacity="0.7"/>
+              <text x="155" y="55" text-anchor="middle" font-size="9" font-weight="bold" fill="#185FA5" font-family="Inter,sans-serif">NON-METALS</text>
+              <text x="155" y="67" text-anchor="middle" font-size="6.5" fill="#A08050" font-family="Inter,sans-serif">dull · insulate · brittle</text>
+              <path d="M115 20 L115 35 L125 35 L125 50 L135 50 L135 65 L145 65 L145 80" fill="none" stroke="#3A3020" stroke-width="2" stroke-dasharray="3,2"/>
+              <text x="112" y="18" text-anchor="middle" font-size="6" fill="#3A3020" font-family="Inter,sans-serif">↑ boundary</text>
+            </svg>`
+          },
+          {
+            title: 'Burning elements in oxygen',
+            body: 'When elements burn in oxygen they form oxides. Metals form metal oxides — for example magnesium burns with a brilliant white flame to form magnesium oxide (2Mg + O₂ → 2MgO). Non-metals also form oxides — carbon burns to form carbon dioxide (C + O₂ → CO₂), sulfur burns with a blue flame to form sulfur dioxide (S + O₂ → SO₂). Metal oxides are generally alkaline or neutral. Non-metal oxides are generally acidic — sulfur dioxide dissolves in water to form sulfurous acid, which is a component of acid rain.',
+            example: 'Magnesium ribbon burning in air produces that blinding white light used in old camera flashes. The white powder left behind is magnesium oxide — totally different from shiny magnesium metal. Never look directly at burning magnesium.'
+          },
+          {
+            title: 'Separating mixtures — physical methods',
+            body: 'Since mixtures are not chemically joined, they can be separated by physical methods that exploit differences in physical properties. Filtration separates an insoluble solid from a liquid (e.g. sand from water). Evaporation separates a dissolved solid from a solution by heating until the liquid evaporates. Distillation separates a liquid from a solution by boiling and condensing the vapour. Chromatography separates dissolved substances with different solubilities (e.g. food dyes, ink). Magnetic separation works when one component is magnetic (e.g. iron filings from sand).',
+            example: 'Making a cup of tea involves filtration (the tea bag stops the leaves), dissolving (sugar dissolves), and if you let it cool — crystallisation (the sugar would come back out of solution). Three separation techniques in one cup.'
+          }
+        ],
+        stages: ['Recall: define element, compound and mixture; give examples of each', 'Understanding: explain why mixtures can be separated but compounds cannot; describe metal vs non-metal properties', 'Application: choose the correct separation technique for an unfamiliar mixture; predict oxide properties', 'Exam technique: use precise language — chemically combined vs physically mixed; state method and reason']
+      },
+      reactivity: {
+        name: 'Reactivity Series', tag: 'Chemistry — Reactivity',
+        knowledge: [
+          {
+            title: 'The reactivity series — order and meaning',
+            body: 'The reactivity series ranks metals in order of how readily they react with water, acids, and oxygen. From most to least reactive: Potassium, Sodium, Lithium, Calcium, Magnesium, Aluminium, Zinc, Iron, Tin, Lead, Copper, Silver, Gold, Platinum. A useful mnemonic: Please Stop Letting Crazy Monkeys Attract Zebras In The Long Cold Snowstorms. The higher a metal is in the series, the more vigorously it reacts — potassium explodes violently in cold water, copper does not react with water at all.',
+            example: 'Potassium on water fizzes so violently the hydrogen produced ignites in a purple flame. Sodium is similar but less dramatic. Magnesium barely reacts with cold water but burns brilliantly in steam. Copper sits below hydrogen and does not react with dilute acids.',
+            svg: `<svg viewBox="0 0 180 160" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+              <text x="90" y="12" text-anchor="middle" font-size="8" font-weight="bold" fill="#3A3020" font-family="Inter,sans-serif">Reactivity Series</text>
+              <line x1="30" y1="18" x2="30" y2="155" stroke="#DDD5C8" stroke-width="1.5"/>
+              <text x="25" y="20" text-anchor="end" font-size="6" fill="#A32D2D" font-family="Inter,sans-serif">↑ Most</text>
+              <text x="25" y="155" text-anchor="end" font-size="6" fill="#3B6D11" font-family="Inter,sans-serif">↓ Least</text>
+              <text x="35" y="28" font-size="7.5" fill="#A32D2D" font-family="Inter,sans-serif" font-weight="bold">Potassium K</text>
+              <text x="35" y="40" font-size="7.5" fill="#A32D2D" font-family="Inter,sans-serif" font-weight="bold">Sodium Na</text>
+              <text x="35" y="52" font-size="7.5" fill="#C2720A" font-family="Inter,sans-serif">Lithium Li</text>
+              <text x="35" y="64" font-size="7.5" fill="#C2720A" font-family="Inter,sans-serif">Calcium Ca</text>
+              <text x="35" y="76" font-size="7.5" fill="#C2720A" font-family="Inter,sans-serif">Magnesium Mg</text>
+              <text x="35" y="88" font-size="7.5" fill="#BA7517" font-family="Inter,sans-serif">Aluminium Al</text>
+              <text x="35" y="100" font-size="7.5" fill="#BA7517" font-family="Inter,sans-serif">Zinc Zn</text>
+              <text x="35" y="112" font-size="7.5" fill="#854F0B" font-family="Inter,sans-serif">Iron Fe</text>
+              <text x="35" y="124" font-size="7.5" fill="#3B6D11" font-family="Inter,sans-serif">Lead Pb</text>
+              <text x="35" y="136" font-size="7.5" fill="#3B6D11" font-family="Inter,sans-serif">Copper Cu</text>
+              <text x="35" y="148" font-size="7.5" fill="#3B6D11" font-family="Inter,sans-serif">Silver Ag · Gold Au</text>
+              <text x="130" y="40" font-size="6" fill="#A32D2D" font-family="Inter,sans-serif">react with water</text>
+              <text x="130" y="90" font-size="6" fill="#BA7517" font-family="Inter,sans-serif">react with acid</text>
+              <text x="130" y="140" font-size="6" fill="#3B6D11" font-family="Inter,sans-serif">unreactive</text>
+            </svg>`
+          },
+          {
+            title: 'Displacement reactions',
+            body: 'A more reactive metal will displace a less reactive metal from its compound. This applies to both metal oxides (heated together) and metal salts in solution. For example, zinc displaces copper from copper sulfate solution: Zn + CuSO₄ → ZnSO₄ + Cu. The blue copper sulfate solution turns colourless and a brown copper coating forms on the zinc. Iron displaces copper from copper sulfate. But copper cannot displace zinc — it is less reactive. Think of it like a queue — a more popular person pushes out a less popular one.',
+            example: 'If you put an iron nail into blue copper sulfate solution, the nail turns orange-brown (copper coats it) and the solution turns from blue to pale green (iron sulfate forms). Iron has displaced copper because iron is higher in the reactivity series.',
+            svg: `<svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+              <rect x="10" y="20" width="80" height="45" rx="4" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+              <text x="50" y="35" text-anchor="middle" font-size="7" font-weight="bold" fill="#185FA5" font-family="Inter,sans-serif">Before</text>
+              <text x="50" y="47" text-anchor="middle" font-size="6.5" fill="#185FA5" font-family="Inter,sans-serif">Blue CuSO₄</text>
+              <text x="50" y="57" text-anchor="middle" font-size="6.5" fill="#3A3020" font-family="Inter,sans-serif">+ Zn strip</text>
+              <text x="100" y="45" text-anchor="middle" font-size="12" fill="#BA7517" font-family="Inter,sans-serif">→</text>
+              <rect x="115" y="20" width="80" height="45" rx="4" fill="#F5F0E8" stroke="#BA7517" stroke-width="1"/>
+              <text x="155" y="35" text-anchor="middle" font-size="7" font-weight="bold" fill="#BA7517" font-family="Inter,sans-serif">After</text>
+              <text x="155" y="47" text-anchor="middle" font-size="6.5" fill="#3A3020" font-family="Inter,sans-serif">Colourless ZnSO₄</text>
+              <text x="155" y="57" text-anchor="middle" font-size="6.5" fill="#C2720A" font-family="Inter,sans-serif">+ copper deposited</text>
+            </svg>`
+          },
+          {
+            title: 'Reactions with water and acids',
+            body: 'Very reactive metals (K, Na, Li, Ca) react vigorously with cold water, producing a metal hydroxide and hydrogen gas. Sodium: 2Na + 2H₂O → 2NaOH + H₂. Moderately reactive metals (Mg, Zn, Fe) react slowly with cold water but react with dilute acids to produce a metal salt and hydrogen gas. Magnesium + hydrochloric acid: Mg + 2HCl → MgCl₂ + H₂. The test for hydrogen gas is the squeaky pop — a burning splint held at the mouth of the test tube makes a squeaky pop sound. Copper, silver, and gold do not react with dilute acids.',
+            example: 'Sodium on water fizzes wildly, melts into a ball, and shoots around the surface — it is so exothermic it sometimes ignites. Magnesium in hydrochloric acid fizzes steadily and disappears. Copper in hydrochloric acid: nothing happens. Same acid, completely different results based on reactivity position.'
+          },
+          {
+            title: 'Rusting — causes, conditions, and prevention',
+            body: 'Rusting is the corrosion of iron (and steel) when it reacts with both oxygen and water simultaneously. The chemical name for rust is hydrated iron(III) oxide. Both oxygen AND water are required — iron in dry air does not rust, iron in pure water without dissolved oxygen rusts very slowly. Rusting is an oxidation reaction. Prevention methods: painting (barrier), oiling/greasing (barrier), galvanising (coating with zinc — zinc is more reactive so it sacrificially corrodes first), sacrificial protection (attaching a more reactive metal like magnesium), alloying (adding chromium to make stainless steel).',
+            example: 'Ship hulls have blocks of magnesium or zinc bolted to them — these corrode instead of the steel hull. The magnesium is higher in the reactivity series so it sacrifices itself to protect the iron. Replace the blocks when they corrode away.'
+          }
+        ],
+        stages: ['Recall: write the reactivity series order from memory; state what is produced in reactions with water and acids', 'Understanding: explain displacement using reactivity; explain why both water and oxygen are needed for rusting', 'Application: predict whether a displacement reaction will occur; choose the best rust prevention method for a given situation', 'Exam technique: write word equations and symbol equations for displacement and acid reactions']
+      },
+      formulae: {
+        name: 'Formulae & Equations', tag: 'Chemistry — Formulae & Equations',
+        knowledge: [
+          {
+            title: 'Ionic charges — what you must memorise',
+            body: 'Ions form when atoms gain or lose electrons. Cations (positive ions): H⁺, Li⁺, Na⁺, K⁺, Ag⁺ (charge 1+); Mg²⁺, Ca²⁺, Cu²⁺, Zn²⁺, Fe²⁺ (charge 2+); Al³⁺, Fe³⁺ (charge 3+); NH₄⁺ (ammonium, 1+). Anions (negative ions): F⁻, Cl⁻, Br⁻, I⁻ (charge 1-); O²⁻, S²⁻ (charge 2-); OH⁻, NO₃⁻, HCO₃⁻ (charge 1-); CO₃²⁻, SO₄²⁻ (charge 2-); PO₄³⁻ (charge 3-). The total positive charge must equal the total negative charge in a neutral compound.',
+            example: 'To form calcium chloride: Ca²⁺ needs two Cl⁻ to balance — so the formula is CaCl₂. To form iron(III) oxide: Fe³⁺ and O²⁻ — find the lowest common multiple: 2 × Fe³⁺ (6+) needs 3 × O²⁻ (6-) — formula is Fe₂O₃.',
+            svg: `<svg viewBox="0 0 220 85" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+              <text x="110" y="11" text-anchor="middle" font-size="8" font-weight="bold" fill="#3A3020" font-family="Inter,sans-serif">Building Ionic Formulae</text>
+              <text x="55" y="25" text-anchor="middle" font-size="7.5" fill="#185FA5" font-family="Inter,sans-serif" font-weight="bold">Ca²⁺</text>
+              <text x="110" y="25" text-anchor="middle" font-size="7.5" fill="#A08050" font-family="Inter,sans-serif">+</text>
+              <text x="165" y="25" text-anchor="middle" font-size="7.5" fill="#A32D2D" font-family="Inter,sans-serif" font-weight="bold">Cl⁻   Cl⁻</text>
+              <text x="55" y="37" text-anchor="middle" font-size="6.5" fill="#185FA5" font-family="Inter,sans-serif">(2+)</text>
+              <text x="165" y="37" text-anchor="middle" font-size="6.5" fill="#A32D2D" font-family="Inter,sans-serif">(1-) + (1-) = 2-</text>
+              <text x="110" y="52" text-anchor="middle" font-size="7" fill="#3B6D11" font-family="Inter,sans-serif">charges balance → CaCl₂ ✓</text>
+              <line x1="10" y1="58" x2="210" y2="58" stroke="#EDE8DF" stroke-width="1"/>
+              <text x="55" y="70" text-anchor="middle" font-size="7.5" fill="#185FA5" font-family="Inter,sans-serif" font-weight="bold">Fe³⁺  Fe³⁺</text>
+              <text x="130" y="70" text-anchor="middle" font-size="7.5" fill="#A32D2D" font-family="Inter,sans-serif" font-weight="bold">O²⁻  O²⁻  O²⁻</text>
+              <text x="55" y="81" text-anchor="middle" font-size="6.5" fill="#185FA5" font-family="Inter,sans-serif">3+ + 3+ = 6+</text>
+              <text x="130" y="81" text-anchor="middle" font-size="6.5" fill="#A32D2D" font-family="Inter,sans-serif">2- + 2- + 2- = 6-</text>
+            </svg>`
+          },
+          {
+            title: 'Balancing equations — the rules',
+            body: 'In a chemical reaction, atoms are rearranged but never created or destroyed. This means the number of each type of atom must be the same on both sides of the equation. To balance an equation: write the unbalanced equation, count atoms on each side, add coefficients (numbers in front of formulae) to balance — never change the formulae themselves. For example, hydrogen burning: H₂ + O₂ → H₂O is unbalanced (2 O on left, 1 on right). Balanced: 2H₂ + O₂ → 2H₂O.',
+            example: 'Magnesium burning: Mg + O₂ → MgO. Count: left has 2 O, right has 1 O. Fix the right: 2MgO. Now count Mg: right has 2, left has 1. Fix: 2Mg + O₂ → 2MgO. Both sides: 2 Mg, 2 O. Balanced.',
+            svg: `<svg viewBox="0 0 220 75" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+              <text x="110" y="12" text-anchor="middle" font-size="8" font-weight="bold" fill="#3A3020" font-family="Inter,sans-serif">Balancing: 2Mg + O₂ → 2MgO</text>
+              <rect x="5" y="22" width="90" height="30" rx="3" fill="#FAEEDA" stroke="#BA7517" stroke-width="1"/>
+              <text x="50" y="33" text-anchor="middle" font-size="7.5" fill="#854F0B" font-family="Inter,sans-serif" font-weight="bold">2Mg  +  O₂</text>
+              <text x="50" y="44" text-anchor="middle" font-size="6.5" fill="#A08050" font-family="Inter,sans-serif">2× Mg · 2× O</text>
+              <text x="110" y="38" text-anchor="middle" font-size="14" fill="#3B6D11" font-family="Inter,sans-serif">→</text>
+              <rect x="125" y="22" width="90" height="30" rx="3" fill="#EAF2E1" stroke="#3B6D11" stroke-width="1"/>
+              <text x="170" y="33" text-anchor="middle" font-size="7.5" fill="#3B6D11" font-family="Inter,sans-serif" font-weight="bold">2MgO</text>
+              <text x="170" y="44" text-anchor="middle" font-size="6.5" fill="#A08050" font-family="Inter,sans-serif">2× Mg · 2× O ✓</text>
+              <text x="110" y="68" text-anchor="middle" font-size="6.5" fill="#A08050" font-family="Inter,sans-serif">Add coefficients only — never change subscripts</text>
+            </svg>`
+          },
+          {
+            title: 'Word equations vs symbol equations',
+            body: 'A word equation names the reactants and products: magnesium + oxygen → magnesium oxide. A symbol equation uses chemical formulae: 2Mg + O₂ → 2MgO. Symbol equations must be balanced. State symbols show the physical state of each substance: (s) solid, (l) liquid, (g) gas, (aq) aqueous (dissolved in water). An example with state symbols: Mg(s) + 2HCl(aq) → MgCl₂(aq) + H₂(g). The arrow means "reacts to form" — it is not an equals sign.',
+            example: 'The formula for a compound is fixed — you cannot write MgO₂ just to balance an equation. The formula is determined by the ionic charges. You can only change the big numbers in front (coefficients) — the small subscript numbers within a formula are locked.'
+          }
+        ],
+        stages: ['Recall: state charges of common ions; write formulae for NaCl, MgO, CaCl₂, Fe₂O₃, Al₂O₃', 'Understanding: explain how to use charges to work out formulae; explain conservation of mass and why equations must balance', 'Application: write and balance symbol equations for unfamiliar reactions; work out formulae for ionic compounds not seen before', 'Exam technique: show working when deriving formulae; add state symbols; never change subscripts when balancing']
+      },
+      water: {
+        name: 'Water, Limestone & Iron', tag: 'Chemistry — Water & Rocks',
+        knowledge: [
+          {
+            title: 'Water treatment — making water safe to drink',
+            body: 'Drinking water must be free from harmful microorganisms and have dissolved substance levels within safe limits. Treatment stages: Sedimentation — large particles settle to the bottom. Filtration — water passes through sand and gravel beds to remove smaller particles. Chlorination — small amounts of chlorine are added to kill remaining microorganisms. Sometimes fluoride is added to protect teeth. Pure water (distilled water) can be made by distillation but this is expensive and only used in laboratories and medicine.',
+            example: 'The water from a river looks nothing like tap water — it contains mud, bacteria, algae, and dissolved minerals. The treatment works is essentially a very large chemistry lab doing sedimentation, filtration, and chlorination on millions of litres per day.',
+            svg: `<svg viewBox="0 0 220 60" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+              <rect x="5" y="15" width="35" height="30" rx="3" fill="#FAEEDA" stroke="#BA7517" stroke-width="1"/>
+              <text x="22" y="27" text-anchor="middle" font-size="6" fill="#854F0B" font-family="Inter,sans-serif">Sediment-</text>
+              <text x="22" y="36" text-anchor="middle" font-size="6" fill="#854F0B" font-family="Inter,sans-serif">ation</text>
+              <line x1="40" y1="30" x2="50" y2="30" stroke="#BA7517" stroke-width="1"/>
+              <rect x="50" y="15" width="35" height="30" rx="3" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+              <text x="67" y="27" text-anchor="middle" font-size="6" fill="#185FA5" font-family="Inter,sans-serif">Filtration</text>
+              <text x="67" y="36" text-anchor="middle" font-size="6" fill="#185FA5" font-family="Inter,sans-serif">sand/gravel</text>
+              <line x1="85" y1="30" x2="95" y2="30" stroke="#185FA5" stroke-width="1"/>
+              <rect x="95" y="15" width="35" height="30" rx="3" fill="#EAF2E1" stroke="#3B6D11" stroke-width="1"/>
+              <text x="112" y="27" text-anchor="middle" font-size="6" fill="#3B6D11" font-family="Inter,sans-serif">Chlorin-</text>
+              <text x="112" y="36" text-anchor="middle" font-size="6" fill="#3B6D11" font-family="Inter,sans-serif">ation</text>
+              <line x1="130" y1="30" x2="140" y2="30" stroke="#3B6D11" stroke-width="1"/>
+              <rect x="140" y="15" width="75" height="30" rx="3" fill="#FFF8ED" stroke="#DDD5C8" stroke-width="1"/>
+              <text x="177" y="27" text-anchor="middle" font-size="6.5" fill="#3A3020" font-family="Inter,sans-serif" font-weight="bold">Safe drinking</text>
+              <text x="177" y="36" text-anchor="middle" font-size="6.5" fill="#3A3020" font-family="Inter,sans-serif">water 💧</text>
+            </svg>`
+          },
+          {
+            title: 'The limestone cycle',
+            body: 'Limestone is calcium carbonate (CaCO₃). When heated strongly it thermally decomposes to form quicklime (calcium oxide, CaO) and carbon dioxide: CaCO₃ → CaO + CO₂. This is the lime kiln reaction. Adding water to quicklime produces slaked lime (calcium hydroxide, Ca(OH)₂) in a highly exothermic reaction: CaO + H₂O → Ca(OH)₂. Dissolving slaked lime in water gives limewater. Limewater turns milky when carbon dioxide is bubbled through it — this is the test for CO₂: Ca(OH)₂ + CO₂ → CaCO₃ + H₂O (the white precipitate is calcium carbonate).',
+            example: 'Farmers spread slaked lime on acidic fields — the alkaline calcium hydroxide neutralises the acid in the soil. The same chemistry as using indigestion tablets to neutralise stomach acid, just on a field-sized scale.',
+            svg: `<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+              <text x="100" y="12" text-anchor="middle" font-size="8" font-weight="bold" fill="#3A3020" font-family="Inter,sans-serif">The Limestone Cycle</text>
+              <rect x="60" y="18" width="80" height="20" rx="3" fill="#EDE8DF" stroke="#A08050" stroke-width="1"/>
+              <text x="100" y="31" text-anchor="middle" font-size="7" fill="#3A3020" font-family="Inter,sans-serif" font-weight="bold">Limestone CaCO₃</text>
+              <line x1="100" y1="38" x2="100" y2="50" stroke="#BA7517" stroke-width="1.5"/>
+              <text x="130" y="46" font-size="6" fill="#BA7517" font-family="Inter,sans-serif">heat → CO₂</text>
+              <rect x="60" y="50" width="80" height="20" rx="3" fill="#FAEEDA" stroke="#BA7517" stroke-width="1"/>
+              <text x="100" y="63" text-anchor="middle" font-size="7" fill="#854F0B" font-family="Inter,sans-serif" font-weight="bold">Quicklime CaO</text>
+              <line x1="100" y1="70" x2="100" y2="82" stroke="#185FA5" stroke-width="1.5"/>
+              <text x="130" y="78" font-size="6" fill="#185FA5" font-family="Inter,sans-serif">+ H₂O</text>
+              <rect x="55" y="82" width="90" height="15" rx="3" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+              <text x="100" y="92" text-anchor="middle" font-size="7" fill="#185FA5" font-family="Inter,sans-serif" font-weight="bold">Slaked lime Ca(OH)₂</text>
+            </svg>`
+          },
+          {
+            title: 'The blast furnace — extracting iron',
+            body: 'Iron is extracted from iron ore (mainly haematite, Fe₂O₃) in a blast furnace. Raw materials loaded in at the top: iron ore, coke (carbon), and limestone. Hot air blasted in at the bottom. Reactions: coke burns in oxygen to form carbon dioxide (C + O₂ → CO₂), CO₂ reacts with more coke to form carbon monoxide (CO₂ + C → 2CO), carbon monoxide reduces iron ore to iron (3CO + Fe₂O₃ → 3CO₂ + 2Fe). Molten iron sinks to the bottom and is tapped off. Limestone removes acidic impurities as slag. The iron produced is brittle cast iron — it must be converted to steel by removing most of the carbon.',
+            example: 'Carbon monoxide is the reducing agent — it takes the oxygen away from the iron oxide, leaving iron behind. Reduction is the removal of oxygen. The blast furnace is essentially a very hot reduction reaction on an industrial scale.',
+            svg: `<svg viewBox="0 0 160 110" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+              <text x="80" y="11" text-anchor="middle" font-size="7.5" font-weight="bold" fill="#3A3020" font-family="Inter,sans-serif">Blast Furnace</text>
+              <path d="M50 18 L110 18 L120 90 L40 90 Z" fill="#FAEEDA" stroke="#BA7517" stroke-width="1.5"/>
+              <text x="80" y="32" text-anchor="middle" font-size="6.5" fill="#854F0B" font-family="Inter,sans-serif">Iron ore + coke</text>
+              <text x="80" y="42" text-anchor="middle" font-size="6.5" fill="#854F0B" font-family="Inter,sans-serif">+ limestone</text>
+              <text x="80" y="58" text-anchor="middle" font-size="6.5" fill="#A32D2D" font-family="Inter,sans-serif">CO reduces Fe₂O₃</text>
+              <text x="80" y="70" text-anchor="middle" font-size="6.5" fill="#A32D2D" font-family="Inter,sans-serif">→ molten iron</text>
+              <rect x="40" y="90" width="80" height="12" rx="2" fill="#3A3020"/>
+              <text x="80" y="99" text-anchor="middle" font-size="6.5" fill="#fff" font-family="Inter,sans-serif">Molten iron tapped here</text>
+              <text x="18" y="75" font-size="6" fill="#185FA5" font-family="Inter,sans-serif">Hot air →</text>
+              <text x="125" y="75" font-size="6" fill="#185FA5" font-family="Inter,sans-serif">← Hot air</text>
+              <line x1="38" y1="72" x2="50" y2="72" stroke="#185FA5" stroke-width="1"/>
+              <line x1="110" y1="72" x2="122" y2="72" stroke="#185FA5" stroke-width="1"/>
+            </svg>`
+          },
+          {
+            title: 'Solubility and testing for water',
+            body: 'Solubility is the maximum mass of solute that dissolves in 100g of solvent at a given temperature. Most solids become more soluble as temperature increases. Gases become less soluble as temperature increases. A saturated solution contains the maximum possible dissolved solute at a given temperature. Testing for water: anhydrous copper sulfate (white powder) turns blue in the presence of water — this tests for the PRESENCE of water. Cobalt chloride paper (blue) turns pink in the presence of water. Neither test proves the water is pure. To test for pure water, check the boiling point (100°C) and freezing point (0°C).',
+            example: 'Dissolving sugar in hot tea — hot water holds more sugar than cold. As the tea cools, excess sugar crystallises out. This is why sugary drinks left to evaporate leave sticky crystals. The anhydrous copper sulfate test: pour unknown liquid on white powder — if it turns blue, water is present.'
+          }
+        ],
+        stages: ['Recall: describe water treatment stages; state the limestone cycle equations; describe the blast furnace', 'Understanding: explain why limestone is added to the blast furnace; explain the limewater test for CO₂', 'Application: apply reactivity and separation knowledge to unfamiliar industrial contexts', 'Exam technique: write equations for the limestone cycle; describe tests for water precisely']
+      },
+      earth: {
+        name: 'Earth, Rocks & Materials', tag: 'Chemistry — Earth Science',
+        knowledge: [
+          {
+            title: 'Structure of the Earth',
+            body: 'The Earth has four layers. The inner core is solid iron and nickel, extremely hot (5,000-6,000°C). The outer core is liquid iron and nickel — its movement generates Earth\'s magnetic field. The mantle is semi-solid rock (silicates) that flows very slowly — convection currents in the mantle drive the movement of tectonic plates. The crust is thin solid rock — oceanic crust is denser and thinner (basalt), continental crust is less dense and thicker (granite). The crust plus the top of the mantle form the tectonic plates.',
+            example: 'The distance to the Earth\'s centre is 6,371km. The crust where we live is only 5-70km thick — like the skin of an apple compared to the whole fruit. We have never drilled deeper than 12km — everything else is inferred from seismic waves.',
+            svg: `<svg viewBox="0 0 160 110" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+              <circle cx="80" cy="58" r="48" fill="#A32D2D" stroke="#3A3020" stroke-width="1"/>
+              <circle cx="80" cy="58" r="38" fill="#C2720A" stroke="#3A3020" stroke-width="1"/>
+              <circle cx="80" cy="58" r="25" fill="#BA7517" stroke="#3A3020" stroke-width="1"/>
+              <circle cx="80" cy="58" r="13" fill="#FAEEDA" stroke="#BA7517" stroke-width="1"/>
+              <text x="80" y="61" text-anchor="middle" font-size="5.5" fill="#854F0B" font-family="Inter,sans-serif" font-weight="bold">Inner</text>
+              <text x="80" y="68" text-anchor="middle" font-size="5" fill="#854F0B" font-family="Inter,sans-serif">core</text>
+              <text x="136" y="30" font-size="5.5" fill="#3A3020" font-family="Inter,sans-serif">Crust</text>
+              <text x="136" y="40" font-size="5.5" fill="#C2720A" font-family="Inter,sans-serif">Mantle</text>
+              <text x="136" y="50" font-size="5.5" fill="#BA7517" font-family="Inter,sans-serif">Outer</text>
+              <text x="136" y="58" font-size="5.5" fill="#BA7517" font-family="Inter,sans-serif">core</text>
+              <line x1="107" y1="16" x2="133" y2="26" stroke="#DDD5C8" stroke-width="0.8"/>
+              <line x1="112" y1="28" x2="133" y2="36" stroke="#DDD5C8" stroke-width="0.8"/>
+            </svg>`
+          },
+          {
+            title: 'Rock types and the rock cycle',
+            body: 'Three types of rock. Igneous rocks form when magma (molten rock) cools and solidifies. Slow cooling underground forms large crystals (granite). Fast cooling at the surface forms small crystals (basalt). Sedimentary rocks form when sediments (eroded particles, shells, organic material) are deposited in layers, compacted and cemented over millions of years. Examples: limestone, sandstone, chalk. They often contain fossils. Metamorphic rocks form when existing rocks are subjected to intense heat and pressure (but not melting). Marble forms from limestone; slate forms from mudstone.',
+            example: 'The White Cliffs of Dover are made of chalk — a sedimentary rock formed from the shells of tiny sea creatures that settled on the seabed millions of years ago. The whole cliff face is made of fossils. The Himalayas contain metamorphic rocks formed when India crashed into Asia.',
+            svg: `<svg viewBox="0 0 200 95" xmlns="http://www.w3.org/2000/svg" style="background:#FFF8ED;border-radius:6px;">
+              <text x="100" y="11" text-anchor="middle" font-size="8" font-weight="bold" fill="#3A3020" font-family="Inter,sans-serif">The Rock Cycle</text>
+              <rect x="70" y="17" width="60" height="18" rx="3" fill="#FAEEDA" stroke="#BA7517" stroke-width="1"/>
+              <text x="100" y="29" text-anchor="middle" font-size="7" fill="#854F0B" font-family="Inter,sans-serif" font-weight="bold">IGNEOUS</text>
+              <rect x="10" y="65" width="60" height="18" rx="3" fill="#EDE8DF" stroke="#A08050" stroke-width="1"/>
+              <text x="40" y="77" text-anchor="middle" font-size="7" fill="#3A3020" font-family="Inter,sans-serif" font-weight="bold">SEDIMENTARY</text>
+              <rect x="130" y="65" width="60" height="18" rx="3" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+              <text x="160" y="77" text-anchor="middle" font-size="7" fill="#185FA5" font-family="Inter,sans-serif" font-weight="bold">METAMORPHIC</text>
+              <path d="M80 35 Q45 45 40 65" fill="none" stroke="#BA7517" stroke-width="1" marker-end="url(#a)"/>
+              <text x="40" y="52" font-size="5.5" fill="#BA7517" font-family="Inter,sans-serif">weathering</text>
+              <path d="M70 74 Q100 85 130 74" fill="none" stroke="#A08050" stroke-width="1"/>
+              <text x="100" y="90" text-anchor="middle" font-size="5.5" fill="#A08050" font-family="Inter,sans-serif">heat+pressure</text>
+              <path d="M160 65 Q145 45 120 35" fill="none" stroke="#185FA5" stroke-width="1"/>
+              <text x="155" y="52" font-size="5.5" fill="#185FA5" font-family="Inter,sans-serif">melting</text>
+            </svg>`
+          },
+          {
+            title: 'Materials — ceramics and composites',
+            body: 'Ceramics are made by heating natural materials at very high temperatures. They are hard, strong under compression, and have high melting points, but are brittle (crack rather than bend). Examples: pottery, bricks, glass, cement. Composites are made from two or more materials combined to give better properties than either alone. The matrix holds everything together; the reinforcement adds strength. Examples: concrete (cement matrix + gravel aggregate), fibreglass (glass fibre reinforcement in a polymer matrix), carbon fibre composites (used in aircraft and racing cars), bone (mineral matrix reinforced with collagen fibres).',
+            example: 'Concrete is strong under compression (being squashed) but weak under tension (being stretched). Adding steel rods makes reinforced concrete — the steel handles tension, the concrete handles compression. Neither alone would work as well.'
+          }
+        ],
+        stages: ['Recall: name Earth\'s layers and their properties; classify rocks as igneous, sedimentary or metamorphic; define ceramic and composite', 'Understanding: explain how each rock type forms; explain why composites have better properties than their individual components', 'Application: classify unfamiliar rocks by their formation; suggest a suitable material for a given use', 'Exam technique: describe rock formation using correct geological language — cooling rate, crystal size, layers, compaction, heat and pressure']
+      }
+    }
 
 };
 
@@ -1816,6 +2130,9 @@ You know this topic far beyond GCSE level. When a student shows genuine curiosit
 - The biochemistry of enzymes and DNA beyond GCSE level
 - Evolutionary biology, genetics, and natural selection in depth
 - The physiology of breathing, respiration, and the digestive system in clinical depth
+- Industrial chemistry, thermodynamics, and electrochemistry beyond Year 8
+- The chemistry of metals, alloys, and materials science at university level
+- Organic chemistry, polymers, and nanomaterials for the genuinely curious
 - Real applications in medicine, engineering, technology
 Keep it accessible. Start with the GCSE concept and extend naturally if they want to go deeper.
 
