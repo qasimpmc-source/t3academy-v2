@@ -74,7 +74,7 @@ export function SubjectCardsNew({ stats }: Props) {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="grid grid-cols-1 md:grid-cols-2 gap-5"
+        className="grid grid-cols-1 md:grid-cols-2 gap-3"
       >
         {SUBJECTS.map((subject, index) => {
           const s = stats[subject.id];
@@ -89,7 +89,7 @@ export function SubjectCardsNew({ stats }: Props) {
             >
               <Link
                 href={`/dashboard/${subject.id}`}
-                className="relative block overflow-hidden rounded-[2rem] p-6 no-underline group"
+                className="relative block overflow-hidden rounded-2xl p-4 no-underline group"
                 style={{
                   background: subject.bg,
                   border: `2px solid ${subject.accentBorder}`,
@@ -115,25 +115,25 @@ export function SubjectCardsNew({ stats }: Props) {
                     <motion.div
                       animate={{ y: [0, -4, 0], rotate: [0, 2, -2, 0] }}
                       transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: index * 0.2 }}
-                      className="relative w-16 h-16 rounded-2xl flex items-center justify-center shadow-md"
+                      className="relative w-12 h-12 rounded-xl flex items-center justify-center shadow-md"
                       style={{ background: subject.iconBg }}
                     >
-                      <subject.icon className="w-8 h-8" style={{ color: subject.textColor }} />
-                      <span className="absolute -top-2 -right-2 text-2xl">{subject.illustration}</span>
+                      <subject.icon className="w-6 h-6" style={{ color: subject.textColor }} />
+                      <span className="absolute -top-1.5 -right-1.5 text-lg">{subject.illustration}</span>
                     </motion.div>
 
                     <div>
-                      <h3 className="text-xl font-bold" style={{ color: subject.textColor, fontFamily: "var(--font-serif)" }}>
+                      <h3 className="text-base font-bold leading-tight" style={{ color: subject.textColor, fontFamily: "var(--font-serif)" }}>
                         {subject.name}
                       </h3>
-                      <p className="text-sm" style={{ color: "var(--color-text3)" }}>
+                      <p className="text-xs" style={{ color: "var(--color-text3)" }}>
                         {subject.topics} topics
                       </p>
                     </div>
                   </div>
 
                   {/* Circular accuracy ring */}
-                  <div className="relative w-16 h-16 flex-shrink-0">
+                  <div className="relative w-12 h-12 flex-shrink-0">
                     <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
                       <circle cx="18" cy="18" r="16" fill="none"
                         stroke="rgba(255,255,255,0.6)" strokeWidth="2" />
@@ -154,16 +154,16 @@ export function SubjectCardsNew({ stats }: Props) {
                 </div>
 
                 {/* Stats row */}
-                <div className="mt-4 pt-4 flex items-center justify-between"
+                <div className="mt-3 pt-3 flex items-center justify-between"
                   style={{ borderTop: "1px solid rgba(255,255,255,0.5)" }}>
-                  <div className="flex gap-6">
+                  <div className="flex gap-4">
                     <div>
-                      <p className="text-[10px] uppercase tracking-widest font-bold" style={{ color: "var(--color-text3)" }}>Done</p>
-                      <p className="text-lg font-bold" style={{ color: subject.textColor }}>{done}</p>
+                      <p className="text-[9px] uppercase tracking-widest font-bold" style={{ color: "var(--color-text3)" }}>Done</p>
+                      <p className="text-base font-bold" style={{ color: subject.textColor }}>{done}</p>
                     </div>
                     <div>
-                      <p className="text-[10px] uppercase tracking-widest font-bold" style={{ color: "var(--color-text3)" }}>Accuracy</p>
-                      <p className="text-lg font-bold" style={{ color: subject.textColor }}>
+                      <p className="text-[9px] uppercase tracking-widest font-bold" style={{ color: "var(--color-text3)" }}>Accuracy</p>
+                      <p className="text-base font-bold" style={{ color: subject.textColor }}>
                         {accuracy !== null ? `${accuracy}%` : "—"}
                       </p>
                     </div>

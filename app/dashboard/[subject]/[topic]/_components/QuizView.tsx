@@ -43,7 +43,10 @@ export default function QuizView({ subject, topicKey, questions, subjectColor, s
 
   const saveAttempt = useCallback(async (correct: boolean) => {
     const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
     await supabase.from("question_attempts").insert({
+      user_id: user.id,
       subject,
       topic: topicKey,
       correct,

@@ -60,7 +60,7 @@ export function StatsSection({ totalDone, accuracy, trophies, streak }: Props) {
             rotate: index % 2 === 0 ? 1 : -1,
             transition: { type: "spring", stiffness: 300 },
           }}
-          className="relative overflow-hidden rounded-3xl p-5 cursor-pointer group"
+          className="relative overflow-hidden rounded-2xl p-3 cursor-pointer group"
           style={{
             background: stat.bg,
             border: "2px solid rgba(255,255,255,0.6)",
@@ -73,19 +73,20 @@ export function StatsSection({ totalDone, accuracy, trophies, streak }: Props) {
           />
 
           <div className="relative">
-            <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-3 shadow-sm"
-              style={{ background: stat.iconBg }}>
-              <stat.icon className="w-6 h-6" style={{ color: stat.textColor }} />
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-8 h-8 rounded-xl flex items-center justify-center"
+                style={{ background: stat.iconBg }}>
+                <stat.icon className="w-4 h-4" style={{ color: stat.textColor }} />
+              </div>
+              <p className="text-[10px] font-bold uppercase tracking-widest"
+                style={{ color: "var(--color-text3)" }}>
+                {stat.label}
+              </p>
             </div>
-
-            <p className="text-[10px] font-bold uppercase tracking-widest mb-1"
-              style={{ color: "var(--color-text3)" }}>
-              {stat.label}
-            </p>
 
             <div className="flex items-baseline gap-1">
               <motion.span
-                className="text-3xl font-bold"
+                className="text-2xl font-bold"
                 style={{ color: stat.textColor, fontFamily: "var(--font-serif)" }}
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
@@ -93,7 +94,7 @@ export function StatsSection({ totalDone, accuracy, trophies, streak }: Props) {
               >
                 {stat.value}
               </motion.span>
-              <span className="text-sm" style={{ color: "var(--color-text3)" }}>{stat.subtitle}</span>
+              <span className="text-xs" style={{ color: "var(--color-text3)" }}>{stat.subtitle}</span>
             </div>
           </div>
 

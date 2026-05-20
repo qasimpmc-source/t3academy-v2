@@ -76,7 +76,7 @@ export default async function DashboardPage() {
             style={{ background: "rgba(251,191,36,0.08)" }} />
         </div>
 
-        <div className="max-w-4xl mx-auto px-6 py-8 space-y-8">
+        <div className="max-w-4xl mx-auto px-6 py-4 space-y-4">
           <WelcomeBanner firstName={firstName} />
           <StatsSection
             totalDone={totalDone}

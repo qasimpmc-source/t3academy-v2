@@ -19,7 +19,7 @@ export function DailyTip() {
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.8 }}
-      className="relative overflow-hidden rounded-[2rem] p-6"
+      className="relative overflow-hidden rounded-2xl px-5 py-3"
       style={{
         background: "linear-gradient(135deg, #fef3c7 0%, #fffbeb 50%, #fff7ed 100%)",
         border: "2px solid rgba(251,191,36,0.4)",
@@ -37,14 +37,16 @@ export function DailyTip() {
       </motion.div>
 
       <div className="relative">
-        <div className="flex items-center gap-2 mb-3">
-          <div className="w-10 h-10 rounded-xl flex items-center justify-center"
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
             style={{ background: "#fde68a" }}>
-            <Lightbulb className="w-5 h-5" style={{ color: "#d97706" }} />
+            <Lightbulb className="w-4 h-4" style={{ color: "#d97706" }} />
           </div>
-          <h3 className="font-bold" style={{ color: "#78350f" }}>Tip of the Day</h3>
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-widest mb-0.5" style={{ color: "#d97706" }}>Tip of the Day</p>
+            <p className="text-xs leading-relaxed" style={{ color: "#92400e" }}>{tip}</p>
+          </div>
         </div>
-        <p className="text-sm leading-relaxed" style={{ color: "#92400e" }}>{tip}</p>
       </div>
     </motion.div>
   );
