@@ -26,7 +26,7 @@ export default function LearnView({ subjectLabel, topicLabel, subjectColor, topi
   const context = `Subject: ${subjectLabel}. Topic: ${topicLabel}.`;
   const welcome: Message = {
     role: "assistant",
-    content: `Let's tackle **${topicLabel}**! This is one of the core topics in ${subjectLabel} for the GL Assessment 11+.\n\nTell me what you already know about this, or I can start with a full explanation — just say "teach me" and I'll walk you through it step by step.`,
+    content: `Hey! 👋 Ready to work on ${topicLabel}? What do you already know about it — or shall I kick things off?`,
   };
 
   const [messages, setMessages] = useState<Message[]>([welcome]);
@@ -53,7 +53,10 @@ export default function LearnView({ subjectLabel, topicLabel, subjectColor, topi
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           tutor: "ollie",
-          messages: history.map(({ role, content }) => ({ role, content })),
+          // Strip the hardcoded welcome so the model doesn't inherit its old style
+          messages: history
+            .filter((m) => m.content !== welcome.content)
+            .map(({ role, content }) => ({ role, content })),
           context,
         }),
       });

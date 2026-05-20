@@ -16,8 +16,7 @@ const QUICK_PROMPTS = [
 
 const WELCOME: Message = {
   role: "assistant",
-  content:
-    "Hello! I'm Ollie, your 11+ tutor. Tell me what you're working on and I'll guide you through it — without just giving you the answer. What would you like help with?",
+  content: "Hey! 👋 I'm Ollie. What are you working on today?",
 };
 
 export default function OllieChat() {
@@ -48,7 +47,10 @@ export default function OllieChat() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           tutor: "ollie",
-          messages: history.map(({ role, content }) => ({ role, content })),
+          // Skip the hardcoded welcome — only send real conversation turns to the API
+          messages: history
+            .filter((m) => m.content !== WELCOME.content)
+            .map(({ role, content }) => ({ role, content })),
         }),
       });
 
