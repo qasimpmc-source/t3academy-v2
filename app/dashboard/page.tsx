@@ -2,6 +2,8 @@ import { createClient } from "@/lib/supabase/server";
 import OllieChat from "./_components/OllieChat";
 import SubjectCard from "./_components/SubjectCard";
 
+export const dynamic = "force-dynamic";
+
 const SUBJECTS = [
   {
     id: "english",

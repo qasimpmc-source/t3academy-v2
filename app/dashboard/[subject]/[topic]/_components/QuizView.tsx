@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import type { Question } from "@/lib/curriculum/questions";
 import { createClient } from "@/lib/supabase/client";
@@ -28,6 +29,7 @@ function shuffle<T>(arr: T[]): T[] {
 }
 
 export default function QuizView({ subject, topicKey, questions, subjectColor, subjectLabel, topicLabel }: Props) {
+  const router = useRouter();
   const SESSION_SIZE = Math.min(10, questions.length);
   const [session] = useState<Question[]>(() => shuffle(questions).slice(0, SESSION_SIZE));
   const [index, setIndex] = useState(0);
@@ -61,6 +63,8 @@ export default function QuizView({ subject, topicKey, questions, subjectColor, s
   function handleNext() {
     if (index + 1 >= SESSION_SIZE) {
       setPhase("results");
+      // Flush the router cache so the dashboard re-fetches fresh stats
+      router.refresh();
     } else {
       setIndex(i => i + 1);
       setSelected(null);
