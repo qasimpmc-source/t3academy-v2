@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
+import { Playfair_Display, DM_Sans } from "next/font/google";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -8,22 +8,23 @@ const playfair = Playfair_Display({
   display: "swap",
 });
 
-const jakarta = Plus_Jakarta_Sans({
+const dmSans = DM_Sans({
   variable: "--font-sans",
   subsets: ["latin"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "T3 Academy",
-  description: "AI-powered exam preparation for 11 Plus and GCSE",
+  title: "T3 Academy — Test. Teach. Test Again.",
+  description:
+    "An online exam preparation platform with a dedicated AI tutor for every subject. 11+ and GCSE prep, verified question banks, mock exams, and progress reports.",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${playfair.variable} ${jakarta.variable} h-full`}>
+    <html lang="en" className={`${playfair.variable} ${dmSans.variable} h-full bg-[var(--color-bg)]`}>
       <body className="min-h-full flex flex-col antialiased">{children}</body>
     </html>
   );

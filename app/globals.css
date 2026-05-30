@@ -5,22 +5,22 @@
   --font-sans: var(--font-sans);
 
   /* Brand palette */
-  --color-bg:          #F8F6F2;
-  --color-bg2:         #FFFFFF;
-  --color-bg3:         #F2EFE9;
-  --color-card:        #FFFFFF;
-  --color-border:      #E8E2D9;
-  --color-border2:     #D5CEBD;
-  --color-text:        #1C1812;
-  --color-text2:       #5C5244;
+  --color-bg:          #FDFBF7;
+  --color-bg2:         #FFFEF9;
+  --color-bg3:         #F5F0E8;
+  --color-card:        #FFFEF9;
+  --color-border:      #ECE4D6;
+  --color-border2:     #DACFBC;
+  --color-text:        #1A1610;
+  --color-text2:       #7A6E5E;
   --color-text3:       #9C8E7E;
   --color-text4:       #C8B8A2;
 
   /* Amber */
-  --color-amber:       #D4860A;
-  --color-amber2:      #B8720A;
-  --color-amber-bg:    #FDF3E3;
-  --color-amber-pale:  #FEF9F0;
+  --color-amber:       #B87016;
+  --color-amber2:      #985C0F;
+  --color-amber-bg:    #FBF1E1;
+  --color-amber-pale:  #FEF8EF;
 
   /* Subject colours */
   --color-english:     #7C3AED;
