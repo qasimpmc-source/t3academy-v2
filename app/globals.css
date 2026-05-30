@@ -1,42 +1,33 @@
 @import "tailwindcss";
 
+/* T3 Academy theme */
 @theme inline {
-  --font-serif: var(--font-serif);
+  --font-display: var(--font-display);
   --font-sans: var(--font-sans);
 
-  /* Brand palette */
-  --color-bg:          #FDFBF7;
-  --color-bg2:         #FFFEF9;
-  --color-bg3:         #F5F0E8;
-  --color-card:        #FFFEF9;
-  --color-border:      #ECE4D6;
-  --color-border2:     #DACFBC;
-  --color-text:        #1A1610;
-  --color-text2:       #7A6E5E;
-  --color-text3:       #9C8E7E;
-  --color-text4:       #C8B8A2;
+  /* Core neutrals (deep ink) */
+  --color-bg:          #070B12;
+  --color-bg2:         #0B111B;
+  --color-bg3:         #0F1724;
+  --color-card:        #0E1622;
+  --color-surface:     #131D2C;
+  --color-border:      #1C293B;
+  --color-border2:     #2A3a52;
+  --color-text:        #EAF1F8;
+  --color-text2:       #9DAEC2;
+  --color-text3:       #6B7C93;
+  --color-text4:       #44546B;
 
-  /* Amber */
-  --color-amber:       #B87016;
-  --color-amber2:      #985C0F;
-  --color-amber-bg:    #FBF1E1;
-  --color-amber-pale:  #FEF8EF;
-
-  /* Subject colours */
-  --color-english:     #7C3AED;
-  --color-english-bg:  #F5F0FF;
-  --color-maths:       #1D6FDB;
-  --color-maths-bg:    #EEF5FF;
-  --color-verbal:      #0F7D4B;
-  --color-verbal-bg:   #EDFAF3;
-  --color-nvr:         #C2720A;
-  --color-nvr-bg:      #FFF7EA;
+  /* Accent (electric aqua) */
+  --color-accent:      #2FE6C4;
+  --color-accent2:     #19C8A8;
+  --color-accent-ink:  #041712;
+  --color-accent-bg:   rgba(47, 230, 196, 0.10);
+  --color-accent-line: rgba(47, 230, 196, 0.30);
 
   /* Feedback */
-  --color-green:       #15803D;
-  --color-green-bg:    #F0FDF4;
-  --color-red:         #B91C1C;
-  --color-red-bg:      #FFF1F1;
+  --color-green:       #34D399;
+  --color-red:         #F87171;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -45,11 +36,20 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-sans), system-ui, sans-serif;
-  background: var(--color-bg);
   color: var(--color-text);
+  background-color: var(--color-bg);
+  background-image:
+    radial-gradient(70% 55% at 50% -8%, rgba(47, 230, 196, 0.14), transparent 70%),
+    radial-gradient(45% 40% at 88% 8%, rgba(47, 230, 196, 0.06), transparent 70%),
+    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 52px 52px, 52px 52px;
+  background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
 }
 
-::-webkit-scrollbar { width: 5px; }
+.font-display { font-family: var(--font-display), system-ui, sans-serif; }
+
+::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--color-border2); border-radius: 3px; }

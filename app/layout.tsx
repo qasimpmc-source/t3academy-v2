@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Playfair_Display, DM_Sans } from "next/font/google";
+import { Space_Grotesk, DM_Sans } from "next/font/google";
 import "./globals.css";
 
-const playfair = Playfair_Display({
-  variable: "--font-serif",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-display",
   subsets: ["latin"],
   display: "swap",
 });
@@ -15,16 +15,16 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "T3 Academy — Test. Teach. Test Again.",
+  title: "T3 Academy | Test. Teach. Test again.",
   description:
-    "An online exam preparation platform with a dedicated AI tutor for every subject. 11+ and GCSE prep, verified question banks, mock exams, and progress reports.",
+    "Your one stop solution for all exam preparation. Verified question banks, timed mock exams, and a trained AI tutor for every subject.",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${playfair.variable} ${dmSans.variable} h-full bg-[var(--color-bg)]`}>
+    <html lang="en" className={`${spaceGrotesk.variable} ${dmSans.variable} h-full bg-bg`}>
       <body className="min-h-full flex flex-col antialiased">{children}</body>
     </html>
   );
