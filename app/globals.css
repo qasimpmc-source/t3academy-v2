@@ -39,16 +39,83 @@ body {
   color: var(--color-text);
   background-color: var(--color-bg);
   background-image:
-    radial-gradient(70% 55% at 50% -8%, rgba(47, 230, 196, 0.14), transparent 70%),
-    radial-gradient(45% 40% at 88% 8%, rgba(47, 230, 196, 0.06), transparent 70%),
     linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 52px 52px, 52px 52px;
+  background-size: 52px 52px, 52px 52px;
   background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
 }
 
+/* Slow-drifting aurora glow behind everything */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(38% 34% at 22% 20%, rgba(47, 230, 196, 0.13), transparent 70%),
+    radial-gradient(34% 32% at 80% 30%, rgba(47, 230, 196, 0.08), transparent 70%),
+    radial-gradient(40% 36% at 60% 88%, rgba(47, 230, 196, 0.06), transparent 70%);
+  animation: aurora-drift 22s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes aurora-drift {
+  0%   { transform: translate3d(-3%, -2%, 0) scale(1); }
+  50%  { transform: translate3d(3%, 2%, 0) scale(1.12); }
+  100% { transform: translate3d(-1%, 3%, 0) scale(1.05); }
+}
+
 .font-display { font-family: var(--font-display), system-ui, sans-serif; }
+
+/* Animated traveling-light border (the look from the CTA box) */
+@property --glow-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.glow-card {
+  position: relative;
+  isolation: isolate;
+}
+
+.glow-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background:
+    conic-gradient(
+      from var(--glow-angle),
+      transparent 0deg,
+      var(--color-accent) 70deg,
+      transparent 150deg,
+      transparent 360deg
+    ),
+    linear-gradient(0deg, var(--color-accent-line), var(--color-accent-line));
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: glow-spin 7s linear infinite;
+  pointer-events: none;
+}
+
+.glow-card--slow::before { animation-duration: 11s; }
+.glow-card--offset::before { animation-delay: -3.5s; }
+
+@keyframes glow-spin {
+  to { --glow-angle: 360deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before { animation: none; }
+  .glow-card::before { animation: none; }
+}
 
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
