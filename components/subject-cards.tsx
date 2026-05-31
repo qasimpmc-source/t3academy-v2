@@ -43,8 +43,9 @@ const SUBJECTS: Subject[] = [
   {
     icon: Brain,
     name: "Quick IQ Test",
-    teaser: "Bite-sized reasoning challenges with instant scoring.",
-    status: "soon",
+    teaser: "A standardised cognitive ability test with a full domain breakdown and downloadable certificate.",
+    status: "live",
+    href: "/iq-test",
   },
   {
     icon: Target,
