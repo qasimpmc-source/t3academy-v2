@@ -183,7 +183,59 @@
 @media (prefers-reduced-motion: reduce) {
   .t3-dark .aurora-bg::before { animation: none; }
   .glow-card::before { animation: none; }
+  .float-1, .float-2, .float-3 { animation: none; }
+  .orb-1, .orb-2, .orb-3 { animation: none; }
 }
+
+/* ── Homepage warm-cream animations ──────────────────────────────────────────── */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-12px) rotate(0.5deg); }
+}
+@keyframes float-mid {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-8px) rotate(-0.3deg); }
+}
+@keyframes float-fast {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
+}
+@keyframes orb-drift-1 {
+  0%   { transform: translate(0, 0); }
+  33%  { transform: translate(40px, -60px); }
+  66%  { transform: translate(-30px, 40px); }
+  100% { transform: translate(0, 0); }
+}
+@keyframes orb-drift-2 {
+  0%   { transform: translate(0, 0); }
+  33%  { transform: translate(-50px, 50px); }
+  66%  { transform: translate(35px, -45px); }
+  100% { transform: translate(0, 0); }
+}
+@keyframes orb-drift-3 {
+  0%   { transform: translate(0, 0); }
+  33%  { transform: translate(30px, 60px); }
+  66%  { transform: translate(-40px, -30px); }
+  100% { transform: translate(0, 0); }
+}
+@keyframes hp-card-lift {
+  0%, 100% { transform: translateY(0px); box-shadow: 0 4px 20px rgba(200,154,94,0.08); }
+  50%       { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(200,154,94,0.14); }
+}
+@keyframes hp-subtle-glow {
+  0%, 100% { box-shadow: 0 4px 20px rgba(200,154,94,0.08); }
+  50%       { box-shadow: 0 8px 32px rgba(200,154,94,0.16); }
+}
+
+.float-1 { animation: float-slow 6s ease-in-out infinite; }
+.float-2 { animation: float-mid  7s ease-in-out infinite; }
+.float-3 { animation: float-fast 5s ease-in-out infinite; }
+
+.orb-1 { animation: orb-drift-1 20s ease-in-out infinite; }
+.orb-2 { animation: orb-drift-2 24s ease-in-out infinite; }
+.orb-3 { animation: orb-drift-3 28s ease-in-out infinite; }
+
+.hp-glow { animation: hp-subtle-glow 4s ease-in-out infinite; }
 
 .font-display { font-family: var(--font-display), system-ui, sans-serif; }
 

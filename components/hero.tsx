@@ -1,85 +1,91 @@
 import Link from "next/link";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { HP } from "./hp-tokens";
 
-const STATS = [
-  { value: "364", label: "exam questions" },
-  { value: "26", label: "topics covered" },
-  { value: "2", label: "AI tutors" },
-];
+// Decorative owl outline SVG — faithful to the original HTML
+function OwlDecoration() {
+  return (
+    <div
+      className="float-1"
+      style={{
+        position: "absolute",
+        top: 16,
+        right: 24,
+        opacity: 0.06,
+        pointerEvents: "none",
+      }}
+    >
+      <svg width="160" height="160" viewBox="0 0 140 140" fill="none">
+        <circle cx="70" cy="60" r="40" stroke="#C89A5E" strokeWidth="2" />
+        <circle cx="55" cy="52" r="10" stroke="#C89A5E" strokeWidth="2" />
+        <circle cx="85" cy="52" r="10" stroke="#C89A5E" strokeWidth="2" />
+        <path d="M60 75 L70 85 L80 75" stroke="#C89A5E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M40 30 L50 45" stroke="#C89A5E" strokeWidth="2" strokeLinecap="round" />
+        <path d="M100 30 L90 45" stroke="#C89A5E" strokeWidth="2" strokeLinecap="round" />
+        <polygon points="70,100 55,130 85,130" stroke="#C89A5E" strokeWidth="2" fill="none" />
+      </svg>
+    </div>
+  );
+}
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden">
-      {/* Subtle radial glow centered behind headline */}
-      <div
-        aria-hidden="true"
-        className="pulse-glow pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 h-[480px] w-[680px] rounded-full"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, rgba(47,230,196,0.13) 0%, transparent 70%)",
-        }}
-      />
+    <section
+      style={{
+        maxWidth: 1152,
+        margin: "0 auto",
+        padding: "48px 24px 80px",
+        position: "relative",
+        fontFamily: "Trebuchet MS, system-ui, sans-serif",
+      }}
+    >
+      <OwlDecoration />
 
-      <div className="relative mx-auto max-w-6xl px-6 pb-20 pt-20 md:pb-28 md:pt-28">
-        <div className="mx-auto max-w-2xl text-center">
+      <div style={{ maxWidth: 560, position: "relative", zIndex: 1 }}>
+        <h1
+          style={{
+            fontFamily: "Georgia, serif",
+            fontSize: "clamp(40px, 6vw, 72px)",
+            fontWeight: 700,
+            color: HP.dark,
+            lineHeight: 1.1,
+            margin: "0 0 24px",
+            letterSpacing: "-0.02em",
+          }}
+        >
+          Test, Teach and Test Again.
+        </h1>
 
-          {/* Badge */}
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-accent-line bg-accent-bg px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-accent">
-            <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-            GL Assessment 11 Plus prep
-          </div>
+        <p
+          style={{
+            fontSize: "clamp(16px, 2vw, 20px)",
+            color: HP.muted,
+            lineHeight: 1.7,
+            margin: "0 0 32px",
+            maxWidth: 480,
+          }}
+        >
+          A home for curious minds.
+        </p>
 
-          {/* Headline */}
-          <h1 className="font-display text-5xl font-bold leading-[1.05] tracking-tight text-text sm:text-6xl md:text-7xl">
-            Test. Teach.{" "}
-            <span
-              className="relative inline-block text-accent"
-              style={{
-                textShadow: "0 0 40px rgba(47,230,196,0.35)",
-              }}
-            >
-              Test again.
-            </span>
-          </h1>
-
-          {/* Body */}
-          <p className="mx-auto mt-6 max-w-lg text-pretty text-lg leading-relaxed text-text2">
-            Verified question banks, timed mock exams, and a trained AI tutor
-            that teaches every topic — then tests it until it sticks.
-          </p>
-
-          {/* CTAs */}
-          <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-            <Link
-              href="/auth/signup"
-              className="inline-flex items-center gap-2 rounded-xl bg-accent px-8 py-4 text-base font-semibold text-accent-ink transition-all hover:bg-accent2 hover:shadow-[0_0_28px_rgba(47,230,196,0.35)]"
-            >
-              Start free today
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-            <Link
-              href="#subjects"
-              className="inline-flex items-center gap-2 rounded-xl border border-border2 bg-transparent px-8 py-4 text-base font-semibold text-text2 transition-all hover:border-accent-line hover:text-text"
-            >
-              Explore platform
-            </Link>
-          </div>
-
-          {/* Stats row */}
-          <div className="mt-12 flex items-center justify-center gap-0 divide-x divide-border2">
-            {STATS.map(({ value, label }) => (
-              <div key={label} className="px-8 text-center">
-                <div
-                  className="font-display text-2xl font-bold text-accent"
-                  style={{ textShadow: "0 0 20px rgba(47,230,196,0.4)" }}
-                >
-                  {value}
-                </div>
-                <div className="mt-0.5 text-xs text-text3">{label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <Link
+          href="#products"
+          style={{
+            display: "inline-block",
+            background: HP.gold,
+            color: HP.dark,
+            fontWeight: 700,
+            fontSize: 14,
+            padding: "12px 32px",
+            borderRadius: 6,
+            textDecoration: "none",
+            letterSpacing: "0.04em",
+            textTransform: "uppercase",
+            transition: "opacity 0.15s",
+          }}
+          className="hover:opacity-85"
+        >
+          Explore T3 Academy
+        </Link>
       </div>
     </section>
   );

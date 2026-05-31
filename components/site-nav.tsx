@@ -1,44 +1,92 @@
 import Link from "next/link";
-import { GraduationCap } from "lucide-react";
+import { HP } from "./hp-tokens";
 
 export function SiteNav() {
   return (
-    <nav className="sticky top-0 z-50 border-b border-border bg-bg/70 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-        <Link href="/" className="flex items-center gap-2.5">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent text-accent-ink">
-            <GraduationCap className="h-5 w-5" aria-hidden="true" />
-          </span>
-          <span className="font-display text-lg font-bold tracking-tight text-text">
-            T3 Academy
-          </span>
+    <nav
+      style={{
+        fontFamily: "Trebuchet MS, system-ui, sans-serif",
+        position: "relative",
+        zIndex: 10,
+      }}
+    >
+      <div
+        style={{
+          maxWidth: 1152,
+          margin: "0 auto",
+          padding: "20px 24px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        {/* Brand */}
+        <Link
+          href="/"
+          style={{
+            fontFamily: "Georgia, serif",
+            fontSize: 20,
+            fontWeight: 700,
+            color: HP.dark,
+            textDecoration: "none",
+            letterSpacing: "-0.02em",
+          }}
+        >
+          T3 Academy
         </Link>
 
-        <div className="hidden items-center gap-1 md:flex">
-          <Link
-            href="#subjects"
-            className="rounded-lg px-3 py-2 text-sm font-medium text-text2 transition-colors hover:text-text"
-          >
-            Subjects
-          </Link>
-          <Link
-            href="#tutors"
-            className="rounded-lg px-3 py-2 text-sm font-medium text-text2 transition-colors hover:text-text"
-          >
-            AI Tutors
-          </Link>
+        {/* Centre links — desktop only */}
+        <div
+          className="hidden md:flex"
+          style={{ gap: 24, fontSize: 14, color: HP.muted }}
+        >
+          {(
+            [
+              { label: "Products", href: "#products" },
+              { label: "Why T3",   href: "#why"      },
+              { label: "About",    href: "#footer"   },
+            ] as const
+          ).map(({ label, href }) => (
+            <a
+              key={label}
+              href={href}
+              style={{ color: HP.muted, textDecoration: "none" }}
+              className="transition-colors hover:text-[#C89A5E]"
+            >
+              {label}
+            </a>
+          ))}
         </div>
 
-        <div className="flex items-center gap-2">
+        {/* Auth */}
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <Link
             href="/auth/login"
-            className="rounded-xl px-4 py-2 text-sm font-medium text-text2 transition-colors hover:text-text"
+            style={{
+              fontSize: 14,
+              fontWeight: 500,
+              color: HP.muted,
+              textDecoration: "none",
+              padding: "8px 14px",
+              borderRadius: 6,
+            }}
+            className="transition-colors hover:text-[#1A1610]"
           >
             Log in
           </Link>
           <Link
             href="/auth/signup"
-            className="rounded-xl bg-accent px-4 py-2 text-sm font-semibold text-accent-ink transition-colors hover:bg-accent2"
+            style={{
+              fontSize: 13,
+              fontWeight: 700,
+              color: HP.dark,
+              background: HP.gold,
+              textDecoration: "none",
+              padding: "9px 18px",
+              borderRadius: 6,
+              letterSpacing: "0.02em",
+            }}
+            className="transition-opacity hover:opacity-85"
           >
             Start free
           </Link>

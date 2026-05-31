@@ -1,158 +1,222 @@
+"use client";
+
 import Link from "next/link";
-import {
-  GraduationCap,
-  Calculator,
-  Lightbulb,
-  Brain,
-  Target,
-  Smile,
-  ArrowRight,
-  Lock,
-  type LucideIcon,
-} from "lucide-react";
+import { Brain } from "lucide-react";
+import { FadeUp } from "./fade-up";
+import { HP } from "./hp-tokens";
 
-type Subject = {
-  icon: LucideIcon;
-  name: string;
-  teaser: string;
-  status: "live" | "soon";
-  href?: string;
-};
+// Inline owl icon for card 1 (matches the original SVG icon style)
+function OwlIcon() {
+  return (
+    <svg
+      viewBox="0 0 40 40"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      width="48"
+      height="48"
+    >
+      <circle cx="20" cy="18" r="10" />
+      <circle cx="15" cy="15" r="3" />
+      <circle cx="25" cy="15" r="3" />
+      <path d="M17 23 L20 26 L23 23" />
+      <path d="M12 8 L14 12" />
+      <path d="M28 8 L26 12" />
+    </svg>
+  );
+}
 
-const SUBJECTS: Subject[] = [
+// Book-open icon inline SVG
+function BookOpenIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      width="48"
+      height="48"
+    >
+      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+    </svg>
+  );
+}
+
+const PRODUCTS = [
   {
-    icon: GraduationCap,
-    name: "11+ Exam Prep",
-    teaser: "English, Maths, Verbal and Non-Verbal Reasoning with Ollie the Owl.",
-    status: "live",
+    icon: <OwlIcon />,
+    name: "T3 11+ Prep",
+    blurb: "AI-powered preparation for the GL Assessment. Meet Ollie.",
+    tag: "Ages 9 to 11",
+    topBorder: HP.gold,
+    tagColor: HP.gold,
+    linkColor: HP.gold,
+    linkBorder: HP.gold,
     href: "/auth/signup",
+    cta: "Start preparing",
+    floatClass: "float-1",
   },
   {
-    icon: Calculator,
-    name: "GCSE Revision",
-    teaser: "Core subjects, exam technique and past-paper drills with Nova.",
-    status: "live",
+    icon: <BookOpenIcon />,
+    name: "T3 Secondary",
+    blurb: "Subject zones, practice tools, and enrichment for secondary school students.",
+    tag: "Ages 11 to 18",
+    topBorder: HP.sage,
+    tagColor: HP.sage,
+    linkColor: HP.sage,
+    linkBorder: HP.sage,
     href: "/auth/signup",
+    cta: "Explore subjects",
+    floatClass: "float-2",
   },
   {
-    icon: Lightbulb,
-    name: "General Knowledge",
-    teaser: "Curious facts and quizzes that make learning feel like play.",
-    status: "soon",
-  },
-  {
-    icon: Brain,
-    name: "Quick IQ Test",
-    teaser: "A standardised cognitive ability test with a full domain breakdown and downloadable certificate.",
-    status: "live",
+    icon: <Brain size={48} />,
+    name: "T3 Mind Score",
+    blurb: "A free adaptive IQ test. Get your score, your breakdown, and a certificate.",
+    tag: "All ages",
+    topBorder: HP.rose,
+    tagColor: HP.rose,
+    linkColor: HP.rose,
+    linkBorder: HP.rose,
     href: "/iq-test",
-  },
-  {
-    icon: Target,
-    name: "Aptitude Test",
-    teaser: "Discover natural strengths across logic, numbers and words.",
-    status: "soon",
-  },
-  {
-    icon: Smile,
-    name: "Personality Test",
-    teaser: "A friendly profile of how each learner works best.",
-    status: "soon",
+    cta: "Take the test",
+    floatClass: "float-3",
   },
 ];
 
-function LiveCard({ subject }: { subject: Subject }) {
-  const Icon = subject.icon;
-  return (
-    <Link
-      href={subject.href ?? "#"}
-      className="glow-card group relative flex flex-col rounded-2xl bg-card p-6 transition-all hover:-translate-y-0.5"
-    >
-      {/* Inner radial glow */}
-      <div
-        aria-hidden="true"
-        className="pulse-glow pointer-events-none absolute inset-x-0 -top-8 mx-auto h-32 w-2/3 rounded-full"
-        style={{
-          background: "radial-gradient(ellipse, rgba(47,230,196,0.12) 0%, transparent 70%)",
-        }}
-      />
-
-      <div className="relative mb-5 flex items-center justify-between">
-        <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-accent-bg text-accent transition-colors group-hover:bg-accent group-hover:text-accent-ink">
-          <Icon className="h-6 w-6" aria-hidden="true" />
-        </span>
-        {/* Gold "Live" badge */}
-        <span
-          className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider"
-          style={{
-            background: "var(--color-gold-bg)",
-            color: "var(--color-gold)",
-            border: "1px solid var(--color-gold-line)",
-          }}
-        >
-          <span
-            className="h-1.5 w-1.5 rounded-full"
-            style={{ background: "var(--color-gold)" }}
-            aria-hidden="true"
-          />
-          Live
-        </span>
-      </div>
-
-      <h3 className="relative mb-1.5 text-lg font-bold text-text">{subject.name}</h3>
-      <p className="relative mb-5 flex-1 text-sm leading-relaxed text-text2">{subject.teaser}</p>
-      <span className="relative inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
-        Start learning
-        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
-      </span>
-    </Link>
-  );
-}
-
-function SoonCard({ subject }: { subject: Subject }) {
-  const Icon = subject.icon;
-  return (
-    <div className="glow-card glow-card--dim glow-card--slow relative flex flex-col rounded-2xl bg-bg2 p-6">
-      <div className="mb-5 flex items-center justify-between">
-        <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-bg3 text-text3">
-          <Icon className="h-6 w-6" aria-hidden="true" />
-        </span>
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-border2 bg-bg px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-text3">
-          <Lock className="h-3 w-3" aria-hidden="true" />
-          Soon
-        </span>
-      </div>
-      <h3 className="mb-1.5 text-lg font-bold text-text">{subject.name}</h3>
-      <p className="text-sm leading-relaxed text-text2">{subject.teaser}</p>
-    </div>
-  );
-}
-
 export function SubjectCards() {
   return (
-    <section id="subjects" className="border-y border-border bg-bg2/60 py-20 md:py-24">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="mb-12 max-w-2xl">
-          <div className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-accent">
-            Subjects
-          </div>
-          <h2 className="font-display text-3xl font-bold tracking-tight text-text md:text-4xl">
-            Live now, with much more on the way
-          </h2>
-          <p className="mt-3 text-base leading-relaxed text-text2">
-            Start with our flagship exam-prep courses today. New subjects are
-            being built with the same depth and care.
-          </p>
-        </div>
+    <section
+      id="products"
+      style={{
+        padding: "80px 24px",
+        position: "relative",
+        fontFamily: "Trebuchet MS, system-ui, sans-serif",
+      }}
+    >
+      <div style={{ maxWidth: 1152, margin: "0 auto" }}>
+        <h2
+          style={{
+            fontFamily: "Georgia, serif",
+            fontSize: "clamp(28px, 4vw, 40px)",
+            fontWeight: 700,
+            color: HP.dark,
+            margin: "0 0 56px",
+            letterSpacing: "-0.02em",
+          }}
+        >
+          Three ways to learn.
+        </h2>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {SUBJECTS.map((s) =>
-            s.status === "live" ? (
-              <LiveCard key={s.name} subject={s} />
-            ) : (
-              <SoonCard key={s.name} subject={s} />
-            )
-          )}
+        <div
+          className="grid md:grid-cols-3"
+          style={{ gap: 32, position: "relative", zIndex: 1 }}
+        >
+          {PRODUCTS.map((p, i) => (
+            <FadeUp key={p.name} delay={i * 0.15}>
+              <div
+                className={`hp-glow ${p.floatClass} group`}
+                style={{
+                  background: HP.surface,
+                  borderRadius: 10,
+                  padding: "32px",
+                  borderTop: `3px solid ${p.topBorder}`,
+                  position: "relative",
+                  overflow: "hidden",
+                  cursor: "default",
+                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                }}
+                onMouseEnter={(e) => {
+                  const el = e.currentTarget as HTMLDivElement;
+                  el.style.transform = "translateY(-4px)";
+                  el.style.boxShadow = "0 12px 40px rgba(200,154,94,0.15)";
+                }}
+                onMouseLeave={(e) => {
+                  const el = e.currentTarget as HTMLDivElement;
+                  el.style.transform = "translateY(0)";
+                  el.style.boxShadow = "";
+                }}
+              >
+                {/* Hover tint overlay */}
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    background: `linear-gradient(135deg, ${p.topBorder}08 0%, transparent 100%)`,
+                    opacity: 0,
+                    transition: "opacity 0.3s",
+                    pointerEvents: "none",
+                  }}
+                  className="group-hover:opacity-100"
+                />
+
+                <div style={{ position: "relative", zIndex: 1 }}>
+                  {/* Icon */}
+                  <div style={{ color: p.topBorder, marginBottom: 24, width: 48, height: 48 }}>
+                    {p.icon}
+                  </div>
+
+                  <h3
+                    style={{
+                      fontFamily: "Georgia, serif",
+                      fontSize: 20,
+                      fontWeight: 700,
+                      color: HP.dark,
+                      margin: "0 0 8px",
+                    }}
+                  >
+                    {p.name}
+                  </h3>
+
+                  <p
+                    style={{
+                      fontSize: 14,
+                      color: HP.muted,
+                      lineHeight: 1.65,
+                      margin: "0 0 16px",
+                    }}
+                  >
+                    {p.blurb}
+                  </p>
+
+                  <span
+                    style={{
+                      fontSize: 11,
+                      fontWeight: 700,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.1em",
+                      color: p.tagColor,
+                    }}
+                  >
+                    {p.tag}
+                  </span>
+
+                  <div style={{ marginTop: 24 }}>
+                    <Link
+                      href={p.href}
+                      style={{
+                        fontSize: 14,
+                        fontWeight: 700,
+                        color: HP.dark,
+                        textDecoration: "none",
+                        borderBottom: `1px solid ${p.linkBorder}`,
+                        paddingBottom: 2,
+                        transition: "color 0.15s",
+                      }}
+                      className="hover:text-[#C89A5E]"
+                    >
+                      {p.cta} &rarr;
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </FadeUp>
+          ))}
         </div>
       </div>
     </section>

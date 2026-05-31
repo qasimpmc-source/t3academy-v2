@@ -1,88 +1,119 @@
-import { Feather, Sparkles, MessageCircle } from "lucide-react";
+"use client";
 
-const TUTORS = [
+import { FadeUp } from "./fade-up";
+import { HP } from "./hp-tokens";
+
+// Inline SVG icons matching original Lucide style
+function BrainIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="28" height="28">
+      <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2Z" />
+      <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2Z" />
+    </svg>
+  );
+}
+function ShieldCheckIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="28" height="28">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      <polyline points="9 12 11 14 15 10" />
+    </svg>
+  );
+}
+function UnlockIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="28" height="28">
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+      <path d="M7 11V7a5 5 0 0 1 9.9-1" />
+    </svg>
+  );
+}
+
+const REASONS = [
   {
-    icon: Feather,
-    name: "Ollie the Owl",
-    subject: "11+ Exam Prep",
-    emoji: "🦉",
-    personality:
-      "Patient and encouraging. Ollie breaks every tricky reasoning question into clear, calm steps — coaching, not lecturing.",
-    quote: "Let's look at this one together. What do you notice first?",
-    glowClass: "glow-card",
+    icon: <BrainIcon />,
+    iconColor: HP.gold,
+    bg: "rgba(200,154,94,0.06)",
+    border: HP.gold,
+    title: "Dedicated AI tutor",
+    body: "Trained in your subject. Personalised, adaptive, always learning with you.",
+    floatClass: "float-1",
   },
   {
-    icon: Sparkles,
-    name: "Nova",
-    subject: "GCSE Revision",
-    emoji: "✨",
-    personality:
-      "Sharp and motivating. Nova drills exam technique and keeps every session focused on what actually scores marks.",
-    quote: "Nice work. Now let's push for the top band. Show your method.",
-    glowClass: "glow-card glow-card--offset glow-card--slow",
+    icon: <ShieldCheckIcon />,
+    iconColor: HP.sage,
+    bg: "rgba(127,168,150,0.06)",
+    border: HP.sage,
+    title: "Vetted by professionals",
+    body: "Question banks reviewed and approved by subject matter experts.",
+    floatClass: "float-2",
+  },
+  {
+    icon: <UnlockIcon />,
+    iconColor: HP.rose,
+    bg: "rgba(168,124,124,0.06)",
+    border: HP.rose,
+    title: "Free to start",
+    body: "No sign-up required for the IQ test. Get started in seconds.",
+    floatClass: "float-3",
   },
 ];
 
 export function AiTutorShowcase() {
   return (
-    <section id="tutors" className="mx-auto max-w-6xl px-6 py-20 md:py-24">
-      <div className="mb-14 text-center">
-        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-accent-line bg-accent-bg px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-accent">
-          <MessageCircle className="h-3.5 w-3.5" aria-hidden="true" />
-          Not a generic chatbot
-        </div>
-        <h2 className="font-display text-3xl font-bold tracking-tight text-text md:text-4xl">
-          A trained AI tutor for every subject
+    <section
+      id="why"
+      style={{
+        padding: "80px 24px",
+        position: "relative",
+        fontFamily: "Trebuchet MS, system-ui, sans-serif",
+      }}
+    >
+      <div style={{ maxWidth: 1152, margin: "0 auto" }}>
+        <h2
+          style={{
+            fontFamily: "Georgia, serif",
+            fontSize: "clamp(28px, 4vw, 40px)",
+            fontWeight: 700,
+            color: HP.dark,
+            margin: "0 0 56px",
+            letterSpacing: "-0.02em",
+          }}
+        >
+          Why T3 Academy.
         </h2>
-        <p className="mx-auto mt-3 max-w-lg text-base leading-relaxed text-text2">
-          Each tutor has its own personality, voice, and teaching style — tuned
-          to the subject and the level it serves.
-        </p>
-      </div>
 
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-        {TUTORS.map((t) => (
-          <div
-            key={t.name}
-            className={`${t.glowClass} relative flex flex-col rounded-2xl bg-card p-7`}
-          >
-            {/* Inner glow blob */}
-            <div
-              aria-hidden="true"
-              className="pulse-glow pulse-glow--slow pointer-events-none absolute inset-x-0 top-0 mx-auto h-28 w-1/2 rounded-full"
-              style={{
-                background:
-                  "radial-gradient(ellipse, rgba(47,230,196,0.10) 0%, transparent 70%)",
-              }}
-            />
-
-            <div className="relative flex items-center gap-4">
-              <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-accent-bg text-3xl ring-1 ring-accent-line">
-                {t.emoji}
+        <div className="grid md:grid-cols-3" style={{ gap: 40 }}>
+          {REASONS.map((r, i) => (
+            <FadeUp key={r.title} delay={i * 0.15}>
+              <div
+                className={r.floatClass}
+                style={{
+                  background: r.bg,
+                  borderLeft: `3px solid ${r.border}`,
+                  borderRadius: 10,
+                  padding: "24px",
+                }}
+              >
+                <div style={{ color: r.iconColor, marginBottom: 16 }}>{r.icon}</div>
+                <h4
+                  style={{
+                    fontFamily: "Georgia, serif",
+                    fontSize: 18,
+                    fontWeight: 700,
+                    color: HP.dark,
+                    margin: "0 0 8px",
+                  }}
+                >
+                  {r.title}
+                </h4>
+                <p style={{ fontSize: 14, color: HP.muted, lineHeight: 1.65, margin: 0 }}>
+                  {r.body}
+                </p>
               </div>
-              <div>
-                <h3 className="text-lg font-bold text-text">{t.name}</h3>
-                <p className="text-sm font-medium text-accent">{t.subject}</p>
-              </div>
-            </div>
-
-            <p className="relative mt-5 text-sm leading-relaxed text-text2">{t.personality}</p>
-
-            {/* Quote block */}
-            <div
-              className="relative mt-5 rounded-xl p-4"
-              style={{
-                background: "var(--color-bg3)",
-                border: "1px solid var(--color-border)",
-                borderLeft: "3px solid var(--color-accent)",
-              }}
-            >
-              <p className="text-sm italic leading-relaxed text-text">
-                &ldquo;{t.quote}&rdquo;
-              </p>
-            </div>
-          </div>
-        ))}
+            </FadeUp>
+          ))}
+        </div>
       </div>
     </section>
   );
