@@ -46,6 +46,12 @@
   --color-accent-ink:  #fff;
   --color-accent-bg:   #FDF3E3;
   --color-accent-line: rgba(212,134,10,0.30);
+
+  /* Gold — secondary accent (homepage only) */
+  --color-gold:        #D4860A;
+  --color-gold-ink:    #fff;
+  --color-gold-bg:     #FDF3E3;
+  --color-gold-line:   rgba(212,134,10,0.30);
 }
 
 /* ── Homepage dark theme scope ──────────────────────────────── */
@@ -70,6 +76,12 @@
 
   --color-green:       #34D399;
   --color-red:         #F87171;
+
+  /* Warm gold — secondary accent for badges, stats, highlights */
+  --color-gold:        #F0B42A;
+  --color-gold-ink:    #1a0f00;
+  --color-gold-bg:     rgba(240, 180, 42, 0.12);
+  --color-gold-line:   rgba(240, 180, 42, 0.35);
 
   color-scheme: dark;
 }
@@ -139,12 +151,34 @@
   animation: glow-spin 7s linear infinite;
   pointer-events: none;
 }
-.glow-card--slow::before  { animation-duration: 11s; }
+.glow-card--slow::before   { animation-duration: 11s; }
 .glow-card--offset::before { animation-delay: -3.5s; }
+.glow-card--dim::before    { opacity: 0.28; }
+
+/* Gold-tinted glow variant */
+.glow-card--gold::before {
+  background:
+    conic-gradient(
+      from var(--glow-angle),
+      transparent 0deg,
+      var(--color-gold) 70deg,
+      transparent 150deg,
+      transparent 360deg
+    ),
+    linear-gradient(0deg, var(--color-gold-line), var(--color-gold-line));
+}
 
 @keyframes glow-spin {
   to { --glow-angle: 360deg; }
 }
+
+/* Pulsing glow blob (used inside cards) */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.18; transform: scale(1); }
+  50%       { opacity: 0.32; transform: scale(1.15); }
+}
+.pulse-glow { animation: pulse-glow 4s ease-in-out infinite; }
+.pulse-glow--slow { animation-duration: 6s; }
 
 @media (prefers-reduced-motion: reduce) {
   .t3-dark .aurora-bg::before { animation: none; }

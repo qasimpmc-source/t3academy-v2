@@ -3,21 +3,44 @@ import { GraduationCap, ArrowRight } from "lucide-react";
 
 export function FinalCta() {
   return (
-    <section className="mx-auto max-w-6xl px-6 pb-20 md:pb-24">
-      <div className="relative overflow-hidden rounded-3xl border border-accent-line bg-bg2 px-8 py-14 text-center md:py-20">
+    <section className="mx-auto max-w-6xl px-6 pb-20 md:pb-28">
+      {/* glow-card gives the animated spinning border; glow-card--slow makes it stately */}
+      <div className="glow-card glow-card--slow relative overflow-hidden rounded-3xl bg-bg2 px-8 py-16 text-center md:py-24">
+        {/* Animated radial glow blob — pulsing */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 -top-24 mx-auto h-56 w-[28rem] rounded-full bg-accent/20 blur-3xl"
+          className="pulse-glow pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-64 w-[32rem] rounded-full"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, rgba(47,230,196,0.18) 0%, transparent 65%)",
+          }}
         />
-        <h2 className="relative text-balance font-display text-3xl font-bold tracking-tight text-text md:text-4xl">
-          Test. Teach. <span className="text-accent">Test again.</span>
+        {/* Second softer blob offset upward */}
+        <div
+          aria-hidden="true"
+          className="pulse-glow pulse-glow--slow pointer-events-none absolute left-1/2 -top-16 -translate-x-1/2 h-48 w-96 rounded-full"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, rgba(240,180,42,0.08) 0%, transparent 70%)",
+          }}
+        />
+
+        <h2 className="relative font-display text-3xl font-bold tracking-tight text-text md:text-5xl">
+          Test. Teach.{" "}
+          <span
+            className="text-accent"
+            style={{ textShadow: "0 0 32px rgba(47,230,196,0.4)" }}
+          >
+            Test again.
+          </span>
         </h2>
-        <p className="relative mx-auto mt-4 max-w-md text-pretty text-base leading-relaxed text-text2">
-          Your one stop solution for all exam preparation. Start free today.
+        <p className="relative mx-auto mt-5 max-w-md text-pretty text-base leading-relaxed text-text2 md:text-lg">
+          Your one stop solution for all exam preparation. Start free today — no
+          credit card needed.
         </p>
         <Link
           href="/auth/signup"
-          className="relative mt-8 inline-flex items-center gap-2 rounded-xl bg-accent px-7 py-3.5 text-base font-semibold text-accent-ink transition-colors hover:bg-accent2"
+          className="relative mt-9 inline-flex items-center gap-2 rounded-xl bg-accent px-8 py-4 text-base font-semibold text-accent-ink transition-all hover:bg-accent2 hover:shadow-[0_0_32px_rgba(47,230,196,0.4)]"
         >
           Create your free account
           <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -78,9 +101,7 @@ export function SiteFooter() {
           <p className="text-sm text-text3">
             © {new Date().getFullYear()} T3 Academy. All rights reserved.
           </p>
-          <p className="text-sm font-medium text-text2">
-            Test. Teach. Test again.
-          </p>
+          <p className="text-sm font-medium text-text2">Test. Teach. Test again.</p>
         </div>
       </div>
     </footer>
@@ -96,16 +117,11 @@ function FooterCol({
 }) {
   return (
     <div>
-      <h3 className="mb-3 text-xs font-bold uppercase tracking-wider text-text3">
-        {title}
-      </h3>
+      <h3 className="mb-3 text-xs font-bold uppercase tracking-wider text-text3">{title}</h3>
       <ul className="flex flex-col gap-2.5">
         {links.map((l) => (
           <li key={l.label}>
-            <Link
-              href={l.href}
-              className="text-sm text-text2 transition-colors hover:text-accent"
-            >
+            <Link href={l.href} className="text-sm text-text2 transition-colors hover:text-accent">
               {l.label}
             </Link>
           </li>
