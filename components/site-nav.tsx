@@ -14,18 +14,18 @@ export function SiteNav() {
         style={{
           maxWidth: 1152,
           margin: "0 auto",
-          padding: "20px 24px",
+          padding: "22px 32px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
         }}
       >
-        {/* Brand */}
+        {/* Wordmark */}
         <Link
           href="/"
           style={{
             fontFamily: "Georgia, serif",
-            fontSize: 20,
+            fontSize: 19,
             fontWeight: 700,
             color: HP.dark,
             textDecoration: "none",
@@ -35,31 +35,31 @@ export function SiteNav() {
           T3 Academy
         </Link>
 
-        {/* Centre links — desktop only */}
+        {/* Centre nav links — desktop */}
         <div
           className="hidden md:flex"
-          style={{ gap: 24, fontSize: 14, color: HP.muted }}
+          style={{ gap: 32, fontSize: 14 }}
         >
           {(
             [
-              { label: "Products", href: "#products" },
-              { label: "Why T3",   href: "#why"      },
-              { label: "About",    href: "#footer"   },
+              { label: "Products",  href: "#products" },
+              { label: "Why T3",    href: "#why"      },
+              { label: "About",     href: "#footer"   },
             ] as const
           ).map(({ label, href }) => (
             <a
               key={label}
               href={href}
               style={{ color: HP.muted, textDecoration: "none" }}
-              className="transition-colors hover:text-[#C89A5E]"
+              className="transition-colors hover:text-[#1A1610]"
             >
               {label}
             </a>
           ))}
         </div>
 
-        {/* Auth */}
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        {/* Right side: Log in + Free IQ Quiz */}
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <Link
             href="/auth/login"
             style={{
@@ -67,28 +67,29 @@ export function SiteNav() {
               fontWeight: 500,
               color: HP.muted,
               textDecoration: "none",
-              padding: "8px 14px",
-              borderRadius: 6,
+              padding: "8px 12px",
             }}
             className="transition-colors hover:text-[#1A1610]"
           >
             Log in
           </Link>
           <Link
-            href="/auth/signup"
+            href="/iq-test"
             style={{
               fontSize: 13,
-              fontWeight: 700,
+              fontWeight: 600,
               color: HP.dark,
-              background: HP.gold,
               textDecoration: "none",
               padding: "9px 18px",
-              borderRadius: 6,
-              letterSpacing: "0.02em",
+              borderRadius: 999,
+              border: `1.5px solid ${HP.dark}`,
+              background: "transparent",
+              letterSpacing: "0.01em",
+              whiteSpace: "nowrap",
             }}
-            className="transition-opacity hover:opacity-85"
+            className="transition-colors hover:bg-[#1A1610] hover:text-[#F5F1EB]"
           >
-            Start free
+            Free IQ Quiz
           </Link>
         </div>
       </div>

@@ -1,92 +1,79 @@
 import Link from "next/link";
 import { HP } from "./hp-tokens";
 
-// Decorative owl outline SVG — faithful to the original HTML
-function OwlDecoration() {
-  return (
-    <div
-      className="float-1"
-      style={{
-        position: "absolute",
-        top: 16,
-        right: 24,
-        opacity: 0.06,
-        pointerEvents: "none",
-      }}
-    >
-      <svg width="160" height="160" viewBox="0 0 140 140" fill="none">
-        <circle cx="70" cy="60" r="40" stroke="#C89A5E" strokeWidth="2" />
-        <circle cx="55" cy="52" r="10" stroke="#C89A5E" strokeWidth="2" />
-        <circle cx="85" cy="52" r="10" stroke="#C89A5E" strokeWidth="2" />
-        <path d="M60 75 L70 85 L80 75" stroke="#C89A5E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M40 30 L50 45" stroke="#C89A5E" strokeWidth="2" strokeLinecap="round" />
-        <path d="M100 30 L90 45" stroke="#C89A5E" strokeWidth="2" strokeLinecap="round" />
-        <polygon points="70,100 55,130 85,130" stroke="#C89A5E" strokeWidth="2" fill="none" />
-      </svg>
-    </div>
-  );
-}
-
 export function Hero() {
   return (
     <section
       style={{
-        maxWidth: 1152,
-        margin: "0 auto",
-        padding: "48px 24px 80px",
-        position: "relative",
+        padding: "80px 24px 96px",
+        textAlign: "center",
         fontFamily: "Trebuchet MS, system-ui, sans-serif",
+        position: "relative",
+        zIndex: 1,
       }}
     >
-      <OwlDecoration />
+      {/* Headline — two lines, large serif */}
+      <h1
+        style={{
+          fontFamily: "Georgia, serif",
+          fontSize: "clamp(52px, 8vw, 96px)",
+          fontWeight: 700,
+          color: HP.dark,
+          lineHeight: 1.05,
+          letterSpacing: "-0.03em",
+          margin: "0 0 28px",
+        }}
+      >
+        Test. Teach.
+        <br />
+        Test again.
+      </h1>
 
-      <div style={{ maxWidth: 560, position: "relative", zIndex: 1 }}>
-        <h1
-          style={{
-            fontFamily: "Georgia, serif",
-            fontSize: "clamp(40px, 6vw, 72px)",
-            fontWeight: 700,
-            color: HP.dark,
-            lineHeight: 1.1,
-            margin: "0 0 24px",
-            letterSpacing: "-0.02em",
-          }}
-        >
-          Test, Teach and Test Again.
-        </h1>
+      {/* Sub-headline */}
+      <p
+        style={{
+          fontSize: "clamp(16px, 2vw, 19px)",
+          color: HP.muted,
+          lineHeight: 1.6,
+          margin: "0 auto 36px",
+          maxWidth: 420,
+        }}
+      >
+        A home for curious minds. A new way to learn.
+      </p>
 
-        <p
-          style={{
-            fontSize: "clamp(16px, 2vw, 20px)",
-            color: HP.muted,
-            lineHeight: 1.7,
-            margin: "0 0 32px",
-            maxWidth: 480,
-          }}
-        >
-          A home for curious minds.
-        </p>
+      {/* Primary CTA — Wisprflow-style pill button */}
+      <Link
+        href="#products"
+        style={{
+          display: "inline-block",
+          background: "#7C6AE8",
+          color: "#ffffff",
+          fontFamily: "Trebuchet MS, system-ui, sans-serif",
+          fontWeight: 600,
+          fontSize: 16,
+          padding: "14px 36px",
+          borderRadius: 999,
+          border: "2px solid #000000",
+          textDecoration: "none",
+          letterSpacing: "0.01em",
+          transition: "opacity 0.15s",
+        }}
+        className="hover:opacity-90"
+      >
+        Explore T3 Academy &rarr;
+      </Link>
 
-        <Link
-          href="#products"
-          style={{
-            display: "inline-block",
-            background: HP.gold,
-            color: HP.dark,
-            fontWeight: 700,
-            fontSize: 14,
-            padding: "12px 32px",
-            borderRadius: 6,
-            textDecoration: "none",
-            letterSpacing: "0.04em",
-            textTransform: "uppercase",
-            transition: "opacity 0.15s",
-          }}
-          className="hover:opacity-85"
-        >
-          Explore T3 Academy
-        </Link>
-      </div>
+      {/* Social-proof micro-copy */}
+      <p
+        style={{
+          marginTop: 16,
+          fontSize: 13,
+          color: HP.muted,
+        }}
+      >
+        No card required &nbsp;&middot;&nbsp; Start in 30 seconds
+      </p>
     </section>
   );
 }
