@@ -1,138 +1,96 @@
 import Link from "next/link";
 
 const C = {
-  primary:         "#d2bbff",
-  primaryContainer:"#7c3aed",
-  secondary:       "#44e2cd",
-  onSurface:       "#e0e3e5",
-  onSurfaceVariant:"#ccc3d8",
-  onPrimaryFixed:  "#25005a",
-  surfaceContainerLowest: "#0b0f10",
-};
-
-const MONO: React.CSSProperties = {
-  fontFamily: "var(--font-mono-brand), 'JetBrains Mono', monospace",
-  fontSize: 10,
-  letterSpacing: "0.2em",
+  primary: "#95d3ba", onPrimary: "#003829",
+  primaryContainer: "#064e3b",
+  secondary: "#e9c349", onSecondaryContainer: "#342800",
+  onSurface: "#e5e2e1", onSurfaceVariant: "#bfc9c3",
+  surfaceContainerLowest: "#0e0e0e",
 };
 
 // ── Final CTA ─────────────────────────────────────────────────────────────────
 
 export function FinalCta() {
   return (
-    <section style={{ padding: "120px 40px", maxWidth: 1440, margin: "0 auto" }}>
+    <section style={{ padding: "64px 24px", maxWidth: 1440, margin: "0 auto" }}>
       <div
         className="glass-card"
         style={{
           padding: "80px 40px",
           textAlign: "center",
+          background: "rgba(6,78,59,0.20)",
+          borderColor: "rgba(255,255,255,0.10)",
           position: "relative",
           overflow: "hidden",
-          border: "1px solid rgba(255,255,255,0.10)",
         }}
       >
-        {/* Glow blobs */}
-        <div aria-hidden="true" style={{ position: "absolute", top: -160, left: -160, width: 600, height: 600, borderRadius: "50%", background: `${C.primary}1A`, filter: "blur(120px)", pointerEvents: "none" }} />
-        <div aria-hidden="true" style={{ position: "absolute", bottom: -160, right: -160, width: 600, height: 600, borderRadius: "50%", background: `${C.secondary}0D`, filter: "blur(120px)", pointerEvents: "none" }} />
+        {/* Radial glow */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            top: -160, right: -160,
+            width: 600, height: 600,
+            borderRadius: "50%",
+            background: `${C.primary}1A`,
+            filter: "blur(120px)",
+            pointerEvents: "none",
+          }}
+        />
 
-        {/* Corner accents */}
-        {[
-          { top: 16, left: 16, borderTop: true, borderLeft: true },
-          { top: 16, right: 16, borderTop: true, borderRight: true },
-          { bottom: 16, left: 16, borderBottom: true, borderLeft: true },
-          { bottom: 16, right: 16, borderBottom: true, borderRight: true },
-        ].map((pos, i) => (
-          <div
-            key={i}
-            aria-hidden="true"
-            style={{
-              position: "absolute",
-              width: 16,
-              height: 16,
-              ...Object.fromEntries(
-                Object.entries(pos)
-                  .filter(([k]) => !["borderTop","borderBottom","borderLeft","borderRight"].includes(k))
-                  .map(([k, v]) => [k, v])
-              ),
-              borderTop:    pos.borderTop    ? "1px solid rgba(255,255,255,0.20)" : "none",
-              borderBottom: pos.borderBottom ? "1px solid rgba(255,255,255,0.20)" : "none",
-              borderLeft:   pos.borderLeft   ? "1px solid rgba(255,255,255,0.20)" : "none",
-              borderRight:  pos.borderRight  ? "1px solid rgba(255,255,255,0.20)" : "none",
-              pointerEvents: "none",
-            }}
-          />
-        ))}
-
-        {/* Content */}
         <h2
           style={{
             fontFamily: "var(--font-montserrat), 'Montserrat', sans-serif",
-            fontSize: "clamp(32px,5vw,60px)",
-            fontWeight: 800,
-            lineHeight: 1.15,
+            fontWeight: 700,
+            fontSize: "clamp(36px,6vw,72px)",
+            lineHeight: 1.1,
             letterSpacing: "-0.02em",
             color: C.onSurface,
-            maxWidth: 800,
-            margin: "0 auto 48px",
+            margin: "0 0 32px",
             position: "relative",
             zIndex: 1,
           }}
         >
-          Redefine your{" "}
-          <span
-            className="text-glow-purple"
-            style={{ fontStyle: "italic", color: C.primary, fontWeight: 800 }}
-          >
-            academic potential.
-          </span>
+          Exams{" "}
+          <span style={{ fontStyle: "italic", color: C.primary }}>done right.</span>
         </h2>
 
         <p
           style={{
-            fontFamily: "var(--font-hanken), 'Hanken Grotesk', sans-serif",
-            fontSize: 20,
-            fontWeight: 300,
-            color: `${C.onSurfaceVariant}B3`,
-            maxWidth: 640,
+            fontFamily: "var(--font-montserrat), sans-serif",
+            fontWeight: 400,
+            fontSize: 18,
+            color: `${C.onSurfaceVariant}CC`,
+            maxWidth: 480,
             margin: "0 auto 64px",
-            lineHeight: 1.7,
+            lineHeight: 1.6,
             position: "relative",
             zIndex: 1,
           }}
         >
-          Join the next cohort of high-attaining students architecting their future through engineering-grade education.
+          Secure your spot. Your AI tutor is ready.
         </p>
 
-        <div style={{ position: "relative", zIndex: 1 }}>
-          <Link
-            href="/auth/signup"
-            className="brutalist-btn hover:scale-105 active:scale-95"
-            style={{
-              background: C.primaryContainer,
-              color: "#ffffff",
-              fontFamily: "var(--font-montserrat), sans-serif",
-              fontWeight: 700,
-              fontSize: 24,
-              letterSpacing: "-0.01em",
-              padding: "28px 64px",
-              textDecoration: "none",
-              display: "inline-block",
-              transition: "transform 0.2s",
-            }}
-          >
-            Secure Your Spot
-          </Link>
-          <div
-            style={{
-              ...MONO,
-              marginTop: 48,
-              color: `${C.onSurfaceVariant}66`,
-              letterSpacing: "0.5em",
-            }}
-          >
-            LIMITED ENROLLMENT CAPACITY
-          </div>
-        </div>
+        <Link
+          href="/auth/signup"
+          className="brutalist-btn hover:scale-105 active:scale-95"
+          style={{
+            background: C.secondary,
+            color: C.onSecondaryContainer,
+            fontFamily: "var(--font-montserrat), sans-serif",
+            fontWeight: 700,
+            fontSize: 24,
+            letterSpacing: "-0.01em",
+            padding: "28px 64px",
+            textDecoration: "none",
+            display: "inline-block",
+            transition: "transform 0.2s",
+            position: "relative",
+            zIndex: 1,
+          }}
+        >
+          Get started today
+        </Link>
       </div>
     </section>
   );
@@ -140,84 +98,64 @@ export function FinalCta() {
 
 // ── Footer ────────────────────────────────────────────────────────────────────
 
-const FOOTER_LINKS = {
-  INSTITUTION: [
-    { label: "PRIVACY_POLICY",   href: "#" },
-    { label: "TERMS_OF_SERVICE", href: "#" },
-    { label: "CONTACT_SECURE",   href: "mailto:hello@t3academy.co.uk" },
-  ],
-  COMMUNITY: [
-    { label: "ALUMNI_NET",    href: "#" },
-    { label: "CAREERS_OPEN", href: "#" },
-    { label: "PRESS_ASSETS", href: "#" },
-  ],
-};
-
 export function SiteFooter() {
   return (
     <footer
       style={{
         background: C.surfaceContainerLowest,
-        padding: "96px 80px",
+        padding: "64px 24px",
         borderTop: "1px solid rgba(255,255,255,0.05)",
         position: "relative",
         zIndex: 10,
       }}
     >
       <div
-        className="grid grid-cols-12"
+        className="grid grid-cols-1 md:grid-cols-12"
         style={{ maxWidth: 1440, margin: "0 auto", gap: 48 }}
       >
-        {/* Brand */}
-        <div className="col-span-12 md:col-span-6">
-          <div
-            style={{
-              fontFamily: "var(--font-montserrat), sans-serif",
-              fontWeight: 700,
-              fontSize: 22,
-              letterSpacing: "-0.02em",
-              color: C.onSurface,
-              marginBottom: 32,
-            }}
-          >
+        {/* Left — brand */}
+        <div className="md:col-span-4">
+          <div style={{ fontWeight: 700, fontSize: 22, letterSpacing: "-0.02em", color: C.onSurface, marginBottom: 16, fontFamily: "var(--font-montserrat), sans-serif" }}>
             T3 Academy
           </div>
-          <p
-            style={{
-              fontFamily: "var(--font-hanken), sans-serif",
-              fontSize: 16,
-              color: `${C.onSurfaceVariant}99`,
-              maxWidth: 320,
-              lineHeight: 1.6,
-              marginBottom: 48,
-            }}
-          >
-            Precision-engineered curriculum systems architected for the next generation of academic leaders.
-          </p>
-          <p style={{ ...MONO, color: `${C.onSurfaceVariant}4D`, letterSpacing: "0.3em" }}>
-            &copy; 2024 T3 ACADEMY. ALL SYSTEMS NOMINAL.
+          <p style={{ fontSize: 16, color: `${C.onSurfaceVariant}99`, fontFamily: "var(--font-montserrat), sans-serif" }}>
+            A home for curious minds.
           </p>
         </div>
 
-        {/* Links */}
-        <div className="col-span-12 md:col-span-6 grid grid-cols-2" style={{ gap: 48 }}>
-          {Object.entries(FOOTER_LINKS).map(([section, links]) => (
-            <div key={section} style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-              <span style={{ ...MONO, color: C.primary, letterSpacing: "0.4em", marginBottom: 16 }}>
-                {section}
-              </span>
-              {links.map(({ label, href }) => (
-                <Link
-                  key={label}
-                  href={href}
-                  style={{ ...MONO, color: `${C.onSurfaceVariant}99`, textDecoration: "none", transition: "color 0.2s" }}
-                  className="hover:text-[#44e2cd]"
-                >
-                  {label}
-                </Link>
-              ))}
-            </div>
+        {/* Centre — links */}
+        <div className="md:col-span-4 flex justify-center items-center flex-wrap" style={{ gap: 24 }}>
+          {[
+            { label: "11+ Prep", href: "/auth/signup" },
+            { label: "GCSE",     href: "/auth/signup" },
+            { label: "IQ Test",  href: "/iq-test"     },
+            { label: "About",    href: "#"             },
+          ].map(({ label, href }, i, arr) => (
+            <span key={label} style={{ display: "flex", alignItems: "center", gap: 24 }}>
+              <Link href={href} style={{ fontWeight: 600, fontSize: 14, letterSpacing: "0.05em", color: `${C.onSurfaceVariant}99`, textDecoration: "none", transition: "color 0.2s" }} className="hover:text-[#95d3ba]">
+                {label}
+              </Link>
+              {i < arr.length - 1 && <span style={{ color: "rgba(255,255,255,0.10)" }}>|</span>}
+            </span>
           ))}
+        </div>
+
+        {/* Right — URL */}
+        <div className="md:col-span-4 flex md:justify-end items-center">
+          <a
+            href="https://t3academy.co.uk"
+            style={{
+              fontFamily: "var(--font-mono-brand), 'JetBrains Mono', monospace",
+              fontSize: 12,
+              color: `${C.primary}99`,
+              letterSpacing: "0.1em",
+              textDecoration: "none",
+              transition: "color 0.2s",
+            }}
+            className="hover:text-[#95d3ba]"
+          >
+            t3academy.co.uk
+          </a>
         </div>
       </div>
     </footer>

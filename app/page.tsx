@@ -1,22 +1,22 @@
 import { SiteNav } from "@/components/site-nav";
 import { Hero } from "@/components/hero";
+import { ProblemSolution } from "@/components/problem-solution";
 import { SubjectCards } from "@/components/subject-cards";
 import { AiTutorShowcase } from "@/components/ai-tutor-showcase";
 import { FinalCta, SiteFooter } from "@/components/site-footer";
-import { MouseParallax } from "@/components/mouse-parallax";
 
 export default function LandingPage() {
   return (
     <div
       style={{
-        background: "radial-gradient(circle at 80% 20%, #2d1b4d 0%, #101415 70%)",
-        color: "#e0e3e5",
+        background: "radial-gradient(circle at 50% 0%, #064e3b 0%, #131313 80%)",
+        color: "#e5e2e1",
         overflowX: "hidden",
         minHeight: "100vh",
-        fontFamily: "var(--font-hanken), 'Hanken Grotesk', system-ui, sans-serif",
+        fontFamily: "var(--font-montserrat), 'Montserrat', system-ui, sans-serif",
       }}
     >
-      {/* Dark noise texture overlay */}
+      {/* Noise texture */}
       <div
         aria-hidden="true"
         style={{
@@ -28,18 +28,14 @@ export default function LandingPage() {
           zIndex: 50,
         }}
       />
-
-      {/* Architectural grid lines */}
+      {/* Green-tinted grid overlay */}
       <div className="architectural-overlay" aria-hidden="true" />
 
-      {/* Mouse parallax — client island */}
-      <MouseParallax />
-
-      {/* All content above overlays */}
       <div style={{ position: "relative", zIndex: 10 }}>
         <SiteNav />
-        <main style={{ paddingTop: 96 }}>
+        <main style={{ paddingTop: 80 }}>
           <Hero />
+          <ProblemSolution />
           <SubjectCards />
           <AiTutorShowcase />
           <FinalCta />

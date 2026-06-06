@@ -1,79 +1,48 @@
-const C = {
-  primary:         "#d2bbff",
-  onSurface:       "#e0e3e5",
-  onSurfaceVariant:"#ccc3d8",
-  surface:         "#101415",
-  surfaceContainerLowest: "#0b0f10",
-};
+const C = { primary: "#95d3ba", onSurface: "#e5e2e1", onSurfaceVariant: "#bfc9c3", surface: "#131313" };
 
 const STEPS = [
-  { icon: "route",     num: "01", title: "Select Path",     body: "Curated programs optimized for distinct academic goals." },
-  { icon: "edit_note", num: "02", title: "Analyse Limits",  body: "Adaptive testing engine designed to probe cognitive boundaries." },
-  { icon: "bolt",      num: "03", title: "System Feedback", body: "Instant logic decomposition for every performance vector." },
-  { icon: "insights",  num: "04", title: "Mastery Logs",    body: "High-fidelity visualisation of your academic progression." },
+  { num: "01", title: "Pick your path",        body: "Choose your exam track. Your starting point, your pace." },
+  { num: "02", title: "Attempt a question",    body: "Calibrated questions matched to your level." },
+  { num: "03", title: "Get instant feedback",  body: "The AI tutor explains the answer, diagnoses the mistake, and generates fresh practice." },
+  { num: "04", title: "Track your growth",     body: "Mastery scores update in real time. Weaknesses become strengths." },
 ];
-
-const MONO: React.CSSProperties = {
-  fontFamily: "var(--font-mono-brand), 'JetBrains Mono', monospace",
-};
 
 export function AiTutorShowcase() {
   return (
     <section
       id="how-it-works"
       style={{
-        padding: "120px 40px",
+        padding: "64px 24px",
+        background: "rgba(14,14,14,0.50)",
         borderTop: "1px solid rgba(255,255,255,0.05)",
         borderBottom: "1px solid rgba(255,255,255,0.05)",
-        background: "rgba(11,15,16,0.80)",
       }}
     >
       <div style={{ maxWidth: 1440, margin: "0 auto" }}>
-        {/* Header */}
         <div style={{ textAlign: "center", marginBottom: 96 }}>
-          <span
-            style={{
-              ...MONO,
-              fontSize: 10,
-              color: C.primary,
-              letterSpacing: "0.5em",
-              display: "block",
-              marginBottom: 24,
-            }}
-          >
-            EXECUTION MODEL
-          </span>
           <h2
             style={{
               fontFamily: "var(--font-montserrat), 'Montserrat', sans-serif",
-              fontSize: "clamp(28px,3.5vw,36px)",
-              fontWeight: 700,
-              letterSpacing: "-0.02em",
+              fontWeight: 600,
+              fontSize: "clamp(28px,4vw,36px)",
               color: C.onSurface,
-              margin: "0 0 24px",
+              margin: "0 0 16px",
             }}
           >
-            The T3 Lifecycle
+            How T3 works.
           </h2>
           <p
             style={{
-              fontFamily: "var(--font-hanken), 'Hanken Grotesk', sans-serif",
+              fontFamily: "var(--font-montserrat), sans-serif",
               fontSize: 16,
               color: `${C.onSurfaceVariant}99`,
-              maxWidth: 480,
-              margin: "0 auto",
-              lineHeight: 1.6,
             }}
           >
-            Mastery is a recursive function of evaluation and adaptation.
+            A recursive cycle of continuous improvement.
           </p>
         </div>
 
-        {/* Steps */}
-        <div
-          className="grid grid-cols-1 md:grid-cols-4"
-          style={{ gap: 64, position: "relative" }}
-        >
+        <div className="grid grid-cols-1 md:grid-cols-4" style={{ gap: 48, position: "relative" }}>
           {/* Connecting line */}
           <div
             className="hidden md:block"
@@ -83,43 +52,33 @@ export function AiTutorShowcase() {
               left: 0,
               right: 0,
               height: 1,
-              background: "rgba(255,255,255,0.05)",
+              background: "rgba(255,255,255,0.10)",
               zIndex: 0,
             }}
           />
 
-          {STEPS.map(({ icon, num, title, body }) => (
-            <div
-              key={num}
-              style={{ textAlign: "center", position: "relative", zIndex: 1 }}
-              className="group"
-            >
-              {/* Icon box */}
+          {STEPS.map(({ num, title, body }) => (
+            <div key={num} style={{ textAlign: "center", position: "relative", zIndex: 1 }}>
               <div
                 style={{
                   width: 80,
                   height: 80,
-                  margin: "0 auto 40px",
+                  margin: "0 auto 32px",
                   background: C.surface,
-                  border: "1px solid rgba(255,255,255,0.10)",
+                  border: `1px solid ${C.primary}33`,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  position: "relative",
-                  transition: "border-color 0.5s, transform 0.5s",
+                  transition: "border-color 0.3s",
                 }}
-                className="group-hover:border-[#d2bbff80] group-hover:-translate-y-2"
+                className="hover:border-[#95d3ba]"
               >
-                <span className="material-symbols-outlined" style={{ color: C.primary, fontSize: 32 }}>{icon}</span>
-                {/* Number badge */}
                 <span
                   style={{
-                    ...MONO,
-                    position: "absolute",
-                    top: -8,
-                    right: -8,
-                    fontSize: 8,
-                    color: "rgba(255,255,255,0.2)",
+                    fontFamily: "var(--font-mono-brand), 'JetBrains Mono', monospace",
+                    fontSize: 20,
+                    fontWeight: 500,
+                    color: C.primary,
                   }}
                 >
                   {num}
@@ -131,7 +90,6 @@ export function AiTutorShowcase() {
                   fontFamily: "var(--font-montserrat), sans-serif",
                   fontWeight: 600,
                   fontSize: 18,
-                  letterSpacing: "-0.01em",
                   color: C.onSurface,
                   margin: "0 0 16px",
                 }}
@@ -140,11 +98,11 @@ export function AiTutorShowcase() {
               </h4>
               <p
                 style={{
-                  fontFamily: "var(--font-hanken), sans-serif",
+                  fontFamily: "var(--font-montserrat), sans-serif",
                   fontSize: 14,
                   color: `${C.onSurfaceVariant}B3`,
                   lineHeight: 1.6,
-                  padding: "0 16px",
+                  padding: "0 8px",
                 }}
               >
                 {body}
