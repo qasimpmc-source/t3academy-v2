@@ -1,17 +1,36 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Plus_Jakarta_Sans, Space_Grotesk, Montserrat } from "next/font/google";
+import {
+  Playfair_Display,
+  Plus_Jakarta_Sans,
+  Space_Grotesk,
+  Montserrat,
+  Hanken_Grotesk,
+  JetBrains_Mono,
+} from "next/font/google";
 import "./globals.css";
 
 // Dashboard fonts
-const playfair = Playfair_Display({ variable: "--font-serif",   subsets: ["latin"], display: "swap" });
-const jakarta  = Plus_Jakarta_Sans({ variable: "--font-sans",    subsets: ["latin"], display: "swap" });
-const spaceGrotesk = Space_Grotesk({ variable: "--font-display", subsets: ["latin"], display: "swap" });
+const playfair    = Playfair_Display({ variable: "--font-serif",    subsets: ["latin"], display: "swap" });
+const jakarta     = Plus_Jakarta_Sans({ variable: "--font-sans",     subsets: ["latin"], display: "swap" });
+const spaceGrotesk = Space_Grotesk({ variable: "--font-display",   subsets: ["latin"], display: "swap" });
 
 // Homepage fonts
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
   weight: ["400", "600", "700", "800"],
+  display: "swap",
+});
+const hanken = Hanken_Grotesk({
+  variable: "--font-hanken",
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  display: "swap",
+});
+const jetbrains = JetBrains_Mono({
+  variable: "--font-mono-brand",
+  subsets: ["latin"],
+  weight: ["400", "500"],
   display: "swap",
 });
 
@@ -25,15 +44,18 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${jakarta.variable} ${spaceGrotesk.variable} ${montserrat.variable} h-full`}
+      className={[
+        playfair.variable,
+        jakarta.variable,
+        spaceGrotesk.variable,
+        montserrat.variable,
+        hanken.variable,
+        jetbrains.variable,
+        "h-full",
+      ].join(" ")}
     >
       <head>
-        {/* Atkinson Hyperlegible Next — body font for MD3 homepage */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;600&display=swap"
-          rel="stylesheet"
-        />
-        {/* Material Symbols — icon font for MD3 homepage */}
+        {/* Material Symbols — icon font */}
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
           rel="stylesheet"

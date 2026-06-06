@@ -3,22 +3,49 @@ import { Hero } from "@/components/hero";
 import { SubjectCards } from "@/components/subject-cards";
 import { AiTutorShowcase } from "@/components/ai-tutor-showcase";
 import { FinalCta, SiteFooter } from "@/components/site-footer";
+import { MouseParallax } from "@/components/mouse-parallax";
 
 export default function LandingPage() {
   return (
-    // bg-background = #f7f9fb per MD3 design system
-    <div style={{ background: "#f7f9fb", color: "#191c1e", overflowX: "hidden" }}>
-      {/* Fixed nav — pushes content down by its height (80px) */}
-      <SiteNav />
+    <div
+      style={{
+        background: "radial-gradient(circle at 80% 20%, #2d1b4d 0%, #101415 70%)",
+        color: "#e0e3e5",
+        overflowX: "hidden",
+        minHeight: "100vh",
+        fontFamily: "var(--font-hanken), 'Hanken Grotesk', system-ui, sans-serif",
+      }}
+    >
+      {/* Dark noise texture overlay */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "fixed",
+          inset: 0,
+          backgroundImage: "url('https://www.transparenttextures.com/patterns/asfalt-dark.png')",
+          opacity: 0.03,
+          pointerEvents: "none",
+          zIndex: 50,
+        }}
+      />
 
-      <main style={{ paddingTop: 80 }}>
-        <Hero />
-        <SubjectCards />
-        <AiTutorShowcase />
-        <FinalCta />
-      </main>
+      {/* Architectural grid lines */}
+      <div className="architectural-overlay" aria-hidden="true" />
 
-      <SiteFooter />
+      {/* Mouse parallax — client island */}
+      <MouseParallax />
+
+      {/* All content above overlays */}
+      <div style={{ position: "relative", zIndex: 10 }}>
+        <SiteNav />
+        <main style={{ paddingTop: 96 }}>
+          <Hero />
+          <SubjectCards />
+          <AiTutorShowcase />
+          <FinalCta />
+        </main>
+        <SiteFooter />
+      </div>
     </div>
   );
 }
