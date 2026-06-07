@@ -86,6 +86,37 @@
   color-scheme: dark;
 }
 
+/* ── 11+ Dashboard emerald theme ───────────────────────────── */
+.t3-emerald {
+  --color-bg:          #022c22;
+  --color-bg2:         #011a13;
+  --color-bg3:         #064e3b;
+  --color-card:        #0a2a1e;
+  --color-surface:     #0d3326;
+  --color-border:      rgba(149,211,186,0.15);
+  --color-border2:     rgba(149,211,186,0.25);
+  --color-text:        #e5e2e1;
+  --color-text2:       #bfc9c3;
+  --color-text3:       #89938d;
+  --color-text4:       #404944;
+
+  --color-amber:       #e9c349;
+  --color-amber2:      #d4a017;
+  --color-amber-bg:    rgba(233,195,73,0.12);
+  --color-amber-pale:  rgba(233,195,73,0.06);
+
+  --color-accent:      #95d3ba;
+  --color-accent2:     #80bea6;
+  --color-accent-ink:  #003829;
+  --color-accent-bg:   rgba(149,211,186,0.10);
+  --color-accent-line: rgba(149,211,186,0.25);
+
+  --color-green:       #95d3ba;
+  --color-red:         #f87171;
+
+  color-scheme: dark;
+}
+
 /* Aurora glow — only inside .t3-dark */
 .t3-dark .aurora-bg {
   position: relative;

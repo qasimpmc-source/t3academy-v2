@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Trophy, Target, Flame, Zap, Star, Award } from "lucide-react";
+import { Trophy, Target, Flame, Zap } from "lucide-react";
 
 interface Props {
   totalDone: number;
@@ -24,23 +24,43 @@ export function StatsSection({ totalDone, accuracy, trophies, streak }: Props) {
   const stats = [
     {
       label: "Questions Done", value: String(totalDone), subtitle: "all topics",
-      icon: Target, gradient: "from-blue-400 to-cyan-400",
-      bg: "#eff6ff", iconBg: "#dbeafe", textColor: "#1d4ed8",
+      icon: Target,
+      bg: "linear-gradient(135deg, #064e3b 0%, #022c22 100%)",
+      border: "rgba(149,211,186,0.25)",
+      iconBg: "rgba(149,211,186,0.15)",
+      iconColor: "#95d3ba",
+      valueColor: "#95d3ba",
+      glowColor: "rgba(149,211,186,0.12)",
     },
     {
       label: "Accuracy", value: accuracy !== null ? `${accuracy}%` : "—", subtitle: "overall",
-      icon: Zap, gradient: "from-emerald-400 to-teal-400",
-      bg: "#f0fdf4", iconBg: "#dcfce7", textColor: "#15803d",
+      icon: Zap,
+      bg: "linear-gradient(135deg, #0a3d2e 0%, #022c22 100%)",
+      border: "rgba(149,211,186,0.2)",
+      iconBg: "rgba(149,211,186,0.12)",
+      iconColor: "#95d3ba",
+      valueColor: "#b0f0d6",
+      glowColor: "rgba(149,211,186,0.08)",
     },
     {
       label: "Trophies", value: String(trophies), subtitle: "earned",
-      icon: Trophy, gradient: "from-amber-400 to-orange-400",
-      bg: "#fffbeb", iconBg: "#fef3c7", textColor: "#d97706",
+      icon: Trophy,
+      bg: "linear-gradient(135deg, #3a2800 0%, #1e1600 100%)",
+      border: "rgba(233,195,73,0.3)",
+      iconBg: "rgba(233,195,73,0.15)",
+      iconColor: "#e9c349",
+      valueColor: "#e9c349",
+      glowColor: "rgba(233,195,73,0.1)",
     },
     {
       label: "Streak", value: String(streak), subtitle: "days",
-      icon: Flame, gradient: "from-rose-400 to-pink-400",
-      bg: "#fff1f2", iconBg: "#ffe4e6", textColor: "#e11d48",
+      icon: Flame,
+      bg: "linear-gradient(135deg, #2d1e00 0%, #1a1200 100%)",
+      border: "rgba(233,195,73,0.25)",
+      iconBg: "rgba(233,195,73,0.12)",
+      iconColor: "#d4a017",
+      valueColor: "#e9c349",
+      glowColor: "rgba(233,195,73,0.08)",
     },
   ];
 
@@ -55,31 +75,24 @@ export function StatsSection({ totalDone, accuracy, trophies, streak }: Props) {
         <motion.div
           key={stat.label}
           variants={itemVariants}
-          whileHover={{
-            scale: 1.03,
-            rotate: index % 2 === 0 ? 1 : -1,
-            transition: { type: "spring", stiffness: 300 },
-          }}
+          whileHover={{ scale: 1.03, y: -4, transition: { type: "spring", stiffness: 300 } }}
           className="relative overflow-hidden rounded-2xl p-3 cursor-pointer group"
           style={{
             background: stat.bg,
-            border: "2px solid rgba(255,255,255,0.6)",
-            boxShadow: "0 4px 16px rgba(28,24,18,0.08)",
+            border: `1px solid ${stat.border}`,
+            boxShadow: `0 4px 20px rgba(0,0,0,0.3)`,
           }}
         >
-          {/* Background glow */}
-          <div
-            className={`absolute -right-4 -bottom-4 w-20 h-20 rounded-full bg-gradient-to-br ${stat.gradient} opacity-20 group-hover:opacity-30 transition-opacity`}
-          />
+          <div className="absolute -right-4 -bottom-4 w-20 h-20 rounded-full pointer-events-none"
+            style={{ background: stat.glowColor, filter: "blur(16px)" }} />
 
           <div className="relative">
             <div className="flex items-center gap-2 mb-2">
               <div className="w-8 h-8 rounded-xl flex items-center justify-center"
                 style={{ background: stat.iconBg }}>
-                <stat.icon className="w-4 h-4" style={{ color: stat.textColor }} />
+                <stat.icon className="w-4 h-4" style={{ color: stat.iconColor }} />
               </div>
-              <p className="text-[10px] font-bold uppercase tracking-widest"
-                style={{ color: "var(--color-text3)" }}>
+              <p className="text-[10px] font-bold uppercase tracking-widest" style={{ color: "#89938d" }}>
                 {stat.label}
               </p>
             </div>
@@ -87,35 +100,16 @@ export function StatsSection({ totalDone, accuracy, trophies, streak }: Props) {
             <div className="flex items-baseline gap-1">
               <motion.span
                 className="text-2xl font-bold"
-                style={{ color: stat.textColor, fontFamily: "var(--font-serif)" }}
+                style={{ color: stat.valueColor, fontFamily: "'Montserrat', system-ui, sans-serif" }}
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.5 + index * 0.1, type: "spring" }}
               >
                 {stat.value}
               </motion.span>
-              <span className="text-xs" style={{ color: "var(--color-text3)" }}>{stat.subtitle}</span>
+              <span className="text-xs" style={{ color: "#89938d" }}>{stat.subtitle}</span>
             </div>
           </div>
-
-          {stat.label === "Streak" && (
-            <motion.div
-              animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="absolute top-3 right-3"
-            >
-              <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-            </motion.div>
-          )}
-          {stat.label === "Trophies" && (
-            <motion.div
-              animate={{ opacity: [0.5, 1, 0.5], scale: [1, 1.1, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="absolute top-3 right-3"
-            >
-              <Award className="w-4 h-4 text-amber-500" />
-            </motion.div>
-          )}
         </motion.div>
       ))}
     </motion.div>

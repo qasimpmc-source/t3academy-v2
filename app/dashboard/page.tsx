@@ -22,12 +22,10 @@ export default async function DashboardPage() {
   const firstName = profile?.full_name?.split(" ")[0] ?? "Explorer";
   const streak = profile?.streak ?? 0;
 
-  // Overall stats
   const totalDone = attempts?.length ?? 0;
   const totalCorrect = attempts?.filter(a => a.correct).length ?? 0;
   const overallAccuracy = totalDone > 0 ? Math.round((totalCorrect / totalDone) * 100) : null;
 
-  // Per-subject stats
   type SubjectStat = { done: number; correct: number; topics: Set<string> };
   const subjectStats: Record<string, SubjectStat> = {};
   for (const a of attempts ?? []) {
@@ -37,7 +35,6 @@ export default async function DashboardPage() {
     subjectStats[a.subject].topics.add(a.topic);
   }
 
-  // Trophies = topics with ≥90% accuracy on 5+ attempts
   type TopicStat = { total: number; correct: number };
   const topicStats: Record<string, TopicStat> = {};
   for (const a of attempts ?? []) {
@@ -50,7 +47,6 @@ export default async function DashboardPage() {
     s => s.total >= 5 && Math.round((s.correct / s.total) * 100) >= 90
   ).length;
 
-  // Shape stats for SubjectCardsNew
   const cardStats = Object.fromEntries(
     SUBJECT_IDS.map(id => {
       const ss = subjectStats[id];
@@ -64,36 +60,29 @@ export default async function DashboardPage() {
 
   return (
     <div className="flex flex-1 overflow-hidden">
-      {/* ── Main content ── */}
       <main className="flex-1 overflow-y-auto">
-        {/* Ambient background glows */}
+        {/* Ambient glows — emerald/gold palette */}
         <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
-          <div className="absolute top-20 left-10 w-64 h-64 rounded-full blur-3xl"
-            style={{ background: "rgba(251,191,36,0.12)" }} />
+          <div className="absolute top-20 left-10 w-72 h-72 rounded-full blur-3xl"
+            style={{ background: "rgba(6,78,59,0.35)" }} />
           <div className="absolute top-1/3 right-20 w-80 h-80 rounded-full blur-3xl"
-            style={{ background: "rgba(253,186,116,0.1)" }} />
+            style={{ background: "rgba(149,211,186,0.06)" }} />
           <div className="absolute bottom-20 left-1/3 w-72 h-72 rounded-full blur-3xl"
-            style={{ background: "rgba(251,191,36,0.08)" }} />
+            style={{ background: "rgba(233,195,73,0.05)" }} />
         </div>
 
         <div className="max-w-4xl mx-auto px-6 py-4 space-y-4">
           <WelcomeBanner firstName={firstName} />
-          <StatsSection
-            totalDone={totalDone}
-            accuracy={overallAccuracy}
-            trophies={trophies}
-            streak={streak}
-          />
+          <StatsSection totalDone={totalDone} accuracy={overallAccuracy} trophies={trophies} streak={streak} />
           <SubjectCardsNew stats={cardStats} />
           <DailyTip />
         </div>
       </main>
 
-      {/* ── Ollie sidebar (desktop) ── */}
       <aside
         className="hidden lg:flex flex-col w-[360px] flex-shrink-0"
         style={{
-          borderLeft: "1px solid var(--color-border)",
+          borderLeft: "1px solid rgba(149,211,186,0.12)",
           height: "calc(100vh - 3.5rem)",
           position: "sticky",
           top: "3.5rem",
