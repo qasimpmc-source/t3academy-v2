@@ -342,7 +342,7 @@ function ProductCards() {
 ══════════════════════════════════════════════════════════════ */
 function ComparisonTable() {
   const rows = [
-    { feature: "Cost", old: "£40/hr Average", t3: "Unlimited Access", t3Color: C.secondary },
+    { feature: "Cost", old: "£40/hr Average", t3: "£0 — Free Forever", t3Color: C.secondary },
     { feature: "Availability", old: "Fixed Slots", t3: "24/7 On-demand", t3Color: C.primary },
     { feature: "Practice Material", old: "Finite Worksheets", t3: "Infinite AI Generation", t3Color: C.primary },
     { feature: "Feedback Loop", old: "Weekly Review", t3: "Instant Correction", t3Color: C.primary },
@@ -507,59 +507,111 @@ function MeetTutors() {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   PRICING
+   PRICING — completely free, everything included
 ══════════════════════════════════════════════════════════════ */
 function Pricing() {
   const router = useRouter();
+
+  const perks = [
+    { icon: "auto_awesome", label: "Infinite AI Question Generation" },
+    { icon: "verified_user", label: "Unlimited Proctored Mock Exams" },
+    { icon: "support_agent", label: "24/7 Priority AI Tutor Access" },
+    { icon: "dashboard", label: "Full Parent Dashboard" },
+    { icon: "phone_iphone", label: "Mobile App Included" },
+    { icon: "all_inclusive", label: "Everything — no paywalls, ever" },
+  ];
+
   return (
     <section style={{ ...maxW1440, ...sectionPad, fontFamily: fontMontserrat }}>
-      <div style={{ textAlign: "center", marginBottom: 64 }}>
-        <h2 style={{ fontSize: 32, fontWeight: 600, color: C.onSurface, marginBottom: 8, marginTop: 0 }}>Invest in Excellence</h2>
-        <p style={{ color: C.onSurfaceVariant }}>Start for free, no card needed</p>
+      <div style={{ textAlign: "center", marginBottom: 56 }}>
+        <span style={{ display: "inline-block", fontSize: 12, fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: C.secondary, marginBottom: 12 }}>
+          Pricing
+        </span>
+        <h2 style={{ fontSize: 32, fontWeight: 700, color: C.onSurface, margin: "0 0 12px" }}>
+          No tiers. No catches. No card.
+        </h2>
+        <p style={{ color: C.onSurfaceVariant, fontSize: 18, maxWidth: 480, margin: "0 auto" }}>
+          Every feature, every student, completely free — forever.
+        </p>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, maxWidth: 900, margin: "0 auto" }}>
-        {/* Standard */}
-        <div style={{ border: `1px solid ${C.outlineVariant}`, padding: 40, borderRadius: 12, background: C.surfaceContainerLow, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-          <div>
-            <h3 style={{ fontSize: 24, fontWeight: 600, color: C.onSurface, margin: "0 0 4px" }}>Standard</h3>
-            <div style={{ fontSize: 40, fontWeight: 700, color: C.onSurface, marginBottom: 24 }}>
-              £0<span style={{ fontSize: 16, fontWeight: 400, color: C.onSurfaceVariant }}>/forever</span>
+      {/* Single card */}
+      <div style={{
+        maxWidth: 640,
+        margin: "0 auto",
+        position: "relative",
+        borderRadius: 20,
+        padding: 4,
+        background: `linear-gradient(135deg, ${C.primary}, ${C.secondary})`,
+        boxShadow: "0 0 60px rgba(149,211,186,0.15), 0 0 60px rgba(233,195,73,0.1)",
+      }}>
+        <div style={{
+          background: C.surfaceContainerHigh,
+          borderRadius: 17,
+          padding: "48px 48px 40px",
+          display: "flex",
+          flexDirection: "column",
+          gap: 0,
+        }}>
+          {/* Price */}
+          <div style={{ textAlign: "center", marginBottom: 40 }}>
+            <div style={{
+              display: "inline-flex",
+              alignItems: "baseline",
+              gap: 4,
+              marginBottom: 8,
+            }}>
+              <span style={{ fontSize: 80, fontWeight: 800, color: C.primary, lineHeight: 1, letterSpacing: "-0.04em" }}>£0</span>
+              <span style={{ fontSize: 20, fontWeight: 500, color: C.onSurfaceVariant }}>/forever</span>
             </div>
-            <ul style={{ listStyle: "none", padding: 0, margin: "0 0 40px", display: "flex", flexDirection: "column", gap: 8 }}>
-              {["Basic question bank", "1 Mock exam per month", "Standard progress metrics"].map(item => (
-                <li key={item} style={{ display: "flex", alignItems: "center", gap: 8, color: C.onSurfaceVariant }}>
-                  <span className="material-symbols-outlined" style={{ color: C.primary, fontSize: 20 }}>check</span>{item}
-                </li>
-              ))}
-            </ul>
+            <p style={{ fontSize: 14, fontWeight: 600, color: C.secondary, letterSpacing: "0.1em", textTransform: "uppercase", margin: 0 }}>
+              Everything included — no upgrades needed
+            </p>
           </div>
-          <button onClick={() => router.push("/auth/signup")} style={{ width: "100%", padding: "16px 0", border: `1px solid ${C.outlineVariant}`, borderRadius: 8, fontSize: 14, fontWeight: 600, letterSpacing: "0.05em", color: C.onSurface, background: "transparent", cursor: "pointer", fontFamily: fontMontserrat }}>
-            Start for Free
-          </button>
-        </div>
 
-        {/* Premium */}
-        <div style={{ position: "relative", border: `2px solid ${C.secondary}`, padding: 40, borderRadius: 12, background: C.surfaceContainerHigh, boxShadow: "0 0 40px rgba(233,195,73,0.1)", display: "flex", flexDirection: "column", justifyContent: "space-between", overflow: "hidden" }}>
-          <div style={{ position: "absolute", top: 0, right: 0, background: C.secondary, color: C.onSecondary, padding: "4px 24px", fontSize: 12, fontWeight: 500, letterSpacing: "0.1em", textTransform: "uppercase", transform: "translate(25%, 25%) rotate(45deg)" }}>
-            Premium
-          </div>
-          <div>
-            <h3 style={{ fontSize: 24, fontWeight: 600, color: C.secondary, margin: "0 0 4px" }}>Professional</h3>
-            <div style={{ fontSize: 40, fontWeight: 700, color: C.onSurface, marginBottom: 24 }}>
-              £19.99<span style={{ fontSize: 16, fontWeight: 400, color: C.onSurfaceVariant }}>/mo</span>
-            </div>
-            <ul style={{ listStyle: "none", padding: 0, margin: "0 0 40px", display: "flex", flexDirection: "column", gap: 8 }}>
-              {["Infinite AI Question Generation", "Unlimited Proctored Mocks", "24/7 Priority AI Tutor Access", "Parent Dashboard Mobile App"].map(item => (
-                <li key={item} style={{ display: "flex", alignItems: "center", gap: 8, color: C.onSurface }}>
-                  <span className="material-symbols-outlined" style={{ color: C.secondary, fontSize: 20 }}>verified</span>{item}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <button onClick={() => router.push("/auth/signup")} style={{ width: "100%", padding: "16px 0", background: C.secondary, color: C.onSecondary, border: "none", borderRadius: 8, fontSize: 14, fontWeight: 700, letterSpacing: "0.05em", cursor: "pointer", fontFamily: fontMontserrat, boxShadow: "0 8px 24px rgba(233,195,73,0.2)" }}>
-            Go Premium
+          {/* Perks */}
+          <ul style={{ listStyle: "none", padding: 0, margin: "0 0 40px", display: "flex", flexDirection: "column", gap: 16 }}>
+            {perks.map(({ icon, label }) => (
+              <li key={label} style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                <span style={{
+                  width: 36, height: 36, borderRadius: 10,
+                  background: "rgba(149,211,186,0.12)",
+                  border: "1px solid rgba(149,211,186,0.2)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  flexShrink: 0,
+                }}>
+                  <span className="material-symbols-outlined" style={{ color: C.primary, fontSize: 18 }}>{icon}</span>
+                </span>
+                <span style={{ fontSize: 16, fontWeight: 500, color: C.onSurface }}>{label}</span>
+              </li>
+            ))}
+          </ul>
+
+          {/* CTA */}
+          <button
+            onClick={() => router.push("/auth/signup")}
+            style={{
+              width: "100%",
+              padding: "18px 0",
+              background: `linear-gradient(135deg, ${C.primary}, ${C.surfaceTint})`,
+              color: C.onPrimary,
+              border: "none",
+              borderRadius: 12,
+              fontSize: 16,
+              fontWeight: 700,
+              letterSpacing: "0.04em",
+              cursor: "pointer",
+              fontFamily: fontMontserrat,
+              boxShadow: "0 8px 32px rgba(149,211,186,0.25)",
+              transition: "opacity 0.2s",
+            }}
+          >
+            Get Started — It&apos;s Free
           </button>
+
+          <p style={{ textAlign: "center", marginTop: 16, fontSize: 12, color: C.outline, margin: "16px 0 0" }}>
+            No credit card required · No hidden fees · Cancel nothing
+          </p>
         </div>
       </div>
     </section>
