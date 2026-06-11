@@ -370,6 +370,36 @@
   font-family: var(--font-hanken), 'Hanken Grotesk', system-ui, sans-serif;
 }
 
+/* ── 2026 landing experience ─────────────────────────────────── */
+@keyframes t3-marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.t3-marquee { animation: t3-marquee-scroll 28s linear infinite; }
+.t3-marquee:hover { animation-play-state: paused; }
+
+.t3-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(233,195,73,0.4) !important;
+  box-shadow: 0 24px 60px -16px rgba(0,0,0,0.55);
+}
+
+@media (max-width: 980px) {
+  .t3-hero {
+    grid-template-columns: 1fr !important;
+    padding-top: 110px !important;
+    text-align: center;
+  }
+  .t3-hero .hero-owl { height: 50vh !important; }
+  .t3-nav-links { display: none !important; }
+  .t3-bento > div { grid-column: span 12 !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t3-marquee { animation: none; }
+  .t3-card:hover { transform: none; }
+}
+
 *, *::before, *::after { box-sizing: border-box; }
 
 html { scroll-behavior: smooth; }

@@ -4,6 +4,7 @@ import { StatsSection } from "./_components/StatsSection";
 import { SubjectCardsNew } from "./_components/SubjectCardsNew";
 import { DailyTip } from "./_components/DailyTip";
 import OllieChat from "./_components/OllieChat";
+import AmbientDots from "./_components/AmbientDots";
 
 export const dynamic = "force-dynamic";
 
@@ -62,6 +63,7 @@ export default async function DashboardPage() {
     <div className="flex flex-1 overflow-hidden">
       <main className="flex-1 overflow-y-auto">
         {/* Ambient glows — emerald/gold palette */}
+        <AmbientDots />
         <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
           <div className="absolute top-20 left-10 w-72 h-72 rounded-full blur-3xl"
             style={{ background: "rgba(6,78,59,0.35)" }} />
