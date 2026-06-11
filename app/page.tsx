@@ -13,21 +13,21 @@ gsap.registerPlugin(ScrollTrigger);
 
 /* ── design tokens ─────────────────────────────────────────── */
 const C = {
-  bg: "#022c22",
-  bgDeep: "#011a13",
-  surface: "#0a2a1e",
-  surfaceHigh: "#0d3326",
-  primary: "#95d3ba",
-  primaryDim: "#80bea6",
-  onPrimary: "#003829",
-  gold: "#e9c349",
-  goldDeep: "#d4a017",
-  onGold: "#3c2f00",
-  text: "#e5e2e1",
-  text2: "#bfc9c3",
-  text3: "#89938d",
-  line: "rgba(149,211,186,0.14)",
-  goldLine: "rgba(233,195,73,0.25)",
+  bg: "#faf6ec",
+  bgDeep: "#f3ead8",
+  surface: "#ffffff",
+  surfaceHigh: "#fffdf8",
+  primary: "#047857",
+  primaryDim: "#0a6b52",
+  onPrimary: "#ffffff",
+  gold: "#c9941a",
+  goldDeep: "#a87810",
+  onGold: "#ffffff",
+  text: "#231f17",
+  text2: "#5b554a",
+  text3: "#92897a",
+  line: "rgba(6,95,70,0.14)",
+  goldLine: "rgba(201,148,26,0.35)",
 };
 const font = "var(--font-montserrat), 'Montserrat', system-ui, sans-serif";
 
@@ -58,12 +58,12 @@ const btnPrimary: React.CSSProperties = {
   background: `linear-gradient(135deg, ${C.gold}, ${C.goldDeep})`,
   color: C.onGold, border: "none", borderRadius: 999, padding: "16px 36px",
   fontSize: 15, fontWeight: 800, letterSpacing: "0.02em", cursor: "pointer",
-  fontFamily: font, boxShadow: "0 12px 40px -8px rgba(233,195,73,0.45)",
+  fontFamily: font, boxShadow: "0 12px 32px -8px rgba(201,148,26,0.4)",
 };
 const btnGhost: React.CSSProperties = {
   background: "transparent", color: C.primary, borderRadius: 999, padding: "15px 34px",
   fontSize: 15, fontWeight: 700, cursor: "pointer", fontFamily: font,
-  border: `1.5px solid rgba(149,211,186,0.4)`,
+  border: `1.5px solid rgba(6,95,70,0.35)`,
 };
 
 /* ── nav ───────────────────────────────────────────────────── */
@@ -88,7 +88,7 @@ function Nav() {
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
         display: "flex", alignItems: "center", justifyContent: "space-between",
         padding: scrolled ? "12px 6vw" : "22px 6vw",
-        background: scrolled ? "rgba(1,26,19,0.82)" : "transparent",
+        background: scrolled ? "rgba(250,246,236,0.85)" : "transparent",
         backdropFilter: scrolled ? "blur(16px)" : "none",
         WebkitBackdropFilter: scrolled ? "blur(16px)" : "none",
         borderBottom: scrolled ? `1px solid ${C.line}` : "1px solid transparent",
@@ -99,8 +99,8 @@ function Nav() {
       <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
         <span style={{
           width: 36, height: 36, borderRadius: 12, display: "flex", alignItems: "center",
-          justifyContent: "center", fontSize: 18, background: "rgba(6,78,59,0.8)",
-          border: `1px solid rgba(149,211,186,0.25)`,
+          justifyContent: "center", fontSize: 18, background: "rgba(6,120,87,0.1)",
+          border: `1px solid rgba(6,95,70,0.25)`,
         }}>🦉</span>
         <span style={{ fontSize: 19, fontWeight: 800, color: C.primary, letterSpacing: "-0.03em" }}>
           T3 <em style={{ fontStyle: "normal", color: C.gold }}>Academy</em>
@@ -122,9 +122,9 @@ function Nav() {
             {open === key && (
               <div style={{
                 position: "absolute", top: "100%", left: 0, minWidth: 200, padding: 8,
-                background: "rgba(10,42,30,0.96)", backdropFilter: "blur(20px)",
+                background: "rgba(255,253,248,0.97)", backdropFilter: "blur(20px)",
                 border: `1px solid ${C.line}`, borderRadius: 16,
-                boxShadow: "0 24px 60px -12px rgba(0,0,0,0.6)",
+                boxShadow: "0 24px 60px -12px rgba(60,47,0,0.18)",
               }}>
                 {key === "courses" ? (
                   <>
@@ -193,17 +193,17 @@ function Hero() {
       {/* ambient glows */}
       <div aria-hidden style={{
         position: "absolute", top: "-10%", right: "-5%", width: 700, height: 700, borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(149,211,186,0.10), transparent 65%)", pointerEvents: "none",
+        background: "radial-gradient(circle, rgba(6,120,87,0.08), transparent 65%)", pointerEvents: "none",
       }} />
       <div aria-hidden style={{
         position: "absolute", bottom: "-20%", left: "-10%", width: 600, height: 600, borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(233,195,73,0.07), transparent 65%)", pointerEvents: "none",
+        background: "radial-gradient(circle, rgba(201,148,26,0.09), transparent 65%)", pointerEvents: "none",
       }} />
 
       <div style={{ position: "relative", zIndex: 2 }}>
         <div className="hero-fade" style={{
           display: "inline-flex", alignItems: "center", gap: 8, padding: "8px 18px",
-          borderRadius: 999, border: `1px solid ${C.goldLine}`, background: "rgba(233,195,73,0.08)",
+          borderRadius: 999, border: `1px solid ${C.goldLine}`, background: "rgba(201,148,26,0.08)",
           color: C.gold, fontSize: 12.5, fontWeight: 700, letterSpacing: "0.12em",
           textTransform: "uppercase", marginBottom: 28, opacity: 0,
         }}>
@@ -265,7 +265,7 @@ function Hero() {
 function Marquee() {
   const items = ["Infinite AI Questions", "Proctored Mock Exams", "24/7 AI Tutor", "Parent Dashboard", "Verbal Reasoning", "Non-Verbal Reasoning", "Maths", "English"];
   return (
-    <div style={{ overflow: "hidden", borderTop: `1px solid ${C.line}`, borderBottom: `1px solid ${C.line}`, padding: "18px 0", background: "rgba(1,26,19,0.5)" }}>
+    <div style={{ overflow: "hidden", borderTop: `1px solid ${C.line}`, borderBottom: `1px solid ${C.line}`, padding: "18px 0", background: "rgba(255,255,255,0.55)" }}>
       <div className="t3-marquee" style={{ display: "flex", gap: 0, width: "max-content" }}>
         {[...items, ...items].map((it, i) => (
           <span key={i} style={{
@@ -332,7 +332,7 @@ function Products() {
       <div style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: 18 }} className="t3-bento">
         {/* 11+ flagship */}
         <div className="rv t3-card" style={{ ...card({ gridColumn: "span 7", minHeight: 340 }) }} onClick={() => router.push("/dashboard")}>
-          <div aria-hidden style={{ position: "absolute", top: -80, right: -80, width: 280, height: 280, borderRadius: "50%", background: "radial-gradient(circle, rgba(149,211,186,0.18), transparent 70%)" }} />
+          <div aria-hidden style={{ position: "absolute", top: -80, right: -80, width: 280, height: 280, borderRadius: "50%", background: "radial-gradient(circle, rgba(6,120,87,0.10), transparent 70%)" }} />
           <p style={{ color: C.primary, fontSize: 12, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 14 }}>Flagship · 11 Plus</p>
           <h3 style={{ fontSize: 32, fontWeight: 800, color: C.text, letterSpacing: "-0.03em", margin: "0 0 14px" }}>The 11+ Mastery Hub</h3>
           <p style={{ color: C.text2, fontSize: 15.5, lineHeight: 1.7, maxWidth: 460 }}>
@@ -341,16 +341,16 @@ function Products() {
           </p>
           <div style={{ display: "flex", gap: 10, marginTop: 26, flexWrap: "wrap" }}>
             {["English", "Maths", "VR", "NVR"].map((s) => (
-              <span key={s} style={{ padding: "7px 16px", borderRadius: 999, fontSize: 12.5, fontWeight: 700, color: C.primary, background: "rgba(149,211,186,0.1)", border: `1px solid ${C.line}` }}>{s}</span>
+              <span key={s} style={{ padding: "7px 16px", borderRadius: 999, fontSize: 12.5, fontWeight: 700, color: C.primary, background: "rgba(6,120,87,0.07)", border: `1px solid ${C.line}` }}>{s}</span>
             ))}
           </div>
           <span style={{ position: "absolute", bottom: 30, right: 34, color: C.gold, fontWeight: 800, fontSize: 14 }}>Explore →</span>
         </div>
 
         {/* IQ test */}
-        <div className="rv t3-card" style={card({ gridColumn: "span 5", minHeight: 340, background: `linear-gradient(160deg, #1e1600, #0f0b00)`, border: `1px solid ${C.goldLine}` })} onClick={() => router.push("/iq-test")}>
-          <div aria-hidden style={{ position: "absolute", bottom: -60, left: -60, width: 240, height: 240, borderRadius: "50%", background: "radial-gradient(circle, rgba(233,195,73,0.16), transparent 70%)" }} />
-          <p style={{ color: C.gold, fontSize: 12, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 14 }}>Free Assessment</p>
+        <div className="rv t3-card" style={card({ gridColumn: "span 5", minHeight: 340, background: `linear-gradient(160deg, #fdf6e0, #f8edd2)`, border: `1px solid ${C.goldLine}` })} onClick={() => router.push("/iq-test")}>
+          <div aria-hidden style={{ position: "absolute", bottom: -60, left: -60, width: 240, height: 240, borderRadius: "50%", background: "radial-gradient(circle, rgba(201,148,26,0.18), transparent 70%)" }} />
+          <p style={{ color: C.goldDeep, fontSize: 12, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 14 }}>Free Assessment</p>
           <h3 style={{ fontSize: 28, fontWeight: 800, color: C.text, letterSpacing: "-0.03em", margin: "0 0 14px" }}>The T3 IQ Test</h3>
           <p style={{ color: C.text2, fontSize: 15, lineHeight: 1.7 }}>
             A 20-minute baseline that maps your child's reasoning profile and builds their personal study plan.
@@ -375,11 +375,11 @@ function Products() {
         </div>
 
         {/* Tutor */}
-        <div className="rv t3-card" style={card({ gridColumn: "span 4", minHeight: 250, background: `linear-gradient(160deg, #064e3b, #022c22)` })} onClick={() => router.push("/auth/signup")}>
-          <p style={{ color: C.gold, fontSize: 12, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 14 }}>Ollie · AI Tutor</p>
-          <h3 style={{ fontSize: 24, fontWeight: 800, color: C.text, margin: "0 0 12px", letterSpacing: "-0.02em" }}>A tutor that never sleeps</h3>
-          <p style={{ color: C.text2, fontSize: 14.5, lineHeight: 1.65 }}>Stuck at 9pm before a mock? Ollie explains every wrong answer, step by step.</p>
-          <span style={{ position: "absolute", bottom: 26, right: 30, color: C.gold, fontWeight: 800, fontSize: 13.5 }}>Meet Ollie →</span>
+        <div className="rv t3-card" style={card({ gridColumn: "span 4", minHeight: 250, background: `linear-gradient(160deg, #064e3b, #022c22)`, border: "1px solid rgba(149,211,186,0.25)" })} onClick={() => router.push("/auth/signup")}>
+          <p style={{ color: "#e9c349", fontSize: 12, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 14 }}>Ollie · AI Tutor</p>
+          <h3 style={{ fontSize: 24, fontWeight: 800, color: "#f3f7f4", margin: "0 0 12px", letterSpacing: "-0.02em" }}>A tutor that never sleeps</h3>
+          <p style={{ color: "#bfc9c3", fontSize: 14.5, lineHeight: 1.65 }}>Stuck at 9pm before a mock? Ollie explains every wrong answer, step by step.</p>
+          <span style={{ position: "absolute", bottom: 26, right: 30, color: "#e9c349", fontWeight: 800, fontSize: 13.5 }}>Meet Ollie →</span>
         </div>
       </div>
     </section>
@@ -422,7 +422,7 @@ function Comparison() {
             {rows.map(([label, a, b, c], i) => (
               <tr key={label} style={{ borderBottom: i < rows.length - 1 ? `1px solid rgba(149,211,186,0.07)` : "none" }}>
                 <td style={{ ...cell, color: C.text2, textAlign: "left", fontWeight: 600 }}>{label}</td>
-                <td style={{ ...cell, textAlign: "center", background: "rgba(233,195,73,0.04)" }}>
+                <td style={{ ...cell, textAlign: "center", background: "rgba(201,148,26,0.06)" }}>
                   {label === "Price" ? <strong style={{ color: C.gold }}>£0 forever</strong> : a ? yes : no}
                 </td>
                 <td style={{ ...cell, textAlign: "center", color: C.text3 }}>{label === "Price" ? "£30–60/hr" : b ? yes : no}</td>
@@ -509,7 +509,7 @@ function Testimonials() {
             <figcaption style={{ marginTop: 22, display: "flex", alignItems: "center", gap: 12 }}>
               <span style={{
                 width: 40, height: 40, borderRadius: 999, display: "flex", alignItems: "center", justifyContent: "center",
-                background: "rgba(149,211,186,0.12)", border: `1px solid ${C.line}`, color: C.primary, fontWeight: 800, fontSize: 15,
+                background: "rgba(6,120,87,0.08)", border: `1px solid ${C.line}`, color: C.primary, fontWeight: 800, fontSize: 15,
               }}>{t.who[0]}</span>
               <span>
                 <span style={{ display: "block", fontWeight: 800, color: C.text, fontSize: 14 }}>{t.who}</span>
@@ -554,7 +554,7 @@ function Pricing() {
             <li key={p} style={{ display: "flex", alignItems: "center", gap: 14, fontSize: 15, color: C.text2, fontWeight: 600 }}>
               <span style={{
                 width: 26, height: 26, borderRadius: 999, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center",
-                background: "rgba(149,211,186,0.14)", color: C.primary, fontSize: 13, fontWeight: 800, border: `1px solid ${C.line}`,
+                background: "rgba(6,120,87,0.09)", color: C.primary, fontSize: 13, fontWeight: 800, border: `1px solid ${C.line}`,
               }}>✓</span>
               {p}
             </li>
@@ -592,7 +592,7 @@ function FAQ() {
           return (
             <div key={q} className="rv" style={{
               borderRadius: 18, border: `1px solid ${isOpen ? C.goldLine : C.line}`,
-              background: isOpen ? "rgba(233,195,73,0.04)" : `linear-gradient(170deg, ${C.surfaceHigh}, ${C.surface})`,
+              background: isOpen ? "rgba(201,148,26,0.07)" : `linear-gradient(170deg, ${C.surfaceHigh}, ${C.surface})`,
               overflow: "hidden", transition: "border-color .3s, background .3s",
             }}>
               <button onClick={() => setOpen(isOpen ? null : i)} style={{
@@ -629,7 +629,7 @@ function FinalCTA() {
     <section ref={ref} style={{ ...sectionPad, textAlign: "center", position: "relative" }}>
       <div aria-hidden style={{
         position: "absolute", inset: "10% 15%", borderRadius: "50%",
-        background: "radial-gradient(ellipse, rgba(233,195,73,0.08), transparent 70%)", pointerEvents: "none",
+        background: "radial-gradient(ellipse, rgba(201,148,26,0.10), transparent 70%)", pointerEvents: "none",
       }} />
       <div className="rv">
         <div style={{ fontSize: 56, marginBottom: 18 }}>🦉</div>

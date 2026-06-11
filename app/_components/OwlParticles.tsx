@@ -11,9 +11,9 @@ import * as THREE from "three";
 
 type OwlPoint = { x: number; y: number; z: number; r: number; g: number; b: number; size: number; isEye: boolean };
 
-const MINT = new THREE.Color("#95d3ba");
-const DEEP = new THREE.Color("#2a7a5d");
-const GOLD = new THREE.Color("#e9c349");
+const MINT = new THREE.Color("#047857");
+const DEEP = new THREE.Color("#9cc4b2");
+const GOLD = new THREE.Color("#c9941a");
 
 function rand(min: number, max: number) {
   return min + Math.random() * (max - min);
@@ -164,7 +164,7 @@ export default function OwlParticles({ className }: { className?: string }) {
     const mat = new THREE.ShaderMaterial({
       transparent: true,
       depthWrite: false,
-      blending: THREE.AdditiveBlending,
+      blending: THREE.NormalBlending,
       uniforms: {
         uTime: { value: 0 },
         uBlink: { value: 1 },

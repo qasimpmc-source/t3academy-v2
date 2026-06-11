@@ -25,42 +25,42 @@ export function StatsSection({ totalDone, accuracy, trophies, streak }: Props) {
     {
       label: "Questions Done", value: String(totalDone), subtitle: "all topics",
       icon: Target,
-      bg: "linear-gradient(135deg, #064e3b 0%, #022c22 100%)",
-      border: "rgba(149,211,186,0.25)",
-      iconBg: "rgba(149,211,186,0.15)",
-      iconColor: "#95d3ba",
-      valueColor: "#95d3ba",
-      glowColor: "rgba(149,211,186,0.12)",
+      bg: "linear-gradient(135deg, #ffffff 0%, #eef7f1 100%)",
+      border: "rgba(6,95,70,0.18)",
+      iconBg: "rgba(6,120,87,0.10)",
+      iconColor: "#047857",
+      valueColor: "#065f46",
+      glowColor: "rgba(6,120,87,0.10)",
     },
     {
       label: "Accuracy", value: accuracy !== null ? `${accuracy}%` : "—", subtitle: "overall",
       icon: Zap,
-      bg: "linear-gradient(135deg, #0a3d2e 0%, #022c22 100%)",
-      border: "rgba(149,211,186,0.2)",
-      iconBg: "rgba(149,211,186,0.12)",
-      iconColor: "#95d3ba",
-      valueColor: "#b0f0d6",
-      glowColor: "rgba(149,211,186,0.08)",
+      bg: "linear-gradient(135deg, #ffffff 0%, #e8f3ed 100%)",
+      border: "rgba(6,95,70,0.15)",
+      iconBg: "rgba(6,120,87,0.08)",
+      iconColor: "#047857",
+      valueColor: "#047857",
+      glowColor: "rgba(6,120,87,0.08)",
     },
     {
       label: "Trophies", value: String(trophies), subtitle: "earned",
       icon: Trophy,
-      bg: "linear-gradient(135deg, #3a2800 0%, #1e1600 100%)",
-      border: "rgba(233,195,73,0.3)",
-      iconBg: "rgba(233,195,73,0.15)",
-      iconColor: "#e9c349",
-      valueColor: "#e9c349",
-      glowColor: "rgba(233,195,73,0.1)",
+      bg: "linear-gradient(135deg, #ffffff 0%, #fdf6e0 100%)",
+      border: "rgba(201,148,26,0.3)",
+      iconBg: "rgba(201,148,26,0.12)",
+      iconColor: "#a87810",
+      valueColor: "#a87810",
+      glowColor: "rgba(201,148,26,0.12)",
     },
     {
       label: "Streak", value: String(streak), subtitle: "days",
       icon: Flame,
-      bg: "linear-gradient(135deg, #2d1e00 0%, #1a1200 100%)",
-      border: "rgba(233,195,73,0.25)",
-      iconBg: "rgba(233,195,73,0.12)",
-      iconColor: "#d4a017",
-      valueColor: "#e9c349",
-      glowColor: "rgba(233,195,73,0.08)",
+      bg: "linear-gradient(135deg, #ffffff 0%, #fbf1d3 100%)",
+      border: "rgba(201,148,26,0.25)",
+      iconBg: "rgba(201,148,26,0.10)",
+      iconColor: "#c9941a",
+      valueColor: "#a87810",
+      glowColor: "rgba(201,148,26,0.10)",
     },
   ];
 
@@ -80,7 +80,7 @@ export function StatsSection({ totalDone, accuracy, trophies, streak }: Props) {
           style={{
             background: stat.bg,
             border: `1px solid ${stat.border}`,
-            boxShadow: `0 4px 20px rgba(0,0,0,0.3)`,
+            boxShadow: `0 4px 16px rgba(60,47,0,0.07)`,
           }}
         >
           <div className="absolute -right-4 -bottom-4 w-20 h-20 rounded-full pointer-events-none"
@@ -92,7 +92,7 @@ export function StatsSection({ totalDone, accuracy, trophies, streak }: Props) {
                 style={{ background: stat.iconBg }}>
                 <stat.icon className="w-4 h-4" style={{ color: stat.iconColor }} />
               </div>
-              <p className="text-[10px] font-bold uppercase tracking-widest" style={{ color: "#89938d" }}>
+              <p className="text-[10px] font-bold uppercase tracking-widest" style={{ color: "#92897a" }}>
                 {stat.label}
               </p>
             </div>
@@ -107,7 +107,7 @@ export function StatsSection({ totalDone, accuracy, trophies, streak }: Props) {
               >
                 {stat.value}
               </motion.span>
-              <span className="text-xs" style={{ color: "#89938d" }}>{stat.subtitle}</span>
+              <span className="text-xs" style={{ color: "#92897a" }}>{stat.subtitle}</span>
             </div>
           </div>
         </motion.div>

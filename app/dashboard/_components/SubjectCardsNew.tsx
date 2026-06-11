@@ -17,47 +17,47 @@ interface Props {
 const SUBJECTS = [
   {
     id: "english", name: "English", topics: 6, icon: BookOpen, illustration: "📚",
-    bg: "linear-gradient(135deg, #064e3b 0%, #022c22 100%)",
-    accentBorder: "rgba(149,211,186,0.3)",
-    iconBg: "rgba(149,211,186,0.15)",
-    textColor: "#95d3ba",
-    progressColor: "#95d3ba",
-    ringBg: "rgba(149,211,186,0.1)",
-    gradientBtn: "linear-gradient(135deg, #95d3ba 0%, #064e3b 100%)",
-    btnColor: "#003829",
+    bg: "linear-gradient(135deg, #ffffff 0%, #eef7f1 100%)",
+    accentBorder: "rgba(6,95,70,0.2)",
+    iconBg: "rgba(6,120,87,0.10)",
+    textColor: "#065f46",
+    progressColor: "#047857",
+    ringBg: "rgba(6,120,87,0.1)",
+    gradientBtn: "linear-gradient(135deg, #047857 0%, #065f46 100%)",
+    btnColor: "#ffffff",
   },
   {
     id: "maths", name: "Maths", topics: 6, icon: Calculator, illustration: "🔢",
-    bg: "linear-gradient(135deg, #0a3d2e 0%, #011a13 100%)",
-    accentBorder: "rgba(149,211,186,0.2)",
-    iconBg: "rgba(149,211,186,0.12)",
-    textColor: "#b0f0d6",
-    progressColor: "#b0f0d6",
-    ringBg: "rgba(149,211,186,0.08)",
-    gradientBtn: "linear-gradient(135deg, #b0f0d6 0%, #0a3d2e 100%)",
-    btnColor: "#002117",
+    bg: "linear-gradient(135deg, #ffffff 0%, #e8f3ed 100%)",
+    accentBorder: "rgba(6,95,70,0.16)",
+    iconBg: "rgba(6,120,87,0.08)",
+    textColor: "#047857",
+    progressColor: "#059669",
+    ringBg: "rgba(6,120,87,0.08)",
+    gradientBtn: "linear-gradient(135deg, #059669 0%, #047857 100%)",
+    btnColor: "#ffffff",
   },
   {
     id: "verbal", name: "Verbal Reasoning", topics: 7, icon: MessageCircle, illustration: "💬",
-    bg: "linear-gradient(135deg, #3a2800 0%, #1e1600 100%)",
-    accentBorder: "rgba(233,195,73,0.3)",
-    iconBg: "rgba(233,195,73,0.15)",
-    textColor: "#e9c349",
-    progressColor: "#e9c349",
-    ringBg: "rgba(233,195,73,0.1)",
-    gradientBtn: "linear-gradient(135deg, #e9c349 0%, #3a2800 100%)",
-    btnColor: "#1e1600",
+    bg: "linear-gradient(135deg, #ffffff 0%, #fdf6e0 100%)",
+    accentBorder: "rgba(201,148,26,0.3)",
+    iconBg: "rgba(201,148,26,0.12)",
+    textColor: "#a87810",
+    progressColor: "#c9941a",
+    ringBg: "rgba(201,148,26,0.1)",
+    gradientBtn: "linear-gradient(135deg, #c9941a 0%, #a87810 100%)",
+    btnColor: "#ffffff",
   },
   {
     id: "nvr", name: "Non-Verbal Reasoning", topics: 7, icon: Shapes, illustration: "🧩",
-    bg: "linear-gradient(135deg, #2d1e00 0%, #1a1200 100%)",
-    accentBorder: "rgba(233,195,73,0.25)",
-    iconBg: "rgba(233,195,73,0.12)",
-    textColor: "#d4a017",
-    progressColor: "#d4a017",
-    ringBg: "rgba(233,195,73,0.08)",
-    gradientBtn: "linear-gradient(135deg, #d4a017 0%, #2d1e00 100%)",
-    btnColor: "#1a1200",
+    bg: "linear-gradient(135deg, #ffffff 0%, #fbf1d3 100%)",
+    accentBorder: "rgba(201,148,26,0.25)",
+    iconBg: "rgba(201,148,26,0.10)",
+    textColor: "#8a6210",
+    progressColor: "#a87810",
+    ringBg: "rgba(201,148,26,0.08)",
+    gradientBtn: "linear-gradient(135deg, #a87810 0%, #8a6210 100%)",
+    btnColor: "#ffffff",
   },
 ];
 
@@ -75,8 +75,8 @@ export function SubjectCardsNew({ stats }: Props) {
   return (
     <div className="space-y-5">
       <div className="flex items-center gap-3">
-        <div className="w-8 h-1 rounded-full" style={{ background: "linear-gradient(90deg, #95d3ba, #e9c349)" }} />
-        <h2 className="text-sm font-bold uppercase tracking-widest" style={{ color: "#89938d", fontFamily: "'Montserrat', system-ui, sans-serif" }}>
+        <div className="w-8 h-1 rounded-full" style={{ background: "linear-gradient(90deg, #047857, #c9941a)" }} />
+        <h2 className="text-sm font-bold uppercase tracking-widest" style={{ color: "#92897a", fontFamily: "'Montserrat', system-ui, sans-serif" }}>
           Choose Your Subject
         </h2>
       </div>
@@ -104,12 +104,12 @@ export function SubjectCardsNew({ stats }: Props) {
                 style={{
                   background: subject.bg,
                   border: `1px solid ${subject.accentBorder}`,
-                  boxShadow: "0 4px 24px rgba(0,0,0,0.3)",
+                  boxShadow: "0 4px 18px rgba(60,47,0,0.07)",
                 }}
               >
                 {/* Progress bar at top */}
                 <div className="absolute top-0 left-0 right-0 h-1 overflow-hidden rounded-t-2xl"
-                  style={{ background: "rgba(255,255,255,0.05)" }}>
+                  style={{ background: "rgba(6,95,70,0.08)" }}>
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${pct}%` }}
@@ -135,7 +135,7 @@ export function SubjectCardsNew({ stats }: Props) {
                       <h3 className="text-base font-bold leading-tight" style={{ color: subject.textColor, fontFamily: "'Montserrat', system-ui, sans-serif" }}>
                         {subject.name}
                       </h3>
-                      <p className="text-xs" style={{ color: "#89938d" }}>
+                      <p className="text-xs" style={{ color: "#92897a" }}>
                         {subject.topics} topics
                       </p>
                     </div>
@@ -145,7 +145,7 @@ export function SubjectCardsNew({ stats }: Props) {
                   <div className="relative w-12 h-12 flex-shrink-0">
                     <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
                       <circle cx="18" cy="18" r="16" fill="none"
-                        stroke="rgba(255,255,255,0.1)" strokeWidth="2" />
+                        stroke="rgba(6,95,70,0.12)" strokeWidth="2" />
                       <motion.circle
                         cx="18" cy="18" r="16" fill="none"
                         stroke={subject.progressColor} strokeWidth="2.5" strokeLinecap="round"
@@ -164,14 +164,14 @@ export function SubjectCardsNew({ stats }: Props) {
 
                 {/* Stats row */}
                 <div className="mt-3 pt-3 flex items-center justify-between"
-                  style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                  style={{ borderTop: "1px solid rgba(6,95,70,0.08)" }}>
                   <div className="flex gap-4">
                     <div>
-                      <p className="text-[9px] uppercase tracking-widest font-bold" style={{ color: "#89938d" }}>Done</p>
+                      <p className="text-[9px] uppercase tracking-widest font-bold" style={{ color: "#92897a" }}>Done</p>
                       <p className="text-base font-bold" style={{ color: subject.textColor }}>{done}</p>
                     </div>
                     <div>
-                      <p className="text-[9px] uppercase tracking-widest font-bold" style={{ color: "#89938d" }}>Accuracy</p>
+                      <p className="text-[9px] uppercase tracking-widest font-bold" style={{ color: "#92897a" }}>Accuracy</p>
                       <p className="text-base font-bold" style={{ color: subject.textColor }}>
                         {accuracy !== null ? `${accuracy}%` : "—"}
                       </p>

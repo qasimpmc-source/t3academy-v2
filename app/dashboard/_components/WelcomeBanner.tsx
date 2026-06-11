@@ -16,14 +16,14 @@ export function WelcomeBanner({ firstName }: Props) {
       transition={{ duration: 0.4 }}
       className="relative overflow-hidden rounded-2xl px-5 py-4"
       style={{
-        background: "linear-gradient(135deg, #064e3b 0%, #022c22 60%, #0a3d2e 100%)",
-        border: "1px solid rgba(149,211,186,0.2)",
-        boxShadow: "0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(149,211,186,0.1)",
+        background: "linear-gradient(135deg, #ffffff 0%, #fdf9ef 60%, #f3f9f4 100%)",
+        border: "1px solid rgba(6,95,70,0.15)",
+        boxShadow: "0 4px 20px rgba(60,47,0,0.07)",
       }}
     >
       {/* Decorative glow */}
       <div className="absolute top-0 right-0 w-32 h-32 rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none"
-        style={{ background: "rgba(233,195,73,0.08)", filter: "blur(20px)" }} />
+        style={{ background: "rgba(201,148,26,0.12)", filter: "blur(20px)" }} />
 
       <div className="relative flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
@@ -34,7 +34,7 @@ export function WelcomeBanner({ firstName }: Props) {
             className="relative flex-shrink-0"
           >
             <div className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg"
-              style={{ background: "linear-gradient(135deg, #95d3ba 0%, #064e3b 100%)", border: "2px solid rgba(149,211,186,0.4)" }}>
+              style={{ background: "linear-gradient(135deg, #95d3ba 0%, #064e3b 100%)", border: "2px solid rgba(6,95,70,0.3)" }}>
               <div className="relative w-full h-full flex items-center justify-center">
                 <div className="absolute top-3 flex gap-1.5">
                   {[0, 1].map(i => (
@@ -54,13 +54,13 @@ export function WelcomeBanner({ firstName }: Props) {
           </motion.div>
 
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest" style={{ color: "#e9c349" }}>
+            <p className="text-xs font-bold uppercase tracking-widest" style={{ color: "#a87810" }}>
               Good to see you, {firstName}!
             </p>
-            <h1 className="text-lg font-bold leading-tight" style={{ color: "#95d3ba", fontFamily: "'Montserrat', system-ui, sans-serif" }}>
+            <h1 className="text-lg font-bold leading-tight" style={{ color: "#065f46", fontFamily: "'Montserrat', system-ui, sans-serif" }}>
               Ready for an adventure?
             </h1>
-            <p className="text-xs" style={{ color: "rgba(191,201,195,0.75)" }}>
+            <p className="text-xs" style={{ color: "#92897a" }}>
               Pick a subject below or ask Ollie to guide you.
             </p>
           </div>
@@ -71,9 +71,9 @@ export function WelcomeBanner({ firstName }: Props) {
             href="/dashboard/english"
             className="flex items-center gap-1.5 no-underline font-bold text-sm px-5 py-2.5 rounded-full group"
             style={{
-              background: "linear-gradient(135deg, #95d3ba 0%, #064e3b 100%)",
-              color: "#003829",
-              boxShadow: "0 4px 16px rgba(149,211,186,0.25)",
+              background: "linear-gradient(135deg, #047857 0%, #065f46 100%)",
+              color: "#ffffff",
+              boxShadow: "0 4px 16px rgba(6,120,87,0.3)",
             }}
           >
             Let&apos;s Go!

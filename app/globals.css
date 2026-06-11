@@ -86,35 +86,35 @@
   color-scheme: dark;
 }
 
-/* ── 11+ Dashboard emerald theme ───────────────────────────── */
+/* ── 11+ Dashboard warm-ivory theme (emerald accent) ───────── */
 .t3-emerald {
-  --color-bg:          #022c22;
-  --color-bg2:         #011a13;
-  --color-bg3:         #064e3b;
-  --color-card:        #0a2a1e;
-  --color-surface:     #0d3326;
-  --color-border:      rgba(149,211,186,0.15);
-  --color-border2:     rgba(149,211,186,0.25);
-  --color-text:        #e5e2e1;
-  --color-text2:       #bfc9c3;
-  --color-text3:       #89938d;
-  --color-text4:       #404944;
+  --color-bg:          #faf6ec;
+  --color-bg2:         #fffdf8;
+  --color-bg3:         #f3ead8;
+  --color-card:        #ffffff;
+  --color-surface:     #f7f2e6;
+  --color-border:      rgba(6,95,70,0.13);
+  --color-border2:     rgba(6,95,70,0.22);
+  --color-text:        #231f17;
+  --color-text2:       #5b554a;
+  --color-text3:       #92897a;
+  --color-text4:       #c8bfae;
 
-  --color-amber:       #e9c349;
-  --color-amber2:      #d4a017;
-  --color-amber-bg:    rgba(233,195,73,0.12);
-  --color-amber-pale:  rgba(233,195,73,0.06);
+  --color-amber:       #c9941a;
+  --color-amber2:      #a87810;
+  --color-amber-bg:    rgba(201,148,26,0.12);
+  --color-amber-pale:  rgba(201,148,26,0.06);
 
-  --color-accent:      #95d3ba;
-  --color-accent2:     #80bea6;
-  --color-accent-ink:  #003829;
-  --color-accent-bg:   rgba(149,211,186,0.10);
-  --color-accent-line: rgba(149,211,186,0.25);
+  --color-accent:      #047857;
+  --color-accent2:     #065f46;
+  --color-accent-ink:  #ffffff;
+  --color-accent-bg:   rgba(6,120,87,0.08);
+  --color-accent-line: rgba(6,120,87,0.25);
 
-  --color-green:       #95d3ba;
-  --color-red:         #f87171;
+  --color-green:       #047857;
+  --color-red:         #b91c1c;
 
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 /* Aurora glow — only inside .t3-dark */
@@ -380,8 +380,8 @@
 
 .t3-card:hover {
   transform: translateY(-6px);
-  border-color: rgba(233,195,73,0.4) !important;
-  box-shadow: 0 24px 60px -16px rgba(0,0,0,0.55);
+  border-color: rgba(201,148,26,0.45) !important;
+  box-shadow: 0 24px 50px -18px rgba(60,47,0,0.22);
 }
 
 @media (max-width: 980px) {

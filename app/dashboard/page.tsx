@@ -66,11 +66,11 @@ export default async function DashboardPage() {
         <AmbientDots />
         <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
           <div className="absolute top-20 left-10 w-72 h-72 rounded-full blur-3xl"
-            style={{ background: "rgba(6,78,59,0.35)" }} />
+            style={{ background: "rgba(6,120,87,0.10)" }} />
           <div className="absolute top-1/3 right-20 w-80 h-80 rounded-full blur-3xl"
-            style={{ background: "rgba(149,211,186,0.06)" }} />
+            style={{ background: "rgba(201,148,26,0.08)" }} />
           <div className="absolute bottom-20 left-1/3 w-72 h-72 rounded-full blur-3xl"
-            style={{ background: "rgba(233,195,73,0.05)" }} />
+            style={{ background: "rgba(6,120,87,0.06)" }} />
         </div>
 
         <div className="max-w-4xl mx-auto px-6 py-4 space-y-4">
@@ -84,7 +84,7 @@ export default async function DashboardPage() {
       <aside
         className="hidden lg:flex flex-col w-[360px] flex-shrink-0"
         style={{
-          borderLeft: "1px solid rgba(149,211,186,0.12)",
+          borderLeft: "1px solid rgba(6,95,70,0.12)",
           height: "calc(100vh - 3.5rem)",
           position: "sticky",
           top: "3.5rem",

@@ -43,7 +43,7 @@ export default function AmbientDots() {
         const a = 0.25 + 0.2 * Math.sin(t * 0.001 + d.seed);
         ctx.beginPath();
         ctx.arc(d.x * w, d.y * h, d.r, 0, Math.PI * 2);
-        ctx.fillStyle = d.gold ? `rgba(233,195,73,${a})` : `rgba(149,211,186,${a})`;
+        ctx.fillStyle = d.gold ? `rgba(201,148,26,${a*0.7})` : `rgba(6,120,87,${a*0.55})`;
         ctx.fill();
       }
       raf = requestAnimationFrame(tick);
