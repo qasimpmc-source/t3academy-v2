@@ -122,11 +122,16 @@ export default function OwlParticles({ className }: { className?: string }) {
     const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
     camera.position.set(0, 0.2, 7.2);
 
+    // Lighten the load on phones: fewer particles + lower pixel ratio.
+    const isMobile = window.innerWidth <= 600;
+    const dpr = Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2);
+
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(dpr);
     mount.appendChild(renderer.domElement);
 
-    const owl = buildOwl();
+    let owl = buildOwl();
+    if (isMobile) owl = owl.filter((_, i) => i % 2 === 0);
     const n = owl.length;
 
     const targets = new Float32Array(n * 3);
@@ -168,7 +173,7 @@ export default function OwlParticles({ className }: { className?: string }) {
       uniforms: {
         uTime: { value: 0 },
         uBlink: { value: 1 },
-        uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
+        uPixelRatio: { value: dpr },
       },
       vertexShader: /* glsl */ `
         attribute float aSize;

@@ -73,6 +73,7 @@ const btnGhost: React.CSSProperties = {
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState<string | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const router = useRouter();
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 24);
@@ -149,15 +150,73 @@ function Nav() {
       </div>
 
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-        <Link href="/auth/login" style={{
+        <Link href="/auth/login" className="t3-desktop-only" style={{
           color: C.text2, fontSize: 13.5, fontWeight: 700, textDecoration: "none", padding: "10px 14px",
         }}>Log in</Link>
-        <Magnetic strength={0.25}>
-          <button onClick={() => router.push("/auth/signup")} style={{ ...btnPrimary, padding: "11px 24px", fontSize: 13.5 }}>
-            Start Free
-          </button>
-        </Magnetic>
+        <span className="t3-desktop-only">
+          <Magnetic strength={0.25}>
+            <button onClick={() => router.push("/auth/signup")} style={{ ...btnPrimary, padding: "11px 24px", fontSize: 13.5 }}>
+              Start Free
+            </button>
+          </Magnetic>
+        </span>
+        <button
+          className="t3-burger"
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          aria-expanded={mobileOpen}
+          onClick={() => setMobileOpen((v) => !v)}
+          style={{
+            width: 44, height: 44, borderRadius: 12, alignItems: "center", justifyContent: "center",
+            background: "rgba(6,120,87,0.08)", border: `1px solid ${C.line}`, color: C.primary,
+            cursor: "pointer", fontSize: 18, lineHeight: 1, padding: 0,
+          }}
+        >
+          {mobileOpen ? "✕" : "☰"}
+        </button>
       </div>
+
+      {mobileOpen && (
+        <div
+          className="t3-mobile-menu"
+          style={{
+            position: "absolute", top: "100%", left: 0, right: 0, padding: "12px 6vw 20px",
+            background: "rgba(255,253,248,0.98)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
+            borderBottom: `1px solid ${C.line}`, boxShadow: "0 24px 50px -18px rgba(60,47,0,0.2)",
+            display: "flex", flexDirection: "column", gap: 2, fontFamily: font,
+          }}
+        >
+          {[
+            { label: "11 Plus", href: "/dashboard" },
+            { label: "GCSE", href: "/auth/signup" },
+            { label: "Other Medical Exams", href: "/auth/signup" },
+            { label: "IQ Test", href: "/iq-test" },
+          ].map((l) => (
+            <Link key={l.label} href={l.href} onClick={() => setMobileOpen(false)} style={{
+              display: "flex", alignItems: "center", minHeight: 48, padding: "0 6px",
+              color: C.text, fontSize: 16, fontWeight: 600, textDecoration: "none",
+              borderBottom: `1px solid ${C.line}`,
+            }}>{l.label}</Link>
+          ))}
+          <a href="https://www.bbc.co.uk/bitesize" target="_blank" rel="noopener noreferrer" onClick={() => setMobileOpen(false)} style={{
+            display: "flex", alignItems: "center", minHeight: 48, padding: "0 6px",
+            color: C.text2, fontSize: 15, fontWeight: 600, textDecoration: "none", borderBottom: `1px solid ${C.line}`,
+          }}>BBC Bitesize ↗</a>
+          <a href="https://www.britannica.com" target="_blank" rel="noopener noreferrer" onClick={() => setMobileOpen(false)} style={{
+            display: "flex", alignItems: "center", minHeight: 48, padding: "0 6px",
+            color: C.text2, fontSize: 15, fontWeight: 600, textDecoration: "none",
+          }}>Britannica ↗</a>
+          <div style={{ display: "flex", gap: 12, marginTop: 14 }}>
+            <Link href="/auth/login" onClick={() => setMobileOpen(false)} style={{
+              flex: 1, minHeight: 48, display: "flex", alignItems: "center", justifyContent: "center",
+              ...btnGhost, padding: "12px 18px", fontSize: 15, textDecoration: "none",
+            }}>Log in</Link>
+            <Link href="/auth/signup" onClick={() => setMobileOpen(false)} style={{
+              flex: 1, minHeight: 48, display: "flex", alignItems: "center", justifyContent: "center",
+              ...btnPrimary, padding: "12px 18px", fontSize: 15, textDecoration: "none",
+            }}>Start Free</Link>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
@@ -214,7 +273,7 @@ function Hero() {
           100% Free, Forever
         </div>
 
-        <h1 style={{ fontSize: "clamp(44px, 5.6vw, 84px)", lineHeight: 1.02, fontWeight: 800, letterSpacing: "-0.04em", margin: 0, color: C.text }}>
+        <h1 style={{ fontSize: "clamp(30px, 5.6vw, 84px)", lineHeight: 1.02, fontWeight: 800, letterSpacing: "-0.04em", margin: 0, color: C.text }}>
           <span style={{ display: "block", overflow: "hidden" }}>
             {words.map((w) => (
               <span key={w} className="hero-word" style={{ display: "inline-block", marginRight: "0.26em" }}>{w}</span>
@@ -247,7 +306,7 @@ function Hero() {
           </Magnetic>
         </div>
 
-        <div className="hero-fade" style={{ display: "flex", gap: 36, marginTop: 56, opacity: 0 }}>
+        <div className="hero-fade hero-stats" style={{ display: "flex", gap: 36, marginTop: 56, opacity: 0 }}>
           {[["50K+", "Questions generated"], ["98%", "Parent satisfaction"], ["£0", "Now & always"]].map(([v, l]) => (
             <div key={l}>
               <div style={{ fontSize: 26, fontWeight: 800, color: C.primary, letterSpacing: "-0.03em" }}>{v}</div>
@@ -329,7 +388,7 @@ function Products() {
   });
 
   return (
-    <section ref={ref} style={sectionPad}>
+    <section ref={ref} className="t3-section" style={sectionPad}>
       <SectionTitle kicker="The Platform" title="Everything they need to ace exam day"
         sub="One account unlocks the full T3 experience — no tiers, no upsells, no locked content." />
       <div style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: 18 }} className="t3-bento">
@@ -442,13 +501,14 @@ function Comparison() {
   const no = <span style={{ color: "rgba(248,113,113,0.7)", fontWeight: 700 }}>✗</span>;
 
   return (
-    <section ref={ref} style={sectionPad}>
+    <section ref={ref} className="t3-section" style={sectionPad}>
       <SectionTitle kicker="Why T3" title="Private tutoring quality, without the £40/hour" />
       <div className="rv" style={{
         borderRadius: 24, overflow: "hidden", border: `1px solid ${C.line}`,
         background: `linear-gradient(180deg, ${C.surfaceHigh}, ${C.surface})`,
       }}>
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+        <div className="t3-table-scroll" style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+        <table style={{ width: "100%", minWidth: 480, borderCollapse: "collapse" }}>
           <thead>
             <tr style={{ borderBottom: `1px solid ${C.line}` }}>
               <th style={{ ...cell, textAlign: "left", color: C.text3, fontWeight: 700, fontSize: 12.5, textTransform: "uppercase", letterSpacing: "0.14em" }}>Feature</th>
@@ -470,6 +530,7 @@ function Comparison() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </section>
   );
@@ -504,10 +565,10 @@ function Science() {
   ];
 
   return (
-    <section ref={ref} style={{ ...sectionPad, position: "relative" }}>
+    <section ref={ref} className="t3-section" style={{ ...sectionPad, position: "relative" }}>
       <SectionTitle kicker="The Science" title="Spaced repetition meets adaptive AI"
         sub="T3 schedules every question using retrieval-practice research — the same techniques behind the world's best-performing students." />
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 18 }}>
+      <div className="t3-grid-auto" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 18 }}>
         {blocks.map((b) => (
           <div key={b.label} className="rv" style={{
             padding: "36px 30px", borderRadius: 24, textAlign: "center",
@@ -534,9 +595,9 @@ function Testimonials() {
     { q: "I use Ollie when I get stuck at night. It explains things better than my school teacher, honestly.", who: "Priya, 10", role: "Year 6 student" },
   ];
   return (
-    <section ref={ref} style={sectionPad}>
+    <section ref={ref} className="t3-section" style={sectionPad}>
       <SectionTitle kicker="Results" title="Families that flew with us" />
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px,1fr))", gap: 18 }}>
+      <div className="t3-grid-auto" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px,1fr))", gap: 18 }}>
         {quotes.map((t) => (
           <figure key={t.who} className="rv t3-card" style={{
             margin: 0, padding: 34, borderRadius: 24, position: "relative",
@@ -576,10 +637,10 @@ function Pricing() {
     "Everything — no paywalls, ever",
   ];
   return (
-    <section ref={ref} style={sectionPad} id="pricing">
+    <section ref={ref} className="t3-section" style={sectionPad} id="pricing">
       <SectionTitle kicker="Pricing" title="Free. Forever. For everyone."
         sub="We believe a child's future shouldn't depend on what their parents can spend. Every feature, every question, every mock — £0." />
-      <div className="rv glow-card glow-card--gold" style={{
+      <div className="rv glow-card glow-card--gold t3-pricing-card" style={{
         maxWidth: 560, margin: "0 auto", borderRadius: 32, padding: "52px 48px", textAlign: "center",
         background: `linear-gradient(165deg, ${C.surfaceHigh}, ${C.bgDeep})`,
       }}>
@@ -623,7 +684,7 @@ function FAQ() {
     ["What ages is T3 suitable for?", "The 11+ hub targets Years 4–6; GCSE content covers Years 10–11. The IQ test works for any age from 8 up."],
   ];
   return (
-    <section ref={ref} style={{ ...sectionPad, maxWidth: 860 }}>
+    <section ref={ref} className="t3-section" style={{ ...sectionPad, maxWidth: 860 }}>
       <SectionTitle kicker="FAQ" title="Questions, answered" />
       <div style={{ display: "grid", gap: 12 }}>
         {faqs.map(([q, a], i) => {
@@ -665,7 +726,7 @@ function FinalCTA() {
   useReveal(ref);
   const router = useRouter();
   return (
-    <section ref={ref} style={{ ...sectionPad, textAlign: "center", position: "relative" }}>
+    <section ref={ref} className="t3-section" style={{ ...sectionPad, textAlign: "center", position: "relative" }}>
       <div aria-hidden style={{
         position: "absolute", inset: "10% 15%", borderRadius: "50%",
         background: "radial-gradient(ellipse, rgba(201,148,26,0.10), transparent 70%)", pointerEvents: "none",

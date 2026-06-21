@@ -384,15 +384,32 @@
   box-shadow: 0 24px 50px -18px rgba(60,47,0,0.22);
 }
 
+/* Hamburger nav — only below the tablet breakpoint */
+.t3-burger { display: none; }
+
 @media (max-width: 980px) {
   .t3-hero {
-    grid-template-columns: 1fr !important;
+    grid-template-columns: minmax(0, 1fr) !important;
     padding-top: 110px !important;
     text-align: center;
   }
-  .t3-hero .hero-owl { height: 50vh !important; }
+  .t3-hero .hero-owl { height: 50vh !important; width: 100%; max-width: 100%; overflow: hidden; }
   .t3-nav-links { display: none !important; }
   .t3-bento > div { grid-column: span 12 !important; }
+  .t3-burger { display: inline-flex !important; }
+  .t3-desktop-only { display: none !important; }
+}
+
+/* Phone-width tuning (320–600px) */
+@media (max-width: 600px) {
+  .t3-hero { padding-top: 92px !important; padding-bottom: 40px !important; }
+  .t3-hero h1 { line-height: 1.12 !important; }
+  .t3-hero .hero-stats { gap: 18px !important; }
+  .t3-section { padding-top: 64px !important; padding-bottom: 64px !important; }
+  .t3-pricing-card { padding: 36px 22px !important; }
+  /* keep multi-column grids from overflowing very narrow screens */
+  .t3-bento { gap: 14px !important; }
+  .t3-grid-auto { grid-template-columns: 1fr !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {
