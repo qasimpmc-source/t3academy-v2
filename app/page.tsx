@@ -31,6 +31,9 @@ const C = {
 };
 const font = "var(--font-montserrat), 'Montserrat', system-ui, sans-serif";
 
+/* External MSRA exam module (separate app) */
+const MSRA_URL = "https://t3academy-msra.vercel.app";
+
 /* ── magnetic button ───────────────────────────────────────── */
 function Magnetic({ children, strength = 0.35 }: { children: React.ReactNode; strength?: number }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -381,6 +384,42 @@ function Products() {
           <p style={{ color: "#bfc9c3", fontSize: 14.5, lineHeight: 1.65 }}>Stuck at 9pm before a mock? Ollie explains every wrong answer, step by step.</p>
           <span style={{ position: "absolute", bottom: 26, right: 30, color: "#e9c349", fontWeight: 800, fontSize: 13.5 }}>Meet Ollie →</span>
         </div>
+
+        {/* MSRA — medical exam module (external app) */}
+        <a
+          href={MSRA_URL}
+          className="rv t3-card"
+          style={{
+            ...card({
+              gridColumn: "span 12",
+              minHeight: 200,
+              background: `linear-gradient(135deg, #064e3b, #022c22)`,
+              border: "1px solid rgba(149,211,186,0.25)",
+            }),
+            textDecoration: "none",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 28,
+            flexWrap: "wrap",
+          }}
+        >
+          <div aria-hidden style={{ position: "absolute", top: -90, right: 80, width: 300, height: 300, borderRadius: "50%", background: "radial-gradient(circle, rgba(201,148,26,0.16), transparent 70%)" }} />
+          <div style={{ position: "relative", zIndex: 1, maxWidth: 660 }}>
+            <p style={{ color: "#e9c349", fontSize: 12, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 14 }}>New · For Doctors</p>
+            <h3 style={{ fontSize: 30, fontWeight: 800, color: "#f3f7f4", letterSpacing: "-0.03em", margin: "0 0 12px" }}>MSRA exam prep, tutored by Orion</h3>
+            <p style={{ color: "#bfc9c3", fontSize: 15, lineHeight: 1.7 }}>
+              AI-generated Clinical Problem Solving and Professional Dilemmas questions, full mock exams
+              and intelligent tutored discussion. Built for doctors applying to specialty training.
+            </p>
+            <div style={{ display: "flex", gap: 10, marginTop: 22, flexWrap: "wrap" }}>
+              {["CPS", "Professional Dilemmas", "Mock Exams", "AI Tutor"].map((s) => (
+                <span key={s} style={{ padding: "7px 16px", borderRadius: 999, fontSize: 12.5, fontWeight: 700, color: "#cfe9df", background: "rgba(149,211,186,0.10)", border: "1px solid rgba(149,211,186,0.22)" }}>{s}</span>
+              ))}
+            </div>
+          </div>
+          <span style={{ position: "relative", zIndex: 1, color: "#e9c349", fontWeight: 800, fontSize: 15, whiteSpace: "nowrap" }}>Open the MSRA Hub →</span>
+        </a>
       </div>
     </section>
   );
