@@ -45,6 +45,7 @@ export default async function DashboardLayout({
         <div className="hidden sm:flex items-center gap-1">
           {[
             { label: "Dashboard", href: "/dashboard" },
+            { label: "Foundations", href: "/dashboard/foundations" },
             { label: "Mock Exam", href: "/dashboard/mock" },
             { label: "Progress", href: "/dashboard/progress" },
           ].map(({ label, href }) => (

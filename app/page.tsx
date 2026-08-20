@@ -428,6 +428,14 @@ function Products() {
           <span style={{ position: "absolute", bottom: 26, right: 30, color: C.gold, fontWeight: 800, fontSize: 13.5 }}>Join →</span>
         </div>
 
+        {/* Foundations */}
+        <div className="rv t3-card" style={card({ gridColumn: "span 4", minHeight: 250 })} onClick={() => router.push("/dashboard/foundations")}>
+          <p style={{ color: C.primary, fontSize: 12, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 14 }}>New · Live</p>
+          <h3 style={{ fontSize: 24, fontWeight: 800, color: C.text, margin: "0 0 12px", letterSpacing: "-0.02em" }}>Year 7 Foundations</h3>
+          <p style={{ color: C.text2, fontSize: 14.5, lineHeight: 1.65 }}>Gated Maths and Science topics, fifteen minutes at a time, tutored by Orbit.</p>
+          <span style={{ position: "absolute", bottom: 26, right: 30, color: C.gold, fontWeight: 800, fontSize: 13.5 }}>Explore →</span>
+        </div>
+
         {/* Mock exams */}
         <div className="rv t3-card" style={card({ gridColumn: "span 4", minHeight: 250 })} onClick={() => router.push("/dashboard/mock")}>
           <p style={{ color: C.primary, fontSize: 12, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 14 }}>Mock Exams</p>

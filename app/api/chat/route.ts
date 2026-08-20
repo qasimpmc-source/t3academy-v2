@@ -27,8 +27,8 @@ export async function POST(request: Request) {
 
   const { tutor, messages, context } = body;
 
-  if (!tutor || !["ollie", "nova"].includes(tutor)) {
-    return new Response(JSON.stringify({ error: "tutor must be 'ollie' or 'nova'" }), {
+  if (!tutor || !["ollie", "nova", "orbit"].includes(tutor)) {
+    return new Response(JSON.stringify({ error: "tutor must be 'ollie', 'nova' or 'orbit'" }), {
       status: 400,
       headers: { "Content-Type": "application/json" },
     });
